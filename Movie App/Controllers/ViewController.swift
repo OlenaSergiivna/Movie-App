@@ -11,7 +11,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.requestAutentification()
+        
+        NetworkManager.shared.requestAuthentication(username: "Olena.Olena", password: "olena1611") { id in
+            print("Session id (VC): \(id)")
+           
+        }
+        
+    
+  
     }
 
 
