@@ -17,31 +17,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JcI-Fk-1Kv">
-                                <rect key="frame" x="20" y="397" width="350" height="50.666666666666686"/>
+                                <rect key="frame" x="20" y="246.99999999999997" width="350" height="50.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-im-XSq">
-                                <rect key="frame" x="20" y="477.66666666666669" width="350" height="50.666666666666686"/>
+                                <rect key="frame" x="20" y="327.66666666666669" width="350" height="50.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhE-RY-fiC">
+                                <rect key="frame" x="50" y="428.33333333333331" width="290" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Submit" cornerStyle="small">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="submitButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pmy-IH-pgQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="top" secondItem="JcI-Fk-1Kv" secondAttribute="bottom" constant="30" id="0tc-1E-D0e"/>
+                            <constraint firstItem="KhE-RY-fiC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="EQ0-WZ-Cad"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JcI-Fk-1Kv" secondAttribute="trailing" constant="20" id="FWZ-yB-WBK"/>
                             <constraint firstItem="JcI-Fk-1Kv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OFc-f6-DKg"/>
                             <constraint firstItem="JcI-Fk-1Kv" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="PCC-Qj-mSc"/>
                             <constraint firstItem="JcI-Fk-1Kv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="PbL-fb-fQ6"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VxC-SG-ten"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="jdp-fi-oKB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KhE-RY-fiC" secondAttribute="trailing" constant="50" id="kd1-fe-a1i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kl1-im-XSq" secondAttribute="trailing" constant="20" id="qs6-79-q08"/>
-                            <constraint firstItem="JcI-Fk-1Kv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="350" id="zpE-iH-I10"/>
+                            <constraint firstItem="KhE-RY-fiC" firstAttribute="top" secondItem="kl1-im-XSq" secondAttribute="bottom" constant="50" id="yYO-20-Owl"/>
+                            <constraint firstItem="JcI-Fk-1Kv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="zpE-iH-I10"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginTextField" destination="JcI-Fk-1Kv" id="YJj-r8-oIu"/>
+                        <outlet property="passTextField" destination="kl1-im-XSq" id="yQL-pa-bLJ"/>
+                        <outlet property="submitButton" destination="KhE-RY-fiC" id="mWV-eC-nSB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
