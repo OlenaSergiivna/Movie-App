@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     var sessionId = ""
+    var userId = ""
     
     @IBOutlet weak var loginTextField: UITextField!
 
@@ -32,6 +33,7 @@ class ViewController: UIViewController {
 
         NetworkManager.shared.requestAuthentication(username: login, password: password) { [weak self] id in
             self?.sessionId = id
+            
             print("Session id (VC): \(self?.sessionId ?? "0")")
            
         }

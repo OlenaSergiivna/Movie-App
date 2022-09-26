@@ -85,4 +85,12 @@ struct NetworkManager {
             }
         }
     }
+    
+    func getDetails(sessionId: String) {
+        
+       let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
+        let getDetailsSession = AF.request(getDetailsUrl, method: .get)
+        
+        getDetailsSession.responseDecodable(of: , completionHandler: <#T##(DataResponse<Decodable, AFError>) -> Void#>)
+    }
 }
