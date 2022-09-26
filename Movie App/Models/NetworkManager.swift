@@ -86,11 +86,20 @@ struct NetworkManager {
         }
     }
     
-    func getDetails(sessionId: String) {
+    func getDetails(sessionId: String, completion: @escaping(Int) -> Void) {
         
        let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
         let getDetailsSession = AF.request(getDetailsUrl, method: .get)
         
-        getDetailsSession.responseDecodable(of: , completionHandler: <#T##(DataResponse<Decodable, AFError>) -> Void#>)
+        getDetailsSession.responseDecodable(of: UserDetails.self) { response in
+            print(response)
+            do {
+                let userId = try response.result.get().id
+                completion(userId)
+            } catch {
+                print("user id: \(error.localizedDescription)")
+            }
+            
+        }
     }
 }

@@ -19,16 +19,41 @@ struct UserDetails: Codable {
 
 
 struct Avatar: Codable {
-    var gravatar: Hash
-    var tmdb: AvatarPath
+    var gravatar: Gravatar
+    var tmdb: TMDB
 }
 
 
-struct Hash: Codable {
+struct Gravatar: Codable {
     var hash: String
 }
 
 
-struct AvatarPath: Codable {
-    var avatar_path: String
+struct TMDB: Codable {
+    var avatar_path: JSONNull
+}
+
+
+class JSONNull: Codable, Hashable {
+
+    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
+        return true
+    }
+
+    func hash(into hasher: inout Hasher) {
+        //
+    }
+    public init() {}
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if !container.decodeNil() {
+            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encodeNil()
+    }
 }
