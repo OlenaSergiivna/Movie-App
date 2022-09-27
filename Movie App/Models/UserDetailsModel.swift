@@ -43,6 +43,7 @@ class JSONNull: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         //
     }
+    
     public init() {}
 
     public required init(from decoder: Decoder) throws {

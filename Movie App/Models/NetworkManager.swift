@@ -17,7 +17,7 @@ struct NetworkManager {
     
     // MARK: - Main autentication request: Request token + Validate token + Create session
     
-    func requestAuthentication(username: String, password: String, completion: @escaping((String) -> Void)) {
+    func requestAuthentication(username: String, password: String, completion: @escaping((String, Int, Int, Int) -> Void)) {
         
         // MARK: - First: Request token
         
@@ -27,20 +27,23 @@ struct NetworkManager {
         tokenRequest.responseDecodable(of: Token.self) { response in
             
             do {
-                let token = try response.result.get().request_token
+                let data = try response.result.get()
                 
-                validateAuthentication(username: username, password: password, token: token)
+                guard let responseRequest = response.response?.statusCode else { return }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                validateAuthentication(username: username, password: password, token: data.request_token) { responseValidate in
                     
-                    createSession(token: token) { id in
-                        completion(id)
+                    createSession(token: data.request_token) { id, responseSession in
+                        
+                        completion(id, responseRequest, responseValidate, responseSession)
                     }
                 }
                 
             } catch {
-                print(error.localizedDescription)
+                print("Request: \(error.localizedDescription)")
             }
+            
+            
         }
         
     }
@@ -49,7 +52,7 @@ struct NetworkManager {
     
     // MARK: - Second: Validate token
     
-    func validateAuthentication(username: String, password: String, token: String) {
+    func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Int) -> ()) {
         
         let validateTokenUrl = "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(apiKey)&username=\(username)&password=\(password)&request_token=\(token)"
         
@@ -58,19 +61,27 @@ struct NetworkManager {
         tokenValidation.responseDecodable(of: Token.self) { response in
             
             do {
-                let _ = try response.result.get()
+                let data = try response.result.get()
                 
+                if let responseValidate = response.response?.statusCode {
+                    completion(responseValidate)
+                }
             } catch {
+                if let responseValidate = response.response?.statusCode {
+                    print(responseValidate)
+                    completion(responseValidate)
+                }
                 print("Validate: \(error.localizedDescription)")
             }
+            
+            
         }
-        
     }
     
     
     // MARK: - Third: Create session id
     
-    func createSession(token: String, completion: @escaping(String) -> Void) {
+    func createSession(token: String, completion: @escaping(String, Int) -> Void) {
         
         let sessionUrl = "https://api.themoviedb.org/3/authentication/session/new?api_key=\(apiKey)&request_token=\(token)"
         let creatingSession = AF.request(sessionUrl, method: .get)
@@ -78,28 +89,36 @@ struct NetworkManager {
         creatingSession.responseDecodable(of: Session.self) { response in
             
             do {
-                let sessionId = try response.result.get().session_id
-                completion(sessionId)
+                let data = try response.result.get()
+                
+                if let responseSession = response.response?.statusCode {
+                    completion(data.session_id, responseSession)
+                }
+                
+                
             } catch {
+                
                 print("Create: \(error.localizedDescription)")
             }
         }
     }
     
+    
+    // MARK: - Get user's details
+    
     func getDetails(sessionId: String, completion: @escaping(Int) -> Void) {
         
-       let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
+        let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
         let getDetailsSession = AF.request(getDetailsUrl, method: .get)
         
         getDetailsSession.responseDecodable(of: UserDetails.self) { response in
-            print(response)
+            
             do {
                 let userId = try response.result.get().id
                 completion(userId)
             } catch {
                 print("user id: \(error.localizedDescription)")
             }
-            
         }
     }
 }

@@ -26,23 +26,49 @@ class ViewController: UIViewController {
 
     }
 
-    @IBAction func submitButtonPressed(_ sender: Any) {
+    @IBAction func submitButtonPressed(_ sender: UIButton) {
         
         guard let login = loginTextField.text else { return }
         guard let password = passTextField.text else { return }
 
-        NetworkManager.shared.requestAuthentication(username: login, password: password) { [weak self] id in
+        NetworkManager.shared.requestAuthentication(username: login, password: password) { [weak self] id, responseRequest, responseValidate, responseSession in
+            print(responseRequest, responseValidate, responseSession)
             self?.sessionId = id
-            print("Session id (VC): \(self?.sessionId ?? "0")")
+            print("Session id: \(self?.sessionId ?? "0")")
             
             NetworkManager.shared.getDetails(sessionId: self?.sessionId ?? "0") { [weak self] userId in
                 self?.userId = userId
+                print("User id: \(self?.userId ?? 0)")
+                
+                if responseRequest == 200 {
+                    print(responseRequest)
+                    if responseValidate == 200 {
+                        print(responseValidate)
+                        if responseSession == 200 {
+                            print(responseSession)
+                            self?.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
+                        }
+                    }
+                }
             }
             
-           
         }
         
-    }
+        
+            
+        
+//            if self.userId != 0  {
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let viewController = storyboard.instantiateViewController(withIdentifier: "tabBar") as! UITabBarController
+//                viewController.modalPresentationStyle = .fullScreen
+//
+//                self.present(viewController, animated: true)
+//            } else {
+//                print("not performed segue")
+//            }
+        }
+        
+        
     
     func resetForm() {
         submitButton.isEnabled = true
