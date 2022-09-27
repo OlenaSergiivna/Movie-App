@@ -152,7 +152,17 @@
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fwB-jR-TFM"/>
+                    <navigationItem key="navigationItem" id="fwB-jR-TFM">
+                        <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="2US-Zm-31V">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="RTr-zF-2h4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="logOutButton" destination="2US-Zm-31V" id="6X2-8V-rzc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUa-sy-ERR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -183,7 +193,17 @@
                         <viewLayoutGuide key="safeArea" id="iHP-dF-Zyf"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ouz-4a-Hl3"/>
+                    <navigationItem key="navigationItem" id="ouz-4a-Hl3">
+                        <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="oDt-MV-A6u">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="logOutButtonPressed:" destination="lSx-JY-h29" id="cdB-yn-OaB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="logOutButton" destination="oDt-MV-A6u" id="vAq-qx-hM0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0C2-SB-ruR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

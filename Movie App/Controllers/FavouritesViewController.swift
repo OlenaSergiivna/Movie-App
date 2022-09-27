@@ -9,6 +9,7 @@ import UIKit
 
 class FavouritesViewController: UIViewController {
 
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,4 +17,19 @@ class FavouritesViewController: UIViewController {
     }
     
 
+    
+    @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
+            if result == true {
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+                self?.present(viewController, animated: true)
+            } else {
+                print("false result")
+            }
+            
+        }
+    }
 }
