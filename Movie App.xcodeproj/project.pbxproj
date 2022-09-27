@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3828E33F320038CC92 /* SearchViewController.swift */; };
 		CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */; };
+		CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3C28E34C820038CC92 /* LogOutModel.swift */; };
+		CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3F28E3526C0038CC92 /* Globals.swift */; };
 		CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063028E0C57D00B67410 /* AppDelegate.swift */; };
 		CE14063328E0C57D00B67410 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063228E0C57D00B67410 /* SceneDelegate.swift */; };
 		CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */; };
@@ -30,6 +32,8 @@
 		8B58C7A4B0A0C166C2D96763 /* Pods-Movie App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie App.release.xcconfig"; path = "Target Support Files/Pods-Movie App/Pods-Movie App.release.xcconfig"; sourceTree = "<group>"; };
 		CE08EB3828E33F320038CC92 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
+		CE08EB3C28E34C820038CC92 /* LogOutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutModel.swift; sourceTree = "<group>"; };
+		CE08EB3F28E3526C0038CC92 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CE14062D28E0C57D00B67410 /* Movie App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE14063028E0C57D00B67410 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE14063228E0C57D00B67410 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +86,14 @@
 			path = SearchTab;
 			sourceTree = "<group>";
 		};
+		CE08EB3E28E352560038CC92 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				CE08EB3F28E3526C0038CC92 /* Globals.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		CE14062428E0C57D00B67410 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +116,7 @@
 		CE14062F28E0C57D00B67410 /* Movie App */ = {
 			isa = PBXGroup;
 			children = (
+				CE08EB3E28E352560038CC92 /* Data */,
 				CE14064428E0EC1200B67410 /* Models */,
 				CE14064528E0EC1C00B67410 /* Views */,
 				CE14064628E0EC2400B67410 /* Controllers */,
@@ -123,6 +136,7 @@
 				CE14064B28E0F38D00B67410 /* TokenModel.swift */,
 				CE170BD928E10CC9001323E4 /* SessionModel.swift */,
 				CEB3450728E225DF00451A6F /* UserDetailsModel.swift */,
+				CE08EB3C28E34C820038CC92 /* LogOutModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -130,8 +144,8 @@
 		CE14064528E0EC1C00B67410 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				CE08EB3728E33EE30038CC92 /* SearchTab */,
 				CE14063628E0C57D00B67410 /* Main.storyboard */,
+				CE08EB3728E33EE30038CC92 /* SearchTab */,
 				CEB3450D28E23E0A00451A6F /* GenresTab */,
 			);
 			path = Views;
@@ -276,8 +290,10 @@
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
+				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,
 				CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
+				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,
 				CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */,
 				CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */,
 				CE14063328E0C57D00B67410 /* SceneDelegate.swift in Sources */,

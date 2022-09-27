@@ -118,4 +118,21 @@ struct NetworkManager {
             }
         }
     }
+    
+    
+    func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
+        
+        let logOutUrl = "https://api.themoviedb.org/3/authentication/session?api_key=\(apiKey)&session_id=\(sessionId)"
+        let logOutSession = AF.request(logOutUrl, method: .delete)
+        
+        logOutSession.responseDecodable(of: LogOut.self) { response in
+            do {
+                let result = try response.result.get().success
+                print("Log out: \(result)")
+                completion(result)
+            } catch {
+                print("Log out: \(error.localizedDescription)")
+            }
+        }
+    }
 }
