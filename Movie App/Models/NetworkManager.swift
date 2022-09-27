@@ -61,7 +61,7 @@ struct NetworkManager {
         tokenValidation.responseDecodable(of: Token.self) { response in
             
             do {
-                let data = try response.result.get()
+                let _ = try response.result.get()
                 if let responseValidate = response.response?.statusCode {
                     completion(responseValidate)
                 }

@@ -1,20 +1,20 @@
 //
-//  GenresViewController.swift
+//  SearchViewController.swift
 //  Movie App
 //
-//  Created by user on 26.09.2022.
+//  Created by user on 27.09.2022.
 //
 
 import UIKit
 
-class GenresViewController: UIViewController {
+class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-
+    
 
     /*
     // MARK: - Navigation
