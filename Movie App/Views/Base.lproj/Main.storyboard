@@ -78,8 +78,24 @@
                     <view key="view" contentMode="scaleToFill" id="l9V-v2-0es">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="de5-S4-Mwr">
+                                <rect key="frame" x="0.0" y="56" width="390" height="705"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="NWm-K3-4CP" id="HUo-pR-S2d"/>
+                                    <outlet property="delegate" destination="NWm-K3-4CP" id="Dl8-Z7-YDi"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="r6x-CU-IGS"/>
                         <color key="backgroundColor" systemColor="systemYellowColor"/>
+                        <constraints>
+                            <constraint firstItem="r6x-CU-IGS" firstAttribute="bottom" secondItem="de5-S4-Mwr" secondAttribute="bottom" id="AKw-q7-vBH"/>
+                            <constraint firstItem="r6x-CU-IGS" firstAttribute="trailing" secondItem="de5-S4-Mwr" secondAttribute="trailing" id="NV8-IN-OjH"/>
+                            <constraint firstItem="de5-S4-Mwr" firstAttribute="top" secondItem="r6x-CU-IGS" secondAttribute="top" id="ktT-Ag-pcM"/>
+                            <constraint firstItem="de5-S4-Mwr" firstAttribute="leading" secondItem="r6x-CU-IGS" secondAttribute="leading" id="qQh-lb-atj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="H7G-jw-ldM">
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="nTP-FH-6BM">
@@ -89,12 +105,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="genresTableView" destination="de5-S4-Mwr" id="tch-Qg-NCU"/>
                         <outlet property="logOutButton" destination="nTP-FH-6BM" id="qct-mV-SMn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag9-0x-G8t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3791" y="53"/>
+            <point key="canvasLocation" x="3790.7692307692305" y="52.606635071090047"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="qn6-7n-Bta">
