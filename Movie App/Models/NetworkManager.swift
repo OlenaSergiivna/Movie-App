@@ -62,7 +62,6 @@ struct NetworkManager {
             
             do {
                 let data = try response.result.get()
-                
                 if let responseValidate = response.response?.statusCode {
                     completion(responseValidate)
                 }
@@ -94,8 +93,6 @@ struct NetworkManager {
                 if let responseSession = response.response?.statusCode {
                     completion(data.session_id, responseSession)
                 }
-                
-                
             } catch {
                 
                 print("Create: \(error.localizedDescription)")
