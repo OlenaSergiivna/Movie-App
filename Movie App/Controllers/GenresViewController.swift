@@ -16,8 +16,27 @@ class GenresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //self.genresTableView.reloadData()
+        
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
+        
+        NetworkManager.shared.requestMovieGenres { [weak self] data in
+            Globals.genres.append(contentsOf: data)
+            
+            DispatchQueue.main.async {
+                self?.genresTableView.reloadData()
+            }
+        }
+        
+        NetworkManager.shared.requestTVGenres { [weak self] data in
+            Globals.genres.append(contentsOf: data)
+            
+            DispatchQueue.main.async {
+                self?.genresTableView.reloadData()
+            }
+        }
+        
     }
     
     
@@ -41,14 +60,14 @@ class GenresViewController: UIViewController {
 extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        return Globals.genres.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = genresTableView.dequeueReusableCell(withIdentifier: "GenresTableViewCell", for: indexPath) as? GenresTableViewCell else {
             return UITableViewCell()
         }
-        cell.genreLabel.text = "Fantasy"
+        cell.genreLabel.text = Globals.genres[indexPath.row].name
         return cell
     }
     

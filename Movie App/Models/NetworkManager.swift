@@ -50,9 +50,9 @@ struct NetworkManager {
     
     
     
-    // MARK: - Second: Validate token
+    // MARK: - Second: Validate token - PRIVATE
     
-    func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Int) -> ()) {
+    private func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Int) -> ()) {
         
         let validateTokenUrl = "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(apiKey)&username=\(username)&password=\(password)&request_token=\(token)"
         
@@ -78,9 +78,9 @@ struct NetworkManager {
     }
     
     
-    // MARK: - Third: Create session id
+    // MARK: - Third: Create session id - PRIVATE
     
-    func createSession(token: String, completion: @escaping(String, Int) -> Void) {
+    private func createSession(token: String, completion: @escaping(String, Int) -> Void) {
         
         let sessionUrl = "https://api.themoviedb.org/3/authentication/session/new?api_key=\(apiKey)&request_token=\(token)"
         let creatingSession = AF.request(sessionUrl, method: .get)
@@ -119,6 +119,7 @@ struct NetworkManager {
         }
     }
     
+    // MARK: - Log out (delete current session)
     
     func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
         
@@ -132,6 +133,42 @@ struct NetworkManager {
                 completion(result)
             } catch {
                 print("Log out: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
+    // MARK: - Request movie genres
+    
+    
+    func requestMovieGenres(completion: @escaping([Genre]) -> Void) {
+     
+        let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(apiKey)", method: .get)
+        
+        request.responseDecodable(of: Genres.self) { response in
+            do {
+                let data = try response.result.get().genres
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+
+    // MARK: - Request tv shows genres
+    
+    func requestTVGenres(completion: @escaping([Genre]) -> Void) {
+     
+        let request = AF.request("https://api.themoviedb.org/3/genre/tv/list?api_key=\(apiKey)&language=en-US", method: .get)
+        
+        request.responseDecodable(of: Genres.self) { response in
+            do {
+                let data = try response.result.get().genres
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
             }
         }
     }

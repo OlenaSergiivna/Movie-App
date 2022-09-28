@@ -23,7 +23,6 @@ class AuthenticationViewController: UIViewController {
         
         resetForm()
         
-        
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {

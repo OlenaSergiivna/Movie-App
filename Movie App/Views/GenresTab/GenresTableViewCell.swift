@@ -32,6 +32,7 @@ class GenresTableViewCell: UITableViewCell {
 extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return 10
     }
     

@@ -11,6 +11,8 @@
 		CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */; };
 		CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3C28E34C820038CC92 /* LogOutModel.swift */; };
 		CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3F28E3526C0038CC92 /* Globals.swift */; };
+		CE0B873E28E4DCCA005CBA8A /* MovieGenresModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B873D28E4DCC9005CBA8A /* MovieGenresModels.swift */; };
+		CE0B874028E4E919005CBA8A /* TrendyMoviesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B873F28E4E919005CBA8A /* TrendyMoviesModel.swift */; };
 		CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063028E0C57D00B67410 /* AppDelegate.swift */; };
 		CE14063328E0C57D00B67410 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063228E0C57D00B67410 /* SceneDelegate.swift */; };
 		CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */; };
@@ -39,6 +41,8 @@
 		CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		CE08EB3C28E34C820038CC92 /* LogOutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogOutModel.swift; sourceTree = "<group>"; };
 		CE08EB3F28E3526C0038CC92 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		CE0B873D28E4DCC9005CBA8A /* MovieGenresModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenresModels.swift; sourceTree = "<group>"; };
+		CE0B873F28E4E919005CBA8A /* TrendyMoviesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendyMoviesModel.swift; sourceTree = "<group>"; };
 		CE14062D28E0C57D00B67410 /* Movie App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Movie App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE14063028E0C57D00B67410 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE14063228E0C57D00B67410 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +108,26 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		CE0B873B28E4DC67005CBA8A /* AuthenticationModels */ = {
+			isa = PBXGroup;
+			children = (
+				CE14064B28E0F38D00B67410 /* TokenModel.swift */,
+				CE170BD928E10CC9001323E4 /* SessionModel.swift */,
+				CEB3450728E225DF00451A6F /* UserDetailsModel.swift */,
+				CE08EB3C28E34C820038CC92 /* LogOutModel.swift */,
+			);
+			path = AuthenticationModels;
+			sourceTree = "<group>";
+		};
+		CE0B873C28E4DC92005CBA8A /* MoviesRequestModels */ = {
+			isa = PBXGroup;
+			children = (
+				CE0B873D28E4DCC9005CBA8A /* MovieGenresModels.swift */,
+				CE0B873F28E4E919005CBA8A /* TrendyMoviesModel.swift */,
+			);
+			path = MoviesRequestModels;
+			sourceTree = "<group>";
+		};
 		CE14062428E0C57D00B67410 = {
 			isa = PBXGroup;
 			children = (
@@ -143,10 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				CE14064928E0F1B100B67410 /* NetworkManager.swift */,
-				CE14064B28E0F38D00B67410 /* TokenModel.swift */,
-				CE170BD928E10CC9001323E4 /* SessionModel.swift */,
-				CEB3450728E225DF00451A6F /* UserDetailsModel.swift */,
-				CE08EB3C28E34C820038CC92 /* LogOutModel.swift */,
+				CE0B873B28E4DC67005CBA8A /* AuthenticationModels */,
+				CE0B873C28E4DC92005CBA8A /* MoviesRequestModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -315,11 +337,13 @@
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
+				CE0B874028E4E919005CBA8A /* TrendyMoviesModel.swift in Sources */,
 				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,
 				CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */,
 				CEC7BD5528E3A78700A7CDD6 /* GenreCollectionViewCell.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
 				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,
+				CE0B873E28E4DCCA005CBA8A /* MovieGenresModels.swift in Sources */,
 				CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */,
 				CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */,
 				CEC7BD5128E39B9300A7CDD6 /* GenresTableViewCell.swift in Sources */,

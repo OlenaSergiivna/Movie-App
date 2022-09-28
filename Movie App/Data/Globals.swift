@@ -10,4 +10,9 @@ import Foundation
 struct Globals {
     static var sessionId = ""
     static var userId = 0
+    
+    static var movieGenres: [Genre] = []
+    static var tvGenres: [Genre] = []
+    
+    static var genres: [Genre] = []
 }
