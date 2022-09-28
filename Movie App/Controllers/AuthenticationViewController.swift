@@ -68,8 +68,8 @@ class AuthenticationViewController: UIViewController {
         //        phoneError.text = "Required"
         //        passwordError.text = "Required"
         
-        loginTextField.text = ""
-        passTextField.text = ""
+        loginTextField.text = "Olena.Olena"
+        passTextField.text = "olena1611"
     }
     
     

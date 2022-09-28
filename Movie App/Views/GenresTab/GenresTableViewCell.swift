@@ -18,29 +18,42 @@ class GenresTableViewCell: UITableViewCell {
         self.genresCollectionView.dataSource = self
         self.genresCollectionView.delegate = self
         
+        
         self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
     }
     
 }
 
-extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionViewCell", for: indexPath) as? GenreCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.movieNameLabel.text = "House of Dragon"
+//        cell.layer.masksToBounds = true
+//        cell.layer.cornerRadius = 20
+        
         cell.movieImage.image = UIImage(named: "house")
+        cell.movieImage.layer.masksToBounds = true
+        cell.movieImage.layer.cornerRadius = 20
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 200)
+    }
+    
 }
+

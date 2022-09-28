@@ -176,9 +176,9 @@
 		CEB3450D28E23E0A00451A6F /* GenresTab */ = {
 			isa = PBXGroup;
 			children = (
-				CEC7BD5728E3A78E00A7CDD6 /* GenreCollectionViewCell */,
 				CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */,
 				CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */,
+				CEC7BD5728E3A78E00A7CDD6 /* GenreCollectionViewCell */,
 			);
 			path = GenresTab;
 			sourceTree = "<group>";
