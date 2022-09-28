@@ -8,7 +8,7 @@
 import Foundation
 import Foundation
 
-struct Trends: Codable {
+struct Results: Codable {
     let page: Int
     let results: [Movie]
     let totalPages, totalResults: Int
@@ -22,41 +22,35 @@ struct Trends: Codable {
 
 
 struct Movie: Codable {
+    
     let adult: Bool
     let backdropPath: String?
-    let id: Int
-    let name: String?
-    let originalLanguage: String
-    let originalName: String?
-    let overview, posterPath: String?
-    let mediaType: String
     let genreIDS: [Int]
+    let id: Int
+    let originalLanguage: String
+    let originalTitle, overview: String?
     let popularity: Double
-    let firstAirDate: String?
+    let posterPath, releaseDate, title: String?
+    let video: Bool?
     let voteAverage: Double
     let voteCount: Int
-    let originCountry: [String]?
-    let title, originalTitle, releaseDate: String?
-    let video: Bool?
+    
+   
 
     enum CodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
-        case id, name
+        case id
         case originalLanguage = "original_language"
-        case originalName = "original_name"
         case overview
         case posterPath = "poster_path"
-        case mediaType = "media_type"
+        case releaseDate = "release_date"
         case genreIDS = "genre_ids"
         case popularity
-        case firstAirDate = "first_air_date"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
-        case originCountry = "origin_country"
         case title
         case originalTitle = "original_title"
-        case releaseDate = "release_date"
         case video
     }
 }

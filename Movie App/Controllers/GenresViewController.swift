@@ -37,6 +37,14 @@ class GenresViewController: UIViewController {
             }
         }
         
+        NetworkManager.shared.requestMoviesByGenre(genreId: 28, page: 1) { movies in
+            Globals.movies.append(contentsOf: movies)
+            print("Data count: \(movies.count)")
+            
+            print("Movies count: \(Globals.movies.count)")
+        }
+        
+        
     }
     
     

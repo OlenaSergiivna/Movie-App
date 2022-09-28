@@ -15,11 +15,20 @@ class GenresTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.genresCollectionView.dataSource = self
         self.genresCollectionView.delegate = self
         
-        
         self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
+        
+//        NetworkManager.shared.requestMoviesByGenre(genreId: 28, page: 1) { movies in
+//            Globals.movies.append(contentsOf: movies)
+//            print("Data count: \(movies.count)")
+//            
+//            print("Movies count: \(Globals.movies.count)")
+//            print("\(movies)")
+//        }
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

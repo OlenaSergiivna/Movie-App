@@ -142,7 +142,7 @@ struct NetworkManager {
     
     
     func requestMovieGenres(completion: @escaping([Genre]) -> Void) {
-     
+        
         let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(apiKey)", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
@@ -155,11 +155,11 @@ struct NetworkManager {
             }
         }
     }
-
+    
     // MARK: - Request tv shows genres
     
     func requestTVGenres(completion: @escaping([Genre]) -> Void) {
-     
+        
         let request = AF.request("https://api.themoviedb.org/3/genre/tv/list?api_key=\(apiKey)&language=en-US", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
@@ -172,4 +172,21 @@ struct NetworkManager {
             }
         }
     }
+    
+    
+    func requestMoviesByGenre(genreId: Int, page: Int, completion: @escaping([Movie]) -> Void) {
+        let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
+        let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
+        
+        movieByGenreRequest.responseDecodable(of: Results.self) { response in
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
 }
