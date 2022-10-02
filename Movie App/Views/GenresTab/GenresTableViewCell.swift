@@ -9,57 +9,98 @@ import UIKit
 
 class GenresTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var genresCollectionView: UICollectionView!
+    
     @IBOutlet weak var genreLabel: UILabel!
     
-    @IBOutlet weak var genresCollectionView: UICollectionView!
+    var moviesArray: [Movie] = [] {
+        didSet {
+            let nibCollectionCell = UINib(nibName: "GenreCollectionViewCell", bundle: nil)
+            self.genresCollectionView.register(nibCollectionCell, forCellWithReuseIdentifier: "GenreCollectionViewCell")
+            
+             genresCollectionView.dataSource = self
+             genresCollectionView.delegate = self
+            
+            DispatchQueue.main.async {
+                self.genresCollectionView.reloadData()
+            }
+            
+        }
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.genresCollectionView.dataSource = self
-        self.genresCollectionView.delegate = self
-        
-        self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
-        
-//        NetworkManager.shared.requestMoviesByGenre(genreId: 28, page: 1) { movies in
-//            Globals.movies.append(contentsOf: movies)
-//            print("Data count: \(movies.count)")
-//            
-//            print("Movies count: \(Globals.movies.count)")
-//            print("\(movies)")
-//        }
+        print("Array: \(moviesArray.count)")
+        self.genresCollectionView.reloadData()
         
     }
-
+  
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
     }
+    
+    override func prepareForReuse() {
+
+        genresCollectionView.dataSource = nil
+        genresCollectionView.delegate = nil
+        genresCollectionView.reloadData()
+        
+        genresCollectionView.dataSource = self
+        genresCollectionView.delegate = self
+    }
+    
     
 }
 
 extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if !moviesArray.isEmpty {
+            return moviesArray.count
+        } else {
+            return 4
+        }
         
-        return 10
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionViewCell", for: indexPath) as? GenreCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.movieNameLabel.text = "House of Dragon"
-//        cell.layer.masksToBounds = true
-//        cell.layer.cornerRadius = 20
+        print("Array2: \(moviesArray.count)")
         
-        cell.movieImage.image = UIImage(named: "house")
-        cell.movieImage.layer.masksToBounds = true
-        cell.movieImage.layer.cornerRadius = 20
+        if !moviesArray.isEmpty {
+            
+            if let title = self.moviesArray[indexPath.row].title {
+                
+                cell.movieNameLabel.text = title
+                
+                
+                if let imagePath = moviesArray[indexPath.row].posterPath {
+                    cell.movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+                }
+               
+            } else {
+                cell.movieNameLabel.text = "empty"
+            }
+
+            cell.movieImage.image = UIImage(named: "house")
+            cell.movieImage.layer.masksToBounds = true
+            cell.movieImage.layer.cornerRadius = 20
+        } else {
+            print("EMPTY")
+            cell.movieNameLabel.text = "NAFO"
+            cell.movieImage.image = UIImage(named: "nafo")
+            cell.movieImage.contentMode = .scaleAspectFill
+        }
+        print("CV indexPath.row: \(indexPath.row) - \(cell.movieNameLabel.text!)")
         return cell
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 200)

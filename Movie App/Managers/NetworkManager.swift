@@ -174,19 +174,23 @@ struct NetworkManager {
     }
     
     
-    func requestMoviesByGenre(genreId: Int, page: Int, completion: @escaping([Movie]) -> Void) {
-        let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
-        let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
+    func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([Movie]) -> Void) {
         
-        movieByGenreRequest.responseDecodable(of: Results.self) { response in
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
-                
+        let genreId = Globals.genres.first(where: { $0.name == genre})?.id
+        print("Id: \(genreId!)")
+            let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId!)&page=\(page)"
+            let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
+            print(movieByGenreURL)
+            movieByGenreRequest.responseDecodable(of: Results.self) { response in
+                do {
+                    let data = try response.result.get().results
+                    completion(data)
+                } catch {
+                    print(error.localizedDescription)
             }
         }
+        
+       
     }
     
 }

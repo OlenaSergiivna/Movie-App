@@ -16,33 +16,28 @@ class GenresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.genresTableView.reloadData()
-        
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
         NetworkManager.shared.requestMovieGenres { [weak self] data in
             Globals.genres.append(contentsOf: data)
             
+            
             DispatchQueue.main.async {
                 self?.genresTableView.reloadData()
+                print("genres fetched")
             }
         }
         
         NetworkManager.shared.requestTVGenres { [weak self] data in
             Globals.genres.append(contentsOf: data)
             
+            
             DispatchQueue.main.async {
                 self?.genresTableView.reloadData()
             }
         }
         
-        NetworkManager.shared.requestMoviesByGenre(genreId: 28, page: 1) { movies in
-            Globals.movies.append(contentsOf: movies)
-            print("Data count: \(movies.count)")
-            
-            print("Movies count: \(Globals.movies.count)")
-        }
         
         
     }
@@ -61,7 +56,7 @@ class GenresViewController: UIViewController {
             
         }
     }
-    
+   
 }
 
 
@@ -72,18 +67,34 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = genresTableView.dequeueReusableCell(withIdentifier: "GenresTableViewCell", for: indexPath) as? GenresTableViewCell else {
             return UITableViewCell()
         }
+        
+//        cell.genresCollectionView.tag = indexPath.row
+//        print("Tag: \(indexPath.row)")
         cell.genreLabel.text = Globals.genres[indexPath.row].name
+        
+        DispatchQueue.main.async {
+            NetworkManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
+      
+            cell.moviesArray = movies
+                print("!TV indexPath.row: \(indexPath.row) - \(cell.genreLabel.text!)!")
+            }
+        }
+        
+        
+        
+       
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-            return 240
+        return 240
         
-       
+        
     }
     
     
