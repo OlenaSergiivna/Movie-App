@@ -13,7 +13,7 @@ class GenresTableViewCell: UITableViewCell {
     
     @IBOutlet weak var genreLabel: UILabel!
     
-    var moviesArray: [Movie] = [] {
+    var moviesArray: [Movie] = [] { 
         didSet {
             let nibCollectionCell = UINib(nibName: "GenreCollectionViewCell", bundle: nil)
             self.genresCollectionView.register(nibCollectionCell, forCellWithReuseIdentifier: "GenreCollectionViewCell")

@@ -22,7 +22,11 @@ extension UIImageView {
             }
             
             DispatchQueue.main.async() { [weak self] in
-                self?.image = image
+                guard let self = self else {
+                    return
+                }
+                
+                self.image = image
             }
         }.resume()
     }

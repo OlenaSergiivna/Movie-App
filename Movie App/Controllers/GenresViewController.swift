@@ -20,21 +20,29 @@ class GenresViewController: UIViewController {
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
         NetworkManager.shared.requestMovieGenres { [weak self] data in
+            guard let self = self else {
+                return
+            }
+            
             Globals.genres.append(contentsOf: data)
             
             
             DispatchQueue.main.async {
-                self?.genresTableView.reloadData()
+                self.genresTableView.reloadData()
                 print("genres fetched")
             }
         }
         
         NetworkManager.shared.requestTVGenres { [weak self] data in
+            guard let self = self else {
+                return
+            }
+            
             Globals.genres.append(contentsOf: data)
             
             
             DispatchQueue.main.async {
-                self?.genresTableView.reloadData()
+                self.genresTableView.reloadData()
             }
         }
         
@@ -45,18 +53,22 @@ class GenresViewController: UIViewController {
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
             if result == true {
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self?.present(viewController, animated: true)
+                self.present(viewController, animated: true)
             } else {
                 print("false result")
             }
             
         }
     }
-   
+    
 }
 
 
@@ -72,21 +84,21 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-//        cell.genresCollectionView.tag = indexPath.row
-//        print("Tag: \(indexPath.row)")
+        //        cell.genresCollectionView.tag = indexPath.row
+        //        print("Tag: \(indexPath.row)")
         cell.genreLabel.text = Globals.genres[indexPath.row].name
         
         DispatchQueue.main.async {
             NetworkManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
-      
-            cell.moviesArray = movies
+                
+                cell.moviesArray = movies
                 print("!TV indexPath.row: \(indexPath.row) - \(cell.genreLabel.text!)!")
             }
         }
         
         
         
-       
+        
         return cell
     }
     

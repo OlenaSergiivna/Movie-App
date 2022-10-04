@@ -21,11 +21,15 @@ class FavouritesViewController: UIViewController {
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
             if result == true {
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self?.present(viewController, animated: true)
+                self.present(viewController, animated: true)
             } else {
                 print("false result")
             }
