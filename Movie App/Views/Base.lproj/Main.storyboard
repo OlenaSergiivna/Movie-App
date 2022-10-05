@@ -208,8 +208,24 @@
                     <view key="view" contentMode="scaleToFill" id="oVe-sp-AHq">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BXX-mq-JTR">
+                                <rect key="frame" x="0.0" y="56" width="390" height="705"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="lSx-JY-h29" id="DKn-AB-QYe"/>
+                                    <outlet property="delegate" destination="lSx-JY-h29" id="3cX-Ap-DC4"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="iHP-dF-Zyf"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstItem="BXX-mq-JTR" firstAttribute="leading" secondItem="iHP-dF-Zyf" secondAttribute="leading" id="3XF-EB-2tf"/>
+                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="trailing" secondItem="BXX-mq-JTR" secondAttribute="trailing" id="OPZ-Pm-c5z"/>
+                            <constraint firstItem="BXX-mq-JTR" firstAttribute="top" secondItem="iHP-dF-Zyf" secondAttribute="top" id="cDj-Op-82V"/>
+                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="bottom" secondItem="BXX-mq-JTR" secondAttribute="bottom" id="jzN-gG-6Um"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ouz-4a-Hl3">
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="oDt-MV-A6u">
@@ -220,6 +236,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="favouritesTableView" destination="BXX-mq-JTR" id="zBS-Ki-Lrx"/>
                         <outlet property="logOutButton" destination="oDt-MV-A6u" id="vAq-qx-hM0"/>
                     </connections>
                 </viewController>

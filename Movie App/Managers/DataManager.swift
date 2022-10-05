@@ -52,11 +52,12 @@ struct DataManager {
     
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([Movie]) -> Void) {
         
-        let genreId = Globals.genres.first(where: { $0.name == genre})?.id
-        print("Id: \(genreId!)")
-            let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId!)&page=\(page)"
+        guard let genreId = Globals.genres.first(where: { $0.name == genre})?.id else { return }
+
+            let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
+        
             let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
-            print(movieByGenreURL)
+        
             movieByGenreRequest.responseDecodable(of: Results.self) { response in
                 do {
                     let data = try response.result.get().results
@@ -67,6 +68,19 @@ struct DataManager {
         }
         
        
+    }
+    
+    func requestFavourites(completion: @escaping ([Movie]) -> Void) {
+        let favouritesRequest = AF.request("https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1", method: .get)
+        
+        favouritesRequest.responseDecodable(of: Results.self) { response in
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
    
 }
