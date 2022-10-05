@@ -53,6 +53,7 @@ class GenresViewController: UIViewController {
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
+            
             guard let self = self else {
                 return
             }
@@ -78,14 +79,13 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
         return Globals.genres.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = genresTableView.dequeueReusableCell(withIdentifier: "GenresTableViewCell", for: indexPath) as? GenresTableViewCell else {
             return UITableViewCell()
         }
         
-        //        cell.genresCollectionView.tag = indexPath.row
-        //        print("Tag: \(indexPath.row)")
         cell.genreLabel.text = Globals.genres[indexPath.row].name
         
         DispatchQueue.main.async {

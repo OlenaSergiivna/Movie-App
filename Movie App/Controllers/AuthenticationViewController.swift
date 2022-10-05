@@ -9,9 +9,6 @@ import UIKit
 
 class AuthenticationViewController: UIViewController {
     
-    //    var sessionId = ""
-    //    var userId = 0
-    
     @IBOutlet weak var loginTextField: UITextField!
     
     @IBOutlet weak var passTextField: UITextField!

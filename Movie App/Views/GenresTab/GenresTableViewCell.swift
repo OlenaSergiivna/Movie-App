@@ -74,30 +74,8 @@ extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         }
         print("Array2: \(moviesArray.count)")
         
-        if !moviesArray.isEmpty {
-            
-            if let title = self.moviesArray[indexPath.row].title {
-                
-                cell.movieNameLabel.text = title
-                
-                
-                if let imagePath = moviesArray[indexPath.row].posterPath {
-                    cell.movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-                }
-               
-            } else {
-                cell.movieNameLabel.text = "empty"
-            }
-
-            cell.movieImage.image = UIImage(named: "house")
-            cell.movieImage.layer.masksToBounds = true
-            cell.movieImage.layer.cornerRadius = 20
-        } else {
-            print("EMPTY")
-            cell.movieNameLabel.text = "NAFO"
-            cell.movieImage.image = UIImage(named: "nafo")
-            cell.movieImage.contentMode = .scaleAspectFill
-        }
+        cell.configure(with: moviesArray, indexPath: indexPath)
+        
         print("CV indexPath.row: \(indexPath.row) - \(cell.movieNameLabel.text!)")
         return cell
     }
