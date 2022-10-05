@@ -23,8 +23,9 @@
 		CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064928E0F1B100B67410 /* NetworkManager.swift */; };
 		CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064B28E0F38D00B67410 /* TokenModel.swift */; };
 		CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE170BD928E10CC9001323E4 /* SessionModel.swift */; };
-		CE2E29AC28ECE82900C865E5 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E29AB28ECE82900C865E5 /* File.swift */; };
+		CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E29AB28ECE82900C865E5 /* Binder.swift */; };
 		CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */; };
+		CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* GenresViewModel.swift */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* GenresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* GenresViewController.swift */; };
@@ -58,8 +59,9 @@
 		CE14064928E0F1B100B67410 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE14064B28E0F38D00B67410 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		CE170BD928E10CC9001323E4 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
-		CE2E29AB28ECE82900C865E5 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		CE2E29AB28ECE82900C865E5 /* Binder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binder.swift; sourceTree = "<group>"; };
 		CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
+		CE5614D528EE15120085A49B /* GenresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewModel.swift; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* GenresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewController.swift; sourceTree = "<group>"; };
@@ -156,7 +158,6 @@
 		CE14062F28E0C57D00B67410 /* Movie App */ = {
 			isa = PBXGroup;
 			children = (
-				CE18AB3728EDF46900AF6B9E /* Helpers */,
 				CE2E29AA28ECE81C00C865E5 /* ViewModels */,
 				CE6133A228EA35B900778822 /* Managers */,
 				CE9D61DE28E8EFCD0007287D /* Extensions */,
@@ -204,17 +205,11 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		CE18AB3728EDF46900AF6B9E /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		CE2E29AA28ECE81C00C865E5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				CE2E29AB28ECE82900C865E5 /* File.swift */,
+				CE2E29AB28ECE82900C865E5 /* Binder.swift */,
+				CE5614D528EE15120085A49B /* GenresViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -377,8 +372,9 @@
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
+				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
-				CE2E29AC28ECE82900C865E5 /* File.swift in Sources */,
+				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
 				CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */,
 				CE0B874028E4E919005CBA8A /* MoviesModel.swift in Sources */,
 				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,

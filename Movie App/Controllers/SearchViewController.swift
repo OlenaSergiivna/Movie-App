@@ -16,8 +16,6 @@ class SearchViewController: UIViewController {
        
     }
     
-
-   
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
@@ -33,7 +31,6 @@ class SearchViewController: UIViewController {
             } else {
                 print("false result")
             }
-            
         }
     }
 }

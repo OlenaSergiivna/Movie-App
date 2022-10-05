@@ -13,13 +13,14 @@ class GenresViewController: UIViewController {
     
     @IBOutlet weak var genresTableView: UITableView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
-        NetworkManager.shared.requestMovieGenres { [weak self] data in
+        DataManager.shared.requestMovieGenres { [weak self] data in
             
             Globals.genres.append(contentsOf: data)
             
@@ -33,7 +34,7 @@ class GenresViewController: UIViewController {
             }
         }
         
-        NetworkManager.shared.requestTVGenres { [weak self] data in
+        DataManager.shared.requestTVGenres { [weak self] data in
            
             Globals.genres.append(contentsOf: data)
             
@@ -88,7 +89,7 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
         cell.genreLabel.text = Globals.genres[indexPath.row].name
         
         DispatchQueue.main.async {
-            NetworkManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
+            DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
                 
                 cell.moviesArray = movies
                 print("!TV indexPath.row: \(indexPath.row) - \(cell.genreLabel.text!)!")
