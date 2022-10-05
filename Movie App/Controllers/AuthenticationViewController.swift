@@ -27,12 +27,17 @@ class AuthenticationViewController: UIViewController {
         guard let login = loginTextField.text else { return }
         guard let password = passTextField.text else { return }
         
-        NetworkManager.shared.requestAuthentication(username: login, password: password) { [weak self] id, responseRequest, responseValidate, responseSession in
+        NetworkManager.shared.requestAuthentication(username: login, password: password) { id, responseRequest, responseValidate, responseSession in
+            
             print(responseRequest, responseValidate, responseSession)
             Globals.sessionId = id
             print("Session id: \(Globals.sessionId)")
             
             NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] userId in
+                guard let self else {
+                    return
+                }
+                
                 Globals.userId = userId
                 print("User id: \(Globals.userId)")
                 
@@ -42,7 +47,7 @@ class AuthenticationViewController: UIViewController {
                         print(responseValidate)
                         if responseSession == 200 {
                             print(responseSession)
-                            self?.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
+                            self.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
                         }
                     }
                 }

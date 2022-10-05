@@ -21,7 +21,7 @@ class FavouritesViewController: UIViewController {
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

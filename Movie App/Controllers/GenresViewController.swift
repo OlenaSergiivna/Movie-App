@@ -20,28 +20,28 @@ class GenresViewController: UIViewController {
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
         NetworkManager.shared.requestMovieGenres { [weak self] data in
-            guard let self = self else {
-                return
-            }
             
             Globals.genres.append(contentsOf: data)
             
-            
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    return
+                }
+                
                 self.genresTableView.reloadData()
                 print("genres fetched")
             }
         }
         
         NetworkManager.shared.requestTVGenres { [weak self] data in
-            guard let self = self else {
-                return
-            }
-            
+           
             Globals.genres.append(contentsOf: data)
             
-            
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    return
+                }
+                
                 self.genresTableView.reloadData()
             }
         }
@@ -54,12 +54,11 @@ class GenresViewController: UIViewController {
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
             
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
             if result == true {
-                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
                 self.present(viewController, animated: true)
@@ -95,10 +94,7 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
                 print("!TV indexPath.row: \(indexPath.row) - \(cell.genreLabel.text!)!")
             }
         }
-        
-        
-        
-        
+
         return cell
     }
     

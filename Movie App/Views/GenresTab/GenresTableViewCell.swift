@@ -21,7 +21,10 @@ class GenresTableViewCell: UITableViewCell {
              genresCollectionView.dataSource = self
              genresCollectionView.delegate = self
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    return
+                }
                 self.genresCollectionView.reloadData()
             }
             
@@ -31,7 +34,6 @@ class GenresTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("Array: \(moviesArray.count)")
         self.genresCollectionView.reloadData()
         
     }
@@ -63,7 +65,6 @@ extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         } else {
             return 4
         }
-        
     }
     
     
@@ -72,11 +73,8 @@ extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionViewCell", for: indexPath) as? GenreCollectionViewCell else {
             return UICollectionViewCell()
         }
-        print("Array2: \(moviesArray.count)")
         
         cell.configure(with: moviesArray, indexPath: indexPath)
-        
-        print("CV indexPath.row: \(indexPath.row) - \(cell.movieNameLabel.text!)")
         return cell
     }
     
