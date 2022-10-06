@@ -15,8 +15,8 @@ class GenresTableViewCell: UITableViewCell {
     
     var moviesArray: [Movie] = [] { 
         didSet {
-            let nibCollectionCell = UINib(nibName: "GenreCollectionViewCell", bundle: nil)
-            self.genresCollectionView.register(nibCollectionCell, forCellWithReuseIdentifier: "GenreCollectionViewCell")
+            
+            self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
             
              genresCollectionView.dataSource = self
              genresCollectionView.delegate = self
@@ -27,7 +27,6 @@ class GenresTableViewCell: UITableViewCell {
                 }
                 self.genresCollectionView.reloadData()
             }
-            
         }
     }
     

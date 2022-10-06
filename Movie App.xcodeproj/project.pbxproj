@@ -31,6 +31,7 @@
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* GenresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* GenresViewController.swift */; };
+		CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */; };
 		CEC7BD5128E39B9300A7CDD6 /* GenresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */; };
 		CEC7BD5228E39B9300A7CDD6 /* GenresTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */; };
 		CEC7BD5528E3A78700A7CDD6 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */; };
@@ -69,6 +70,7 @@
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* GenresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewController.swift; sourceTree = "<group>"; };
+		CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovedResponseModel.swift; sourceTree = "<group>"; };
 		CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresTableViewCell.swift; sourceTree = "<group>"; };
 		CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenresTableViewCell.xib; sourceTree = "<group>"; };
 		CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				CE0B873D28E4DCC9005CBA8A /* MovieGenresModels.swift */,
 				CE0B873F28E4E919005CBA8A /* MoviesModel.swift */,
+				CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */,
 			);
 			path = MoviesRequestModels;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
+				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
 				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
 				CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */,

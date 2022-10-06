@@ -9,7 +9,7 @@ import UIKit
 
 class FavouritesViewController: UIViewController {
     
-    @IBOutlet weak var favouritesTableView: UITableView!
+    @IBOutlet weak var favouritesTableView: UITableView! 
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
@@ -86,5 +86,28 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
+            guard let self else {
+                return
+            }
+            
+            self.favouriteMovies.remove(at: indexPath.row)
+            self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // Check later
+//            NetworkManager.shared.deleteFromFavorites(id: self.favouriteMovies[indexPath.row].id, type: "movie") { result in
+//                print(result)
+//            }
+            
+        }
+        deleteAction.backgroundColor = .systemRed
+        
+        
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
