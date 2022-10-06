@@ -167,8 +167,30 @@
                     <view key="view" contentMode="scaleToFill" id="BES-fm-4Jn">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
+                                <rect key="frame" x="0.0" y="112" width="390" height="649"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="3O0-fn-2ee">
+                                <rect key="frame" x="0.0" y="56" width="390" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="OCX-eD-hX2" id="Hps-hb-PF2"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                        <constraints>
+                            <constraint firstItem="asY-tv-9hg" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
+                            <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
+                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="3O0-fn-2ee" secondAttribute="bottom" id="MbP-lc-2vz"/>
+                            <constraint firstItem="3O0-fn-2ee" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="SK4-yn-wew"/>
+                            <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="mzI-Ep-zxD"/>
+                            <constraint firstItem="3O0-fn-2ee" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="or4-eZ-PO2"/>
+                            <constraint firstItem="3O0-fn-2ee" firstAttribute="trailing" secondItem="asY-tv-9hg" secondAttribute="trailing" id="yum-kw-hJj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fwB-jR-TFM">
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="2US-Zm-31V">

@@ -49,6 +49,7 @@ struct DataManager {
         }
     }
     
+    // MARK: - Request movie by specific genre/genres
     
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([Movie]) -> Void) {
         
@@ -66,11 +67,13 @@ struct DataManager {
                     print(error.localizedDescription)
             }
         }
-        
-       
     }
     
-    func requestFavourites(completion: @escaping ([Movie]) -> Void) {
+    
+    // MARK: - Request movies from Favorites lisr
+    
+    func requestFavorites(completion: @escaping ([Movie]) -> Void) {
+        
         let favouritesRequest = AF.request("https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1", method: .get)
         
         favouritesRequest.responseDecodable(of: Results.self) { response in
@@ -82,6 +85,35 @@ struct DataManager {
             }
         }
     }
-   
+    
+    // MARK: - Delete movie from Favorites list
+    
+    func deleteFromFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
+        
+        let parameters: [String : Any] = [
+            "media_type" : type,
+            "media_id" : id,
+            "favorite" : false
+        ]
+        
+        let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(apiKey)&session_id=\(Globals.sessionId)"
+        
+        
+        let deleteFromFavoritesRequest = AF.request(deleteURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        
+        deleteFromFavoritesRequest.responseDecodable(of: Removed.self) { response in
+            do {
+                let result = try response.result.get()
+                print(result)
+                if let response = response.response?.statusCode {
+                    completion(response)
+                }
+              
+            } catch {
+                print("removed: \(error.localizedDescription)")
+            }
+        }
+        
+    }
 }
 

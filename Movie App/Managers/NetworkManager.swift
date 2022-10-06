@@ -137,24 +137,5 @@ struct NetworkManager {
         }
     }
     
-    func deleteFromFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
     
-        let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(apiKey)&session_id=\(Globals.sessionId)&media_id=\(id)&media_type=\(type)&favorite=\(false)"
-        
-        let deleteFromFavouritesSession = AF.request(deleteURL, method: .post)
-        
-        deleteFromFavouritesSession.responseDecodable(of: Removed.self) { response in
-            do {
-                let result = try response.result.get()
-                print(result)
-                if let response = response.response?.statusCode {
-                    completion(response)
-                }
-              
-            } catch {
-                print("removed: \(error.localizedDescription)")
-            }
-        }
-        
-    }
 }
