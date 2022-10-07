@@ -15,6 +15,8 @@ class FavouritesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var overviewLabel: UILabel!
     
+    @IBOutlet weak var someBackView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -33,7 +35,10 @@ class FavouritesTableViewCell: UITableViewCell {
             movieTitleLabel.text = title
             overviewLabel.text = overview
             movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            
+            movieImage.layer.masksToBounds = true
+            movieImage.layer.cornerRadius = 5
+            someBackView.layer.masksToBounds = true
+            someBackView.layer.cornerRadius = 10
         } else {
             return
         }

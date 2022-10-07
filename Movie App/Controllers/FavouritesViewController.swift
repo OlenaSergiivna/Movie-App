@@ -32,11 +32,8 @@ class FavouritesViewController: UIViewController {
             guard let self else {
                 return
             }
-            
             self.someMovies = favorites
-            print("SM count: \(self.someMovies.count)")
-            print("SM: \(self.someMovies)")
-            
+
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self else {
@@ -90,7 +87,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return 230
         
     }
     
