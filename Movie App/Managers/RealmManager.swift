@@ -14,6 +14,8 @@ struct RealmManager {
     
     static let shared = RealmManager()
     
+    private init() { }
+    
     func deleteAll() {
         
         try! realm.write {
@@ -23,7 +25,7 @@ struct RealmManager {
     
     
     func saveFavoriteInRealm(movies: [Movie]) {
-        
+        //cast type? init?
         for movie in movies {
             
             let movieRealm = FavoriteMovieRealm()
@@ -54,6 +56,17 @@ struct RealmManager {
         
         let result = realm.objects(FavoriteMovieRealm.self)
         return Array(result)
+    }
+    
+    func convert(to moviesRealm: [FavoriteMovieRealm]) -> [Movie] {
+        var movies = [Movie]()
+    
+            for movieRealm in moviesRealm {
+                let movie = Movie(from: movieRealm)
+                movies.append(movie)
+            }
+
+        return movies
     }
     
 }

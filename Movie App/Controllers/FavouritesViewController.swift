@@ -13,13 +13,14 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
-    var favoriteMovies: [Movie] = [] {
+    var someMovies: [Movie] = [] {
         didSet {
-            for movie in favoriteMovies {
-                print("\(movie.title)")
+            for movie in someMovies {
+                print("\(String(describing: movie.title))")
             }
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +28,15 @@ class FavouritesViewController: UIViewController {
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
-        DataManager.shared.requestFavorites { [weak self] data in
-          print("data requested")
+        Repository.shared.dataCashingFavorites { [weak self] favorites in
             guard let self else {
                 return
             }
             
-            self.favoriteMovies = data
-            print("data downloaded: \(self.favoriteMovies.count)")
+            self.someMovies = favorites
+            print("SM count: \(self.someMovies.count)")
+            print("SM: \(self.someMovies)")
+            
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self else {
@@ -46,7 +48,7 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-
+    
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
@@ -65,13 +67,14 @@ class FavouritesViewController: UIViewController {
             
         }
     }
+    
 }
 
 
 extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteMovies.count
+        return someMovies.count
     }
     
     
@@ -80,18 +83,15 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        guard let imagePath = favoriteMovies[indexPath.row].posterPath, let title = favoriteMovies[indexPath.row].title else {
-            return UITableViewCell()
-        }
-        cell.movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-        cell.movieTitleLabel.text = title
+        cell.configure(with: someMovies[indexPath.row])
         
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 250
+        
     }
     
     
@@ -101,37 +101,36 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             guard let self else {
                 return
             }
-           
-            DataManager.shared.deleteFromFavorites(id: self.favoriteMovies[indexPath.row].id, type: "movie") { result in
+            
+            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { result in
                 
-                self.favoriteMovies.remove(at: indexPath.row)
+                self.someMovies.remove(at: indexPath.row)
                 self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
                 print(result)
                 
                 // MARK: - Optional?
-//                if result == 200 {
-//                    DataManager.shared.requestFavorites { [weak self] data in
-//                        print("new data requested")
-//
-//                        guard let self else {
-//                            return
-//                        }
-//
-//                        self.favoriteMovies = data
-//
-//                        print("new data downloaded: \(self.favoriteMovies.count)")
-//                        DispatchQueue.main.async { [weak self] in
-//
-//                            guard let self else {
-//                                return
-//                            }
-//
-//                            self.favouritesTableView.reloadData()
-//                        }
-//                    }
-//                }
+                //                if result == 200 {
+                //                    DataManager.shared.requestFavorites { [weak self] data in
+                //                        print("new data requested")
+                //
+                //                        guard let self else {
+                //                            return
+                //                        }
+                //
+                //                        self.favoriteMovies = data
+                //
+                //                        print("new data downloaded: \(self.favoriteMovies.count)")
+                //                        DispatchQueue.main.async { [weak self] in
+                //
+                //                            guard let self else {
+                //                                return
+                //                            }
+                //
+                //                            self.favouritesTableView.reloadData()
+                //                        }
+                //                    }
+                //                }
             }
-            
             
         }
         deleteAction.backgroundColor = .systemRed

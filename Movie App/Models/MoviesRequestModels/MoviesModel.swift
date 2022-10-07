@@ -21,7 +21,7 @@ struct Results: Codable {
 }
 
 
-struct Movie: Codable {
+struct Movie: Codable, Hashable {
     
     let adult: Bool
     let backdropPath: String?
@@ -52,5 +52,25 @@ struct Movie: Codable {
         case title
         case originalTitle = "original_title"
         case video
+    }
+    
+    
+    init(from movieRealm: FavoriteMovieRealm) {
+        self.adult = movieRealm.adult
+        self.backdropPath = movieRealm.backdropPath
+        self.id = movieRealm.id
+        self.originalLanguage = movieRealm.originalLanguage
+        self.overview = movieRealm.overview
+        self.posterPath = movieRealm.posterPath
+        self.releaseDate = movieRealm.releaseDate
+        self.genreIDS = Array(movieRealm.genreIDS)
+        self.popularity = movieRealm.popularity
+        self.voteAverage = movieRealm.voteAverage
+        self.voteCount = movieRealm.voteCount
+        self.title = movieRealm.title
+        self.originalTitle = movieRealm.originalTitle
+        self.video = movieRealm.video
+        
+        
     }
 }

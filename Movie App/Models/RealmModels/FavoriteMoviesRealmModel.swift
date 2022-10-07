@@ -21,7 +21,7 @@ class FavoriteMovieRealm: Object {
     @Persisted var adult: Bool
     @Persisted var backdropPath: String?
     @Persisted var genreIDS: List<Int>
-    @Persisted(primaryKey: true) var id: Int
+    @Persisted(primaryKey: true) var id: Int = 0
     @Persisted var originalLanguage: String
     @Persisted var originalTitle: String?
     @Persisted var overview: String?

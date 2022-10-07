@@ -29,8 +29,14 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBd-NR-Zqn">
-                                <rect key="frame" x="144" y="10" width="83" height="21"/>
+                                <rect key="frame" x="144" y="10" width="128" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veO-1q-5qG">
+                                <rect key="frame" x="144" y="39" width="128" height="13.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,9 +44,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cBd-NR-Zqn" firstAttribute="top" secondItem="5re-eO-OGA" secondAttribute="top" id="2dS-D0-EbD"/>
+                            <constraint firstAttribute="trailing" secondItem="veO-1q-5qG" secondAttribute="trailing" constant="8" id="6e2-h5-VVY"/>
                             <constraint firstItem="cBd-NR-Zqn" firstAttribute="leading" secondItem="5re-eO-OGA" secondAttribute="trailing" constant="16" id="99y-mg-Cgh"/>
+                            <constraint firstItem="veO-1q-5qG" firstAttribute="top" secondItem="cBd-NR-Zqn" secondAttribute="bottom" constant="8" id="Gne-3Y-DgK"/>
                             <constraint firstItem="5re-eO-OGA" firstAttribute="leading" secondItem="fai-ih-PSq" secondAttribute="leading" constant="8" id="K02-aC-tub"/>
                             <constraint firstItem="5re-eO-OGA" firstAttribute="centerY" secondItem="fai-ih-PSq" secondAttribute="centerY" id="XCb-dP-EIp"/>
+                            <constraint firstAttribute="trailing" secondItem="cBd-NR-Zqn" secondAttribute="trailing" constant="8" id="mkI-ih-fEu"/>
+                            <constraint firstItem="veO-1q-5qG" firstAttribute="leading" secondItem="cBd-NR-Zqn" secondAttribute="leading" id="qfj-RB-3s3"/>
+                            <constraint firstItem="veO-1q-5qG" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="fai-ih-PSq" secondAttribute="bottom" constant="8" id="zqT-n1-V6y"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -56,6 +67,7 @@
             <connections>
                 <outlet property="movieImage" destination="5re-eO-OGA" id="xvF-ma-WWg"/>
                 <outlet property="movieTitleLabel" destination="cBd-NR-Zqn" id="l7F-6m-iX0"/>
+                <outlet property="overviewLabel" destination="veO-1q-5qG" id="VOz-sG-bea"/>
             </connections>
             <point key="canvasLocation" x="36.92307692307692" y="73.222748815165872"/>
         </tableViewCell>
