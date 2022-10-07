@@ -9,7 +9,7 @@ import UIKit
 
 class FavouritesViewController: UIViewController {
     
-    @IBOutlet weak var favouritesTableView: UITableView! 
+    @IBOutlet weak var favouritesTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
@@ -102,11 +102,18 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                 return
             }
             
-            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { result in
+            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
                 
+                guard let self else {
+                    return
+                }
+                
+                RealmManager.shared.delete(primaryKey: self.someMovies[indexPath.row].id )
                 self.someMovies.remove(at: indexPath.row)
                 self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
                 print(result)
+                print("some movies: \(self.someMovies.count)")
+                print("realm: \(RealmManager.shared.getFavoriteFromRealm().count)")
                 
                 // MARK: - Optional?
                 //                if result == 200 {

@@ -69,4 +69,15 @@ struct RealmManager {
         return movies
     }
     
+    func delete<T>(primaryKey: T) {
+        
+        guard let dataToDelete = realm.object(ofType: FavoriteMovieRealm.self, forPrimaryKey: primaryKey) else {
+            return
+        }
+        
+        try? realm.write {
+            realm.delete(dataToDelete)
+        }
+    }
+    
 }
