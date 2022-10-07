@@ -13,7 +13,13 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
-    var favoriteMovies: [Movie] = [] 
+    var favoriteMovies: [Movie] = [] {
+        didSet {
+            for movie in favoriteMovies {
+                print("\(movie.title)")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +28,13 @@ class FavouritesViewController: UIViewController {
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
         DataManager.shared.requestFavorites { [weak self] data in
-            
+          print("data requested")
             guard let self else {
                 return
             }
             
             self.favoriteMovies = data
-           
+            print("data downloaded: \(self.favoriteMovies.count)")
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self else {
@@ -97,15 +103,39 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             }
            
             DataManager.shared.deleteFromFavorites(id: self.favoriteMovies[indexPath.row].id, type: "movie") { result in
+                
+                self.favoriteMovies.remove(at: indexPath.row)
+                self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
                 print(result)
+                
+                // MARK: - Optional?
+//                if result == 200 {
+//                    DataManager.shared.requestFavorites { [weak self] data in
+//                        print("new data requested")
+//
+//                        guard let self else {
+//                            return
+//                        }
+//
+//                        self.favoriteMovies = data
+//
+//                        print("new data downloaded: \(self.favoriteMovies.count)")
+//                        DispatchQueue.main.async { [weak self] in
+//
+//                            guard let self else {
+//                                return
+//                            }
+//
+//                            self.favouritesTableView.reloadData()
+//                        }
+//                    }
+//                }
             }
             
-            self.favoriteMovies.remove(at: indexPath.row)
-            self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
             
         }
         deleteAction.backgroundColor = .systemRed
-
+        
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

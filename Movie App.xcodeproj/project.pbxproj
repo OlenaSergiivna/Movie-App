@@ -37,6 +37,8 @@
 		CEC7BD5528E3A78700A7CDD6 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */; };
 		CEC7BD5628E3A78700A7CDD6 /* GenreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */; };
 		CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */; };
+		CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731C28F054CE00CD0872 /* RealmManager.swift */; };
+		CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */; };
 		D56FA2DAE280F28A3B4AC642 /* Pods_Movie_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9D48116088435D42259085 /* Pods_Movie_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +78,8 @@
 		CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreCollectionViewCell.xib; sourceTree = "<group>"; };
 		CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsScreenViewController.swift; sourceTree = "<group>"; };
+		CEFA731C28F054CE00CD0872 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesRealmModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,7 @@
 		CE14064428E0EC1200B67410 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CEFA731E28F054EC00CD0872 /* RealmModels */,
 				CE0B873B28E4DC67005CBA8A /* AuthenticationModels */,
 				CE0B873C28E4DC92005CBA8A /* MoviesRequestModels */,
 			);
@@ -236,6 +241,7 @@
 			children = (
 				CE14064928E0F1B100B67410 /* NetworkManager.swift */,
 				CE6133A028EA028200778822 /* DataManager.swift */,
+				CEFA731C28F054CE00CD0872 /* RealmManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -265,6 +271,14 @@
 				CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */,
 			);
 			path = GenreCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		CEFA731E28F054EC00CD0872 /* RealmModels */ = {
+			isa = PBXGroup;
+			children = (
+				CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */,
+			);
+			path = RealmModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,7 +407,9 @@
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
+				CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
+				CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */,
 				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
 				CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */,
 				CE0B874028E4E919005CBA8A /* MoviesModel.swift in Sources */,

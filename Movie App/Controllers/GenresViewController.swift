@@ -92,7 +92,6 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
             DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
                 
                 cell.moviesArray = movies
-                print("!TV indexPath.row: \(indexPath.row) - \(cell.genreLabel.text!)!")
             }
         }
 
