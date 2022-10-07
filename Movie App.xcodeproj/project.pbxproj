@@ -39,6 +39,7 @@
 		CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */; };
 		CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731C28F054CE00CD0872 /* RealmManager.swift */; };
 		CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */; };
+		CEFA732228F0759F00CD0872 /* RepositoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA732128F0759F00CD0872 /* RepositoryManager.swift */; };
 		D56FA2DAE280F28A3B4AC642 /* Pods_Movie_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9D48116088435D42259085 /* Pods_Movie_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsScreenViewController.swift; sourceTree = "<group>"; };
 		CEFA731C28F054CE00CD0872 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesRealmModel.swift; sourceTree = "<group>"; };
+		CEFA732128F0759F00CD0872 /* RepositoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				CE14064928E0F1B100B67410 /* NetworkManager.swift */,
 				CE6133A028EA028200778822 /* DataManager.swift */,
 				CEFA731C28F054CE00CD0872 /* RealmManager.swift */,
+				CEFA732128F0759F00CD0872 /* RepositoryManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
 				CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */,
 				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
+				CEFA732228F0759F00CD0872 /* RepositoryManager.swift in Sources */,
 				CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */,
 				CE0B874028E4E919005CBA8A /* MoviesModel.swift in Sources */,
 				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,

@@ -12,6 +12,7 @@ struct RealmManager {
     
     private var realm = try! Realm()
     
+    static let shared = RealmManager()
     
     func deleteAll() {
         
@@ -21,24 +22,38 @@ struct RealmManager {
     }
     
     
-    func saveInRealm(movie: Movie) {
+    func saveFavoriteInRealm(movies: [Movie]) {
         
-        let movieRealm = FavoriteMovieRealm()
-        movieRealm.adult = movie.adult
-        movieRealm.backdropPath = movie.backdropPath
-        movieRealm.genreIDS.append(objectsIn: movie.genreIDS)
-        movieRealm.id = movie.id
-        movieRealm.originalLanguage = movie.originalLanguage
-        movieRealm.originalTitle = movie.originalTitle
-        movieRealm.overview = movie.overview
-        movieRealm.popularity = movie.popularity
-        movieRealm.posterPath = movie.posterPath
-        movieRealm.releaseDate = movie.releaseDate
-        movieRealm.title = movie.title
-        movieRealm.video = movie.video
-        movieRealm.voteAverage = movie.voteAverage
-        movieRealm.voteCount = movie.voteCount
+        for movie in movies {
+            
+            let movieRealm = FavoriteMovieRealm()
+            
+            movieRealm.adult = movie.adult
+            movieRealm.backdropPath = movie.backdropPath
+            movieRealm.genreIDS.append(objectsIn: movie.genreIDS)
+            movieRealm.id = movie.id
+            movieRealm.originalLanguage = movie.originalLanguage
+            movieRealm.originalTitle = movie.originalTitle
+            movieRealm.overview = movie.overview
+            movieRealm.popularity = movie.popularity
+            movieRealm.posterPath = movie.posterPath
+            movieRealm.releaseDate = movie.releaseDate
+            movieRealm.title = movie.title
+            movieRealm.video = movie.video
+            movieRealm.voteAverage = movie.voteAverage
+            movieRealm.voteCount = movie.voteCount
+            
+            try? realm.write {
+                realm.add(movieRealm, update: .all)
+                
+            }
+        }
+    }
+    
+    func getFavoriteFromRealm() -> [FavoriteMovieRealm] {
         
+        let result = realm.objects(FavoriteMovieRealm.self)
+        return Array(result)
     }
     
 }
