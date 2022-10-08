@@ -19,6 +19,8 @@ class GenresViewController: UIViewController {
         
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
+          
+        //sometimes fetched tv genres first
         
         DataManager.shared.requestMovieGenres { [weak self] data in
             

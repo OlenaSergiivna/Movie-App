@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 struct RealmManager {
-    
+    // try! / try?
     private var realm = try! Realm()
     
     static let shared = RealmManager()
@@ -52,11 +52,13 @@ struct RealmManager {
         }
     }
     
+    
     func getFavoriteFromRealm() -> [FavoriteMovieRealm] {
         
         let result = realm.objects(FavoriteMovieRealm.self)
         return Array(result)
     }
+    
     
     func convert(to moviesRealm: [FavoriteMovieRealm]) -> [Movie] {
         var movies = [Movie]()
@@ -69,7 +71,8 @@ struct RealmManager {
         return movies
     }
     
-    func delete<T>(primaryKey: T) {
+    
+    func delete<T>(primaryKey: T, completion: @escaping() -> Void) {
         
         guard let dataToDelete = realm.object(ofType: FavoriteMovieRealm.self, forPrimaryKey: primaryKey) else {
             return
@@ -78,6 +81,7 @@ struct RealmManager {
         try? realm.write {
             realm.delete(dataToDelete)
         }
+        completion()
     }
     
 }

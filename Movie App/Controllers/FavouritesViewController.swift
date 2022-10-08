@@ -94,46 +94,73 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        // weak self + guard let self in each closure?
         let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
             guard let self else {
                 return
             }
             
             DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
-                
+                print("delete from favorites result: \(result)")
                 guard let self else {
                     return
                 }
                 
-                RealmManager.shared.delete(primaryKey: self.someMovies[indexPath.row].id )
-                self.someMovies.remove(at: indexPath.row)
-                self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
-                print(result)
-                print("some movies: \(self.someMovies.count)")
-                print("realm: \(RealmManager.shared.getFavoriteFromRealm().count)")
+                if result == 200 {
+                    
+                    RealmManager.shared.delete(primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
+                        print("deleted from realm")
+                        
+                        guard let self else {
+                            return
+                        }
+                        
+                        Repository.shared.dataCashingFavorites { favorites in
+                            print("favorites in cell cashing: \(favorites)")
+                            self.someMovies = favorites
+                            
+                            DispatchQueue.main.async { [weak self] in
+                                
+                                guard let self else {
+                                    return
+                                }
+                                print("some movies: \(self.someMovies.count)")
+                                self.favouritesTableView.reloadData()
+                                print("data in TV has been reloaded")
+                            }
+                        }
+                        
+                    }
                 
-                // MARK: - Optional?
-                //                if result == 200 {
-                //                    DataManager.shared.requestFavorites { [weak self] data in
-                //                        print("new data requested")
-                //
-                //                        guard let self else {
-                //                            return
-                //                        }
-                //
-                //                        self.favoriteMovies = data
-                //
-                //                        print("new data downloaded: \(self.favoriteMovies.count)")
-                //                        DispatchQueue.main.async { [weak self] in
-                //
-                //                            guard let self else {
-                //                                return
-                //                            }
-                //
-                //                            self.favouritesTableView.reloadData()
-                //                        }
-                //                    }
-                //                }
+                
+                
+//                self.someMovies.remove(at: indexPath.row)
+//                self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
+                print(result)
+               
+                //print("realm: \(RealmManager.shared.getFavoriteFromRealm().count)")
+                
+//
+//                                    DataManager.shared.requestFavorites { [weak self] data in
+//                                        print("new data requested")
+//
+//                                        guard let self else {
+//                                            return
+//                                        }
+//
+//                                        self.favoriteMovies = data
+//
+//                                        print("new data downloaded: \(self.favoriteMovies.count)")
+//                                        DispatchQueue.main.async { [weak self] in
+//
+//                                            guard let self else {
+//                                                return
+//                                            }
+//
+//                                            self.favouritesTableView.reloadData()
+//                                        }
+//                                    }
+                                }
             }
             
         }
