@@ -7,20 +7,20 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-    
-    @IBOutlet weak var searchLabel: UILabel!
-    
-    @IBOutlet weak var movieSearchBAr: UISearchBar!
+class SearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var searchTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
+    let searchController = UISearchController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        
     }
     
     
@@ -59,5 +59,23 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    
+}
+
+extension SearchViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        
+        print("Making search...")
+        
+    }
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        //
+//    }
+
     
 }

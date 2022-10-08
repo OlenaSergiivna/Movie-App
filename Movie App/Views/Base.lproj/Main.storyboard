@@ -165,7 +165,7 @@
             </objects>
             <point key="canvasLocation" x="2862" y="53"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="qfZ-GI-JwJ">
             <objects>
                 <viewController storyboardIdentifier="SearchViewController" modalPresentationStyle="fullScreen" id="OCX-eD-hX2" customClass="SearchViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
@@ -173,46 +173,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
-                                <rect key="frame" x="0.0" y="174" width="390" height="587"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
+                                <rect key="frame" x="0.0" y="108" width="390" height="653"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwY-yC-pyZ">
-                                <rect key="frame" x="16" y="64" width="366" height="30"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="3O0-fn-2ee">
-                                <rect key="frame" x="0.0" y="118" width="390" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="OCX-eD-hX2" id="Hps-hb-PF2"/>
-                                </connections>
-                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
-                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="3O0-fn-2ee" firstAttribute="top" secondItem="hwY-yC-pyZ" secondAttribute="bottom" constant="24" id="1b2-2Q-Hyt"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
-                            <constraint firstItem="hwY-yC-pyZ" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" constant="8" id="Cf7-JH-B0J"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
-                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="3O0-fn-2ee" secondAttribute="bottom" id="MbP-lc-2vz"/>
+                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="dZh-Q7-I6M"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="mzI-Ep-zxD"/>
-                            <constraint firstItem="3O0-fn-2ee" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="or4-eZ-PO2"/>
-                            <constraint firstItem="hwY-yC-pyZ" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" constant="16" id="pQx-I0-WOU"/>
-                            <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="hwY-yC-pyZ" secondAttribute="trailing" constant="8" id="y3e-l6-Ggo"/>
-                            <constraint firstItem="3O0-fn-2ee" firstAttribute="trailing" secondItem="asY-tv-9hg" secondAttribute="trailing" id="yum-kw-hJj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fwB-jR-TFM">
+                    <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="2US-Zm-31V">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" systemColor="tintColor"/>
                             <connections>
                                 <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="RTr-zF-2h4"/>
                             </connections>
@@ -220,8 +201,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logOutButton" destination="2US-Zm-31V" id="6X2-8V-rzc"/>
-                        <outlet property="movieSearchBAr" destination="3O0-fn-2ee" id="lMH-iv-JuM"/>
-                        <outlet property="searchLabel" destination="hwY-yC-pyZ" id="eZ2-CT-Pbm"/>
                         <outlet property="searchTableView" destination="vjG-lJ-t35" id="7qo-9b-jDt"/>
                     </connections>
                 </viewController>
@@ -295,9 +274,12 @@
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k26-D9-fZh">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="k26-D9-fZh">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="108"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -342,6 +324,9 @@
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
