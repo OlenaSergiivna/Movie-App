@@ -19,38 +19,25 @@ class GenresViewController: UIViewController {
         
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
-          
-        //sometimes fetched tv genres first
+        
         
         DataManager.shared.requestMovieGenres { [weak self] data in
             
             Globals.genres.append(contentsOf: data)
             
-            DispatchQueue.main.async { [weak self] in
-                guard let self else {
-                    return
-                }
+            DataManager.shared.requestTVGenres { [weak self] data in
                 
-                self.genresTableView.reloadData()
-                print("genres fetched")
+                Globals.genres.append(contentsOf: data)
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else {
+                        return
+                    }
+                    
+                    self.genresTableView.reloadData()
+                }
             }
         }
-        
-        DataManager.shared.requestTVGenres { [weak self] data in
-           
-            Globals.genres.append(contentsOf: data)
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self else {
-                    return
-                }
-                
-                self.genresTableView.reloadData()
-            }
-        }
-        
-        
-        
     }
     
     
@@ -96,15 +83,14 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.moviesArray = movies
             }
         }
-
+        
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 240
-        
-        
     }
     
     
