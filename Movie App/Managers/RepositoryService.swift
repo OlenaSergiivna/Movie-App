@@ -8,27 +8,29 @@
 import Foundation
 import UIKit
 
-struct Repository {
+struct RepositoryService {
     
-    static let shared = Repository()
-    
-    // MARK: -
+    static let shared = RepositoryService()
     
     func dataCashingFavorites(completion: @escaping([Movie]) -> Void) {
         
+        // Data fetched from API
+        
         DataManager.shared.requestFavorites { favorites in
+            
+            // Data saved in Realm Database
             
             RealmManager.shared.saveFavoriteInRealm(movies: favorites)
             
+            // Data fetched from Realm Database
+            
             let favoritesArray = RealmManager.shared.getFavoriteFromRealm()
             
-           
-           let data = RealmManager.shared.convert(to: favoritesArray)
+            // Data converted in ViewController's models
+            
+            let data = RealmManager.shared.convert(to: favoritesArray)
             completion(data)
             
         }
-        
-        
-    
     }
 }

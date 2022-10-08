@@ -123,7 +123,10 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hN0-vC-CvH">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemIndigoColor"/>
+                        <tabBarAppearance key="standardAppearance"/>
                     </tabBar>
                     <connections>
                         <segue destination="9nC-t0-rlZ" kind="relationship" relationship="viewControllers" id="0kV-IV-3za"/>
@@ -139,7 +142,9 @@
         <scene sceneID="iFF-PJ-jMT">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="9nC-t0-rlZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Genres" id="HAb-cx-P66"/>
+                    <tabBarItem key="tabBarItem" title="Genres" image="film" catalog="system" id="HAb-cx-P66">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ot1-lr-XPX">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
@@ -168,12 +173,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
-                                <rect key="frame" x="0.0" y="112" width="390" height="649"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
+                                <rect key="frame" x="0.0" y="174" width="390" height="587"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
+                                    <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
+                                </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwY-yC-pyZ">
+                                <rect key="frame" x="16" y="64" width="366" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="3O0-fn-2ee">
-                                <rect key="frame" x="0.0" y="56" width="390" height="56"/>
+                                <rect key="frame" x="0.0" y="118" width="390" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="Hps-hb-PF2"/>
@@ -183,12 +198,15 @@
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
                         <constraints>
+                            <constraint firstItem="3O0-fn-2ee" firstAttribute="top" secondItem="hwY-yC-pyZ" secondAttribute="bottom" constant="24" id="1b2-2Q-Hyt"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
+                            <constraint firstItem="hwY-yC-pyZ" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" constant="8" id="Cf7-JH-B0J"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="3O0-fn-2ee" secondAttribute="bottom" id="MbP-lc-2vz"/>
-                            <constraint firstItem="3O0-fn-2ee" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="SK4-yn-wew"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="mzI-Ep-zxD"/>
                             <constraint firstItem="3O0-fn-2ee" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="or4-eZ-PO2"/>
+                            <constraint firstItem="hwY-yC-pyZ" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" constant="16" id="pQx-I0-WOU"/>
+                            <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="hwY-yC-pyZ" secondAttribute="trailing" constant="8" id="y3e-l6-Ggo"/>
                             <constraint firstItem="3O0-fn-2ee" firstAttribute="trailing" secondItem="asY-tv-9hg" secondAttribute="trailing" id="yum-kw-hJj"/>
                         </constraints>
                     </view>
@@ -202,11 +220,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logOutButton" destination="2US-Zm-31V" id="6X2-8V-rzc"/>
+                        <outlet property="movieSearchBAr" destination="3O0-fn-2ee" id="lMH-iv-JuM"/>
+                        <outlet property="searchLabel" destination="hwY-yC-pyZ" id="eZ2-CT-Pbm"/>
+                        <outlet property="searchTableView" destination="vjG-lJ-t35" id="7qo-9b-jDt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUa-sy-ERR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5617" y="670"/>
+            <point key="canvasLocation" x="5616.9230769230771" y="669.66824644549763"/>
         </scene>
         <!--Details Screen View Controller-->
         <scene sceneID="xEP-8q-wSa">
@@ -270,7 +291,9 @@
         <scene sceneID="LG7-gM-9qo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Iuk-YE-J2F" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="1r9-8l-nOE"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="1r9-8l-nOE">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k26-D9-fZh">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
@@ -285,11 +308,13 @@
             </objects>
             <point key="canvasLocation" x="4688" y="670"/>
         </scene>
-        <!--Item-->
+        <!--Favorites-->
         <scene sceneID="oQ0-cg-Rf0">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="wOV-Wt-ro3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="e2u-dG-VTv"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="star.fill" catalog="system" id="e2u-dG-VTv">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hnI-tI-3lM">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
@@ -306,6 +331,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="film" catalog="system" width="128" height="93"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

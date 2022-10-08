@@ -28,7 +28,7 @@ class FavouritesViewController: UIViewController {
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
-        Repository.shared.dataCashingFavorites { [weak self] favorites in
+        RepositoryService.shared.dataCashingFavorites { [weak self] favorites in
             guard let self else {
                 return
             }
@@ -115,7 +115,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                             return
                         }
                         
-                        Repository.shared.dataCashingFavorites { favorites in
+                        RepositoryService.shared.dataCashingFavorites { favorites in
                             print("favorites in cell cashing: \(favorites)")
                             self.someMovies = favorites
                             

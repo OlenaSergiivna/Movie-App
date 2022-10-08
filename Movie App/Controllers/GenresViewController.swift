@@ -21,11 +21,11 @@ class GenresViewController: UIViewController {
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
         
-        DataManager.shared.requestMovieGenres { [weak self] data in
+        DataManager.shared.requestMovieGenres { data in
             
             Globals.genres.append(contentsOf: data)
             
-            DataManager.shared.requestTVGenres { [weak self] data in
+            DataManager.shared.requestTVGenres { data in
                 
                 Globals.genres.append(contentsOf: data)
                 
