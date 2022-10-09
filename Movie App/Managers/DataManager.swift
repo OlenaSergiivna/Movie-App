@@ -116,11 +116,11 @@ struct DataManager {
     }
     
     
-    func search(with text: String, page: Int, adult: Bool = false, completion: @escaping([MediaSearchResult]) -> Void) {
+    func search(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
         
-        let searchRequest = AF.request("https://api.themoviedb.org/3/search/multi?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
+        let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
-        searchRequest.responseDecodable(of: SearchResults.self) { response in
+        searchRequest.responseDecodable(of: ResultsTV.self) { response in
             print(response)
             do {
                 let data = try response.result.get().results

@@ -15,7 +15,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    private var searchResults: [Movie] = []
+    private var searchResults: [TVModel] = []
     
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else {
@@ -33,9 +33,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
         
-        DataManager.shared.search(with: "house", page: 1) { results in
-            print(results.count)
-        }
+       
     }
     
     
@@ -66,12 +64,34 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if !searchResults.isEmpty {
+            return searchResults.count
+        } else {
+            return 10
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        
+        guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else {
+            return UITableViewCell()
+        }
+       
+        
+        if !searchResults.isEmpty {
+            var content = cell.defaultContentConfiguration()
+            content.text = "\(searchResults[indexPath.row].name). \(searchResults[indexPath.row].origin_country)"
+            
+            cell.contentConfiguration = content
+            
+        } else {
+            var content = cell.defaultContentConfiguration()
+            content.text = "No search results"
+            cell.contentConfiguration = content
+        }
+        
         return cell
+        
     }
     
     
@@ -83,8 +103,19 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else {
             return
         }
+       
+        print("Making search...text: \(text)")
+        if text.count > 3 {
+            DataManager.shared.search(with: text, page: 1) { results in
+                self.searchResults = results
+                
+                DispatchQueue.main.async {
+                    self.searchTableView.reloadData()
+                }
+            }
+        }
         
-        print("Making search...")
+       
         
     }
     

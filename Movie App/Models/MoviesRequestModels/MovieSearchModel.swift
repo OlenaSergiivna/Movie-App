@@ -7,9 +7,11 @@
 
 import Foundation
 
-struct SearchResults: Codable {
+// enum?
+
+struct SearchResults1: Codable {
     let page: Int
-    let results: [MediaSearchResult]
+    let results: [MediaSearchResult1]
     let totalResults, totalPages: Int
 
     enum CodingKeys: String, CodingKey {
@@ -19,14 +21,14 @@ struct SearchResults: Codable {
     }
 }
 
-struct MediaSearchResult: Codable {
+struct MediaSearchResult1: Codable {
     let posterPath: String?
     let adult: Bool?
     let overview: String?
     let releaseDate, originalTitle, title: String?
     let genreIDS: [Int]?
     let id: Int?
-    let mediaType: MediaType
+    let mediaType: MediaType1
     let originalLanguage: String?
     let backdropPath: String?
     let popularity: Double?
@@ -37,7 +39,7 @@ struct MediaSearchResult: Codable {
     let originCountry: [String]?
     let name, originalName: String?
     let profilePath: String?
-    let knownFor: [KnownFor]?
+    let knownFor: [KnownFor1]?
 
     enum CodingKeys: String, CodingKey {
         case posterPath = "poster_path"
@@ -61,14 +63,14 @@ struct MediaSearchResult: Codable {
     }
 }
 
-struct KnownFor: Codable {
+struct KnownFor1: Codable {
     let posterPath: String?
     let adult: Bool?
     let overview: String?
     let releaseDate, originalTitle, title: String?
     let genreIDS: [Int]?
     let id: Int?
-    let mediaType: MediaType
+    let mediaType: MediaType1
     let originalLanguage: String?
     let backdropPath: String?
     let popularity: Double?
@@ -101,7 +103,7 @@ struct KnownFor: Codable {
     }
 }
 
-enum MediaType: String, Codable {
+enum MediaType1: String, Codable {
     case movie = "movie"
     case person = "person"
     case tv = "tv"
