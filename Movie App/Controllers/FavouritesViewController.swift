@@ -25,6 +25,9 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //no data without internet connection
+        //someMovies = RealmManager.shared.getFavoriteFromRealm()
+        
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         

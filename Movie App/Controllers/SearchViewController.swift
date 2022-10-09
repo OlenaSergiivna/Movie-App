@@ -13,13 +13,25 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
-    let searchController = UISearchController()
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    private var searchResults: [Movie] = []
+    
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else {
+            return false
+        }
+        return text.isEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
+        searchController.searchBar.placeholder = "Search"
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
         
     }
     

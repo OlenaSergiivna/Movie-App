@@ -113,6 +113,9 @@ struct DataManager {
                 print("removed: \(error.localizedDescription)")
             }
         }
+    }
+    
+    func search(with: String) {
         
     }
 }
