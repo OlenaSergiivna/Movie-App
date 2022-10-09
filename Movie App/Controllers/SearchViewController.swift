@@ -33,6 +33,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchController.obscuresBackgroundDuringPresentation = false
         definesPresentationContext = true
         
+        DataManager.shared.search(with: "house", page: 1) { results in
+            print(results.count)
+        }
     }
     
     

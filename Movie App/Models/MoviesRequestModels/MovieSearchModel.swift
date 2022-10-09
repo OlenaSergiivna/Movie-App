@@ -8,93 +8,96 @@
 import Foundation
 
 struct SearchResults: Codable {
-    
     let page: Int
-    let results: [MovieSearch]
-    let totalPages, totalResults: Int
-    
+    let results: [MediaSearchResult]
+    let totalResults, totalPages: Int
+
     enum CodingKeys: String, CodingKey {
         case page, results
-        case totalPages = "total_pages"
         case totalResults = "total_results"
+        case totalPages = "total_pages"
     }
 }
 
-
-struct MovieSearch: Codable {
-    let backdropPath: String?
-    let firstAirDate: String?
-    let genreIDS: [Int]?
-    let id: Int
-    let mediaType: MediaType
-    let name: String?
-    let originCountry: [String]?
-    let originalLanguage: String?
-    let originalName, overview: String?
-    let popularity: Double
+struct MediaSearchResult: Codable {
     let posterPath: String?
+    let adult: Bool?
+    let overview: String?
+    let releaseDate, originalTitle, title: String?
+    let genreIDS: [Int]?
+    let id: Int?
+    let mediaType: MediaType
+    let originalLanguage: String?
+    let backdropPath: String?
+    let popularity: Double?
     let voteAverage: Double?
     let voteCount: Int?
-    let adult: Bool?
-    let originalTitle, releaseDate, title: String?
     let video: Bool?
-    let gender: Int?
+    let firstAirDate: String?
+    let originCountry: [String]?
+    let name, originalName: String?
+    let profilePath: String?
     let knownFor: [KnownFor]?
-    let knownForDepartment, profilePath: String?
-    
+
     enum CodingKeys: String, CodingKey {
-        case backdropPath = "backdrop_path"
-        case firstAirDate = "first_air_date"
-        case genreIDS = "genre_ids"
-        case id
-        case mediaType = "media_type"
-        case name
-        case originCountry = "origin_country"
-        case originalLanguage = "original_language"
-        case originalName = "original_name"
-        case overview, popularity
         case posterPath = "poster_path"
+        case popularity, id, overview
+        case backdropPath = "backdrop_path"
         case voteAverage = "vote_average"
+        case mediaType = "media_type"
+        case firstAirDate = "first_air_date"
+        case originCountry = "origin_country"
+        case genreIDS = "genre_ids"
+        case originalLanguage = "original_language"
         case voteCount = "vote_count"
+        case name
+        case originalName = "original_name"
         case adult
-        case originalTitle = "original_title"
         case releaseDate = "release_date"
-        case title, video, gender
-        case knownFor = "known_for"
-        case knownForDepartment = "known_for_department"
+        case originalTitle = "original_title"
+        case title, video
         case profilePath = "profile_path"
+        case knownFor = "known_for"
     }
 }
 
-// Movie model ?
-
 struct KnownFor: Codable {
-    let adult: Bool
-    let backdropPath: String
-    let genreIDS: [Int]
-    let id: Int
+    let posterPath: String?
+    let adult: Bool?
+    let overview: String?
+    let releaseDate, originalTitle, title: String?
+    let genreIDS: [Int]?
+    let id: Int?
     let mediaType: MediaType
-    let originalLanguage: String
-    let originalTitle, overview, posterPath, releaseDate: String
-    let title: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount: Int
-    
+    let originalLanguage: String?
+    let backdropPath: String?
+    let popularity: Double?
+    let voteAverage: Double?
+    let voteCount: Int?
+    let video: Bool?
+    let firstAirDate: String?
+    let originCountry: [String]?
+    let name, originalName: String?
+    let profilePath: String?
+
     enum CodingKeys: String, CodingKey {
-        case adult
-        case backdropPath = "backdrop_path"
-        case genreIDS = "genre_ids"
-        case id
-        case mediaType = "media_type"
-        case originalLanguage = "original_language"
-        case originalTitle = "original_title"
-        case overview
         case posterPath = "poster_path"
-        case releaseDate = "release_date"
-        case title, video
+        case popularity, id, overview
+        case backdropPath = "backdrop_path"
         case voteAverage = "vote_average"
+        case mediaType = "media_type"
+        case firstAirDate = "first_air_date"
+        case originCountry = "origin_country"
+        case genreIDS = "genre_ids"
+        case originalLanguage = "original_language"
         case voteCount = "vote_count"
+        case name
+        case originalName = "original_name"
+        case adult
+        case releaseDate = "release_date"
+        case originalTitle = "original_title"
+        case title, video
+        case profilePath = "profile_path"
     }
 }
 
