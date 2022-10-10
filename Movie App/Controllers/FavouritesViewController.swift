@@ -30,12 +30,12 @@ class FavouritesViewController: UIViewController {
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
-        RepositoryService.shared.dataCashingFavorites { [weak self] favorites in
+        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else {
                 return
             }
             self.someMovies = favorites
-
+            
             DispatchQueue.main.async { [weak self] in
                 
                 guard let self else {
@@ -110,14 +110,14 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 if result == 200 {
                     
-                    RealmManager.shared.delete(primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
+                    RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
                         print("deleted from realm")
                         
                         guard let self else {
                             return
                         }
                         
-                        RepositoryService.shared.dataCashingFavorites { favorites in
+                        RepositoryService.shared.movieFavoritesCashing { favorites in
                             print("favorites in cell cashing: \(favorites)")
                             self.someMovies = favorites
                             
@@ -133,36 +133,10 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                         
                     }
-                
-                
-                
-//                self.someMovies.remove(at: indexPath.row)
-//                self.favouritesTableView.deleteRows(at: [indexPath], with: .fade)
-                print(result)
-               
-                //print("realm: \(RealmManager.shared.getFavoriteFromRealm().count)")
-                
-//
-//                                    DataManager.shared.requestFavorites { [weak self] data in
-//                                        print("new data requested")
-//
-//                                        guard let self else {
-//                                            return
-//                                        }
-//
-//                                        self.favoriteMovies = data
-//
-//                                        print("new data downloaded: \(self.favoriteMovies.count)")
-//                                        DispatchQueue.main.async { [weak self] in
-//
-//                                            guard let self else {
-//                                                return
-//                                            }
-//
-//                                            self.favouritesTableView.reloadData()
-//                                        }
-//                                    }
-                                }
+                    
+                    print(result)
+                    
+                }
             }
             
         }

@@ -12,7 +12,7 @@ struct RepositoryService {
     
     static let shared = RepositoryService()
     
-    func dataCashingFavorites(completion: @escaping([MovieModel]) -> Void) {
+    func movieFavoritesCashing(completion: @escaping([MovieModel]) -> Void) {
         
         // Data fetched from API
         
@@ -20,7 +20,7 @@ struct RepositoryService {
             
             // Data saved in Realm Database
             
-            RealmManager.shared.saveFavoriteInRealm(movies: favorites)
+            RealmManager.shared.saveFavoriteMoviesInRealm(movies: favorites)
             
             // Data fetched from Realm Database & converted in ViewController's models
             

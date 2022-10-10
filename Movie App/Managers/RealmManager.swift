@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import Realm
 
 struct RealmManager {
     // try! / try?
@@ -24,8 +25,8 @@ struct RealmManager {
     }
     
     
-    func saveFavoriteInRealm(movies: [MovieModel]) {
-        //cast type? init?
+    func saveFavoriteMoviesInRealm(movies: [MovieModel]) {
+        
         for movie in movies {
             
             let movieRealm = FavoriteMovieRealm()
@@ -55,6 +56,7 @@ struct RealmManager {
     
     func getFavoriteMoviesFromRealm() -> [MovieModel] {
         
+        
         let moviesRealm = realm.objects(FavoriteMovieRealm.self)
         
         var movies = [MovieModel]()
@@ -67,23 +69,55 @@ struct RealmManager {
         
         return Array(movies)
     }
+   
     
-    
-//    func convertMovies(to moviesRealm: [FavoriteMovieRealm]) -> [MovieModel] {
-//        var movies = [MovieModel]()
-//    
-//            for movieRealm in moviesRealm {
-//                let movie = MovieModel(from: movieRealm)
-//                movies.append(movie)
-//            }
-//
-//        return movies
-//    }
-    
-    
-    func delete<T>(primaryKey: T, completion: @escaping() -> Void) {
+    func saveFavoriteTVInRealm(tvShows: [TVModel]) {
         
-        guard let dataToDelete = realm.object(ofType: FavoriteMovieRealm.self, forPrimaryKey: primaryKey) else {
+        for tv in tvShows {
+            
+            let tvRealm = FavoriteTVRealm()
+            
+            tvRealm.backdropPath = tv.backdropPath
+            tvRealm.firstAirDate = tv.firstAirDate
+            tvRealm.genreIDS.append(objectsIn: tv.genreIDS)
+            tvRealm.id = tv.id
+            tvRealm.name = tv.name
+            tvRealm.originCountry.append(objectsIn: tv.originCountry)
+            tvRealm.originalLanguage = tv.originalLanguage
+            tvRealm.originalName = tv.originalName
+            tvRealm.overview = tv.overview
+            tvRealm.popularity = tv.popularity
+            tvRealm.posterPath = tv.posterPath
+            tvRealm.voteAverage = tv.voteAverage
+            tvRealm.voteCount = tv.voteCount
+
+            try? realm.write {
+                realm.add(tvRealm, update: .all)
+                
+            }
+        }
+    }
+    
+    
+    func getFavoriteTVFromRealm() -> [TVModel] {
+        
+        let tvRealm = realm.objects(FavoriteTVRealm.self)
+        
+        var tvShows = [TVModel]()
+    
+            for tv in tvRealm {
+                let tv = TVModel(from: tv)
+                tvShows.append(tv)
+            }
+
+        
+        return Array(tvShows)
+    }
+    
+    
+    func delete<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
+        
+        guard let dataToDelete = realm.object(ofType: type, forPrimaryKey: primaryKey) else {
             return
         }
         
