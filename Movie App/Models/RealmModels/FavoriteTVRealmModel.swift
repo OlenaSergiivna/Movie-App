@@ -21,7 +21,7 @@ class FavoriteTVRealm: Object {
     @Persisted var backdropPath: String?
     @Persisted var firstAirDate: String?
     @Persisted var genreIDS: List<Int>
-    @Persisted(primaryKey: true) var id: Int = 0
+    @Persisted(primaryKey: true) var id: Int
     @Persisted var name: String
     @Persisted var originCountry: List<String>
     @Persisted var originalLanguage: String

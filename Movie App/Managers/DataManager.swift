@@ -51,7 +51,7 @@ struct DataManager {
     
     // MARK: - Request movie by specific genre/genres
     
-    func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([Movie]) -> Void) {
+    func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         guard let genreId = Globals.genres.first(where: { $0.name == genre})?.id else { return }
 
@@ -72,7 +72,7 @@ struct DataManager {
     
     // MARK: - Request movies from Favorites lisr
     
-    func requestFavorites(completion: @escaping ([Movie]) -> Void) {
+    func requestFavorites(completion: @escaping ([MovieModel]) -> Void) {
         
         let favouritesRequest = AF.request("https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1", method: .get)
         

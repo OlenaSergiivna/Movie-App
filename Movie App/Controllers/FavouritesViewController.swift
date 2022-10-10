@@ -13,7 +13,7 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
-    var someMovies: [Movie] = [] {
+    var someMovies: [MovieModel] = [] {
         didSet {
             for movie in someMovies {
                 print("\(String(describing: movie.title))")
@@ -25,8 +25,7 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //no data without internet connection
-        //someMovies = RealmManager.shared.getFavoriteFromRealm()
+        someMovies = RealmManager.shared.getFavoriteMoviesFromRealm()
         
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")

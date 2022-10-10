@@ -24,7 +24,7 @@ struct RealmManager {
     }
     
     
-    func saveFavoriteInRealm(movies: [Movie]) {
+    func saveFavoriteInRealm(movies: [MovieModel]) {
         //cast type? init?
         for movie in movies {
             
@@ -53,23 +53,32 @@ struct RealmManager {
     }
     
     
-    func getFavoriteFromRealm() -> [FavoriteMovieRealm] {
+    func getFavoriteMoviesFromRealm() -> [MovieModel] {
         
-        let result = realm.objects(FavoriteMovieRealm.self)
-        return Array(result)
-    }
-    
-    
-    func convert(to moviesRealm: [FavoriteMovieRealm]) -> [Movie] {
-        var movies = [Movie]()
+        let moviesRealm = realm.objects(FavoriteMovieRealm.self)
+        
+        var movies = [MovieModel]()
     
             for movieRealm in moviesRealm {
-                let movie = Movie(from: movieRealm)
+                let movie = MovieModel(from: movieRealm)
                 movies.append(movie)
             }
 
-        return movies
+        
+        return Array(movies)
     }
+    
+    
+//    func convertMovies(to moviesRealm: [FavoriteMovieRealm]) -> [MovieModel] {
+//        var movies = [MovieModel]()
+//    
+//            for movieRealm in moviesRealm {
+//                let movie = MovieModel(from: movieRealm)
+//                movies.append(movie)
+//            }
+//
+//        return movies
+//    }
     
     
     func delete<T>(primaryKey: T, completion: @escaping() -> Void) {

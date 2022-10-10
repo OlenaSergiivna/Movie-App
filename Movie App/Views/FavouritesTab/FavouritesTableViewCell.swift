@@ -28,7 +28,7 @@ class FavouritesTableViewCell: UITableViewCell {
         
     }
     
-    func configure(with data: Movie) {
+    func configure(with data: MovieModel) {
         
         if let title = data.title, let overview = data.overview, let imagePath = data.posterPath {
             

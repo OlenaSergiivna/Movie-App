@@ -15,7 +15,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    private var searchResults: [TVModel] = []
+    private var searchResultsTV: [TVModel] = []
+    private var searchResultsMovie: [MovieModel] = []
     
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else {
@@ -64,8 +65,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !searchResults.isEmpty {
-            return searchResults.count
+        if !searchResultsTV.isEmpty {
+            return searchResultsTV.count
         } else {
             return 10
         }
@@ -78,9 +79,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
        
         
-        if !searchResults.isEmpty {
+        if !searchResultsTV.isEmpty {
             var content = cell.defaultContentConfiguration()
-            content.text = "\(searchResults[indexPath.row].name). \(searchResults[indexPath.row].origin_country)"
+            content.text = "\(searchResultsTV[indexPath.row].name). \(searchResultsTV[indexPath.row].originCountry)"
             
             cell.contentConfiguration = content
             
@@ -107,7 +108,7 @@ extension SearchViewController: UISearchResultsUpdating {
         print("Making search...text: \(text)")
         if text.count > 3 {
             DataManager.shared.search(with: text, page: 1) { results in
-                self.searchResults = results
+                self.searchResultsTV = results
                 
                 DispatchQueue.main.async {
                     self.searchTableView.reloadData()
@@ -118,10 +119,5 @@ extension SearchViewController: UISearchResultsUpdating {
        
         
     }
-    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        //
-//    }
-
     
 }

@@ -19,7 +19,7 @@ class GenreCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func configure(with data: [Movie], indexPath: IndexPath) {
+    func configure(with data: [MovieModel], indexPath: IndexPath) {
         if !data.isEmpty {
             
             guard let title =  data[indexPath.row].title, let imagePath = data[indexPath.row].posterPath  else {

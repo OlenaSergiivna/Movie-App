@@ -49,23 +49,25 @@ struct TVModel: Codable {
     }
     
     
-    init(from movieRealm: FavoriteMovieRealm) {
-        self.adult = movieRealm.adult
-        self.backdropPath = movieRealm.backdropPath
-        self.id = movieRealm.id
-        self.originalLanguage = movieRealm.originalLanguage
-        self.overview = movieRealm.overview
-        self.posterPath = movieRealm.posterPath
-        self.releaseDate = movieRealm.releaseDate
-        self.genreIDS = Array(movieRealm.genreIDS)
-        self.popularity = movieRealm.popularity
-        self.voteAverage = movieRealm.voteAverage
-        self.voteCount = movieRealm.voteCount
-        self.title = movieRealm.title
-        self.originalTitle = movieRealm.originalTitle
-        self.video = movieRealm.video
-        
-        
-    }
     
+    
+}
+
+extension TVModel {
+    
+    init(from tvRealm: FavoriteTVRealm) {
+        self.backdropPath = tvRealm.backdropPath
+        self.firstAirDate = tvRealm.firstAirDate
+        self.genreIDS = Array(tvRealm.genreIDS)
+        self.id = tvRealm.id
+        self.name = tvRealm.name
+        self.originCountry = Array(tvRealm.originCountry)
+        self.originalLanguage = tvRealm.originalLanguage
+        self.originalName = tvRealm.originalName
+        self.overview = tvRealm.overview
+        self.popularity = tvRealm.popularity
+        self.posterPath = tvRealm.posterPath
+        self.voteAverage = tvRealm.voteAverage
+        self.voteCount = tvRealm.voteCount
+    }
 }
