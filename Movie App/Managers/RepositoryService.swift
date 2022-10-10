@@ -24,9 +24,9 @@ struct RepositoryService {
             
             // Data fetched from Realm Database & converted in ViewController's models
             
-            let favoritesArray = RealmManager.shared.getFavoriteMoviesFromRealm()
+            let favoritesArray = RealmManager.shared.getFavoritesFromRealm(type: .movie)
             
-            completion(favoritesArray)
+            completion(favoritesArray as! [MovieModel])
             
         }
     }

@@ -53,22 +53,6 @@ struct RealmManager {
         }
     }
     
-    
-    func getFavoriteMoviesFromRealm() -> [MovieModel] {
-        
-        
-        let moviesRealm = realm.objects(FavoriteMovieRealm.self)
-        
-        var movies = [MovieModel]()
-    
-            for movieRealm in moviesRealm {
-                let movie = MovieModel(from: movieRealm)
-                movies.append(movie)
-            }
-
-        
-        return Array(movies)
-    }
    
     
     func saveFavoriteTVInRealm(tvShows: [TVModel]) {
@@ -99,19 +83,43 @@ struct RealmManager {
     }
     
     
-    func getFavoriteTVFromRealm() -> [TVModel] {
-        
-        let tvRealm = realm.objects(FavoriteTVRealm.self)
-        
-        var tvShows = [TVModel]()
     
+    enum MediaType {
+        case movie
+        case tv
+    }
+    
+    
+    
+    func getFavoritesFromRealm(type: MediaType) -> Any {
+        switch type {
+        case .movie:
+            
+            let moviesRealm = realm.objects(FavoriteMovieRealm.self)
+            
+            var movies = [MovieModel]()
+            
+            for movieRealm in moviesRealm {
+                let movie = MovieModel(from: movieRealm)
+                movies.append(movie)
+            }
+            return (Array(movies))
+            
+            
+        case .tv:
+            
+            let tvRealm = realm.objects(FavoriteTVRealm.self)
+            
+            var tvShows = [TVModel]()
+            
             for tv in tvRealm {
                 let tv = TVModel(from: tv)
                 tvShows.append(tv)
             }
-
+            
+            return (Array(tvShows))
+        }
         
-        return Array(tvShows)
     }
     
     
