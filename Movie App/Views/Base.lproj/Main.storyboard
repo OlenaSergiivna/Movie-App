@@ -174,31 +174,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
-                                <rect key="frame" x="0.0" y="56" width="390" height="705"/>
+                                <rect key="frame" x="0.0" y="139.33333333333331" width="390" height="621.66666666666674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchTableViewCell" id="BVD-Io-yG1" customClass="SearchTableViewCell" customModule="Movie_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BVD-Io-yG1" id="TVI-So-lAO">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
                                 </connections>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2N0-af-dex">
+                                <rect key="frame" x="8" y="108" width="374" height="32.333333333333314"/>
+                                <segments>
+                                    <segment title="Movies"/>
+                                    <segment title="TV Shows"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControl:" destination="RbB-eE-HJ4" eventType="valueChanged" id="8iq-n3-FHT"/>
+                                    <action selector="segmentedControlChanged:" destination="OCX-eD-hX2" eventType="valueChanged" id="vBT-6A-bEq"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="2N0-af-dex" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" constant="8" id="1m3-El-2fs"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
+                            <constraint firstItem="2N0-af-dex" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="5ad-wY-G9K"/>
+                            <constraint firstItem="2N0-af-dex" firstAttribute="height" secondItem="BES-fm-4Jn" secondAttribute="height" multiplier="0.04" id="BAP-Ws-oqP"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
-                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="dZh-Q7-I6M"/>
+                            <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="2N0-af-dex" secondAttribute="trailing" constant="8" id="XwN-Oi-9fR"/>
+                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="2N0-af-dex" secondAttribute="bottom" id="gr9-AQ-RFe"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="mzI-Ep-zxD"/>
+                            <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="2N0-af-dex" secondAttribute="bottom" id="tnh-Kl-YAg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
@@ -212,9 +218,11 @@
                     <connections>
                         <outlet property="logOutButton" destination="2US-Zm-31V" id="6X2-8V-rzc"/>
                         <outlet property="searchTableView" destination="vjG-lJ-t35" id="7qo-9b-jDt"/>
+                        <outlet property="segmentedControl" destination="2N0-af-dex" id="VOL-Q6-fzp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUa-sy-ERR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="RbB-eE-HJ4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5616.9230769230771" y="669.66824644549763"/>
         </scene>

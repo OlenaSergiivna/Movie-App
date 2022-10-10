@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 struct RepositoryService {
     
@@ -27,6 +26,26 @@ struct RepositoryService {
             let favoritesArray = RealmManager.shared.getFavoritesFromRealm(type: .movie)
             
             completion(favoritesArray as! [MovieModel])
+            
+        }
+    }
+    
+    
+    func tvShowsFavoritesCashing(completion: @escaping([TVModel]) -> Void) {
+        
+        // Data fetched from API
+        
+        DataManager.shared.requestFavorites { favorites in
+            
+            // Data saved in Realm Database
+            
+            RealmManager.shared.saveFavoriteMoviesInRealm(movies: favorites)
+            
+            // Data fetched from Realm Database & converted in ViewController's models
+            
+            let favoritesArray = RealmManager.shared.getFavoritesFromRealm(type: .movie)
+            
+            completion(favoritesArray as! [TVModel])
             
         }
     }

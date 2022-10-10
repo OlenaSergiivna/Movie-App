@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import Foundation
 
 struct ResultsMovie: Codable {
     let page: Int
     let results: [MovieModel]
     let totalPages, totalResults: Int
-
+    
     enum CodingKeys: String, CodingKey {
         case page, results
         case totalPages = "total_pages"
@@ -35,8 +34,8 @@ struct MovieModel: Codable, Hashable {
     let voteAverage: Double
     let voteCount: Int
     
-   
-
+    
+    
     enum CodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
@@ -53,9 +52,13 @@ struct MovieModel: Codable, Hashable {
         case originalTitle = "original_title"
         case video
     }
-    
+}
+
+
+extension MovieModel {
     
     init(from movieRealm: FavoriteMovieRealm) {
+        
         self.adult = movieRealm.adult
         self.backdropPath = movieRealm.backdropPath
         self.id = movieRealm.id
@@ -70,7 +73,6 @@ struct MovieModel: Codable, Hashable {
         self.title = movieRealm.title
         self.originalTitle = movieRealm.originalTitle
         self.video = movieRealm.video
-        
         
     }
 }

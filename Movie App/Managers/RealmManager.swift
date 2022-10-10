@@ -24,6 +24,7 @@ struct RealmManager {
         }
     }
     
+    //MARK: - Save movies in Realm
     
     func saveFavoriteMoviesInRealm(movies: [MovieModel]) {
         
@@ -53,7 +54,7 @@ struct RealmManager {
         }
     }
     
-   
+    //MARK: - Save tv shows in Realm
     
     func saveFavoriteTVInRealm(tvShows: [TVModel]) {
         
@@ -74,7 +75,7 @@ struct RealmManager {
             tvRealm.posterPath = tv.posterPath
             tvRealm.voteAverage = tv.voteAverage
             tvRealm.voteCount = tv.voteCount
-
+            
             try? realm.write {
                 realm.add(tvRealm, update: .all)
                 
@@ -83,13 +84,12 @@ struct RealmManager {
     }
     
     
-    
     enum MediaType {
         case movie
         case tv
     }
     
-    
+    //MARK: - Get from Realm
     
     func getFavoritesFromRealm(type: MediaType) -> Any {
         switch type {
@@ -122,6 +122,7 @@ struct RealmManager {
         
     }
     
+    //MARK: - Delete object from Realm
     
     func delete<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
         

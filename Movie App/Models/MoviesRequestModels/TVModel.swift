@@ -48,14 +48,13 @@ struct TVModel: Codable {
         case voteCount = "vote_count"
     }
     
-    
-    
-    
 }
+
 
 extension TVModel {
     
     init(from tvRealm: FavoriteTVRealm) {
+        
         self.backdropPath = tvRealm.backdropPath
         self.firstAirDate = tvRealm.firstAirDate
         self.genreIDS = Array(tvRealm.genreIDS)

@@ -70,7 +70,13 @@ struct DataManager {
     }
     
     
-    // MARK: - Request movies from Favorites lisr
+    // MARK: - Request movies from Favorites list
+    
+    enum MediaType {
+        case movie
+        case tv
+    }
+    
     
     func requestFavorites(completion: @escaping ([MovieModel]) -> Void) {
         
@@ -116,13 +122,31 @@ struct DataManager {
     }
     
     
-    func search(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
+    func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsTV.self) { response in
             print(response)
             do {
+                print("tv show decoded")
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    
+    func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping([MovieModel]) -> Void) {
+        
+        let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
+        
+        searchRequest.responseDecodable(of: ResultsMovie.self) { response in
+            do {
+                print("movie decoded")
                 let data = try response.result.get().results
                 completion(data)
             } catch {

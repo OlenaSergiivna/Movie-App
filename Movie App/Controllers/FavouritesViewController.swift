@@ -12,7 +12,7 @@ class FavouritesViewController: UIViewController {
     @IBOutlet weak var favouritesTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
-    
+
     var someMovies: [MovieModel] = [] {
         didSet {
             for movie in someMovies {
@@ -103,7 +103,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
-                print("delete from favorites result: \(result)")
+                print("delete movie from favorites result: \(result)")
                 guard let self else {
                     return
                 }
