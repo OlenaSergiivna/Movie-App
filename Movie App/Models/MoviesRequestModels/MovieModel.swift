@@ -8,9 +8,9 @@
 import Foundation
 import Foundation
 
-struct Results: Codable {
+struct ResultsMovie: Codable {
     let page: Int
-    let results: [Movie]
+    let results: [MovieModel]
     let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
@@ -21,7 +21,7 @@ struct Results: Codable {
 }
 
 
-struct Movie: Codable, Hashable {
+struct MovieModel: Codable, Hashable {
     
     let adult: Bool
     let backdropPath: String?

@@ -59,7 +59,7 @@ struct DataManager {
         
             let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
         
-            movieByGenreRequest.responseDecodable(of: Results.self) { response in
+            movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
                 do {
                     let data = try response.result.get().results
                     completion(data)
@@ -76,7 +76,7 @@ struct DataManager {
         
         let favouritesRequest = AF.request("https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1", method: .get)
         
-        favouritesRequest.responseDecodable(of: Results.self) { response in
+        favouritesRequest.responseDecodable(of: ResultsMovie.self) { response in
             do {
                 let data = try response.result.get().results
                 completion(data)
