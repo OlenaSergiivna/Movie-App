@@ -49,4 +49,15 @@ struct RepositoryService {
             
         }
     }
+    func tvShowsSearchCashing(completion: @escaping([MovieModel]) -> Void) {
+        
+        // Data fetched from API
+        
+        DataManager.shared.searchMovie(with: text, page: 1) { results in
+            
+            // Data saved in Realm Database
+            
+            
+        }
+    }
 }

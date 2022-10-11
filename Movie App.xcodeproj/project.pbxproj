@@ -40,6 +40,8 @@
 		CEC7BD5228E39B9300A7CDD6 /* GenresTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */; };
 		CEC7BD5528E3A78700A7CDD6 /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */; };
 		CEC7BD5628E3A78700A7CDD6 /* GenreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */; };
+		CED374E528F619C1006D95A9 /* SearchMovieRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */; };
+		CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */; };
 		CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */; };
 		CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731C28F054CE00CD0872 /* RealmManager.swift */; };
 		CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */; };
@@ -86,6 +88,8 @@
 		CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenresTableViewCell.xib; sourceTree = "<group>"; };
 		CEC7BD5328E3A78700A7CDD6 /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreCollectionViewCell.xib; sourceTree = "<group>"; };
+		CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieRealmModel.swift; sourceTree = "<group>"; };
+		CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVRealmModel.swift; sourceTree = "<group>"; };
 		CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsScreenViewController.swift; sourceTree = "<group>"; };
 		CEFA731C28F054CE00CD0872 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesRealmModel.swift; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 			children = (
 				CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */,
 				CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */,
+				CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */,
+				CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -417,6 +423,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB3450B28E23E0100451A6F /* GenresViewController.swift in Sources */,
+				CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */,
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */,
@@ -428,6 +435,7 @@
 				CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */,
 				CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */,
 				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
+				CED374E528F619C1006D95A9 /* SearchMovieRealmModel.swift in Sources */,
 				CEFA732228F0759F00CD0872 /* RepositoryService.swift in Sources */,
 				CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */,
 				CE0B874028E4E919005CBA8A /* MovieModel.swift in Sources */,

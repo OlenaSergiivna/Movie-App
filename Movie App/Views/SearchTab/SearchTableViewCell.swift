@@ -11,8 +11,6 @@ class SearchTableViewCell: UITableViewCell {
 
     @IBOutlet weak var movieTitle: UILabel!
     
-    @IBOutlet weak var movieRating: UILabel!
-    
     @IBOutlet weak var movieImage: UIImageView!
     
     override func awakeFromNib() {
@@ -30,7 +28,7 @@ class SearchTableViewCell: UITableViewCell {
         
         if let title = data.title, let imagePath = data.posterPath {
             movieTitle.text = title
-            movieRating.text = String(data.voteAverage)
+            //movieRating.text = String(data.voteAverage)
             movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
             movieImage.layer.masksToBounds = true
             movieImage.layer.cornerRadius = 5
@@ -46,7 +44,7 @@ class SearchTableViewCell: UITableViewCell {
         
         if let imagePath = data.posterPath {
             movieTitle.text = data.name
-            movieRating.text = String(data.voteAverage)
+            //movieRating.text = String(data.voteAverage)
             movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
             movieImage.layer.masksToBounds = true
             movieImage.layer.cornerRadius = 5

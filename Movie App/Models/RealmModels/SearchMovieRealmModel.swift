@@ -1,22 +1,24 @@
 //
-//  FavoriteMoviesRealmModel.swift
+//  SearchMovieModel.swift
 //  Movie App
 //
-//  Created by user on 07.10.2022.
+//  Created by user on 12.10.2022.
 //
 
 import Foundation
 import RealmSwift
 
-class FavoritesMovieRealm: Object {
+class SearchMovieRealmModel: Object {
     
     @Persisted var page: Int
-    @Persisted var results: List<FavoriteMovieRealm>
+    @Persisted var results: List<SearchMovieRealm>
     @Persisted var totalPages: Int
     @Persisted var totalResults: Int
+    
 }
 
-class FavoriteMovieRealm: Object {
+
+class SearchMovieRealm: Object {
     
     @Persisted var adult: Bool
     @Persisted var backdropPath: String?
@@ -32,6 +34,5 @@ class FavoriteMovieRealm: Object {
     @Persisted var video: Bool?
     @Persisted var voteAverage: Double
     @Persisted var voteCount: Int
+    
 }
-
-

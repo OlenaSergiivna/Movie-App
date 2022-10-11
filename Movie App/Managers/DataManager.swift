@@ -127,10 +127,9 @@ struct DataManager {
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsTV.self) { response in
-            print(response)
             do {
-                print("tv show decoded")
                 let data = try response.result.get().results
+                print("tv show decoded")
                 completion(data)
             } catch {
                 print(error.localizedDescription)
@@ -145,9 +144,10 @@ struct DataManager {
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsMovie.self) { response in
+           
             do {
-                print("movie decoded")
                 let data = try response.result.get().results
+                print("movie decoded")
                 completion(data)
             } catch {
                 print(error.localizedDescription)

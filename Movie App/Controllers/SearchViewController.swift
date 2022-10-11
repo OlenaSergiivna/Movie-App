@@ -16,6 +16,9 @@ class SearchViewController: UIViewController {
     private var searchResultsTV: [TVModel] = []
     private var searchResultsMovie: [MovieModel] = []
     
+    private var previousSearchResultsMovie: [MovieModel] = []
+    private var previousSearchResultsTV: [TVModel] = []
+    
     let searchController = UISearchController(searchResultsController: nil)
     
     private var searchBarIsEmpty: Bool {
@@ -30,7 +33,7 @@ class SearchViewController: UIViewController {
         
         let nibFavouritesCell = UINib(nibName: "SearchTableViewCell", bundle: nil)
         searchTableView.register(nibFavouritesCell, forCellReuseIdentifier: "SearchTableViewCell")
-        
+
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
@@ -72,13 +75,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch selectedIndex {
         case 0:
-            return !searchResultsMovie.isEmpty ? searchResultsMovie.count : 0
+            return !searchResultsMovie.isEmpty ? searchResultsMovie.count : 10
         case 1:
-            return !searchResultsTV.isEmpty ? searchResultsTV.count : 0
+            return !searchResultsTV.isEmpty ? searchResultsTV.count : 10
         default:
             return 0
         }
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -93,24 +97,33 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
             if !searchResultsMovie.isEmpty {
                 cell.configureMovie(with: searchResultsMovie[indexPath.row])
-                
                 return cell
+            } else if !previousSearchResultsMovie.isEmpty {
+                cell.configureMovie(with: previousSearchResultsMovie[indexPath.row])
+                return cell
+            } else {
+                cell.movieTitle.text = ""
+                return cell
+               
             }
         case 1:
             
             if !searchResultsTV.isEmpty {
                 cell.configureTV(with: searchResultsTV[indexPath.row])
-                
                 return cell
+            } else if !previousSearchResultsTV.isEmpty {
+                cell.configureTV(with: previousSearchResultsTV[indexPath.row])
+                return cell
+            } else {
+                //cell.movieRating.text = ""
+                cell.movieTitle.text = ""
+                return cell
+               
             }
             
         default:
-            var content = cell.defaultContentConfiguration()
-            content.text = "No search results"
-            cell.contentConfiguration = content
             return cell
         }
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -127,23 +140,30 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else {
             return
         }
-        print("text = \(text)")
+        
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        print("selected index = \(selectedIndex)")
+       
         switch selectedIndex {
+            
         case 0:
-            print("update search results: movie")
+            
             if text.count > 2 {
                 DataManager.shared.searchMovie(with: text, page: 1) { results in
                     self.searchResultsMovie = results
+                    
+                    for i in 1...10 {
+                        RealmManager.shared.saveFavoriteMoviesInRealm(movies: results)
+                    }
+                   
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
                 }
             }
+            
         case 1:
-            print("update search results: tv")
+           
             if text.count > 2 {
                 DataManager.shared.searchTV(with: text, page: 1) { results in
                     self.searchResultsTV = results
@@ -153,6 +173,7 @@ extension SearchViewController: UISearchResultsUpdating {
                     }
                 }
             }
+            
         default:
             print("Can't find segmented control...")
         }
