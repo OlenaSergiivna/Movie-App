@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchTableView: UITableView!
     
@@ -16,7 +16,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     private var searchResultsTV: [TVModel] = []
     private var searchResultsMovie: [MovieModel] = []
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
     let searchController = UISearchController(searchResultsController: nil)
     
     private var searchBarIsEmpty: Bool {
@@ -37,10 +36,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
         searchController.searchBar.placeholder = "Search"
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.scopeButtonTitles = ["Movies","TV Shows"]
         definesPresentationContext = true
         
-//        segmentedControll.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
-//        segmentedControll.selectedSegmentIndex = 0
         
     }
     
@@ -63,21 +61,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-   
-    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
-            self.searchTableView.reloadData()
-        print(sender.selectedSegmentIndex)
-    }
-    
-    
-    
 }
 
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let selectedIndex = segmentedControl.selectedSegmentIndex
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
         
         switch selectedIndex {
         case 0:
@@ -95,18 +86,18 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let selectedIndex = segmentedControl.selectedSegmentIndex
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
         case 0:
-            print("creating cell: movie")
+
             if !searchResultsMovie.isEmpty {
                 cell.configureMovie(with: searchResultsMovie[indexPath.row])
                 
                 return cell
             }
         case 1:
-            print("creating cell: tv")
+            
             if !searchResultsTV.isEmpty {
                 cell.configureTV(with: searchResultsTV[indexPath.row])
                 
@@ -136,9 +127,9 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else {
             return
         }
-        
-        let selectedIndex = segmentedControl.selectedSegmentIndex
-        
+        print("text = \(text)")
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        print("selected index = \(selectedIndex)")
         switch selectedIndex {
         case 0:
             print("update search results: movie")
@@ -165,7 +156,17 @@ extension SearchViewController: UISearchResultsUpdating {
         default:
             print("Can't find segmented control...")
         }
-  
+        
+    }
+}
+
+
+
+extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        updateSearchResults(for: searchController)
+        
     }
     
 }
