@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreviousRequestsTableViewCell" rowHeight="88" id="KGk-i7-Jjw" customClass="PreviousRequestsTableViewCell" customModule="Movie_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="367" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="367" height="88"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQt-Zw-YSn">
+                        <rect key="frame" x="0.0" y="0.0" width="367" height="88"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW4-ha-GHY">
+                                <rect key="frame" x="16" y="15.999999999999998" width="335" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="KW4-ha-GHY" firstAttribute="top" secondItem="NQt-Zw-YSn" secondAttribute="top" constant="16" id="oAW-Qu-WW6"/>
+                            <constraint firstAttribute="trailing" secondItem="KW4-ha-GHY" secondAttribute="trailing" constant="16" id="rMv-hz-AI4"/>
+                            <constraint firstItem="KW4-ha-GHY" firstAttribute="leading" secondItem="NQt-Zw-YSn" secondAttribute="leading" constant="16" id="x75-Cn-Qzl"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NQt-Zw-YSn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8ZC-uA-1Qd"/>
+                    <constraint firstItem="NQt-Zw-YSn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gLV-LQ-iJe"/>
+                    <constraint firstAttribute="bottom" secondItem="NQt-Zw-YSn" secondAttribute="bottom" id="h94-7f-bfA"/>
+                    <constraint firstAttribute="trailing" secondItem="NQt-Zw-YSn" secondAttribute="trailing" id="z9f-Y7-gF7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="requestLabel" destination="KW4-ha-GHY" id="WuY-Tl-Nwm"/>
+            </connections>
+            <point key="canvasLocation" x="60.769230769230766" y="36.255924170616112"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

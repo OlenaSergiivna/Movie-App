@@ -16,8 +16,8 @@ class SearchViewController: UIViewController {
     private var searchResultsTV: [TVModel] = []
     private var searchResultsMovie: [MovieModel] = []
     
-    private var previousSearchResultsMovie: [MovieModel] = []
-    private var previousSearchResultsTV: [TVModel] = []
+    private var previousSearchRequestsMovie: [String] = ["hulk", "malena", "house of dragon"]
+    private var previousSearchRequestsTV: [String] = ["star wars", "gucci", "harry potter"]
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -31,8 +31,11 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nibFavouritesCell = UINib(nibName: "SearchTableViewCell", bundle: nil)
-        searchTableView.register(nibFavouritesCell, forCellReuseIdentifier: "SearchTableViewCell")
+        let nibResultCell = UINib(nibName: "SearchTableViewCell", bundle: nil)
+        searchTableView.register(nibResultCell, forCellReuseIdentifier: "SearchTableViewCell")
+        
+        let nibRequestCell = UINib(nibName: "PreviousRequestsTableViewCell", bundle: nil)
+        searchTableView.register(nibRequestCell, forCellReuseIdentifier: "PreviousRequestsTableViewCell")
 
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -70,61 +73,97 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
-        
         switch selectedIndex {
+            
         case 0:
-            return !searchResultsMovie.isEmpty ? searchResultsMovie.count : 10
+            if !searchResultsMovie.isEmpty {
+                return searchResultsMovie.count
+            } else if !previousSearchRequestsMovie.isEmpty {
+                return previousSearchRequestsMovie.count
+            } else {
+                return 10
+            }
+            
         case 1:
-            return !searchResultsTV.isEmpty ? searchResultsTV.count : 10
+            if !searchResultsTV.isEmpty {
+                return searchResultsTV.count
+            } else if !previousSearchRequestsTV.isEmpty {
+                return previousSearchRequestsTV.count
+            } else {
+                return 10
+            }
+            
         default:
+            print("can't count cells")
             return 0
         }
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else {
-            return UITableViewCell()
-        }
-        
+
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
         case 0:
-
+            
             if !searchResultsMovie.isEmpty {
+                
+                guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else {
+                    return UITableViewCell()
+                }
+                
                 cell.configureMovie(with: searchResultsMovie[indexPath.row])
                 return cell
-            } else if !previousSearchResultsMovie.isEmpty {
-                cell.configureMovie(with: previousSearchResultsMovie[indexPath.row])
+                
+            } else if !previousSearchRequestsMovie.isEmpty {
+                
+                guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.configureRequest(with: previousSearchRequestsMovie[indexPath.row])
                 return cell
+                
             } else {
-                cell.movieTitle.text = ""
-                return cell
-               
+                return UITableViewCell()
+                
             }
+            
         case 1:
             
             if !searchResultsTV.isEmpty {
+                
+                guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else {
+                    return UITableViewCell()
+                }
+                
                 cell.configureTV(with: searchResultsTV[indexPath.row])
                 return cell
-            } else if !previousSearchResultsTV.isEmpty {
-                cell.configureTV(with: previousSearchResultsTV[indexPath.row])
+                
+            } else if !previousSearchRequestsTV.isEmpty {
+                
+                guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
+                    return UITableViewCell()
+                }
+                
+                cell.configureRequest(with: previousSearchRequestsTV[indexPath.row])
                 return cell
+                
             } else {
-                //cell.movieRating.text = ""
-                cell.movieTitle.text = ""
-                return cell
-               
+                return UITableViewCell()
+                
             }
             
         default:
-            return cell
+            print("can't create cell")
+            return UITableViewCell()
         }
     }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -150,12 +189,7 @@ extension SearchViewController: UISearchResultsUpdating {
             if text.count > 2 {
                 DataManager.shared.searchMovie(with: text, page: 1) { results in
                     self.searchResultsMovie = results
-                    
-                    for i in 1...10 {
-                        RealmManager.shared.saveFavoriteMoviesInRealm(movies: results)
-                    }
-                   
-                    
+
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
@@ -165,9 +199,10 @@ extension SearchViewController: UISearchResultsUpdating {
         case 1:
            
             if text.count > 2 {
+                
                 DataManager.shared.searchTV(with: text, page: 1) { results in
                     self.searchResultsTV = results
-                    
+        
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
@@ -187,7 +222,8 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         updateSearchResults(for: searchController)
-        
+        searchTableView.reloadData()
+ 
     }
     
 }

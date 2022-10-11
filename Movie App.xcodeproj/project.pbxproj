@@ -42,6 +42,8 @@
 		CEC7BD5628E3A78700A7CDD6 /* GenreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */; };
 		CED374E528F619C1006D95A9 /* SearchMovieRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */; };
 		CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */; };
+		CED374EA28F625B6006D95A9 /* PreviousRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */; };
+		CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED374E928F625B6006D95A9 /* PreviousRequestsTableViewCell.xib */; };
 		CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */; };
 		CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731C28F054CE00CD0872 /* RealmManager.swift */; };
 		CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */; };
@@ -90,6 +92,8 @@
 		CEC7BD5428E3A78700A7CDD6 /* GenreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenreCollectionViewCell.xib; sourceTree = "<group>"; };
 		CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieRealmModel.swift; sourceTree = "<group>"; };
 		CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVRealmModel.swift; sourceTree = "<group>"; };
+		CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousRequestsTableViewCell.swift; sourceTree = "<group>"; };
+		CED374E928F625B6006D95A9 /* PreviousRequestsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviousRequestsTableViewCell.xib; sourceTree = "<group>"; };
 		CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsScreenViewController.swift; sourceTree = "<group>"; };
 		CEFA731C28F054CE00CD0872 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		CEFA731F28F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesRealmModel.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 			children = (
 				CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */,
 				CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */,
+				CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */,
+				CED374E928F625B6006D95A9 /* PreviousRequestsTableViewCell.xib */,
 			);
 			path = SearchTab;
 			sourceTree = "<group>";
@@ -363,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE14063D28E0C57F00B67410 /* LaunchScreen.storyboard in Resources */,
+				CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */,
 				CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */,
 				CEC7BD5228E39B9300A7CDD6 /* GenresTableViewCell.xib in Resources */,
 				CE169E4928EE34AF00FF9FB0 /* FavouritesTableViewCell.xib in Resources */,
@@ -432,6 +439,7 @@
 				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
 				CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
+				CED374EA28F625B6006D95A9 /* PreviousRequestsTableViewCell.swift in Sources */,
 				CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */,
 				CEFA732028F05B4A00CD0872 /* FavoriteMoviesRealmModel.swift in Sources */,
 				CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */,
