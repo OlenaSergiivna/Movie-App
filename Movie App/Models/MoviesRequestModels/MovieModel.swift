@@ -75,4 +75,24 @@ extension MovieModel {
         self.video = movieRealm.video
         
     }
+    
+    
+    init(from movieRealm: SearchMovieRealm) {
+        
+        self.adult = movieRealm.adult
+        self.backdropPath = movieRealm.backdropPath
+        self.id = movieRealm.id
+        self.originalLanguage = movieRealm.originalLanguage
+        self.overview = movieRealm.overview
+        self.posterPath = movieRealm.posterPath
+        self.releaseDate = movieRealm.releaseDate
+        self.genreIDS = Array(movieRealm.genreIDS)
+        self.popularity = movieRealm.popularity
+        self.voteAverage = movieRealm.voteAverage
+        self.voteCount = movieRealm.voteCount
+        self.title = movieRealm.title
+        self.originalTitle = movieRealm.originalTitle
+        self.video = movieRealm.video
+        
+    }
 }

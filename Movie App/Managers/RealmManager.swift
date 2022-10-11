@@ -85,15 +85,17 @@ struct RealmManager {
     
     
     enum MediaType {
-        case movie
-        case tv
+        case movieFavorite
+        case tvFavorite
+        case movieSearch
+        case tvSearch
     }
     
     //MARK: - Get from Realm
     
-    func getFavoritesFromRealm(type: MediaType) -> Any {
+    func getFromRealm(type: MediaType) -> Any {
         switch type {
-        case .movie:
+        case .movieFavorite:
             
             let moviesRealm = realm.objects(FavoriteMovieRealm.self)
             
@@ -106,7 +108,7 @@ struct RealmManager {
             return (Array(movies))
             
             
-        case .tv:
+        case .tvFavorite:
             
             let tvRealm = realm.objects(FavoriteTVRealm.self)
             
@@ -118,8 +120,30 @@ struct RealmManager {
             }
             
             return (Array(tvShows))
+            
+        case .movieSearch:
+            
+            let moviesRealm = realm.objects(SearchMovieRealm.self)
+            
+            var movies = [MovieModel]()
+            
+            for movieRealm in moviesRealm {
+                let movie = MovieModel(from: movieRealm)
+            }
+            return (Array(movies))
+            
+        case .tvSearch:
+            let tvRealm = realm.objects(SearchTVRealm.self)
+            
+            var tvShows = [TVModel]()
+            
+            for tv in tvRealm {
+                let tv = TVModel(from: tv)
+                tvShows.append(tv)
+            }
+            
+            return (Array(tvShows))
         }
-        
     }
     
     //MARK: - Delete object from Realm
@@ -136,4 +160,60 @@ struct RealmManager {
         completion()
     }
     
+    
+    func saveMoviesSearchResultsInRealm(movies: [MovieModel]) {
+        
+        for movie in movies {
+            
+            let movieRealm = SearchMovieRealm()
+            
+            movieRealm.adult = movie.adult
+            movieRealm.backdropPath = movie.backdropPath
+            movieRealm.genreIDS.append(objectsIn: movie.genreIDS)
+            movieRealm.id = movie.id
+            movieRealm.originalLanguage = movie.originalLanguage
+            movieRealm.originalTitle = movie.originalTitle
+            movieRealm.overview = movie.overview
+            movieRealm.popularity = movie.popularity
+            movieRealm.posterPath = movie.posterPath
+            movieRealm.releaseDate = movie.releaseDate
+            movieRealm.title = movie.title
+            movieRealm.video = movie.video
+            movieRealm.voteAverage = movie.voteAverage
+            movieRealm.voteCount = movie.voteCount
+            
+            try? realm.write {
+                realm.add(movieRealm, update: .all)
+                
+            }
+        }
+    }
+    
+    
+    func saveTVSearchResultsInRealm(tvShows: [TVModel]) {
+        
+        for tv in tvShows {
+            
+            let tvRealm = SearchTVRealm()
+            
+            tvRealm.backdropPath = tv.backdropPath
+            tvRealm.firstAirDate = tv.firstAirDate
+            tvRealm.genreIDS.append(objectsIn: tv.genreIDS)
+            tvRealm.id = tv.id
+            tvRealm.name = tv.name
+            tvRealm.originCountry.append(objectsIn: tv.originCountry)
+            tvRealm.originalLanguage = tv.originalLanguage
+            tvRealm.originalName = tv.originalName
+            tvRealm.overview = tv.overview
+            tvRealm.popularity = tv.popularity
+            tvRealm.posterPath = tv.posterPath
+            tvRealm.voteAverage = tv.voteAverage
+            tvRealm.voteCount = tv.voteCount
+            
+            try? realm.write {
+                realm.add(tvRealm, update: .all)
+                
+            }
+        }
+    }
 }

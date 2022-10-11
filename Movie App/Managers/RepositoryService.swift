@@ -23,7 +23,7 @@ struct RepositoryService {
             
             // Data fetched from Realm Database & converted in ViewController's models
             
-            let favoritesArray = RealmManager.shared.getFavoritesFromRealm(type: .movie)
+            let favoritesArray = RealmManager.shared.getFromRealm(type: .movieFavorite)
             
             completion(favoritesArray as! [MovieModel])
             
@@ -43,21 +43,48 @@ struct RepositoryService {
             
             // Data fetched from Realm Database & converted in ViewController's models
             
-            let favoritesArray = RealmManager.shared.getFavoritesFromRealm(type: .movie)
+            let favoritesArray = RealmManager.shared.getFromRealm(type: .movieFavorite)
             
             completion(favoritesArray as! [TVModel])
             
         }
     }
-    func tvShowsSearchCashing(completion: @escaping([MovieModel]) -> Void) {
+    
+    
+    func movieSearchCashing(text: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         // Data fetched from API
         
-        DataManager.shared.searchMovie(with: text, page: 1) { results in
+        DataManager.shared.searchMovie(with: text, page: page) { results in
             
             // Data saved in Realm Database
             
+            RealmManager.shared.saveMoviesSearchResultsInRealm(movies: results)
             
+            // Data fetched from Realm Database & converted in ViewController's models
+            
+            let searchArray = RealmManager.shared.getFromRealm(type: .movieSearch)
+            
+            completion(searchArray as! [MovieModel])
+        }
+    }
+    
+    
+    func tvSearchCashing(text: String, page: Int, completion: @escaping([TVModel]) -> Void) {
+        
+        // Data fetched from API
+        
+        DataManager.shared.searchTV(with: text, page: page) { results in
+            
+            // Data saved in Realm Database
+            
+            RealmManager.shared.saveTVSearchResultsInRealm(tvShows: results)
+            
+            // Data fetched from Realm Database & converted in ViewController's models
+            
+            let searchArray = RealmManager.shared.getFromRealm(type: .tvSearch)
+            
+            completion(searchArray as! [TVModel])
         }
     }
 }

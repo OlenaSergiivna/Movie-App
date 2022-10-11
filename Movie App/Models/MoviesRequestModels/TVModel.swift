@@ -69,4 +69,22 @@ extension TVModel {
         self.voteAverage = tvRealm.voteAverage
         self.voteCount = tvRealm.voteCount
     }
+    
+    
+    init(from tvRealm: SearchTVRealm) {
+        
+        self.backdropPath = tvRealm.backdropPath
+        self.firstAirDate = tvRealm.firstAirDate
+        self.genreIDS = Array(tvRealm.genreIDS)
+        self.id = tvRealm.id
+        self.name = tvRealm.name
+        self.originCountry = Array(tvRealm.originCountry)
+        self.originalLanguage = tvRealm.originalLanguage
+        self.originalName = tvRealm.originalName
+        self.overview = tvRealm.overview
+        self.popularity = tvRealm.popularity
+        self.posterPath = tvRealm.posterPath
+        self.voteAverage = tvRealm.voteAverage
+        self.voteCount = tvRealm.voteCount
+    }
 }

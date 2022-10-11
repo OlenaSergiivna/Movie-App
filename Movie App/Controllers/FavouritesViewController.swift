@@ -25,7 +25,7 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        someMovies = RealmManager.shared.getFavoritesFromRealm(type: .movie) as! [MovieModel]
+        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
         
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
