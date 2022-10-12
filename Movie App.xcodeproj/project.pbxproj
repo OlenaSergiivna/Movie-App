@@ -35,6 +35,7 @@
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* GenresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* GenresViewController.swift */; };
+		CEC003B628F780A5005B8B4E /* String+ isBlank.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC003B528F780A5005B8B4E /* String+ isBlank.swift */; };
 		CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */; };
 		CEC7BD5128E39B9300A7CDD6 /* GenresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */; };
 		CEC7BD5228E39B9300A7CDD6 /* GenresTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */; };
@@ -85,6 +86,7 @@
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* GenresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewController.swift; sourceTree = "<group>"; };
+		CEC003B528F780A5005B8B4E /* String+ isBlank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ isBlank.swift"; sourceTree = "<group>"; };
 		CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovedResponseModel.swift; sourceTree = "<group>"; };
 		CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresTableViewCell.swift; sourceTree = "<group>"; };
 		CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenresTableViewCell.xib; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */,
+				CEC003B528F780A5005B8B4E /* String+ isBlank.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
 				CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */,
+				CEC003B628F780A5005B8B4E /* String+ isBlank.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
 				CED374EA28F625B6006D95A9 /* PreviousRequestsTableViewCell.swift in Sources */,
 				CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */,

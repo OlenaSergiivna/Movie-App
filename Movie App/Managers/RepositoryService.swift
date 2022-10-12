@@ -53,7 +53,7 @@ struct RepositoryService {
         }
     }
     
-    // MARK: - Cashing movies from search
+  //  // MARK: - Cashing movies from search
     
     func movieSearchCashing(text: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
@@ -72,6 +72,7 @@ struct RepositoryService {
             completion(searchArray as! [MovieModel])
         }
     }
+    
     
     // MARK: - Cashing TV Shows from search
     
