@@ -135,6 +135,7 @@ struct RealmManager {
             
             for movieRealm in moviesRealm {
                 let movie = MovieModel(from: movieRealm)
+                movies.append(movie)
             }
             return (Array(movies))
             

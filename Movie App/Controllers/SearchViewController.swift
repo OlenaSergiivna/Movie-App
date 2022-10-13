@@ -270,6 +270,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
+        guard let text = searchController.searchBar.text else {
+            return
+        }
+        
+        let searchText = text.replacingOccurrences(of: " ", with: "%20")
+        
         switch selectedIndex {
         case 0:
             
@@ -280,19 +286,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 
 //                DispatchQueue.main.async {
 //                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
-//                    
+//
 //                }
-                
-                guard let text = searchController.searchBar.text else {
-                    return
-                }
-                
-                let searchText = text.replacingOccurrences(of: " ", with: "%20")
                 
                 DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
                     self.displayStatus = false
                     self.searchResultsMovie.append(contentsOf: result)
-                    print("OK")
+                    
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
@@ -300,17 +300,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         case 1:
-            print("case 1")
-//            if ((indexPath.row == self.searchResultsTV.count - 5) && totalPagesCount > pageCount) {
-//
-//                displayStatus = true
-//                pageCount += 1
-//
-//                DispatchQueue.main.async {
-//                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
-//
-//                }
-//            }
+            DataManager.shared.searchTV(with: searchText, page: pageCount) { result in
+                self.displayStatus = false
+                self.searchResultsTV.append(contentsOf: result)
+                
+                DispatchQueue.main.async {
+                    self.searchTableView.reloadData()
+                }
+            }
             
         default:
             return
