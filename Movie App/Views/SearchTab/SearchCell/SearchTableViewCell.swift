@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var movieTitle: UILabel!
     
     @IBOutlet weak var movieImage: UIImageView!
@@ -17,10 +17,10 @@ class SearchTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         
     }
     
@@ -32,8 +32,8 @@ class SearchTableViewCell: UITableViewCell {
             movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
             movieImage.layer.masksToBounds = true
             movieImage.layer.cornerRadius = 5
-//            someBackView.layer.masksToBounds = true
-//            someBackView.layer.cornerRadius = 10
+            //            someBackView.layer.masksToBounds = true
+            //            someBackView.layer.cornerRadius = 10
         } else {
             return
         }
@@ -48,8 +48,8 @@ class SearchTableViewCell: UITableViewCell {
             movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
             movieImage.layer.masksToBounds = true
             movieImage.layer.cornerRadius = 5
-//            someBackView.layer.masksToBounds = true
-//            someBackView.layer.cornerRadius = 10
+            // someBackView.layer.masksToBounds = true
+            // someBackView.layer.cornerRadius = 10
         } else {
             return
         }

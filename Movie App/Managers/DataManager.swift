@@ -14,8 +14,8 @@ struct DataManager {
     
     private let apiKey = "b718f4e2921daaf000e347114cf44187"
     
-    // MARK: - Request movie genres
     
+    // MARK: - Request movie genres
     
     func requestMovieGenres(completion: @escaping([Genre]) -> Void) {
         
@@ -31,6 +31,7 @@ struct DataManager {
             }
         }
     }
+    
     
     // MARK: - Request tv shows genres
     
@@ -49,22 +50,23 @@ struct DataManager {
         }
     }
     
+    
     // MARK: - Request movie by specific genre/genres
     
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         guard let genreId = Globals.genres.first(where: { $0.name == genre})?.id else { return }
-
-            let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
         
-            let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
+        let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
         
-            movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
-                do {
-                    let data = try response.result.get().results
-                    completion(data)
-                } catch {
-                    print(error.localizedDescription)
+        let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
+        
+        movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
@@ -76,7 +78,6 @@ struct DataManager {
         case movie
         case tv
     }
-    
     
     func requestFavorites(completion: @escaping ([MovieModel]) -> Void) {
         
@@ -91,6 +92,7 @@ struct DataManager {
             }
         }
     }
+    
     
     // MARK: - Delete movie from Favorites list
     
@@ -114,13 +116,15 @@ struct DataManager {
                 if let response = response.response?.statusCode {
                     completion(response)
                 }
-              
+                
             } catch {
                 print("removed: \(error.localizedDescription)")
             }
         }
     }
     
+    
+    // MARK: - Search TV Shows by text request
     
     func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
         
@@ -139,12 +143,14 @@ struct DataManager {
     }
     
     
+    // MARK: - Search movies by text request
+    
     func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping([MovieModel]) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsMovie.self) { response in
-           
+            
             do {
                 let data = try response.result.get().results
                 print("movie decoded")
@@ -153,7 +159,6 @@ struct DataManager {
                 print(error.localizedDescription)
             }
         }
-        
     }
 }
 

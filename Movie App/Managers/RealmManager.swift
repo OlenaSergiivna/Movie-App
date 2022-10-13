@@ -17,12 +17,16 @@ struct RealmManager {
     
     private init() { }
     
+    
+    // MARK: - Delete all data from Realm
+    
     func deleteAll() {
         
         try! realm.write {
             realm.deleteAll()
         }
     }
+    
     
     //MARK: - Save movies in Realm
     
@@ -54,7 +58,8 @@ struct RealmManager {
         }
     }
     
-    //MARK: - Save tv shows in Realm
+    
+    //MARK: - Save TV Shows in Realm
     
     func saveFavoriteTVInRealm(tvShows: [TVModel]) {
         
@@ -90,6 +95,7 @@ struct RealmManager {
         case movieSearch
         case tvSearch
     }
+    
     
     //MARK: - Get from Realm
     
@@ -146,7 +152,8 @@ struct RealmManager {
         }
     }
     
-    //MARK: - Delete object from Realm
+    
+    //MARK: - Delete object of specific type from Realm
     
     func delete<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
         
@@ -160,6 +167,8 @@ struct RealmManager {
         completion()
     }
     
+    
+    // MARK: - Save movies from search results in Realm
     
     func saveMoviesSearchResultsInRealm(movies: [MovieModel]) {
         
@@ -189,6 +198,8 @@ struct RealmManager {
         }
     }
     
+    
+    // MARK: - Save TV Shows from search results in Realm
     
     func saveTVSearchResultsInRealm(tvShows: [TVModel]) {
         

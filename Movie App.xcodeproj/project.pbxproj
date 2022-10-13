@@ -134,10 +134,8 @@
 		CE08EB3728E33EE30038CC92 /* SearchTab */ = {
 			isa = PBXGroup;
 			children = (
-				CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */,
-				CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */,
-				CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */,
-				CED374E928F625B6006D95A9 /* PreviousRequestsTableViewCell.xib */,
+				CE14D97E28F862F100CEEB02 /* SearchCell */,
+				CE14D97F28F8631300CEEB02 /* RequestsCell */,
 			);
 			path = SearchTab;
 			sourceTree = "<group>";
@@ -226,7 +224,7 @@
 				CE14063628E0C57D00B67410 /* Main.storyboard */,
 				CE08EB3728E33EE30038CC92 /* SearchTab */,
 				CEB3450D28E23E0A00451A6F /* GenresTab */,
-				CE169E3E28EE30AA00FF9FB0 /* FavouritesTab */,
+				CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -243,13 +241,40 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		CE169E3E28EE30AA00FF9FB0 /* FavouritesTab */ = {
+		CE14D97E28F862F100CEEB02 /* SearchCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */,
+				CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */,
+			);
+			path = SearchCell;
+			sourceTree = "<group>";
+		};
+		CE14D97F28F8631300CEEB02 /* RequestsCell */ = {
+			isa = PBXGroup;
+			children = (
+				CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */,
+				CED374E928F625B6006D95A9 /* PreviousRequestsTableViewCell.xib */,
+			);
+			path = RequestsCell;
+			sourceTree = "<group>";
+		};
+		CE14D98028F8638C00CEEB02 /* GenresTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */,
+				CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */,
+			);
+			path = GenresTableViewCell;
+			sourceTree = "<group>";
+		};
+		CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */ = {
 			isa = PBXGroup;
 			children = (
 				CE169E4628EE34AF00FF9FB0 /* FavouritesTableViewCell.swift */,
 				CE169E4728EE34AF00FF9FB0 /* FavouritesTableViewCell.xib */,
 			);
-			path = FavouritesTab;
+			path = FavoritesTab;
 			sourceTree = "<group>";
 		};
 		CE2E29AA28ECE81C00C865E5 /* ViewModels */ = {
@@ -284,8 +309,7 @@
 		CEB3450D28E23E0A00451A6F /* GenresTab */ = {
 			isa = PBXGroup;
 			children = (
-				CEC7BD4F28E39B9300A7CDD6 /* GenresTableViewCell.swift */,
-				CEC7BD5028E39B9300A7CDD6 /* GenresTableViewCell.xib */,
+				CE14D98028F8638C00CEEB02 /* GenresTableViewCell */,
 				CEC7BD5728E3A78E00A7CDD6 /* GenreCollectionViewCell */,
 			);
 			path = GenresTab;

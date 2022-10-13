@@ -9,6 +9,8 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+
+    
     @IBOutlet weak var searchTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
@@ -205,6 +207,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 DataManager.shared.searchMovie(with: searchText, page: 1) { results in
                     self.searchResultsMovie = results
+                    
+                    
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()

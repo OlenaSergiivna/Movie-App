@@ -8,7 +8,7 @@
 import UIKit
 
 class GenresTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var genresCollectionView: UICollectionView!
     
     @IBOutlet weak var genreLabel: UILabel!
@@ -18,8 +18,8 @@ class GenresTableViewCell: UITableViewCell {
             
             self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
             
-             genresCollectionView.dataSource = self
-             genresCollectionView.delegate = self
+            genresCollectionView.dataSource = self
+            genresCollectionView.delegate = self
             
             DispatchQueue.main.async { [weak self] in
                 guard let self else {
@@ -36,7 +36,7 @@ class GenresTableViewCell: UITableViewCell {
         self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
         
     }
-  
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -44,7 +44,7 @@ class GenresTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-
+        
         genresCollectionView.dataSource = nil
         genresCollectionView.delegate = nil
         genresCollectionView.reloadData()

@@ -11,6 +11,7 @@ struct RepositoryService {
     
     static let shared = RepositoryService()
     
+    
     // MARK: - Cashing movies from Favorites list
     
     func movieFavoritesCashing(completion: @escaping([MovieModel]) -> Void) {
@@ -31,6 +32,7 @@ struct RepositoryService {
             
         }
     }
+    
     
     // MARK: - Cashing TV Shows from Favorites list
     
@@ -53,7 +55,8 @@ struct RepositoryService {
         }
     }
     
-  //  // MARK: - Cashing movies from search
+    
+    //  // MARK: - Cashing movies from search
     
     func movieSearchCashing(text: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         

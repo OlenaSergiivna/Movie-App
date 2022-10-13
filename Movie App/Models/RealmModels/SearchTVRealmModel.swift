@@ -17,7 +17,7 @@ class SearchTVRealmModel: Object {
 }
 
 class SearchTVRealm: Object {
-
+    
     @Persisted var backdropPath: String?
     @Persisted var firstAirDate: String?
     @Persisted var genreIDS: List<Int>

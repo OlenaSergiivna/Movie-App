@@ -17,7 +17,7 @@ class FavoritesTVRealm: Object {
 }
 
 class FavoriteTVRealm: Object {
-
+    
     @Persisted var backdropPath: String?
     @Persisted var firstAirDate: String?
     @Persisted var genreIDS: List<Int>
