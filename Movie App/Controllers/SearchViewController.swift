@@ -18,11 +18,27 @@ class SearchViewController: UIViewController {
     private var searchResultsTV: [TVModel] = []
     private var searchResultsMovie: [MovieModel] = []
     
-    private var previousSearchRequests: [String] = [] {
+    private var previousSearchRequests: [String] = []
+//    {
+//        didSet {
+//            print("request array: \(previousSearchRequests)")
+//        }
+//    }
+    
+    var pageCount = 1 {
         didSet {
-            print("request array: \(previousSearchRequests)")
+            print("page count: \(pageCount)")
         }
     }
+    
+    var displayStatus = false
+//    {
+//        didSet {
+//            print("display status: \(displayStatus)")
+//        }
+//    }
+    
+    var totalPagesCount = 10
     
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -185,10 +201,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
         
     }
+    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -204,10 +222,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if cell is PreviousRequestsTableViewCell {
                 let text = previousSearchRequests[indexPath.row]
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
+                searchController.searchBar.text = text
                 
-                DataManager.shared.searchMovie(with: searchText, page: 1) { results in
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { results in
                     self.searchResultsMovie = results
-                    
                     
                     
                     DispatchQueue.main.async {
@@ -223,7 +241,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             
             if cell is PreviousRequestsTableViewCell {
-                
                 let text = previousSearchRequests[indexPath.row]
                 
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
@@ -247,6 +264,58 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
+        switch selectedIndex {
+        case 0:
+            
+            if ((indexPath.row == searchResultsMovie.count - 5) && totalPagesCount > pageCount) {
+                
+                displayStatus = true
+                pageCount += 1
+                
+//                DispatchQueue.main.async {
+//                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
+//                    
+//                }
+                
+                guard let text = searchController.searchBar.text else {
+                    return
+                }
+                
+                let searchText = text.replacingOccurrences(of: " ", with: "%20")
+                
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
+                    self.displayStatus = false
+                    self.searchResultsMovie.append(contentsOf: result)
+                    print("OK")
+                    DispatchQueue.main.async {
+                        self.searchTableView.reloadData()
+                    }
+                }
+            }
+            
+        case 1:
+            print("case 1")
+//            if ((indexPath.row == self.searchResultsTV.count - 5) && totalPagesCount > pageCount) {
+//
+//                displayStatus = true
+//                pageCount += 1
+//
+//                DispatchQueue.main.async {
+//                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
+//
+//                }
+//            }
+            
+        default:
+            return
+        }
+    }
 }
 
 
@@ -256,9 +325,9 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text else {
             return
         }
-        
+        print("UpdateResults text: \(text)")
         let searchText = text.replacingOccurrences(of: " ", with: "%20")
-        
+        print("UpdateResults text: \(searchText)")
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
@@ -266,7 +335,7 @@ extension SearchViewController: UISearchResultsUpdating {
         case 0:
             
             if text.count > 2 {
-                DataManager.shared.searchMovie(with: searchText, page: 1) { results in
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { results in
                     self.searchResultsMovie = results
                     
                     DispatchQueue.main.async {
@@ -331,8 +400,7 @@ extension SearchViewController: UISearchResultsUpdating {
         
         func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
             updateSearchResults(for: searchController)
-            
-            //searchBarTextDidEndEditing(searchController.searchBar)
+            pageCount = 1
             searchTableView.reloadData()
             
             
