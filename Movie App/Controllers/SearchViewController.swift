@@ -21,7 +21,7 @@ class SearchViewController: UIViewController {
             print("request array: \(previousSearchRequests)")
         }
     }
-    //private var previousSearchRequestsTV: [String] = [""]
+    
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -190,7 +190,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // response: what if the is no movies/tv shows on request?
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         let cell = tableView.cellForRow(at: indexPath)
@@ -201,9 +201,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if cell is PreviousRequestsTableViewCell {
                 let text = previousSearchRequests[indexPath.row]
-                print(text)
+                let searchText = text.replacingOccurrences(of: " ", with: "%20")
                 
-                DataManager.shared.searchMovie(with: text, page: 1) { results in
+                DataManager.shared.searchMovie(with: searchText, page: 1) { results in
                     self.searchResultsMovie = results
                     
                     DispatchQueue.main.async {
@@ -221,9 +221,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if cell is PreviousRequestsTableViewCell {
                 
                 let text = previousSearchRequests[indexPath.row]
-                print(text)
                 
-                DataManager.shared.searchTV(with: text, page: 1) { results in
+                let searchText = text.replacingOccurrences(of: " ", with: "%20")
+                
+                DataManager.shared.searchTV(with: searchText, page: 1) { results in
                     self.searchResultsTV = results
                     
                     DispatchQueue.main.async {
@@ -246,11 +247,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 extension SearchViewController: UISearchResultsUpdating {
-    
+    // response: what if the is no results on request?
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {
             return
         }
+        
+        let searchText = text.replacingOccurrences(of: " ", with: "%20")
         
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
@@ -259,7 +262,7 @@ extension SearchViewController: UISearchResultsUpdating {
         case 0:
             
             if text.count > 2 {
-                DataManager.shared.searchMovie(with: text, page: 1) { results in
+                DataManager.shared.searchMovie(with: searchText, page: 1) { results in
                     self.searchResultsMovie = results
                     
                     DispatchQueue.main.async {
@@ -272,7 +275,7 @@ extension SearchViewController: UISearchResultsUpdating {
             
             if text.count > 2 {
                 
-                DataManager.shared.searchTV(with: text, page: 1) { results in
+                DataManager.shared.searchTV(with: searchText, page: 1) { results in
                     self.searchResultsTV = results
                     
                     DispatchQueue.main.async {
@@ -295,11 +298,14 @@ extension SearchViewController: UISearchResultsUpdating {
             guard let text = searchController.searchBar.text  else {
                 return
             }
-            
-        if !text.hasPrefix(" ") && !text.hasSuffix(" ") && !text.isBlank && !previousSearchRequests.contains(where: { ($0 == text)}) {
+        
+        let preSearchText = text.trimmingCharacters(in: .whitespaces)
+        let searchText = preSearchText.trimmingCharacters(in: .punctuationCharacters)
+        
+        if !searchText.isEmpty && !previousSearchRequests.contains(where: { ($0 == searchText)}) {
             //print(previousSearchRequests.contains(where: { !($0.isEmpty) && !($0 == text)}))
-                self.previousSearchRequests.insert(text, at: 0)
-                print("inserted: \(text)")
+            self.previousSearchRequests.insert(searchText.capitalized, at: 0)
+                print("inserted: \(searchText)")
             }
             
             if previousSearchRequests.count > 10 {
