@@ -7,16 +7,18 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-    
-
+class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     private var searchResultsTV: [TVModel] = []
-    private var searchResultsMovie: [MovieModel] = []
+    private var searchResultsMovie: [MovieModel] = [] {
+        didSet {
+            print("array count: \(searchResultsMovie.count)")
+        }
+    }
     
     private var previousSearchRequests: [String] = []
 //    {
@@ -31,12 +33,11 @@ class SearchViewController: UIViewController {
         }
     }
     
-    var displayStatus = false
-//    {
-//        didSet {
-//            print("display status: \(displayStatus)")
-//        }
-//    }
+    var displayStatus = false {
+        didSet {
+            print("display status: \(displayStatus)")
+        }
+    }
     
     var totalPagesCount = 10
     
@@ -52,16 +53,31 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchTableView.keyboardDismissMode = .onDrag
+        
+        // MARK: - Setting refresh control programatically
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(updatateTableView), for: .valueChanged)
+        searchTableView.refreshControl = refreshControl
+        refreshControl.tintColor = .systemTeal
+        refreshControl.attributedTitle = NSAttributedString("Refreshing")
+        refreshControl.sizeToFit()
+        
        //UserDefaults.standard.removeObject(forKey: "requests")
 //        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
 //            print("\(key) = \(value) \n")
 //        }
-
+        // MARK: - Registration nibs
+        
         let nibResultCell = UINib(nibName: "SearchTableViewCell", bundle: nil)
         searchTableView.register(nibResultCell, forCellReuseIdentifier: "SearchTableViewCell")
         
         let nibRequestCell = UINib(nibName: "PreviousRequestsTableViewCell", bundle: nil)
         searchTableView.register(nibRequestCell, forCellReuseIdentifier: "PreviousRequestsTableViewCell")
+        
+        // MARK: - Setting search control programatically
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -71,12 +87,28 @@ class SearchViewController: UIViewController {
         searchController.searchBar.scopeButtonTitles = ["Movies","TV Shows"]
         definesPresentationContext = true
         
+        // MARK: - Setting search textfield
+        searchController.searchBar.searchTextField.delegate = self
+        searchController.searchBar.searchTextField.clearButtonMode = .never
+        
+        
+        // MARK: - Get data from UserDefaults
         if let value = UserDefaults.standard.stringArray(forKey: "requests") {
             self.previousSearchRequests = value
         }
         
     }
     
+    @objc func updatateTableView(refreshControl: UIRefreshControl) {
+        pageCount = 1
+        updateSearchResults(for: searchController)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            refreshControl.endRefreshing()
+        }
+        
+    }
+        
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -96,6 +128,8 @@ class SearchViewController: UIViewController {
         }
     }
     
+    
+    
     func deleteAll(from array: inout [String], key: String, completion: () -> Void) {
         
         array.removeAll()
@@ -103,6 +137,7 @@ class SearchViewController: UIViewController {
         completion()
         
     }
+    
 }
 
 
@@ -220,6 +255,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             
             if cell is PreviousRequestsTableViewCell {
+                searchController.searchBar.endEditing(true)
+                searchController.searchBar.resignFirstResponder()
+                displayStatus = true
                 let text = previousSearchRequests[indexPath.row]
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
                 searchController.searchBar.text = text
@@ -231,6 +269,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
+                    self.displayStatus = false
                 }
             } else if cell is SearchTableViewCell {
                 print("movie cell tapped")
@@ -241,9 +280,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             
             if cell is PreviousRequestsTableViewCell {
-                let text = previousSearchRequests[indexPath.row]
+                searchController.searchBar.resignFirstResponder()
+                displayStatus = true
                 
+                let text = previousSearchRequests[indexPath.row]
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
+                searchController.searchBar.text = text
+                
                 
                 DataManager.shared.searchTV(with: searchText, page: 1) { results in
                     self.searchResultsTV = results
@@ -251,6 +294,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
+                    
+                    self.displayStatus = false
                 }
             } else if cell is SearchTableViewCell {
                 print("tv cell tapped")
@@ -263,7 +308,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -290,22 +334,32 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //                }
                 
                 DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
-                    self.displayStatus = false
+                    //self.displayStatus = false
                     self.searchResultsMovie.append(contentsOf: result)
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
+                    self.displayStatus = false
                 }
             }
             
         case 1:
-            DataManager.shared.searchTV(with: searchText, page: pageCount) { result in
-                self.displayStatus = false
-                self.searchResultsTV.append(contentsOf: result)
+            
+            if ((indexPath.row == searchResultsTV.count - 5) && totalPagesCount > pageCount) {
                 
-                DispatchQueue.main.async {
-                    self.searchTableView.reloadData()
+                displayStatus = true
+                pageCount += 1
+                
+                DataManager.shared.searchTV(with: searchText, page: pageCount) { result in
+                    //self.displayStatus = false
+                    self.searchResultsTV.append(contentsOf: result)
+                    
+                    DispatchQueue.main.async {
+                        self.searchTableView.reloadData()
+                    }
+                    
+                    self.displayStatus = false
                 }
             }
             
@@ -318,47 +372,51 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController: UISearchResultsUpdating {
     // response: what if the is no results on request?
+    
     func updateSearchResults(for searchController: UISearchController) {
+        
         guard let text = searchController.searchBar.text else {
             return
         }
-        print("UpdateResults text: \(text)")
         let searchText = text.replacingOccurrences(of: " ", with: "%20")
-        print("UpdateResults text: \(searchText)")
+
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
             
         case 0:
             
-            if text.count > 2 {
+            if text.count > 2 && displayStatus == false {
+                displayStatus = true
                 DataManager.shared.searchMovie(with: searchText, page: pageCount) { results in
                     self.searchResultsMovie = results
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
+                    
+                    self.displayStatus = false
                 }
             }
             
         case 1:
             
-            if text.count > 2 {
-                
+            if text.count > 2 && displayStatus == false {
+                displayStatus = true
                 DataManager.shared.searchTV(with: searchText, page: 1) { results in
                     self.searchResultsTV = results
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                     }
+                    
+                    self.displayStatus = false
                 }
             }
             
         default:
             print("Can't find segmented control...")
         }
-        
-        
     }
     
     
@@ -373,7 +431,7 @@ extension SearchViewController: UISearchResultsUpdating {
         let searchText = preSearchText.trimmingCharacters(in: .punctuationCharacters)
         
         if !searchText.isEmpty && !previousSearchRequests.contains(where: { ($0 == searchText)}) {
-            //print(previousSearchRequests.contains(where: { !($0.isEmpty) && !($0 == text)}))
+            
             self.previousSearchRequests.insert(searchText.capitalized, at: 0)
                 print("inserted: \(searchText)")
             }
@@ -385,21 +443,86 @@ extension SearchViewController: UISearchResultsUpdating {
             
             UserDefaults.standard.set(self.previousSearchRequests, forKey: "requests")
             print("request saved in UD")
-        
     }
-    
-    //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    //        <#code#>
-    //    }
 }
     
     extension SearchViewController: UISearchBarDelegate {
         
         func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-            updateSearchResults(for: searchController)
             pageCount = 1
+            updateSearchResults(for: searchController)
             searchTableView.reloadData()
-            
-            
         }
+        
+        
+        
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            
+            let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+
+            switch selectedIndex {
+
+            case 0:
+                searchResultsMovie = []
+                pageCount = 1
+                searchController.searchBar.resignFirstResponder()
+
+            case 1:
+                searchResultsTV = []
+                pageCount = 1
+                searchController.searchBar.resignFirstResponder()
+
+
+            default:
+                return
+
+            }
+
+            DispatchQueue.main.async {
+                self.searchTableView.reloadData()
+            }
+        }
+        
     }
+
+
+
+//extension SearchViewController: UITextFieldDelegate {
+//
+//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//        textField.delegate = self
+//
+//        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+//
+//        switch selectedIndex {
+//
+//        case 0:
+//
+//            textField.resignFirstResponder()
+//            searchResultsMovie = []
+//            pageCount = 1
+//
+//
+//
+//        case 1:
+//
+//
+//            searchResultsTV = []
+//            pageCount = 1
+//            searchController.searchBar.resignFirstResponder()
+//
+//
+//        default:
+//            return false
+//
+//        }
+//
+//        DispatchQueue.main.async {
+//            self.searchTableView.reloadData()
+//        }
+//
+//        return true
+//    }
+//
+//
+//    }
