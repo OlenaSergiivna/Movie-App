@@ -137,10 +137,6 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.moviesArray = movies
             }
         }
-//
-//        if indexPath.row == 0 {
-//            removeSpinnerView()
-//        }
 
         return cell
     }

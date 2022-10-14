@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FavouritesTableViewCell: UITableViewCell {
     
@@ -33,11 +34,32 @@ class FavouritesTableViewCell: UITableViewCell {
             
             movieTitleLabel.text = title
             overviewLabel.text = overview
-            movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            movieImage.layer.masksToBounds = true
-            movieImage.layer.cornerRadius = 5
             someBackView.layer.masksToBounds = true
             someBackView.layer.cornerRadius = 10
+            
+            let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                         |> RoundCornerImageProcessor(cornerRadius: 5)
+            movieImage.kf.indicatorType = .activity
+            movieImage.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "loading"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+//            {
+//                result in
+//                switch result {
+//                case .success(let value):
+//                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("Job failed: \(error.localizedDescription)")
+//                }
+//            }
+           
         } else {
             return
         }
