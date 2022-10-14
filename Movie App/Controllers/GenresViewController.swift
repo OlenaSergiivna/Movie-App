@@ -102,10 +102,7 @@ class GenresViewController: UIViewController {
     }
     
     func removeSpinnerView() {
-        
-        // wait two seconds to simulate some work happening
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            // then remove the spinner view controller
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
             guard let self else {
                 return
             }
@@ -114,6 +111,7 @@ class GenresViewController: UIViewController {
             self.child.removeFromParent()
         }
     }
+    
     
 }
 

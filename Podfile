@@ -5,5 +5,6 @@ target 'Movie App' do
     pod 'Alamofire'
     pod 'youtube-ios-player-helper'
     pod 'RealmSwift'
+    pod 'Kingfisher', '~> 7.0'
 
 end

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GenreCollectionViewCell: UICollectionViewCell {
     
@@ -31,14 +32,33 @@ class GenreCollectionViewCell: UICollectionViewCell {
                 return
             }
             
+            
+            let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                         |> RoundCornerImageProcessor(cornerRadius: 10)
+            movieImage.kf.indicatorType = .activity
+            movieImage.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "loading"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+//            {
+//                result in
+//                switch result {
+//                case .success(let value):
+//                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("Job failed: \(error.localizedDescription)")
+//                }
+//            }
+            
             movieNameLabel.text = title
-            movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            movieImage.image = UIImage(named: "house")
-            movieImage.layer.masksToBounds = true
-            movieImage.layer.cornerRadius = 20
-            
-            
         }
         
     }
+    
 }
