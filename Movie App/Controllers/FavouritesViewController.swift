@@ -21,6 +21,7 @@ class FavouritesViewController: UIViewController {
         }
     }
     
+    let child = SpinnerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -17,14 +17,17 @@ struct DataManager {
     
     // MARK: - Request movie genres
     
-    func requestMovieGenres(completion: @escaping([Genre]) -> Void) {
+    func requestMovieGenres(completion: @escaping([Genre], Int) -> Void) {
         
         let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(apiKey)", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
             do {
                 let data = try response.result.get().genres
-                completion(data)
+                guard let statusCode = response.response?.statusCode else {
+                   return
+                }
+                completion(data, statusCode)
             } catch {
                 print(error.localizedDescription)
                 
@@ -35,14 +38,17 @@ struct DataManager {
     
     // MARK: - Request tv shows genres
     
-    func requestTVGenres(completion: @escaping([Genre]) -> Void) {
+    func requestTVGenres(completion: @escaping([Genre], Int) -> Void) {
         
         let request = AF.request("https://api.themoviedb.org/3/genre/tv/list?api_key=\(apiKey)&language=en-US", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
             do {
                 let data = try response.result.get().genres
-                completion(data)
+                guard let statusCode = response.response?.statusCode else {
+                   return
+                }
+                completion(data, statusCode)
             } catch {
                 print(error.localizedDescription)
                 

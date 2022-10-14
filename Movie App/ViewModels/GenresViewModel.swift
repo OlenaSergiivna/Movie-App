@@ -13,7 +13,7 @@ private class ViewModel {
     
     func requestMovies() {
         
-        DataManager.shared.requestMovieGenres { data in
+        DataManager.shared.requestMovieGenres { data, code in
             
             Globals.genres.append(contentsOf: data)
             

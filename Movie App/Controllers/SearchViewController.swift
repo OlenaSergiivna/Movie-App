@@ -66,9 +66,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         refreshControl.sizeToFit()
         
        //UserDefaults.standard.removeObject(forKey: "requests")
-//        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
-//            print("\(key) = \(value) \n")
-//        }
+        
         // MARK: - Registration nibs
         
         let nibResultCell = UINib(nibName: "SearchTableViewCell", bundle: nil)
@@ -485,44 +483,3 @@ extension SearchViewController: UISearchResultsUpdating {
         
     }
 
-
-
-//extension SearchViewController: UITextFieldDelegate {
-//
-//    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-//        textField.delegate = self
-//
-//        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-//
-//        switch selectedIndex {
-//
-//        case 0:
-//
-//            textField.resignFirstResponder()
-//            searchResultsMovie = []
-//            pageCount = 1
-//
-//
-//
-//        case 1:
-//
-//
-//            searchResultsTV = []
-//            pageCount = 1
-//            searchController.searchBar.resignFirstResponder()
-//
-//
-//        default:
-//            return false
-//
-//        }
-//
-//        DispatchQueue.main.async {
-//            self.searchTableView.reloadData()
-//        }
-//
-//        return true
-//    }
-//
-//
-//    }

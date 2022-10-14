@@ -12,31 +12,62 @@ class GenresViewController: UIViewController {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var genresTableView: UITableView!
+
+    let child = SpinnerViewController()
     
+    var pageCount = 1 {
+        didSet {
+            print("page count: \(pageCount)")
+        }
+    }
+    
+    var displayStatus = false {
+        didSet {
+            print("display status: \(displayStatus)")
+        }
+    }
+    
+    var totalPagesCount = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createSpinnerView()
+     
+        //add condition: if request is success -> if second request is success -> ... -> reload data and remove spinner
+        
         let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
         genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
         
+        // MARK: - Fetch data
         
-        DataManager.shared.requestMovieGenres { data in
+        DataManager.shared.requestMovieGenres { data, statusCode in
             
-            Globals.genres.append(contentsOf: data)
-            
-            DataManager.shared.requestTVGenres { data in
+            if statusCode == 200 {
                 
                 Globals.genres.append(contentsOf: data)
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else {
-                        return
+                DataManager.shared.requestTVGenres { [weak self] data, statusCode in
+                
+                    if statusCode == 200 {
+                        
+                        Globals.genres.append(contentsOf: data)
+
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self else {
+                                return
+                            }
+                            
+                            self.genresTableView.reloadData()
+                            
+                            self.removeSpinnerView()
+                            
+                        }
                     }
                     
-                    self.genresTableView.reloadData()
                 }
             }
+            
         }
     }
     
@@ -56,6 +87,31 @@ class GenresViewController: UIViewController {
                 print("false result")
             }
             
+        }
+    }
+    
+    
+    func createSpinnerView() {
+
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+
+    }
+    
+    func removeSpinnerView() {
+        
+        // wait two seconds to simulate some work happening
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            // then remove the spinner view controller
+            guard let self else {
+                return
+            }
+            self.child.willMove(toParent: nil)
+            self.child.view.removeFromSuperview()
+            self.child.removeFromParent()
         }
     }
     
@@ -83,9 +139,14 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.moviesArray = movies
             }
         }
-        
+//
+//        if indexPath.row == 0 {
+//            removeSpinnerView()
+//        }
+
         return cell
     }
+    
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -93,5 +154,6 @@ extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
+  
     
 }
