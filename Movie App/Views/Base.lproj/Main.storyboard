@@ -125,6 +125,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-62-ghq">
                                 <rect key="frame" x="0.0" y="56" width="390" height="705"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Waz-mJ-mGj" id="1fN-5U-n3K"/>
+                                    <outlet property="delegate" destination="Waz-mJ-mGj" id="YZp-Cy-GcV"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rtW-su-7UY"/>
@@ -140,10 +144,14 @@
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="1oP-QQ-LkB">
                             <color key="tintColor" systemColor="tintColor"/>
                             <connections>
-                                <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="FZM-dt-gRp"/>
+                                <action selector="logOutPressed:" destination="Waz-mJ-mGj" id="beL-70-zAB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="logOutButton" destination="1oP-QQ-LkB" id="DAl-hD-s46"/>
+                        <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwq-o6-4hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

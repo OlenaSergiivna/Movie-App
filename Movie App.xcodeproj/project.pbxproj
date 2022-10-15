@@ -29,6 +29,10 @@
 		CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */; };
 		CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */; };
 		CE2E29AC28ECE82900C865E5 /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E29AB28ECE82900C865E5 /* Binder.swift */; };
+		CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3682BB28FB154700B4A356 /* TVTableViewCell.swift */; };
+		CE3682BE28FB154700B4A356 /* TVTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3682BC28FB154700B4A356 /* TVTableViewCell.xib */; };
+		CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3682C028FB3B5E00B4A356 /* TVCollectionViewCell.swift */; };
+		CE3682C328FB3B5E00B4A356 /* TVCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3682C128FB3B5E00B4A356 /* TVCollectionViewCell.xib */; };
 		CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */; };
 		CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* GenresViewModel.swift */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
@@ -82,6 +86,10 @@
 		CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		CE2E29AB28ECE82900C865E5 /* Binder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binder.swift; sourceTree = "<group>"; };
+		CE3682BB28FB154700B4A356 /* TVTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVTableViewCell.swift; sourceTree = "<group>"; };
+		CE3682BC28FB154700B4A356 /* TVTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TVTableViewCell.xib; sourceTree = "<group>"; };
+		CE3682C028FB3B5E00B4A356 /* TVCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE3682C128FB3B5E00B4A356 /* TVCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TVCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
 		CE5614D528EE15120085A49B /* GenresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewModel.swift; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -228,6 +236,7 @@
 				CE14063628E0C57D00B67410 /* Main.storyboard */,
 				CEB3450D28E23E0A00451A6F /* MovieTab */,
 				CEFF39EE28FB0A8C00405F73 /* TVTab */,
+				CE3682BF28FB3B1C00B4A356 /* TVCollectionViewCell */,
 				CE08EB3728E33EE30038CC92 /* SearchTab */,
 				CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */,
 			);
@@ -293,6 +302,24 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		CE3682BA28FB151600B4A356 /* TVTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE3682BB28FB154700B4A356 /* TVTableViewCell.swift */,
+				CE3682BC28FB154700B4A356 /* TVTableViewCell.xib */,
+			);
+			path = TVTableViewCell;
+			sourceTree = "<group>";
+		};
+		CE3682BF28FB3B1C00B4A356 /* TVCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE3682C028FB3B5E00B4A356 /* TVCollectionViewCell.swift */,
+				CE3682C128FB3B5E00B4A356 /* TVCollectionViewCell.xib */,
+			);
+			path = TVCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		CE6133A228EA35B900778822 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +372,7 @@
 		CEFF39EE28FB0A8C00405F73 /* TVTab */ = {
 			isa = PBXGroup;
 			children = (
+				CE3682BA28FB151600B4A356 /* TVTableViewCell */,
 			);
 			path = TVTab;
 			sourceTree = "<group>";
@@ -412,10 +440,12 @@
 				CE14063D28E0C57F00B67410 /* LaunchScreen.storyboard in Resources */,
 				CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */,
 				CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */,
+				CE3682BE28FB154700B4A356 /* TVTableViewCell.xib in Resources */,
 				CEC7BD5228E39B9300A7CDD6 /* MovieTableViewCell.xib in Resources */,
 				CE169E4928EE34AF00FF9FB0 /* FavouritesTableViewCell.xib in Resources */,
 				CE14063A28E0C57F00B67410 /* Assets.xcassets in Resources */,
 				CE14064828E0ED7D00B67410 /* Podfile in Resources */,
+				CE3682C328FB3B5E00B4A356 /* TVCollectionViewCell.xib in Resources */,
 				CEC7BD5628E3A78700A7CDD6 /* MovieCollectionViewCell.xib in Resources */,
 				CE14063828E0C57D00B67410 /* Main.storyboard in Resources */,
 			);
@@ -471,6 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,
+				CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */,
 				CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */,
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
@@ -480,6 +511,7 @@
 				CEF4F66A28FB0B60000BC6DA /* TVViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
+				CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */,
 				CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */,
 				CEC003B628F780A5005B8B4E /* String+ isBlank.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,

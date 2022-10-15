@@ -15,7 +15,7 @@ struct DataManager {
     private let apiKey = "b718f4e2921daaf000e347114cf44187"
     
     
-    // MARK: - Request movie genres
+    // MARK: - Request movies genres
     
     func requestMovieGenres(completion: @escaping([Genre], Int) -> Void) {
         
@@ -57,8 +57,8 @@ struct DataManager {
     }
     
     
-    // MARK: - Request movie by specific genre/genres
-    
+    // MARK: - Request movies by specific genre/genres
+    // models?
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
@@ -68,6 +68,28 @@ struct DataManager {
         let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
         
         movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    
+    // MARK: - Request tv shows by specific genre/genres
+    // models?
+    func requestTVByGenre(genre: String, page: Int, completion: @escaping([TVModel]) -> Void) {
+        
+        guard let genreId = Globals.tvGenres.first(where: { $0.name == genre})?.id else { return }
+        
+        let tvByGenreURL = "https://api.themoviedb.org/3/discover/tv?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
+        
+        let tvByGenreRequest = AF.request(tvByGenreURL, method: .get)
+        
+        tvByGenreRequest.responseDecodable(of: ResultsTV.self) { response in
             do {
                 let data = try response.result.get().results
                 completion(data)

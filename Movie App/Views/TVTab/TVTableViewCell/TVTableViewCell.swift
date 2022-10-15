@@ -1,79 +1,78 @@
 //
-//  MovieTableViewCell.swift
+//  TVTableViewCell.swift
 //  Movie App
 //
-//  Created by user on 27.09.2022.
+//  Created by user on 15.10.2022.
 //
 
 import UIKit
 
-class MovieTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var moviesCollectionView: UICollectionView!
-    
+class TVTableViewCell: UITableViewCell {
+
     @IBOutlet weak var genreLabel: UILabel!
     
-    var moviesArray: [MovieModel] = [] {
+    @IBOutlet weak var genresCollectionView: UICollectionView!
+    
+    var tvArray: [TVModel] = [] {
         didSet {
             
-            self.moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+            self.genresCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
             
-            moviesCollectionView.dataSource = self
-            moviesCollectionView.delegate = self
+            genresCollectionView.dataSource = self
+            genresCollectionView.delegate = self
             
             DispatchQueue.main.async { [weak self] in
                 guard let self else {
                     return
                 }
-                self.moviesCollectionView.reloadData()
+                self.genresCollectionView.reloadData()
             }
         }
     }
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         
+        self.genresCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
     }
-    
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
         
     }
     
     override func prepareForReuse() {
         
-        moviesCollectionView.dataSource = nil
-        moviesCollectionView.delegate = nil
-        moviesCollectionView.reloadData()
+        genresCollectionView.dataSource = nil
+        genresCollectionView.delegate = nil
+        genresCollectionView.reloadData()
         
 //        moviesCollectionView.dataSource = self
 //        moviesCollectionView.delegate = self
     }
     
-    
 }
 
-extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+
+extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !moviesArray.isEmpty {
-            return moviesArray.count
+        if !tvArray.isEmpty {
+            return tvArray.count
         } else {
             return 4
         }
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TVCollectionViewCell", for: indexPath) as? TVCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        cell.configure(with: moviesArray, indexPath: indexPath)
+        cell.configure(with: tvArray, indexPath: indexPath)
         return cell
     }
     
@@ -81,5 +80,5 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         return CGSize(width: 120, height: 200)
     }
     
+    
 }
-

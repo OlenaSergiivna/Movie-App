@@ -22,6 +22,8 @@ class AuthenticationViewController: UIViewController {
         
     }
     
+    // add language choice + implementation in all VC
+    
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         
         guard let login = loginTextField.text else { return }
