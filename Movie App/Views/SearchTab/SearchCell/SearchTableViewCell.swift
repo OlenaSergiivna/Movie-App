@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var movieTitle: UILabel!
     
     @IBOutlet weak var movieImage: UIImageView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,40 +22,98 @@ class SearchTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        
+   
     }
+    
+    
     
     func configureMovie(with data: MovieModel) {
         
-        if let title = data.title, let imagePath = data.posterPath {
+        if let title = data.title {
+            
+            movieImage.isHidden = false
+            movieTitle.isHidden = false
+            movieTitle.isEnabled = true
+            
             movieTitle.text = title
-            //movieRating.text = String(data.voteAverage)
-            movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            movieImage.layer.masksToBounds = true
-            movieImage.layer.cornerRadius = 5
-            //            someBackView.layer.masksToBounds = true
-            //            someBackView.layer.cornerRadius = 10
-        } else {
-            return
         }
-        
+            if let imagePath = data.posterPath {
+                
+            let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                         |> RoundCornerImageProcessor(cornerRadius: 5)
+            movieImage.kf.indicatorType = .activity
+            movieImage.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "loading"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+//            {
+//                result in
+//                switch result {
+//                case .success(let value):
+//                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("Job failed: \(error.localizedDescription)")
+//                }
+//            }
+            
+//            someBackView.layer.masksToBounds = true
+//            someBackView.layer.cornerRadius = 10
+        } else {
+            //print("Poster Path: \(data.posterPath) - \(data.title)")
+            movieImage.image = .strokedCheckmark
+            movieTitle.isHidden = false
+            movieTitle.isEnabled = true
+        }
     }
     
+    
+    
     func configureTV(with data: TVModel) {
+    
+        movieImage.isHidden = false
+        movieTitle.isHidden = false
+        movieTitle.isEnabled = true
+        
+        movieTitle.text = data.name
         
         if let imagePath = data.posterPath {
-            movieTitle.text = data.name
-            //movieRating.text = String(data.voteAverage)
-            movieImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            movieImage.layer.masksToBounds = true
-            movieImage.layer.cornerRadius = 5
+            
+            let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                         |> RoundCornerImageProcessor(cornerRadius: 5)
+            movieImage.kf.indicatorType = .activity
+            movieImage.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "loading"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+//            {
+//                result in
+//                switch result {
+//                case .success(let value):
+//                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("Job failed: \(error.localizedDescription)")
+//                }
+//            }
+            
             // someBackView.layer.masksToBounds = true
             // someBackView.layer.cornerRadius = 10
         } else {
-            return
+            //print("Poster Path: \(data.posterPath) - \(data.name)")
+            movieImage.image = .strokedCheckmark
+            movieTitle.isHidden = false
+            movieTitle.isEnabled = true
         }
-        
     }
-    
 }

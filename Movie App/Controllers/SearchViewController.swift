@@ -175,7 +175,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        
+     
         switch selectedIndex {
         case 0:
             
@@ -184,7 +184,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as? SearchTableViewCell else {
                     return UITableViewCell()
                 }
-                
+        
                 cell.configureMovie(with: searchResultsMovie[indexPath.row])
                 return cell
                 
