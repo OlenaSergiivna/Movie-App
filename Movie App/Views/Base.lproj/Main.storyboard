@@ -74,7 +74,7 @@
         <!--Movies-->
         <scene sceneID="MsX-b1-Lld">
             <objects>
-                <viewController storyboardIdentifier="GenresViewController" modalPresentationStyle="fullScreen" id="NWm-K3-4CP" customClass="GenresViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GenresViewController" modalPresentationStyle="fullScreen" id="NWm-K3-4CP" customClass="MovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l9V-v2-0es">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -106,13 +106,48 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="genresTableView" destination="de5-S4-Mwr" id="tch-Qg-NCU"/>
                         <outlet property="logOutButton" destination="nTP-FH-6BM" id="qct-mV-SMn"/>
+                        <outlet property="movieTableView" destination="de5-S4-Mwr" id="tch-Qg-NCU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag9-0x-G8t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3790.7692307692305" y="52.606635071090047"/>
+            <point key="canvasLocation" x="3791" y="-431"/>
+        </scene>
+        <!--TV Shows-->
+        <scene sceneID="IgZ-R7-gmh">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="Waz-mJ-mGj" customClass="TVViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DK7-z4-P0U">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-62-ghq">
+                                <rect key="frame" x="0.0" y="56" width="390" height="705"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rtW-su-7UY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rtW-su-7UY" firstAttribute="bottom" secondItem="gO4-62-ghq" secondAttribute="bottom" id="MWz-Sg-ghT"/>
+                            <constraint firstItem="rtW-su-7UY" firstAttribute="trailing" secondItem="gO4-62-ghq" secondAttribute="trailing" id="NcX-rS-cll"/>
+                            <constraint firstItem="gO4-62-ghq" firstAttribute="top" secondItem="rtW-su-7UY" secondAttribute="top" id="Z2O-DA-HuF"/>
+                            <constraint firstItem="gO4-62-ghq" firstAttribute="leading" secondItem="rtW-su-7UY" secondAttribute="leading" id="psX-Td-43K"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="TV Shows" id="SJP-xk-1A4">
+                        <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="1oP-QQ-LkB">
+                            <color key="tintColor" systemColor="tintColor"/>
+                            <connections>
+                                <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="FZM-dt-gRp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lwq-o6-4hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5620" y="-41.232227488151658"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="qn6-7n-Bta">
@@ -130,8 +165,9 @@
                     </tabBar>
                     <connections>
                         <segue destination="9nC-t0-rlZ" kind="relationship" relationship="viewControllers" id="0kV-IV-3za"/>
-                        <segue destination="Iuk-YE-J2F" kind="relationship" relationship="viewControllers" id="VX9-6a-9K7"/>
-                        <segue destination="wOV-Wt-ro3" kind="relationship" relationship="viewControllers" id="qBi-Tv-HhR"/>
+                        <segue destination="fsJ-oz-VGe" kind="relationship" relationship="viewControllers" id="GfR-pZ-Onq"/>
+                        <segue destination="Iuk-YE-J2F" kind="relationship" relationship="viewControllers" id="1Sx-5z-VV3"/>
+                        <segue destination="wOV-Wt-ro3" kind="relationship" relationship="viewControllers" id="deZ-o3-P4V"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7dw-1Y-YY0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -163,7 +199,7 @@
                     <buttonConfiguration key="configuration" style="plain" title="Button"/>
                 </button>
             </objects>
-            <point key="canvasLocation" x="2862" y="53"/>
+            <point key="canvasLocation" x="2862" y="-431"/>
         </scene>
         <!--Search-->
         <scene sceneID="qfZ-GI-JwJ">
@@ -311,11 +347,31 @@
             </objects>
             <point key="canvasLocation" x="2862" y="1277"/>
         </scene>
+        <!--TV Shows-->
+        <scene sceneID="Qbt-vi-vP7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fsJ-oz-VGe" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="TV Shows" image="tv" catalog="system" id="Rkc-RJ-AFu"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0mK-10-hhX">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Waz-mJ-mGj" kind="relationship" relationship="rootViewController" id="qnb-Kr-zQ2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K8E-LA-Ozb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4690.7692307692305" y="-41.232227488151658"/>
+        </scene>
     </scenes>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="tv" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

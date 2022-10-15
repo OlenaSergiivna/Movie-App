@@ -7,11 +7,11 @@
 
 import UIKit
 
-class GenresViewController: UIViewController {
+class MovieViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
-    @IBOutlet weak var genresTableView: UITableView!
+    @IBOutlet weak var movieTableView: UITableView!
 
     let child = SpinnerViewController()
     
@@ -34,40 +34,28 @@ class GenresViewController: UIViewController {
         
         createSpinnerView()
      
-        //add condition: if request is success -> if second request is success -> ... -> reload data and remove spinner
+        let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
+        movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")
         
-        let nibMovieCell = UINib(nibName: "GenresTableViewCell", bundle: nil)
-        genresTableView.register(nibMovieCell, forCellReuseIdentifier: "GenresTableViewCell")
-        
-        // MARK: - Fetch data
+        // MARK: - Fetch movie data
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
             if statusCode == 200 {
                 
-                Globals.genres.append(contentsOf: data)
+                Globals.movieGenres = data
                 
-                DataManager.shared.requestTVGenres { [weak self] data, statusCode in
-                
-                    if statusCode == 200 {
-                        
-                        Globals.genres.append(contentsOf: data)
-
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self else {
-                                return
-                            }
-                            
-                            self.genresTableView.reloadData()
-                            
-                            self.removeSpinnerView()
-                            
-                        }
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else {
+                        return
                     }
+                    
+                    self.movieTableView.reloadData()
+                    
+                    self.removeSpinnerView()
                     
                 }
             }
-            
         }
     }
     
@@ -86,20 +74,19 @@ class GenresViewController: UIViewController {
             } else {
                 print("false result")
             }
-            
         }
     }
     
     
     func createSpinnerView() {
 
-        // add the spinner view controller
         addChild(child)
         child.view.frame = view.frame
         view.addSubview(child.view)
         child.didMove(toParent: self)
-
     }
+    
+    
     
     func removeSpinnerView() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
@@ -111,28 +98,28 @@ class GenresViewController: UIViewController {
             self.child.removeFromParent()
         }
     }
-    
-    
 }
 
 
-extension GenresViewController: UITableViewDelegate, UITableViewDataSource {
+
+extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Globals.genres.count
+        return Globals.movieGenres.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = genresTableView.dequeueReusableCell(withIdentifier: "GenresTableViewCell", for: indexPath) as? GenresTableViewCell else {
+        guard let cell = movieTableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.genreLabel.text = Globals.genres[indexPath.row].name
+        cell.genreLabel.text = Globals.movieGenres[indexPath.row].name
+        
         
         DispatchQueue.main.async {
-            DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) {  movies in
+            DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) { movies in
                 
                 cell.moviesArray = movies
             }

@@ -61,7 +61,7 @@ struct DataManager {
     
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
-        guard let genreId = Globals.genres.first(where: { $0.name == genre})?.id else { return }
+        guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
         
         let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
         

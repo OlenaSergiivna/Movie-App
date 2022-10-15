@@ -13,7 +13,5 @@ struct Globals {
     
     static var movieGenres: [Genre] = []
     static var tvGenres: [Genre] = []
-    
-    static var genres: [Genre] = []
-    static var movies: [MovieModel] = []
+
 }

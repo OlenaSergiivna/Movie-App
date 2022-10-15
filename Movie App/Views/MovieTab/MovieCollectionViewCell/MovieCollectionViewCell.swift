@@ -1,5 +1,5 @@
 //
-//  GenreCollectionViewCell.swift
+//  MovieCollectionViewCell.swift
 //  Movie App
 //
 //  Created by user on 28.09.2022.
@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class GenreCollectionViewCell: UICollectionViewCell {
+class MovieCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImage: UIImageView!
     

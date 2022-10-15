@@ -1,5 +1,5 @@
 //
-//  GenresTableViewCell.swift
+//  MovieTableViewCell.swift
 //  Movie App
 //
 //  Created by user on 27.09.2022.
@@ -7,16 +7,33 @@
 
 import UIKit
 
-class GenresTableViewCell: UITableViewCell {
+class MovieTableViewCell: UITableViewCell {
     
     @IBOutlet weak var genresCollectionView: UICollectionView!
     
     @IBOutlet weak var genreLabel: UILabel!
     
-    var moviesArray: [MovieModel] = [] { 
+//    var tvArray: [TVModel] = [] {
+//        didSet {
+//
+//            self.genresCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+//
+//            genresCollectionView.dataSource = self
+//            genresCollectionView.delegate = self
+//
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self else {
+//                    return
+//                }
+//                self.genresCollectionView.reloadData()
+//            }
+//        }
+//    }
+    
+    var moviesArray: [MovieModel] = [] {
         didSet {
             
-            self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
+            self.genresCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
             
             genresCollectionView.dataSource = self
             genresCollectionView.delegate = self
@@ -33,7 +50,7 @@ class GenresTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.genresCollectionView.register(UINib(nibName: "GenreCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "GenreCollectionViewCell")
+        self.genresCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         
     }
     
@@ -49,14 +66,14 @@ class GenresTableViewCell: UITableViewCell {
         genresCollectionView.delegate = nil
         genresCollectionView.reloadData()
         
-        genresCollectionView.dataSource = self
-        genresCollectionView.delegate = self
+//        genresCollectionView.dataSource = self
+//        genresCollectionView.delegate = self
     }
     
     
 }
 
-extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if !moviesArray.isEmpty {
@@ -69,7 +86,7 @@ extension GenresTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GenreCollectionViewCell", for: indexPath) as? GenreCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
             return UICollectionViewCell()
         }
         

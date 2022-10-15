@@ -15,14 +15,14 @@ private class ViewModel {
         
         DataManager.shared.requestMovieGenres { data, code in
             
-            Globals.genres.append(contentsOf: data)
+            Globals.movieGenres.append(contentsOf: data)
             
 //            DispatchQueue.main.async { [weak self] in
 //                guard let self else {
 //                    return
 //                }
 //
-//                genresTableView.reloadData()
+//                movieTableView.reloadData()
 //                print("genres fetched")
 //            }
         }
