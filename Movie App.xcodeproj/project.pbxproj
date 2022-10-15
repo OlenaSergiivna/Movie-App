@@ -171,7 +171,7 @@
 			path = AuthenticationModels;
 			sourceTree = "<group>";
 		};
-		CE0B873C28E4DC92005CBA8A /* MoviesRequestModels */ = {
+		CE0B873C28E4DC92005CBA8A /* DataRequestModels */ = {
 			isa = PBXGroup;
 			children = (
 				CE0B873D28E4DCC9005CBA8A /* GenresModels.swift */,
@@ -179,7 +179,7 @@
 				CE1437F128F38911002A7FBB /* TVModel.swift */,
 				CEC3408B28EF3FCD00F5275B /* RemovedResponseModel.swift */,
 			);
-			path = MoviesRequestModels;
+			path = DataRequestModels;
 			sourceTree = "<group>";
 		};
 		CE14062428E0C57D00B67410 = {
@@ -225,7 +225,7 @@
 			children = (
 				CE0B873B28E4DC67005CBA8A /* AuthenticationModels */,
 				CEFA731E28F054EC00CD0872 /* RealmModels */,
-				CE0B873C28E4DC92005CBA8A /* MoviesRequestModels */,
+				CE0B873C28E4DC92005CBA8A /* DataRequestModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,9 +236,9 @@
 				CE14063628E0C57D00B67410 /* Main.storyboard */,
 				CEB3450D28E23E0A00451A6F /* MovieTab */,
 				CEFF39EE28FB0A8C00405F73 /* TVTab */,
-				CE3682BF28FB3B1C00B4A356 /* TVCollectionViewCell */,
 				CE08EB3728E33EE30038CC92 /* SearchTab */,
 				CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */,
+				CE14A11C28FB4B1C003174FC /* DetailsScreen */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,6 +255,13 @@
 				CE70D57228F9DCE700536243 /* SpinnerViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE14A11C28FB4B1C003174FC /* DetailsScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DetailsScreen;
 			sourceTree = "<group>";
 		};
 		CE14D97E28F862F100CEEB02 /* SearchCell */ = {
@@ -373,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				CE3682BA28FB151600B4A356 /* TVTableViewCell */,
+				CE3682BF28FB3B1C00B4A356 /* TVCollectionViewCell */,
 			);
 			path = TVTab;
 			sourceTree = "<group>";

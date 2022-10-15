@@ -12,6 +12,8 @@ class MovieViewController: UIViewController {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var movieTableView: UITableView!
+    
+    var tappedCell: MovieModel!
 
     let child = SpinnerViewController()
     
@@ -115,6 +117,10 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        // Set cell's delegate
+        
+        cell.cellDelegate = self
+        
         cell.genreLabel.text = Globals.movieGenres[indexPath.row].name
         
         
@@ -135,6 +141,23 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
-  
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "detailsviewcontrollerseg" {
+//            let DestViewController = segue.destination as! DetailsViewController
+//            DestViewController.backgroundColor = tappedCell.color
+//            DestViewController.backgroundColorName = tappedCell.name
+//        }
+//    }
     
+}
+
+extension MovieViewController: CollectionViewCellDelegate {
+    
+    func collectionView(collectionviewcell: MovieCollectionViewCell?, index: Int, didTappedInTableViewCell: MovieTableViewCell) {
+        let cells = didTappedInTableViewCell.moviesArray
+        self.tappedCell = cells[index]
+        print("You tapped the cell \(index) with title \(tappedCell.title ?? "0")")
+            // You can also do changes to the cell you tapped using the 'collectionviewcell'
+        
+    }
 }

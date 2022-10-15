@@ -259,13 +259,69 @@
                     <view key="view" contentMode="scaleToFill" id="ffi-3O-7DL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jv2-nb-BmL">
+                                <rect key="frame" x="40" y="87" width="310" height="387"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XD2-SH-3dj">
+                                <rect key="frame" x="40" y="554" width="310" height="27.666666666666629"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77u-Xz-Dv8">
+                                <rect key="frame" x="40" y="490" width="270" height="25.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
+                                <rect key="frame" x="40" y="597.66666666666663" width="310" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
+                                <rect key="frame" x="40" y="642.66666666666663" width="310" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="r0N-Cl-XCq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="XD2-SH-3dj" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="80" id="05b-PQ-zoc"/>
+                            <constraint firstItem="H29-HP-q4a" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="r0N-Cl-XCq" secondAttribute="bottom" constant="8" id="1q2-lt-0Ru"/>
+                            <constraint firstItem="7Ur-da-UOa" firstAttribute="leading" secondItem="XD2-SH-3dj" secondAttribute="leading" id="4CJ-Bk-RdP"/>
+                            <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="7Ur-da-UOa" secondAttribute="leading" id="9X7-Kn-oAQ"/>
+                            <constraint firstItem="77u-Xz-Dv8" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="16" id="C3F-Rg-rIa"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="77u-Xz-Dv8" secondAttribute="trailing" constant="80" id="FFD-cZ-Oql"/>
+                            <constraint firstItem="77u-Xz-Dv8" firstAttribute="leading" secondItem="jv2-nb-BmL" secondAttribute="leading" id="Jsd-Y4-0yR"/>
+                            <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="ffi-3O-7DL" secondAttribute="height" multiplier="0.458531" id="Lo5-Fl-Zbg"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="7Ur-da-UOa" secondAttribute="trailing" constant="40" id="aWd-6d-Zja"/>
+                            <constraint firstItem="XD2-SH-3dj" firstAttribute="leading" secondItem="jv2-nb-BmL" secondAttribute="leading" id="akv-Pn-M8A"/>
+                            <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="r0N-Cl-XCq" secondAttribute="top" constant="40" id="hNI-ck-KFx"/>
+                            <constraint firstItem="7Ur-da-UOa" firstAttribute="top" secondItem="XD2-SH-3dj" secondAttribute="bottom" constant="16" id="kHW-WH-HHn"/>
+                            <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="r0N-Cl-XCq" secondAttribute="leading" constant="40" id="kaT-85-qEa"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="H29-HP-q4a" secondAttribute="trailing" constant="40" id="mQi-Aj-C0I"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" constant="40" id="rPC-Ax-014"/>
+                            <constraint firstItem="H29-HP-q4a" firstAttribute="top" secondItem="7Ur-da-UOa" secondAttribute="bottom" constant="24" id="yIv-Ja-ZZP"/>
+                            <constraint firstItem="jv2-nb-BmL" firstAttribute="width" secondItem="ffi-3O-7DL" secondAttribute="width" multiplier="0.794872" id="yfF-XF-oyv"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="XD2-SH-3dj" secondAttribute="trailing" constant="40" id="ym4-hg-X5G"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mediaGenres" destination="7Ur-da-UOa" id="RCu-av-A2L"/>
+                        <outlet property="mediaImage" destination="jv2-nb-BmL" id="nt4-cV-6AX"/>
+                        <outlet property="mediaName" destination="XD2-SH-3dj" id="hqZ-PG-0Wk"/>
+                        <outlet property="mediaOverview" destination="H29-HP-q4a" id="Mgv-YA-xlR"/>
+                        <outlet property="mediaRating" destination="77u-Xz-Dv8" id="d3K-Ei-qTT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ea1-0A-f0J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6958" y="670"/>
+            <point key="canvasLocation" x="6956.9230769230771" y="669.66824644549763"/>
         </scene>
         <!--Favourites View Controller-->
         <scene sceneID="DDJ-Kd-BMO">
