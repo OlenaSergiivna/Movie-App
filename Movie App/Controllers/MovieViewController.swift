@@ -130,7 +130,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.moviesArray = movies
             }
         }
-
+        
         return cell
     }
     
@@ -141,15 +141,18 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detailsviewcontrollerseg" {
-//            let DestViewController = segue.destination as! DetailsViewController
-//            DestViewController.backgroundColor = tappedCell.color
-//            DestViewController.backgroundColorName = tappedCell.name
-//        }
-//    }
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "DetailsScreen" {
+              let destinationViewController = segue.destination as! DetailsScreenViewController
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configure(with: tappedCell)
+                
+            }
+        }
     
 }
+
+
 
 extension MovieViewController: CollectionViewCellDelegate {
     
@@ -157,7 +160,8 @@ extension MovieViewController: CollectionViewCellDelegate {
         let cells = didTappedInTableViewCell.moviesArray
         self.tappedCell = cells[index]
         print("You tapped the cell \(index) with title \(tappedCell.title ?? "0")")
-            // You can also do changes to the cell you tapped using the 'collectionviewcell'
+        
+        performSegue(withIdentifier: "DetailsScreen", sender: self)
         
     }
 }
