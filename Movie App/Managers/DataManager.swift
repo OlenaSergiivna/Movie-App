@@ -152,6 +152,30 @@ struct DataManager {
     }
     
     
+    
+    func addToFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
+        
+        let addURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(apiKey)&session_id=\(Globals.sessionId)&media_id=\(id)&media_type=\(type)&favorite=true"
+        
+        
+        let addToFavoritesRequest = AF.request(addURL, method: .post)
+        
+        addToFavoritesRequest.responseDecodable(of: Removed.self) { response in
+            do {
+                let result = try response.result.get()
+                print(result)
+                if let response = response.response?.statusCode {
+                    completion(response)
+                }
+                
+            } catch {
+                print("added: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
+    
     // MARK: - Search TV Shows by text request
     
     func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {

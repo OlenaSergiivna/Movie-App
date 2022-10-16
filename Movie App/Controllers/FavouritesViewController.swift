@@ -21,8 +21,7 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
         
         someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
         
@@ -36,6 +35,26 @@ class FavouritesViewController: UIViewController {
             
             DispatchQueue.main.async {
                 
+                self.favouritesTableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
+
+        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
+        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
+
+        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+            guard let self else { return }
+
+            self.someMovies = favorites
+
+            DispatchQueue.main.async {
+
                 self.favouritesTableView.reloadData()
             }
         }

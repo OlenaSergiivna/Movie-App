@@ -272,37 +272,49 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77u-Xz-Dv8">
-                                <rect key="frame" x="40" y="464" width="270" height="25.333333333333314"/>
+                                <rect key="frame" x="40" y="464" width="58.666666666666657" height="25.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
                                 <rect key="frame" x="40" y="571.66666666666663" width="310" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
                                 <rect key="frame" x="40" y="616.66666666666663" width="310" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiK-j8-To5">
+                                <rect key="frame" x="98.666666666666686" y="464" width="251.33333333333331" height="35"/>
+                                <color key="tintColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                                <connections>
+                                    <action selector="addToFavoritesPressed:" destination="UlR-Nu-m3s" eventType="touchUpInside" id="fYU-j5-fp9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="r0N-Cl-XCq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XD2-SH-3dj" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="80" id="05b-PQ-zoc"/>
-                            <constraint firstItem="H29-HP-q4a" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="r0N-Cl-XCq" secondAttribute="bottom" constant="8" id="1q2-lt-0Ru"/>
+                            <constraint firstItem="H29-HP-q4a" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="r0N-Cl-XCq" secondAttribute="bottom" constant="16" id="1q2-lt-0Ru"/>
+                            <constraint firstItem="QiK-j8-To5" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="trailing" id="25g-WH-GWE"/>
                             <constraint firstItem="7Ur-da-UOa" firstAttribute="leading" secondItem="XD2-SH-3dj" secondAttribute="leading" id="4CJ-Bk-RdP"/>
                             <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="7Ur-da-UOa" secondAttribute="leading" id="9X7-Kn-oAQ"/>
                             <constraint firstItem="77u-Xz-Dv8" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="16" id="C3F-Rg-rIa"/>
-                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="77u-Xz-Dv8" secondAttribute="trailing" constant="80" id="FFD-cZ-Oql"/>
                             <constraint firstItem="77u-Xz-Dv8" firstAttribute="leading" secondItem="jv2-nb-BmL" secondAttribute="leading" id="Jsd-Y4-0yR"/>
                             <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="ffi-3O-7DL" secondAttribute="height" multiplier="0.458531" id="Lo5-Fl-Zbg"/>
                             <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="7Ur-da-UOa" secondAttribute="trailing" constant="40" id="aWd-6d-Zja"/>
                             <constraint firstItem="XD2-SH-3dj" firstAttribute="leading" secondItem="jv2-nb-BmL" secondAttribute="leading" id="akv-Pn-M8A"/>
+                            <constraint firstItem="r0N-Cl-XCq" firstAttribute="trailing" secondItem="QiK-j8-To5" secondAttribute="trailing" constant="40" id="cAl-Oa-eEM"/>
+                            <constraint firstItem="QiK-j8-To5" firstAttribute="top" secondItem="77u-Xz-Dv8" secondAttribute="top" id="f2v-lV-H0x"/>
                             <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="r0N-Cl-XCq" secondAttribute="top" constant="40" id="hNI-ck-KFx"/>
                             <constraint firstItem="7Ur-da-UOa" firstAttribute="top" secondItem="XD2-SH-3dj" secondAttribute="bottom" constant="16" id="kHW-WH-HHn"/>
                             <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="r0N-Cl-XCq" secondAttribute="leading" constant="40" id="kaT-85-qEa"/>
@@ -314,6 +326,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="LWA-RL-EkC"/>
                     <connections>
+                        <outlet property="favoritesButton" destination="QiK-j8-To5" id="U7K-q7-Gfo"/>
                         <outlet property="mediaGenres" destination="7Ur-da-UOa" id="RCu-av-A2L"/>
                         <outlet property="mediaImage" destination="jv2-nb-BmL" id="nt4-cV-6AX"/>
                         <outlet property="mediaName" destination="XD2-SH-3dj" id="hqZ-PG-0Wk"/>
@@ -438,6 +451,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="tv" catalog="system" width="128" height="95"/>

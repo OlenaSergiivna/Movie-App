@@ -24,15 +24,55 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var mediaOverview: UILabel!
     
+    @IBOutlet weak var favoritesButton: UIButton!
+    
+    var isFavorite: Bool = false {
+        didSet {
+            if isFavorite == true {
+                favoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                favoritesButton.tintColor = .systemRed
+            } else {
+                favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                favoritesButton.tintColor = .systemRed
+            }
+        }
+    }
+    
+    var mediaId: Int = 0
+    
+    var media: [MovieModel] = []
+    
+    var favoriteMovies: [MovieModel] = [] {
+        didSet {
+            if favoriteMovies.contains(where: { $0.id == mediaId }) {
+                isFavorite = true
+                
+            } else {
+               isFavorite = false
+                
+            }
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DataManager.shared.requestFavorites { [weak self] favorites in
+            guard let self else { return }
+            
+            self.favoriteMovies = favorites
+            
+         }
         
         
     }
     
     
+    
     func configureMovie(with cell: MovieModel) {
+        media.append(cell)
+        mediaId = cell.id
         
         mediaName.text = cell.title
         mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
@@ -145,5 +185,51 @@ class DetailsScreenViewController: UIViewController {
             mediaImage.image = .strokedCheckmark
         }
     }
+    
+    
+    
+    @IBAction func addToFavoritesPressed(_ sender: UIButton) {
+        print("button tapped")
+        
+        
+        
+        if isFavorite {
+            favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            favoritesButton.tintColor = .systemRed
+            isFavorite = false
+            DataManager.shared.deleteFromFavorites(id: mediaId, type: "movie") { [weak self] response in
+                print("delete movie from favorites result: \(response)")
+                
+                guard let self else { return }
+                
+                if response == 200 {
+                    
+                    RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
+                        print("deleted from realm")
+                        
+                    }
+                }
+            }
+            
+        } else {
+            isFavorite = true
+            favoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            favoritesButton.tintColor = .systemRed
+            
+            DataManager.shared.addToFavorites(id: mediaId, type: "movie") { [weak self] response in
+                print("added to favorites result: \(response)")
+                
+                guard let self else { return }
+                
+                if response == 200 {
+                    
+                    RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media)
+                        print("added to realm")
+                        
+                    }
+                }
+            }
+    }
+    
 }
 

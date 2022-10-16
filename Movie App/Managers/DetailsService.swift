@@ -7,6 +7,9 @@
 
 import Foundation
 
+// NetworkModel -> DataBaseModel -> UIModel service
+
+
 //func moviecollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //
 //    if indexPath.row == 0 {
