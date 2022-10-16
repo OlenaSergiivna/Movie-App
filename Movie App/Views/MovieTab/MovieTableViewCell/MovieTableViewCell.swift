@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-protocol CollectionViewCellDelegate: AnyObject {
+protocol MovieCollectionViewCellDelegate: AnyObject {
     func collectionView(collectionviewcell: MovieCollectionViewCell?, index: Int, didTappedInTableViewCell: MovieTableViewCell)
     // other delegate methods that you can define to perform action in viewcontroller
 }
@@ -21,7 +21,7 @@ class MovieTableViewCell: UITableViewCell {
       }
     
     
-    weak var cellDelegate: CollectionViewCellDelegate?
+    weak var cellDelegate: MovieCollectionViewCellDelegate?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
     

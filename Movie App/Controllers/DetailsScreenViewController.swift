@@ -32,7 +32,7 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    func configure(with cell: MovieModel) {
+    func configureMovie(with cell: MovieModel) {
         
         mediaName.text = cell.title
         mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
@@ -42,13 +42,71 @@ class DetailsScreenViewController: UIViewController {
         // MARK: Configuring movie genre
         
         var genresString = ""
-        let genres = Globals.tvGenres
+        let genres = Globals.movieGenres
         
         for movieID in cell.genreIDS {
             
             for genre in genres {
                 
                 if movieID == genre.id {
+                    genresString.append("\(genre.name). ")
+                }
+            }
+        }
+        
+        mediaGenres.text = String("\(genresString)".dropLast(2))
+        
+        // MARK: Configuring movie image
+        
+        if let imagePath = cell.posterPath {
+            
+            let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+            |> RoundCornerImageProcessor(cornerRadius: 10)
+            mediaImage.kf.indicatorType = .activity
+            mediaImage.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "loading"),
+                options: [
+                    .processor(processor),
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+            //            {
+            //                result in
+            //                switch result {
+            //                case .success(let value):
+            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+            //                case .failure(let error):
+            //                    print("Job failed: \(error.localizedDescription)")
+            //                }
+            //            }
+            
+        } else {
+            mediaImage.image = .strokedCheckmark
+        }
+    }
+    
+    
+    
+    func configureTV(with cell: TVModel) {
+        
+        mediaName.text = cell.name
+        mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+        
+        mediaOverview.text = cell.overview
+        
+        // MARK: Configuring movie genre
+        
+        var genresString = ""
+        let genres = Globals.tvGenres
+        
+        for tvID in cell.genreIDS {
+            
+            for genre in genres {
+                
+                if tvID == genre.id {
                     genresString.append("\(genre.name). ")
                 }
             }

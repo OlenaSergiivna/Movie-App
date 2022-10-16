@@ -7,7 +7,7 @@
 
 import Foundation
 
-//func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//func moviecollectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //
 //    if indexPath.row == 0 {
 

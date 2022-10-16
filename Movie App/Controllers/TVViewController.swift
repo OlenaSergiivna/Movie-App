@@ -13,6 +13,8 @@ class TVViewController: UIViewController {
     
     @IBOutlet weak var tvTableView: UITableView!
     
+    var tappedCell: TVModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +51,7 @@ class TVViewController: UIViewController {
         let loadingVC = LoadingViewController()
         add(loadingVC)
         
-        DataManager.shared.requestTVGenres { [weak self] data, statusCode in
+        DataManager.shared.requestTVGenres { data, statusCode in
             
             if statusCode == 200 {
                 
@@ -86,6 +88,10 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        // Set cell's delegate
+        
+        cell.cellDelegate = self
+        
         cell.genreLabel.text = Globals.tvGenres[indexPath.row].name
         
         
@@ -106,6 +112,30 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailsScreen" {
+            if let destinationViewController = segue.destination as? DetailsScreenViewController {
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configureTV(with: tappedCell)
+            }
+            
+            
+        }
+    }
   
+    
+}
+
+
+
+extension TVViewController: TVCollectionViewCellDelegate {
+    func collectionView(collectionviewcell: TVCollectionViewCell?, index: Int, didTappedInTableViewCell: TVTableViewCell) {
+        let cells = didTappedInTableViewCell.tvArray
+        self.tappedCell = cells[index]
+        print("You tapped the cell \(index) with title \(tappedCell.name)")
+        
+        performSegue(withIdentifier: "DetailsScreen", sender: self)
+    }
     
 }

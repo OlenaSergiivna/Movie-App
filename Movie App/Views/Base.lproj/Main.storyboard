@@ -152,6 +152,7 @@
                     <connections>
                         <outlet property="logOutButton" destination="1oP-QQ-LkB" id="DAl-hD-s46"/>
                         <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
+                        <segue destination="UlR-Nu-m3s" kind="presentation" identifier="DetailsScreen" id="qND-he-REe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwq-o6-4hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -432,6 +433,9 @@
             <point key="canvasLocation" x="4690.7692307692305" y="-41.232227488151658"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="qND-he-REe"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>

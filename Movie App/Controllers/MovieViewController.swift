@@ -128,7 +128,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == "DetailsScreen" {
             if let destinationViewController = segue.destination as? DetailsScreenViewController {
                 destinationViewController.loadViewIfNeeded()
-                destinationViewController.configure(with: tappedCell)
+                destinationViewController.configureMovie(with: tappedCell)
             }
             
             
@@ -139,7 +139,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 
-extension MovieViewController: CollectionViewCellDelegate {
+extension MovieViewController: MovieCollectionViewCellDelegate {
     
     func collectionView(collectionviewcell: MovieCollectionViewCell?, index: Int, didTappedInTableViewCell: MovieTableViewCell) {
         let cells = didTappedInTableViewCell.moviesArray

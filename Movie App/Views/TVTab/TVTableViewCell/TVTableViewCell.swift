@@ -7,23 +7,30 @@
 
 import UIKit
 
+protocol TVCollectionViewCellDelegate: AnyObject {
+    func collectionView(collectionviewcell: TVCollectionViewCell?, index: Int, didTappedInTableViewCell: TVTableViewCell)
+    // other delegate methods that you can define to perform action in viewcontroller
+}
+
 class TVTableViewCell: UITableViewCell {
 
     @IBOutlet weak var genreLabel: UILabel!
     
-    @IBOutlet weak var genresCollectionView: UICollectionView!
+    @IBOutlet weak var tvCollectionView: UICollectionView!
+    
+    weak var cellDelegate: TVCollectionViewCellDelegate?
     
     var tvArray: [TVModel] = [] {
         didSet {
             
-            self.genresCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
+            self.tvCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
             
-            genresCollectionView.dataSource = self
-            genresCollectionView.delegate = self
+            tvCollectionView.dataSource = self
+            tvCollectionView.delegate = self
             
             DispatchQueue.main.async {
                 
-                self.genresCollectionView.reloadData()
+                self.tvCollectionView.reloadData()
             }
         }
     }
@@ -31,7 +38,7 @@ class TVTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.genresCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
+        self.tvCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -42,9 +49,9 @@ class TVTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         
-        genresCollectionView.dataSource = nil
-        genresCollectionView.delegate = nil
-        genresCollectionView.reloadData()
+        tvCollectionView.dataSource = nil
+        tvCollectionView.delegate = nil
+        tvCollectionView.reloadData()
         
 //        moviesCollectionView.dataSource = self
 //        moviesCollectionView.delegate = self
@@ -78,5 +85,14 @@ extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
         return CGSize(width: 120, height: 200)
     }
     
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let cell = tvCollectionView.cellForItem(at: indexPath) as? TVCollectionViewCell {
+           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+        }
+        
+    }
     
 }
