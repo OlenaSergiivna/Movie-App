@@ -35,10 +35,8 @@ class MovieTableViewCell: UITableViewCell {
             moviesCollectionView.dataSource = self
             moviesCollectionView.delegate = self
             
-            DispatchQueue.main.async { [weak self] in
-                guard let self else {
-                    return
-                }
+            DispatchQueue.main.async {
+                
                 self.moviesCollectionView.reloadData()
             }
         }

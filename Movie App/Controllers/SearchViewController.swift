@@ -264,11 +264,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     self.searchResultsMovie = results
                     
-                    DispatchQueue.main.async { [weak self] in
+                    DispatchQueue.main.async {
                         
-                       
-                        
-                        self?.searchTableView.reloadData()
+                        self.searchTableView.reloadData()
                     }
                     self.displayStatus = false
                 }
@@ -294,8 +292,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     self.searchResultsTV = results
                     
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
+                    DispatchQueue.main.async {
                         
                         self.searchTableView.reloadData()
                     }
@@ -344,8 +341,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     self.searchResultsMovie.append(contentsOf: result)
                     
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
+                    DispatchQueue.main.async {
                         
                         self.searchTableView.reloadData()
                     }
@@ -365,8 +361,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     self.searchResultsTV.append(contentsOf: result)
                     
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
+                    DispatchQueue.main.async {
                         
                         self.searchTableView.reloadData()
                     }
@@ -400,14 +395,13 @@ extension SearchViewController: UISearchResultsUpdating {
             
             if text.count > 2 && displayStatus == false {
                 displayStatus = true
-                DataManager.shared.searchMovie(with: searchText, page: pageCount) {[weak self] results in
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] results in
                     
                     guard let self else { return }
                     
                     self.searchResultsMovie = results
                     
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
+                    DispatchQueue.main.async {
                         
                         self.searchTableView.reloadData()
                     }
@@ -425,8 +419,7 @@ extension SearchViewController: UISearchResultsUpdating {
                     
                     self.searchResultsTV = results
                     
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self else { return }
+                    DispatchQueue.main.async {
                         
                         self.searchTableView.reloadData()
                     }
@@ -499,8 +492,7 @@ extension SearchViewController: UISearchResultsUpdating {
 
             }
 
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
+            DispatchQueue.main.async {
                 
                 self.searchTableView.reloadData()
             }

@@ -55,9 +55,7 @@ class TVViewController: UIViewController {
                 
                 Globals.tvGenres = data
                 
-                DispatchQueue.main.async { [weak self] in
-                    
-                    guard let self else { return }
+                DispatchQueue.main.async {
                     
                     self.tvTableView.reloadData()
 

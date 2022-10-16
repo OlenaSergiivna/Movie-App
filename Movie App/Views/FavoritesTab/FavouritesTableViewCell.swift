@@ -30,12 +30,16 @@ class FavouritesTableViewCell: UITableViewCell {
     
     func configure(with data: MovieModel) {
         
-        if let title = data.title, let overview = data.overview, let imagePath = data.posterPath {
+        if let title = data.title, let overview = data.overview {
             
             movieTitleLabel.text = title
             overviewLabel.text = overview
             someBackView.layer.masksToBounds = true
             someBackView.layer.cornerRadius = 10
+        }
+          
+            
+       if let imagePath = data.posterPath {
             
             let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
             let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)

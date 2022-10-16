@@ -34,9 +34,7 @@ class FavouritesViewController: UIViewController {
             
             self.someMovies = favorites
             
-            DispatchQueue.main.async { [weak self] in
-                
-                guard let self else { return }
+            DispatchQueue.main.async {
                 
                 self.favouritesTableView.reloadData()
             }
@@ -104,13 +102,13 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                         
                         guard let self else { return }
                         
-                        RepositoryService.shared.movieFavoritesCashing { favorites in
+                        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                             print("favorites in cell cashing: \(favorites)")
+                            guard let self else { return }
+                            
                             self.someMovies = favorites
                             
-                            DispatchQueue.main.async { [weak self] in
-                                
-                                guard let self else { return }
+                            DispatchQueue.main.async {
                                 
                                 self.favouritesTableView.reloadData()
                             }

@@ -21,10 +21,8 @@ class TVTableViewCell: UITableViewCell {
             genresCollectionView.dataSource = self
             genresCollectionView.delegate = self
             
-            DispatchQueue.main.async { [weak self] in
-                guard let self else {
-                    return
-                }
+            DispatchQueue.main.async {
+                
                 self.genresCollectionView.reloadData()
             }
         }

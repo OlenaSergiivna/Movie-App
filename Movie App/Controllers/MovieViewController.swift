@@ -46,9 +46,7 @@ class MovieViewController: UIViewController {
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
             
-            guard let self else {
-                return
-            }
+            guard let self else { return }
             
             if result == true {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -72,10 +70,7 @@ class MovieViewController: UIViewController {
                 
                 Globals.movieGenres = data
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else {
-                        return
-                    }
+                DispatchQueue.main.async {
                     
                     self.movieTableView.reloadData()
                 }
