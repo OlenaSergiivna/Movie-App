@@ -7,14 +7,18 @@
 
 import UIKit
 
-class SpinnerViewController: UIViewController {
+class LoadingViewController: UIViewController {
     
-    var spinner = UIActivityIndicatorView(style: .medium)
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
     
-    override func loadView() {
-        view = UIView()
+    
+    override func viewDidLoad() {
+        
         view.backgroundColor = .white
         
+        let spinner = UIActivityIndicatorView(style: .medium)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         view.addSubview(spinner)
@@ -22,4 +26,6 @@ class SpinnerViewController: UIViewController {
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
+    
+
 }

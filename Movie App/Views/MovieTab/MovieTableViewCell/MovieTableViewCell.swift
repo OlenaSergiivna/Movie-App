@@ -16,6 +16,11 @@ protocol CollectionViewCellDelegate: AnyObject {
 
 class MovieTableViewCell: UITableViewCell {
     
+    deinit {
+        print("!!! Deinit: \(self)") 
+      }
+    
+    
     weak var cellDelegate: CollectionViewCellDelegate?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
@@ -25,7 +30,7 @@ class MovieTableViewCell: UITableViewCell {
     var moviesArray: [MovieModel] = [] {
         didSet {
             
-            self.moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+            moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
             
             moviesCollectionView.dataSource = self
             moviesCollectionView.delegate = self
@@ -42,15 +47,10 @@ class MovieTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+//        moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         
     }
     
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-    }
     
     override func prepareForReuse() {
         
@@ -58,8 +58,8 @@ class MovieTableViewCell: UITableViewCell {
         moviesCollectionView.delegate = nil
         moviesCollectionView.reloadData()
         
-//        moviesCollectionView.dataSource = self
-//        moviesCollectionView.delegate = self
+        //        moviesCollectionView.dataSource = self
+        //        moviesCollectionView.delegate = self
     }
     
     
@@ -78,7 +78,7 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
+        guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
             return UICollectionViewCell()
         }
         
@@ -92,9 +92,8 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let cell = collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
-            
-            self.cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+        if let cell = moviesCollectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
+           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
         }
         
     }

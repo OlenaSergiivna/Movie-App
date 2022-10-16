@@ -10,6 +10,10 @@ import Kingfisher
 
 class MovieCollectionViewCell: UICollectionViewCell {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var movieImage: UIImageView!
     
     @IBOutlet weak var movieNameLabel: UILabel!

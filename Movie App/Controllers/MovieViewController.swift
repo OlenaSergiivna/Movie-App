@@ -14,8 +14,6 @@ class MovieViewController: UIViewController {
     @IBOutlet weak var movieTableView: UITableView!
     
     var tappedCell: MovieModel!
-
-    let child = SpinnerViewController()
     
     var pageCount = 1 {
         didSet {
@@ -34,32 +32,15 @@ class MovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createSpinnerView()
-     
         let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")
         
         // MARK: - Fetch movie data
         
-        DataManager.shared.requestMovieGenres { data, statusCode in
-            
-            if statusCode == 200 {
-                
-                Globals.movieGenres = data
-                
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else {
-                        return
-                    }
-                    
-                    self.movieTableView.reloadData()
-                    
-                    self.removeSpinnerView()
-                    
-                }
-            }
-        }
+        loadContent()
+    
     }
+    
     
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
@@ -80,24 +61,31 @@ class MovieViewController: UIViewController {
     }
     
     
-    func createSpinnerView() {
-
-        addChild(child)
-        child.view.frame = view.frame
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-    }
-    
-    
-    
-    func removeSpinnerView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
-            guard let self else {
-                return
+    func loadContent() {
+        
+        let loadingVC = LoadingViewController()
+        add(loadingVC)
+        
+        DataManager.shared.requestMovieGenres { data, statusCode in
+            
+            if statusCode == 200 {
+                
+                Globals.movieGenres = data
+                
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else {
+                        return
+                    }
+                    
+                    self.movieTableView.reloadData()
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    
+                    loadingVC.remove()
+                    
+                }
             }
-            self.child.willMove(toParent: nil)
-            self.child.view.removeFromSuperview()
-            self.child.removeFromParent()
         }
     }
 }
@@ -141,14 +129,16 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "DetailsScreen" {
-              let destinationViewController = segue.destination as! DetailsScreenViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailsScreen" {
+            if let destinationViewController = segue.destination as? DetailsScreenViewController {
                 destinationViewController.loadViewIfNeeded()
                 destinationViewController.configure(with: tappedCell)
-                
             }
+            
+            
         }
+    }
     
 }
 

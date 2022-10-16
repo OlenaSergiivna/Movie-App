@@ -92,7 +92,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         // MARK: - Get data from UserDefaults
         if let value = UserDefaults.standard.stringArray(forKey: "requests") {
-            self.previousSearchRequests = value
+         previousSearchRequests = value
         }
         
     }
@@ -111,15 +111,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            guard let self else {
-                return
-            }
+            guard let self else { return }
             
             if result == true {
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
                 self.present(viewController, animated: true)
+                
             } else {
                 print("false result")
             }
@@ -246,7 +245,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         // response: what if the is no movies/tv shows on request?
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
-        let cell = tableView.cellForRow(at: indexPath)
+        let cell = searchTableView.cellForRow(at: indexPath)
         
         switch selectedIndex {
             
@@ -260,12 +259,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
                 searchController.searchBar.text = text
                 
-                DataManager.shared.searchMovie(with: searchText, page: pageCount) { results in
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] results in
+                    guard let self else { return }
+                    
                     self.searchResultsMovie = results
                     
-                    
-                    DispatchQueue.main.async {
-                        self.searchTableView.reloadData()
+                    DispatchQueue.main.async { [weak self] in
+                        
+                       
+                        
+                        self?.searchTableView.reloadData()
                     }
                     self.displayStatus = false
                 }
@@ -286,10 +289,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 searchController.searchBar.text = text
                 
                 
-                DataManager.shared.searchTV(with: searchText, page: 1) { results in
+                DataManager.shared.searchTV(with: searchText, page: 1) { [weak self] results in
+                    guard let self else { return }
+                    
                     self.searchResultsTV = results
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        
                         self.searchTableView.reloadData()
                     }
                     
@@ -331,11 +338,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //
 //                }
                 
-                DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
-                    //self.displayStatus = false
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] result in
+                    
+                    guard let self else { return }
+                    
                     self.searchResultsMovie.append(contentsOf: result)
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        
                         self.searchTableView.reloadData()
                     }
                     self.displayStatus = false
@@ -349,11 +360,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 displayStatus = true
                 pageCount += 1
                 
-                DataManager.shared.searchTV(with: searchText, page: pageCount) { result in
-                    //self.displayStatus = false
+                DataManager.shared.searchTV(with: searchText, page: pageCount) { [weak self] result in
+                    guard let self else { return }
+                    
                     self.searchResultsTV.append(contentsOf: result)
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        
                         self.searchTableView.reloadData()
                     }
                     
@@ -386,10 +400,15 @@ extension SearchViewController: UISearchResultsUpdating {
             
             if text.count > 2 && displayStatus == false {
                 displayStatus = true
-                DataManager.shared.searchMovie(with: searchText, page: pageCount) { results in
+                DataManager.shared.searchMovie(with: searchText, page: pageCount) {[weak self] results in
+                    
+                    guard let self else { return }
+                    
                     self.searchResultsMovie = results
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        
                         self.searchTableView.reloadData()
                     }
                     
@@ -401,10 +420,14 @@ extension SearchViewController: UISearchResultsUpdating {
             
             if text.count > 2 && displayStatus == false {
                 displayStatus = true
-                DataManager.shared.searchTV(with: searchText, page: 1) { results in
+                DataManager.shared.searchTV(with: searchText, page: 1) { [weak self] results in
+                    guard let self else { return }
+                    
                     self.searchResultsTV = results
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        
                         self.searchTableView.reloadData()
                     }
                     
@@ -430,7 +453,7 @@ extension SearchViewController: UISearchResultsUpdating {
         
         if !searchText.isEmpty && !previousSearchRequests.contains(where: { ($0 == searchText)}) {
             
-            self.previousSearchRequests.insert(searchText.capitalized, at: 0)
+            previousSearchRequests.insert(searchText.capitalized, at: 0)
                 print("inserted: \(searchText)")
             }
             
@@ -439,7 +462,7 @@ extension SearchViewController: UISearchResultsUpdating {
                 print("removed last ")
             }
             
-            UserDefaults.standard.set(self.previousSearchRequests, forKey: "requests")
+            UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
             print("request saved in UD")
     }
 }
@@ -476,7 +499,9 @@ extension SearchViewController: UISearchResultsUpdating {
 
             }
 
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                
                 self.searchTableView.reloadData()
             }
         }

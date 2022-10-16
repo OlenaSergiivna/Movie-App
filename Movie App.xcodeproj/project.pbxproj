@@ -36,7 +36,9 @@
 		CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */; };
 		CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* GenresViewModel.swift */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
-		CE70D57328F9DCE700536243 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* SpinnerViewController.swift */; };
+		CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* LoadingViewController.swift */; };
+		CE81D89D28FC7A4100D667A8 /* DetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* DetailsService.swift */; };
+		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* MovieViewController.swift */; };
@@ -93,7 +95,9 @@
 		CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
 		CE5614D528EE15120085A49B /* GenresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresViewModel.swift; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		CE70D57228F9DCE700536243 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		CE70D57228F9DCE700536243 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		CE81D89C28FC7A4100D667A8 /* DetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsService.swift; sourceTree = "<group>"; };
+		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
@@ -252,7 +256,7 @@
 				CE08EB3828E33F320038CC92 /* SearchViewController.swift */,
 				CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */,
 				CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */,
-				CE70D57228F9DCE700536243 /* SpinnerViewController.swift */,
+				CE70D57228F9DCE700536243 /* LoadingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -334,6 +338,7 @@
 				CE6133A028EA028200778822 /* DataManager.swift */,
 				CEFA731C28F054CE00CD0872 /* RealmManager.swift */,
 				CEFA732128F0759F00CD0872 /* RepositoryService.swift */,
+				CE81D89C28FC7A4100D667A8 /* DetailsService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -343,6 +348,7 @@
 			children = (
 				CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */,
 				CEC003B528F780A5005B8B4E /* String+ isBlank.swift */,
+				CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -515,7 +521,8 @@
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
-				CE70D57328F9DCE700536243 /* SpinnerViewController.swift in Sources */,
+				CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */,
+				CE81D89D28FC7A4100D667A8 /* DetailsService.swift in Sources */,
 				CEF4F66A28FB0B60000BC6DA /* TVViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* GenresViewModel.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* RemovedResponseModel.swift in Sources */,
@@ -542,6 +549,7 @@
 				CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */,
 				CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */,
 				CEC7BD5128E39B9300A7CDD6 /* MovieTableViewCell.swift in Sources */,
+				CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */,
 				CE1437F228F38911002A7FBB /* TVModel.swift in Sources */,
 				CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */,
 				CE14063328E0C57D00B67410 /* SceneDelegate.swift in Sources */,

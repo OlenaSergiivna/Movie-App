@@ -9,6 +9,10 @@ import UIKit
 
 class AuthenticationViewController: UIViewController {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var loginTextField: UITextField!
     
     @IBOutlet weak var passTextField: UITextField!
@@ -36,9 +40,9 @@ class AuthenticationViewController: UIViewController {
             print("Session id: \(Globals.sessionId)")
             
             NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] userId in
-                guard let self else {
-                    return
-                }
+//                guard let self else {
+//                    return
+//                }
                 
                 Globals.userId = userId
                 print("User id: \(Globals.userId)")
@@ -48,6 +52,10 @@ class AuthenticationViewController: UIViewController {
                     if responseValidate == 200 {
                         print(responseValidate)
                         if responseSession == 200 {
+                            
+                            guard let self else {
+                                return
+                            }
                             print(responseSession)
                             self.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
                         }

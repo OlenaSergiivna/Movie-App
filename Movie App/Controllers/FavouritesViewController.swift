@@ -21,8 +21,6 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-    let child = SpinnerViewController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,16 +30,13 @@ class FavouritesViewController: UIViewController {
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-            guard let self else {
-                return
-            }
+            guard let self else { return }
+            
             self.someMovies = favorites
             
             DispatchQueue.main.async { [weak self] in
                 
-                guard let self else {
-                    return
-                }
+                guard let self else { return }
                 
                 self.favouritesTableView.reloadData()
             }
@@ -52,9 +47,7 @@ class FavouritesViewController: UIViewController {
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            guard let self else {
-                return
-            }
+            guard let self else { return }
             
             if result == true {
                 
@@ -64,10 +57,8 @@ class FavouritesViewController: UIViewController {
             } else {
                 print("false result")
             }
-            
         }
     }
-    
 }
 
 
@@ -97,26 +88,21 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        // weak self + guard let self in each closure?
         let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
-            guard let self else {
-                return
-            }
+            
+            guard let self else { return }
             
             DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
                 print("delete movie from favorites result: \(result)")
-                guard let self else {
-                    return
-                }
+                
+                guard let self else { return }
                 
                 if result == 200 {
                     
                     RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
                         print("deleted from realm")
                         
-                        guard let self else {
-                            return
-                        }
+                        guard let self else { return }
                         
                         RepositoryService.shared.movieFavoritesCashing { favorites in
                             print("favorites in cell cashing: \(favorites)")
@@ -124,19 +110,12 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                             
                             DispatchQueue.main.async { [weak self] in
                                 
-                                guard let self else {
-                                    return
-                                }
-                                print("some movies: \(self.someMovies.count)")
+                                guard let self else { return }
+                                
                                 self.favouritesTableView.reloadData()
-                                print("data in TV has been reloaded")
                             }
                         }
-                        
                     }
-                    
-                    print(result)
-                    
                 }
             }
             
