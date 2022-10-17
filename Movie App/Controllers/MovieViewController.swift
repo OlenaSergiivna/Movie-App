@@ -29,6 +29,7 @@ class MovieViewController: UIViewController {
     
     var totalPagesCount = 10
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -124,17 +125,6 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailsScreen" {
-            if let destinationViewController = segue.destination as? DetailsScreenViewController {
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configureMovie(with: tappedCell)
-            }
-            
-            
-        }
-    }
-    
 }
 
 
@@ -146,7 +136,13 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
         self.tappedCell = cells[index]
         print("You tapped the cell \(index) with title \(tappedCell.title ?? "0")")
         
-        performSegue(withIdentifier: "DetailsScreen", sender: self)
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+            
+            destinationViewController.loadViewIfNeeded()
+            destinationViewController.configureMovie(with: tappedCell)
+            navigationController?.present(destinationViewController, animated: true)
+            
+        }
     }
 }

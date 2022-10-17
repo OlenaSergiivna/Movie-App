@@ -7,6 +7,8 @@
 
 import UIKit
 
+// rearch requests saving on scroll + on movie tap
+
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchTableView: UITableView!

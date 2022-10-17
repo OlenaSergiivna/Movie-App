@@ -108,7 +108,6 @@
                     <connections>
                         <outlet property="logOutButton" destination="nTP-FH-6BM" id="qct-mV-SMn"/>
                         <outlet property="movieTableView" destination="de5-S4-Mwr" id="tch-Qg-NCU"/>
-                        <segue destination="UlR-Nu-m3s" kind="presentation" identifier="DetailsScreen" id="rQv-Vs-uTK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag9-0x-G8t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -152,7 +151,6 @@
                     <connections>
                         <outlet property="logOutButton" destination="1oP-QQ-LkB" id="DAl-hD-s46"/>
                         <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
-                        <segue destination="UlR-Nu-m3s" kind="presentation" identifier="DetailsScreen" id="qND-he-REe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwq-o6-4hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -257,41 +255,41 @@
         <!--Details Screen View Controller-->
         <scene sceneID="xEP-8q-wSa">
             <objects>
-                <viewController storyboardIdentifier="DetailsScreenViewController" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsScreenViewController" modalPresentationStyle="pageSheet" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffi-3O-7DL">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jv2-nb-BmL">
-                                <rect key="frame" x="40" y="87" width="310" height="361"/>
+                                <rect key="frame" x="40" y="87" width="310" height="387"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XD2-SH-3dj">
-                                <rect key="frame" x="40" y="528" width="310" height="27.666666666666629"/>
+                                <rect key="frame" x="40" y="554" width="310" height="27.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77u-Xz-Dv8">
-                                <rect key="frame" x="40" y="464" width="58.666666666666657" height="25.333333333333314"/>
+                                <rect key="frame" x="40" y="490" width="58.666666666666657" height="25.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
-                                <rect key="frame" x="40" y="571.66666666666663" width="310" height="21"/>
+                                <rect key="frame" x="40" y="597.66666666666663" width="310" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
-                                <rect key="frame" x="40" y="616.66666666666663" width="310" height="20.333333333333371"/>
+                                <rect key="frame" x="40" y="642.66666666666663" width="310" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiK-j8-To5">
-                                <rect key="frame" x="98.666666666666686" y="464" width="251.33333333333331" height="35"/>
+                                <rect key="frame" x="98.666666666666671" y="490" width="251.33333333333331" height="35"/>
                                 <color key="tintColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
@@ -336,7 +334,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ea1-0A-f0J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7966" y="-432"/>
+            <point key="canvasLocation" x="7175" y="290"/>
         </scene>
         <!--Favourites View Controller-->
         <scene sceneID="DDJ-Kd-BMO">
@@ -446,9 +444,6 @@
             <point key="canvasLocation" x="4690.7692307692305" y="-41.232227488151658"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="qND-he-REe"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
         <image name="heart" catalog="system" width="128" height="107"/>

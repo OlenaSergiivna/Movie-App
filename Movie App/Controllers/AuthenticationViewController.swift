@@ -7,6 +7,8 @@
 
 import UIKit
 
+// add CocoaLumberjack + set MovieVC as root VC, open AuthVC only when user in not logged in + keyChain + autologin
+
 class AuthenticationViewController: UIViewController {
     
     deinit {
@@ -26,7 +28,7 @@ class AuthenticationViewController: UIViewController {
         
     }
     
-    // add language choice + implementation in all VC
+    // add language choice + implementation in all VC 
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
         
@@ -40,9 +42,6 @@ class AuthenticationViewController: UIViewController {
             print("Session id: \(Globals.sessionId)")
             
             NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] userId in
-//                guard let self else {
-//                    return
-//                }
                 
                 Globals.userId = userId
                 print("User id: \(Globals.userId)")
@@ -53,9 +52,7 @@ class AuthenticationViewController: UIViewController {
                         print(responseValidate)
                         if responseSession == 200 {
                             
-                            guard let self else {
-                                return
-                            }
+                            guard let self else { return }
                             print(responseSession)
                             self.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
                         }

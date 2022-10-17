@@ -17,7 +17,6 @@ class TVViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
         let nibMovieCell = UINib(nibName: "TVTableViewCell", bundle: nil)
         tvTableView.register(nibMovieCell, forCellReuseIdentifier: "TVTableViewCell")
@@ -25,6 +24,7 @@ class TVViewController: UIViewController {
         // MARK: - Fetch tv shows data
         
         loadContent()
+    
     }
     
     

@@ -62,6 +62,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
     //                    print("Job failed: \(error.localizedDescription)")
     //                }
     //            }
+                
+                let cashe = Kingfisher.ImageCache.default
+                cashe.memoryStorage.config.countLimit = 16
             } else {
                 movieImage.image = .strokedCheckmark
                 movieNameLabel.isHidden = false

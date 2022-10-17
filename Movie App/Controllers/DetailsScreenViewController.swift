@@ -122,7 +122,8 @@ class DetailsScreenViewController: UIViewController {
             //                    print("Job failed: \(error.localizedDescription)")
             //                }
             //            }
-            
+            let cashe = ImageCache.default
+            cashe.memoryStorage.config.countLimit = 16
         } else {
             mediaImage.image = .strokedCheckmark
         }
