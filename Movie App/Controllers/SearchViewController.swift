@@ -272,6 +272,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     self.displayStatus = false
                 }
+                
             } else if cell is SearchTableViewCell {
                 print("movie cell tapped")
                 
@@ -281,9 +282,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     destinationViewController.loadViewIfNeeded()
                     destinationViewController.configureMovie(with: searchResultsMovie[indexPath.row])
                     navigationController?.present(destinationViewController, animated: true)
-                    
-                    
-                    
+          
                 }
             } else {
                 print("tapped empty cell")
@@ -314,6 +313,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             } else if cell is SearchTableViewCell {
                 print("tv cell tapped")
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+                    
+                    destinationViewController.loadViewIfNeeded()
+                    destinationViewController.configureTV(with: searchResultsTV[indexPath.row])
+                    navigationController?.present(destinationViewController, animated: true)
+                }
             } else {
                 print("tapped empty cell")
             }
