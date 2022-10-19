@@ -190,13 +190,12 @@ class DetailsScreenViewController: UIViewController {
     
     @IBAction func addToFavoritesPressed(_ sender: UIButton) {
         print("button tapped")
-        
-        
-        
+
         if isFavorite {
             favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
             favoritesButton.tintColor = .systemRed
             isFavorite = false
+            
             DataManager.shared.deleteFromFavorites(id: mediaId, type: "movie") { [weak self] response in
                 print("delete movie from favorites result: \(response)")
                 
@@ -231,5 +230,7 @@ class DetailsScreenViewController: UIViewController {
             }
     }
     
+  
+  
 }
 

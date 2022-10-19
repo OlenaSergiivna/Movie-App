@@ -16,9 +16,6 @@ class FavouritesViewController: UIViewController {
     var someMovies: [MovieModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
-
-
-        //someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
         
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
@@ -34,26 +31,12 @@ class FavouritesViewController: UIViewController {
         }
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
-//
-//        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
-//        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
-//
-//        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-//            guard let self else { return }
-//
-//            self.someMovies = favorites
-//
-//            DispatchQueue.main.async {
-//
-//                self.favouritesTableView.reloadData()
-//            }
-//        }
     }
-    
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -107,19 +90,19 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             guard let self else { return }
             
             DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
-                print("delete movie from favorites result: \(result)")
+                //print("delete movie from favorites result: \(result)")
                 
                 guard let self else { return }
                 
                 if result == 200 {
                     
                     RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
-                        print("deleted from realm")
+                        //print("deleted from realm")
                         
                         guard let self else { return }
                         
                         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-                            print("favorites in cell cashing: \(favorites)")
+                            //print("favorites in cell cashing: \(favorites)")
                             guard let self else { return }
                             
                             self.someMovies = favorites
@@ -145,10 +128,32 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
             
+            destinationViewController.presentationController?.delegate = self
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configureMovie(with: someMovies[indexPath.row])
             navigationController?.present(destinationViewController, animated: true)
             
+            
+            
         }
+    }
+}
+
+
+
+extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        
+        RepositoryService.shared.movieFavoritesCashing {[weak self] data in
+            guard let self else { return }
+            
+            self.someMovies = data
+            
+            DispatchQueue.main.async {
+                self.favouritesTableView.reloadData()
+                
+            }
+        }
+       
     }
 }
