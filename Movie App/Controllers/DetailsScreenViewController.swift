@@ -58,14 +58,13 @@ class DetailsScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DataManager.shared.requestFavorites { [weak self] favorites in
+        DataManager.shared.requestFavorites { [weak self] favorites, _ in
             guard let self else { return }
-            
-            self.favoriteMovies = favorites
+    
+                self.favoriteMovies = favorites
             
          }
-        
-        
+   
     }
     
     

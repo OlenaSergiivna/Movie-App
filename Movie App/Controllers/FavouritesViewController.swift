@@ -13,17 +13,12 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
 
-    var someMovies: [MovieModel] = [] {
-        didSet {
-            for movie in someMovies {
-                print("\(String(describing: movie.title))")
-            }
-        }
-    }
+    var someMovies: [MovieModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
+
+
+        //someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
         
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
@@ -34,7 +29,6 @@ class FavouritesViewController: UIViewController {
             self.someMovies = favorites
             
             DispatchQueue.main.async {
-                
                 self.favouritesTableView.reloadData()
             }
         }
@@ -43,21 +37,21 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
-
-        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
-        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
-
-        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-            guard let self else { return }
-
-            self.someMovies = favorites
-
-            DispatchQueue.main.async {
-
-                self.favouritesTableView.reloadData()
-            }
-        }
+//        someMovies = RealmManager.shared.getFromRealm(type: .movieFavorite) as! [MovieModel]
+//
+//        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
+//        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
+//
+//        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+//            guard let self else { return }
+//
+//            self.someMovies = favorites
+//
+//            DispatchQueue.main.async {
+//
+//                self.favouritesTableView.reloadData()
+//            }
+//        }
     }
     
     
@@ -86,6 +80,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = favouritesTableView.dequeueReusableCell(withIdentifier: "FavouritesTableViewCell", for: indexPath) as? FavouritesTableViewCell else {
             return UITableViewCell()
@@ -97,10 +92,12 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 230
         
     }
+    
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -135,10 +132,23 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-            
         }
+        
         deleteAction.backgroundColor = .systemRed
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+            
+            destinationViewController.loadViewIfNeeded()
+            destinationViewController.configureMovie(with: someMovies[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
+            
+        }
     }
 }

@@ -48,6 +48,9 @@
 		CEC7BD5228E39B9300A7CDD6 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5028E39B9300A7CDD6 /* MovieTableViewCell.xib */; };
 		CEC7BD5528E3A78700A7CDD6 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC7BD5328E3A78700A7CDD6 /* MovieCollectionViewCell.swift */; };
 		CEC7BD5628E3A78700A7CDD6 /* MovieCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC7BD5428E3A78700A7CDD6 /* MovieCollectionViewCell.xib */; };
+		CECEF5EC28FDAC4600BCB039 /* InternetConnectionServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEF5EB28FDAC4600BCB039 /* InternetConnectionServise.swift */; };
+		CECEF5EE28FDB5B100BCB039 /* AlamofireConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEF5ED28FDB5B100BCB039 /* AlamofireConnectionService.swift */; };
+		CECEF5F028FDBA6A00BCB039 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECEF5EF28FDBA6A00BCB039 /* File.swift */; };
 		CED374E528F619C1006D95A9 /* SearchMovieRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */; };
 		CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */; };
 		CED374EA28F625B6006D95A9 /* PreviousRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */; };
@@ -107,6 +110,9 @@
 		CEC7BD5028E39B9300A7CDD6 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
 		CEC7BD5328E3A78700A7CDD6 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEC7BD5428E3A78700A7CDD6 /* MovieCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCollectionViewCell.xib; sourceTree = "<group>"; };
+		CECEF5EB28FDAC4600BCB039 /* InternetConnectionServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectionServise.swift; sourceTree = "<group>"; };
+		CECEF5ED28FDB5B100BCB039 /* AlamofireConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireConnectionService.swift; sourceTree = "<group>"; };
+		CECEF5EF28FDBA6A00BCB039 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieRealmModel.swift; sourceTree = "<group>"; };
 		CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVRealmModel.swift; sourceTree = "<group>"; };
 		CED374E828F625B6006D95A9 /* PreviousRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousRequestsTableViewCell.swift; sourceTree = "<group>"; };
@@ -339,6 +345,9 @@
 				CEFA731C28F054CE00CD0872 /* RealmManager.swift */,
 				CEFA732128F0759F00CD0872 /* RepositoryService.swift */,
 				CE81D89C28FC7A4100D667A8 /* DetailsService.swift */,
+				CECEF5EB28FDAC4600BCB039 /* InternetConnectionServise.swift */,
+				CECEF5EF28FDBA6A00BCB039 /* File.swift */,
+				CECEF5ED28FDB5B100BCB039 /* AlamofireConnectionService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -517,8 +526,10 @@
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,
 				CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */,
 				CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */,
+				CECEF5EE28FDB5B100BCB039 /* AlamofireConnectionService.swift in Sources */,
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
+				CECEF5EC28FDAC4600BCB039 /* InternetConnectionServise.swift in Sources */,
 				CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */,
@@ -549,6 +560,7 @@
 				CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */,
 				CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */,
 				CEC7BD5128E39B9300A7CDD6 /* MovieTableViewCell.swift in Sources */,
+				CECEF5F028FDBA6A00BCB039 /* File.swift in Sources */,
 				CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */,
 				CE1437F228F38911002A7FBB /* TVModel.swift in Sources */,
 				CEE9E16328E3707F000424DC /* DetailsScreenViewController.swift in Sources */,
@@ -698,6 +710,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T999GJYMD3;
@@ -715,6 +728,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Movie-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -727,6 +741,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T999GJYMD3;
@@ -744,6 +759,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.Movie-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
