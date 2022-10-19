@@ -45,7 +45,6 @@ class MovieTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         
     }
     
@@ -56,8 +55,6 @@ class MovieTableViewCell: UITableViewCell {
         moviesCollectionView.delegate = nil
         moviesCollectionView.reloadData()
         
-        //        moviesCollectionView.dataSource = self
-        //        moviesCollectionView.delegate = self
     }
     
     
