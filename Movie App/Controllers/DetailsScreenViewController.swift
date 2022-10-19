@@ -40,7 +40,7 @@ class DetailsScreenViewController: UIViewController {
     
     var mediaId: Int = 0
     
-    var media: [MovieModel] = []
+    var media: [Any] = []
     
     var favoriteMovies: [MovieModel] = [] {
         didSet {
@@ -69,125 +69,126 @@ class DetailsScreenViewController: UIViewController {
     
     
     
-    func configureMovie(with cell: MovieModel) {
-        media.append(cell)
-        mediaId = cell.id
-        
-        mediaName.text = cell.title
-        mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
-        
-        mediaOverview.text = cell.overview
-        
-        // MARK: Configuring movie genre
-        
-        var genresString = ""
-        let genres = Globals.movieGenres
-        
-        for movieID in cell.genreIDS {
+    func configure(with cell: Any) {
+        if cell is MovieModel {
+           let cell = cell as! MovieModel
             
-            for genre in genres {
+            media.append(cell)
+            mediaId = cell.id
+            
+            mediaName.text = cell.title
+            mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+            
+            mediaOverview.text = cell.overview
+            
+            // MARK: Configuring movie genre
+            
+            var genresString = ""
+            let genres = Globals.movieGenres
+            
+            for movieID in cell.genreIDS {
                 
-                if movieID == genre.id {
-                    genresString.append("\(genre.name). ")
+                for genre in genres {
+                    
+                    if movieID == genre.id {
+                        genresString.append("\(genre.name). ")
+                    }
                 }
             }
-        }
-        
-        mediaGenres.text = String("\(genresString)".dropLast(2))
-        
-        // MARK: Configuring movie image
-        
-        if let imagePath = cell.posterPath {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 10)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "loading"),
-                options: [
-                    .processor(processor),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
-            let cashe = ImageCache.default
-            cashe.memoryStorage.config.countLimit = 16
-        } else {
-            mediaImage.image = .strokedCheckmark
+            mediaGenres.text = String("\(genresString)".dropLast(2))
+            
+            // MARK: Configuring movie image
+            
+            if let imagePath = cell.posterPath {
+                
+                let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+                let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+                |> RoundCornerImageProcessor(cornerRadius: 10)
+                mediaImage.kf.indicatorType = .activity
+                mediaImage.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(named: "loading"),
+                    options: [
+                        .processor(processor),
+                        .scaleFactor(UIScreen.main.scale),
+                        .transition(.fade(1)),
+                        .cacheOriginalImage
+                    ])
+                //            {
+                //                result in
+                //                switch result {
+                //                case .success(let value):
+                //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                //                case .failure(let error):
+                //                    print("Job failed: \(error.localizedDescription)")
+                //                }
+                //            }
+                let cashe = ImageCache.default
+                cashe.memoryStorage.config.countLimit = 16
+            } else {
+                mediaImage.image = .strokedCheckmark
+            }
+            
+        } else if cell is TVModel {
+            let cell = cell as! TVModel
+            
+            mediaName.text = cell.name
+            mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+            
+            mediaOverview.text = cell.overview
+            
+            // MARK: Configuring movie genre
+            
+            var genresString = ""
+            let genres = Globals.tvGenres
+            
+            for tvID in cell.genreIDS {
+                
+                for genre in genres {
+                    
+                    if tvID == genre.id {
+                        genresString.append("\(genre.name). ")
+                    }
+                }
+            }
+            
+            mediaGenres.text = String("\(genresString)".dropLast(2))
+            
+            // MARK: Configuring movie image
+            
+            if let imagePath = cell.posterPath {
+                
+                let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+                let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+                |> RoundCornerImageProcessor(cornerRadius: 10)
+                mediaImage.kf.indicatorType = .activity
+                mediaImage.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(named: "loading"),
+                    options: [
+                        .processor(processor),
+                        .scaleFactor(UIScreen.main.scale),
+                        .transition(.fade(1)),
+                        .cacheOriginalImage
+                    ])
+                //            {
+                //                result in
+                //                switch result {
+                //                case .success(let value):
+                //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                //                case .failure(let error):
+                //                    print("Job failed: \(error.localizedDescription)")
+                //                }
+                //            }
+                
+            } else {
+                mediaImage.image = .strokedCheckmark
+            }
         }
     }
     
-    
-    
-    func configureTV(with cell: TVModel) {
-        
-        mediaName.text = cell.name
-        mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
-        
-        mediaOverview.text = cell.overview
-        
-        // MARK: Configuring movie genre
-        
-        var genresString = ""
-        let genres = Globals.tvGenres
-        
-        for tvID in cell.genreIDS {
-            
-            for genre in genres {
-                
-                if tvID == genre.id {
-                    genresString.append("\(genre.name). ")
-                }
-            }
-        }
-        
-        mediaGenres.text = String("\(genresString)".dropLast(2))
-        
-        // MARK: Configuring movie image
-        
-        if let imagePath = cell.posterPath {
-            
-            let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 10)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "loading"),
-                options: [
-                    .processor(processor),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
-            
-        } else {
-            mediaImage.image = .strokedCheckmark
-        }
-    }
-    
-    
-    
+
     @IBAction func addToFavoritesPressed(_ sender: UIButton) {
         print("button tapped")
 
@@ -222,7 +223,7 @@ class DetailsScreenViewController: UIViewController {
                 
                 if response == 200 {
                     
-                    RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media)
+                    RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media as? [MovieModel] ?? [])
                         print("added to realm")
                         
                     }

@@ -280,7 +280,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
                     
                     destinationViewController.loadViewIfNeeded()
-                    destinationViewController.configureMovie(with: searchResultsMovie[indexPath.row])
+                    destinationViewController.configure(with: searchResultsMovie[indexPath.row])
                     navigationController?.present(destinationViewController, animated: true)
           
                 }
@@ -318,7 +318,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
                     
                     destinationViewController.loadViewIfNeeded()
-                    destinationViewController.configureTV(with: searchResultsTV[indexPath.row])
+                    destinationViewController.configure(with: searchResultsTV[indexPath.row])
                     navigationController?.present(destinationViewController, animated: true)
                 }
             } else {

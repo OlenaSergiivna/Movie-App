@@ -130,7 +130,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             
             destinationViewController.presentationController?.delegate = self
             destinationViewController.loadViewIfNeeded()
-            destinationViewController.configureMovie(with: someMovies[indexPath.row])
+            destinationViewController.configure(with: someMovies[indexPath.row])
             navigationController?.present(destinationViewController, animated: true)
             
             

@@ -7,6 +7,17 @@
 
 import Foundation
 
+struct DetailsService {
+    
+    static let shared = DetailsService()
+        
+}
+
+
+
+
+
+
 // NetworkModel -> DataBaseModel -> UIModel service
 
 

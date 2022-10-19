@@ -111,20 +111,6 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
         
         return 240
     }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailsScreen" {
-            if let destinationViewController = segue.destination as? DetailsScreenViewController {
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configureTV(with: tappedCell)
-            }
-            
-            
-        }
-    }
-  
-    
 }
 
 
@@ -135,7 +121,14 @@ extension TVViewController: TVCollectionViewCellDelegate {
         self.tappedCell = cells[index]
         print("You tapped the cell \(index) with title \(tappedCell.name)")
         
-        performSegue(withIdentifier: "DetailsScreen", sender: self)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+            
+            destinationViewController.loadViewIfNeeded()
+            destinationViewController.configure(with: tappedCell)
+            navigationController?.present(destinationViewController, animated: true)
+            
+        }
     }
     
 }

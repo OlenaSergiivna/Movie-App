@@ -140,7 +140,7 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
         if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
             
             destinationViewController.loadViewIfNeeded()
-            destinationViewController.configureMovie(with: tappedCell)
+            destinationViewController.configure(with: tappedCell)
             navigationController?.present(destinationViewController, animated: true)
             
         }
