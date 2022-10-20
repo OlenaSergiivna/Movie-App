@@ -12,14 +12,9 @@ struct DataManager {
     
     static let shared = DataManager()
     
-    private let apiKey = "b718f4e2921daaf000e347114cf44187"
-    
-    
-    // MARK: - Request movies genres
-    
     func requestMovieGenres(completion: @escaping([Genre], Int) -> Void) {
         
-        let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(apiKey)", method: .get)
+        let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(Globals.apiKey)", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
             do {
@@ -40,7 +35,7 @@ struct DataManager {
     
     func requestTVGenres(completion: @escaping([Genre], Int) -> Void) {
         
-        let request = AF.request("https://api.themoviedb.org/3/genre/tv/list?api_key=\(apiKey)&language=en-US", method: .get)
+        let request = AF.request("https://api.themoviedb.org/3/genre/tv/list?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         request.responseDecodable(of: Genres.self) { response in
             do {
@@ -63,7 +58,7 @@ struct DataManager {
         
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
         
-        let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
+        let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(Globals.apiKey)&with_genres=\(genreId)&page=\(page)"
         
         let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
         
@@ -85,7 +80,7 @@ struct DataManager {
         
         guard let genreId = Globals.tvGenres.first(where: { $0.name == genre})?.id else { return }
         
-        let tvByGenreURL = "https://api.themoviedb.org/3/discover/tv?api_key=\(apiKey)&with_genres=\(genreId)&page=\(page)"
+        let tvByGenreURL = "https://api.themoviedb.org/3/discover/tv?api_key=\(Globals.apiKey)&with_genres=\(genreId)&page=\(page)"
         
         let tvByGenreRequest = AF.request(tvByGenreURL, method: .get)
         
@@ -110,7 +105,7 @@ struct DataManager {
     
     func requestFavoriteMovies(completion: @escaping (_ success: Bool, _ favorites: [MovieModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
-        let urlMovie = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
+        let urlMovie = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
         print(urlMovie)
         AF.request(urlMovie,
                    method: .get,
@@ -163,7 +158,7 @@ struct DataManager {
     
     func requestFavoriteTVShows(completion: @escaping (_ success: Bool, _ favorites: [TVModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
-        let urlTV = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/tv?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
+        let urlTV = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
         print(urlTV)
         
         AF.request(urlTV,
@@ -246,7 +241,7 @@ struct DataManager {
             "favorite" : false
         ]
         
-        let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(apiKey)&session_id=\(Globals.sessionId)"
+        let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)"
         print(deleteURL)
         
         let deleteFromFavoritesRequest = AF.request(deleteURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
@@ -269,7 +264,7 @@ struct DataManager {
     
     func addToFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
         
-        let addURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(apiKey)&session_id=\(Globals.sessionId)&media_id=\(id)&media_type=\(type)&favorite=true"
+        let addURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&media_id=\(id)&media_type=\(type)&favorite=true"
         
         
         let addToFavoritesRequest = AF.request(addURL, method: .post)
@@ -294,7 +289,7 @@ struct DataManager {
     
     func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
         
-        let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
+        let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsTV.self) { response in
             print("tv url: \(searchRequest)")
@@ -313,7 +308,7 @@ struct DataManager {
     
     func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping([MovieModel]) -> Void) {
         
-        let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
+        let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsMovie.self) { response in
             print("movie url: \(searchRequest)")

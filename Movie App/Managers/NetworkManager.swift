@@ -42,10 +42,7 @@ struct NetworkManager {
             } catch {
                 print("Request: \(error.localizedDescription)")
             }
-            
-            
         }
-        
     }
     
     
@@ -72,8 +69,7 @@ struct NetworkManager {
                 }
                 print("Validate: \(error.localizedDescription)")
             }
-            
-            
+ 
         }
     }
     
@@ -119,6 +115,8 @@ struct NetworkManager {
         }
     }
     
+    
+    
     // MARK: - Log out (delete current session)
     
     func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
@@ -136,6 +134,4 @@ struct NetworkManager {
             }
         }
     }
-    
-    
 }

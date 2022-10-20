@@ -8,6 +8,8 @@
 import UIKit
 import Kingfisher
 
+// add popup message when media has been added to favorites list or deleted from it
+
 class DetailsScreenViewController: UIViewController {
     
     deinit {

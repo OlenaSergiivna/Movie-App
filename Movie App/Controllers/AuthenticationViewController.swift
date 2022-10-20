@@ -8,6 +8,7 @@
 import UIKit
 
 // add CocoaLumberjack + set MovieVC as root VC, open AuthVC only when user in not logged in + keyChain + autologin
+// add login and password validation
 
 class AuthenticationViewController: UIViewController {
     

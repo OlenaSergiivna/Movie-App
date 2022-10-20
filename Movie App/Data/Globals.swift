@@ -8,6 +8,7 @@
 import Foundation
 
 struct Globals {
+    static var apiKey = "b718f4e2921daaf000e347114cf44187"
     static var sessionId = ""
     static var userId = 0
     
