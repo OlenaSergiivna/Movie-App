@@ -30,98 +30,103 @@ class DetailsScreenViewController: UIViewController {
     
     var mediaId: Int = 0
     
-    var mediaType: String = "" {
-        didSet {
-            
-            if mediaType == "movie" {
-              
-                DataManager.shared.requestFavoriteMovies { [weak self] success, favorites, _, _ in
-                    guard let self else { return }
-                    
-                    if let favorites = favorites {
-                        
-                        self.favoriteMedia = favorites
-                    }
-                }
-                
-            } else if mediaType == "tv" {
-                
-                DataManager.shared.requestFavoriteTVShows { [weak self] success, favorites, _, _ in
-                    guard let self else { return }
-                    
-                    if let favorites = favorites {
-                        
-                        self.favoriteMedia = favorites
-                    }
-                 }
-        
-            }
-        }
-    }
+    var mediaType: String = ""
     
-    
-    
-    var favoriteMedia: [Any] = [] {
-        didSet {
-            
-            if favoriteMedia is [MovieModel] {
-                let favoriteMedia = favoriteMedia as! [MovieModel]
-                
-                if favoriteMedia.contains(where: { $0.id == mediaId }) {
-                    isFavorite = true
-                    
-                } else {
-                    isFavorite = false
-                }
-                
-            } else if favoriteMedia is [TVModel] {
-                let favoriteMedia = favoriteMedia as! [TVModel]
-                
-                if favoriteMedia.contains(where: { $0.id == mediaId }) {
-                    isFavorite = true
-                    
-                } else {
-                    isFavorite = false
-                }
-            }
-            
-        }
-    }
-    
-
-    
+//    var mediaType: String = "" {
+//        didSet {
+//
+//            if mediaType == "movie" {
+//
+//                DataManager.shared.requestFavoriteMovies { [weak self] success, favorites, _, _ in
+//                    guard let self else { return }
+//
+//                    if let favorites = favorites {
+//
+//                        self.favoriteMedia = favorites
+//                    }
+//                }
+//
+//            } else if mediaType == "tv" {
+//
+//                DataManager.shared.requestFavoriteTVShows { [weak self] success, favorites, _, _ in
+//                    guard let self else { return }
+//
+//                    if let favorites = favorites {
+//
+//                        self.favoriteMedia = favorites
+//                    }
+//                 }
+//
+//            }
+//        }
+//    }
+//
+//
+//
+//    var favoriteMedia: [Any] = [] {
+//        didSet {
+//
+//            if favoriteMedia is [MovieModel] {
+//                let favoriteMedia = favoriteMedia as! [MovieModel]
+//
+//                if favoriteMedia.contains(where: { $0.id == mediaId }) {
+//                    isFavorite = true
+//
+//                } else {
+//                    isFavorite = false
+//                }
+//
+//            } else if favoriteMedia is [TVModel] {
+//                let favoriteMedia = favoriteMedia as! [TVModel]
+//
+//                if favoriteMedia.contains(where: { $0.id == mediaId }) {
+//                    isFavorite = true
+//
+//                } else {
+//                    isFavorite = false
+//                }
+//            }
+//
+//        }
+//    }
+//
+//
+//
     var isFavorite: Bool = false {
         didSet {
             if isFavorite == true {
-                
+
                 favoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
                 favoritesButton.tintColor = .systemRed
             } else {
-               
+
                 favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
                 favoritesButton.tintColor = .systemRed
             }
         }
     }
-    
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
-   // MARK: - Configuring DetailsScreen with data depends on tapped cell type
+    
+    // MARK: - Configuring DetailsScreen with data depends on tapped cell type
     
     func configure<T>(with cell: T) {
         
         if cell is MovieModel {
             
-           let cell = cell as! MovieModel
-           
+            let cell = cell as! MovieModel
+            
             mediaType = "movie"
             media.append(cell)
             mediaId = cell.id
+            
+            configureFavoriteButton(cell: cell)
             
             mediaName.text = cell.title
             mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
@@ -184,6 +189,8 @@ class DetailsScreenViewController: UIViewController {
             media.append(cell)
             mediaId = cell.id
             
+            configureFavoriteButton(cell: cell)
+            
             
             mediaName.text = cell.name
             mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
@@ -241,7 +248,56 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-
+    
+    func configureFavoriteButton<T>(cell: T) {
+        
+        if cell is MovieModel {
+            
+            let cell = cell as! MovieModel
+        
+        // MARK: - Request favorite movies list
+        
+            DataManager.shared.requestFavoriteMovies { [weak self] success, favorites, _, _ in
+                guard let self else { return }
+                
+                guard let favorites = favorites else { return }
+                
+                // MARK: - Check if movie is already in favorite list & set isFavorite property
+                
+                if favorites.contains(where: { $0.id == cell.id }) {
+                    self.isFavorite = true
+                    
+                } else {
+                    self.isFavorite = false
+                }
+            }
+            
+        } else if cell is TVModel {
+            
+            let cell = cell as! TVModel
+            
+            // MARK: - Request favorite tv shows list
+            
+            DataManager.shared.requestFavoriteTVShows { [weak self] success, favorites, _, _ in
+                guard let self else { return }
+                
+                if let favorites = favorites {
+                    
+                    // MARK: - Check if tv show is already in favorite list & set isFavorite property
+                    
+                    if favorites.contains(where: { $0.id == cell.id }) {
+                        self.isFavorite = true
+                        
+                    } else {
+                        self.isFavorite = false
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     @IBAction func addToFavoritesPressed(_ sender: UIButton) {
         print("button tapped")
         
