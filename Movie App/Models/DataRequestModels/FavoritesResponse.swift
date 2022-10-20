@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Removed: Codable {
+struct FavoritesResponse: Codable {
     var success: Bool
     var status_code: Int
     var status_message: String

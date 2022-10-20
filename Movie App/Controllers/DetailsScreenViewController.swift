@@ -240,7 +240,8 @@ class DetailsScreenViewController: UIViewController {
                 //                    print("Job failed: \(error.localizedDescription)")
                 //                }
                 //            }
-                
+                let cashe = ImageCache.default
+                cashe.memoryStorage.config.countLimit = 16
             } else {
                 mediaImage.image = .strokedCheckmark
             }
@@ -298,7 +299,7 @@ class DetailsScreenViewController: UIViewController {
     
     
     
-    @IBAction func addToFavoritesPressed(_ sender: UIButton) {
+    @IBAction func favoritesButtonPressed(_ sender: UIButton) {
         print("button tapped")
         
         if isFavorite {
@@ -306,48 +307,45 @@ class DetailsScreenViewController: UIViewController {
             favoritesButton.tintColor = .systemRed
             isFavorite = false
             
-            if mediaType == "movie" {
+            DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { [weak self] response in
                 
-                DataManager.shared.deleteFromFavorites(id: mediaId, type: mediaType) { [weak self] response in
+                guard let self else { return }
+                
+                if response == 200 {
                     
-                    guard let self else { return }
-                    
-                    if response == 200 {
+                    if self.mediaType == "movie" {
                         
                         RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
-                            
                         }
-                    }
-                }
-                
-            } else if mediaType == "tv" {
-                
-                DataManager.shared.deleteFromFavorites(id: mediaId, type: mediaType) { [weak self] response in
-                    
-                    guard let self else { return }
-                    
-                    if response == 200 {
-
+                        
+                    } else if self.mediaType == "tv" {
+                        
                         RealmManager.shared.delete(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
-
                         }
                     }
                 }
             }
             
-            
         } else {
-            isFavorite = true
+            
             favoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             favoritesButton.tintColor = .systemRed
+            isFavorite = true
             
             DataManager.shared.addToFavorites(id: mediaId, type: mediaType) { [weak self] response in
                 
                 guard let self else { return }
                 
                 if response == 200 {
+                    if self.mediaType == "movie" {
+                        
+                        RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media as! [MovieModel])
+                        
+                    } else if self.mediaType == "tv" {
+                        
+                        RealmManager.shared.saveFavoriteTVInRealm(tvShows: self.media as! [TVModel])
+                    }
                     
-                    RealmManager.shared.saveFavoriteTVInRealm(tvShows: self.media as? [TVModel] ?? [])
                     
                 }
             }

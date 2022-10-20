@@ -251,7 +251,7 @@ struct DataManager {
         
         let deleteFromFavoritesRequest = AF.request(deleteURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
-        deleteFromFavoritesRequest.responseDecodable(of: Removed.self) { response in
+        deleteFromFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
                 let result = try response.result.get()
                 print(result)
@@ -274,7 +274,7 @@ struct DataManager {
         
         let addToFavoritesRequest = AF.request(addURL, method: .post)
         
-        addToFavoritesRequest.responseDecodable(of: Removed.self) { response in
+        addToFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
                 let result = try response.result.get()
                 print(result)
