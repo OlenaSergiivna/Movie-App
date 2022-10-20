@@ -69,11 +69,12 @@ struct RepositoryService {
         
         // Data fetched from API
         
-        DataManager.shared.requestFavorites { favorites, statusCode in
+        DataManager.shared.requestFavoriteTVShows { success, favorites, _, _ in
             
             // Data saved in Realm Database
+            guard let favorites = favorites else { return }
             
-            RealmManager.shared.saveFavoriteMoviesInRealm(movies: favorites)
+            RealmManager.shared.saveFavoriteTVInRealm(tvShows: favorites)
             
             // Data fetched from Realm Database & converted in ViewController's models
             

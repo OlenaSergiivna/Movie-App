@@ -132,9 +132,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configure(with: someMovies[indexPath.row])
             navigationController?.present(destinationViewController, animated: true)
-            
-            
-            
+  
         }
     }
 }
