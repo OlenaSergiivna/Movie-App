@@ -28,7 +28,7 @@ struct RealmManager {
     }
     
     
-    //MARK: - Save movies in Realm
+    //MARK: - Save favorite movies in Realm
     
     func saveFavoriteMoviesInRealm(movies: [MovieModel]) {
         
@@ -59,7 +59,7 @@ struct RealmManager {
     }
     
     
-    //MARK: - Save TV Shows in Realm
+    //MARK: - Save favorite TV Shows in Realm
     
     func saveFavoriteTVInRealm(tvShows: [TVModel]) {
         
@@ -92,8 +92,7 @@ struct RealmManager {
     enum MediaType {
         case movieFavorite
         case tvFavorite
-        case movieSearch
-        case tvSearch
+
     }
     
     
@@ -127,29 +126,6 @@ struct RealmManager {
             
             return (Array(tvShows))
             
-        case .movieSearch:
-            
-            let moviesRealm = realm.objects(SearchMovieRealm.self)
-            
-            var movies = [MovieModel]()
-            
-            for movieRealm in moviesRealm {
-                let movie = MovieModel(from: movieRealm)
-                movies.append(movie)
-            }
-            return (Array(movies))
-            
-        case .tvSearch:
-            let tvRealm = realm.objects(SearchTVRealm.self)
-            
-            var tvShows = [TVModel]()
-            
-            for tv in tvRealm {
-                let tv = TVModel(from: tv)
-                tvShows.append(tv)
-            }
-            
-            return (Array(tvShows))
         }
     }
     
@@ -166,66 +142,5 @@ struct RealmManager {
             realm.delete(dataToDelete)
         }
         completion()
-    }
-    
-    
-    // MARK: - Save movies from search results in Realm
-    
-    func saveMoviesSearchResultsInRealm(movies: [MovieModel]) {
-        
-        for movie in movies {
-            
-            let movieRealm = SearchMovieRealm()
-            
-            movieRealm.adult = movie.adult
-            movieRealm.backdropPath = movie.backdropPath
-            movieRealm.genreIDS.append(objectsIn: movie.genreIDS)
-            movieRealm.id = movie.id
-            movieRealm.originalLanguage = movie.originalLanguage
-            movieRealm.originalTitle = movie.originalTitle
-            movieRealm.overview = movie.overview
-            movieRealm.popularity = movie.popularity
-            movieRealm.posterPath = movie.posterPath
-            movieRealm.releaseDate = movie.releaseDate
-            movieRealm.title = movie.title
-            movieRealm.video = movie.video
-            movieRealm.voteAverage = movie.voteAverage
-            movieRealm.voteCount = movie.voteCount
-            
-            try? realm.write {
-                realm.add(movieRealm, update: .all)
-                
-            }
-        }
-    }
-    
-    
-    // MARK: - Save TV Shows from search results in Realm
-    
-    func saveTVSearchResultsInRealm(tvShows: [TVModel]) {
-        
-        for tv in tvShows {
-            
-            let tvRealm = SearchTVRealm()
-            
-            tvRealm.backdropPath = tv.backdropPath
-            tvRealm.firstAirDate = tv.firstAirDate
-            tvRealm.genreIDS.append(objectsIn: tv.genreIDS)
-            tvRealm.id = tv.id
-            tvRealm.name = tv.name
-            tvRealm.originCountry.append(objectsIn: tv.originCountry)
-            tvRealm.originalLanguage = tv.originalLanguage
-            tvRealm.originalName = tv.originalName
-            tvRealm.overview = tv.overview
-            tvRealm.popularity = tv.popularity
-            tvRealm.posterPath = tv.posterPath
-            tvRealm.voteAverage = tv.voteAverage
-            tvRealm.voteCount = tv.voteCount
-            
-            try? realm.write {
-                realm.add(tvRealm, update: .all)
-                
-            }
-        }
-    }
+    }  
 }
