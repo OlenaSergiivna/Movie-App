@@ -6,12 +6,20 @@ PODS:
   - Realm/Headers (10.29.0)
   - RealmSwift (10.29.0):
     - Realm (= 10.29.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - youtube-ios-player-helper (1.0.4)
 
 DEPENDENCIES:
   - Alamofire
   - Kingfisher (~> 7.0)
   - RealmSwift
+  - RxCocoa (= 6.5.0)
+  - RxSwift (= 6.5.0)
   - youtube-ios-player-helper
 
 SPEC REPOS:
@@ -20,6 +28,9 @@ SPEC REPOS:
     - Kingfisher
     - Realm
     - RealmSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
@@ -27,8 +38,11 @@ SPEC CHECKSUMS:
   Kingfisher: 596b207973051aae5e4c54a1c1cb39837ea10d36
   Realm: 5596770daeff1ad76c8eb10d5947dc10472da779
   RealmSwift: 35d8d318b7e5a8dbc7096c2a243184e4d19abcc0
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 5856b2c05df30ed7c17b4de5bd9bb02698f11edc
+PODFILE CHECKSUM: 8c89a84943321ad2019233aded07cc0d9ae320a2
 
 COCOAPODS: 1.11.3
