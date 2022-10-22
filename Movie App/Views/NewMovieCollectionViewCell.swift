@@ -1,27 +1,26 @@
 //
-//  MovieCollectionViewCell.swift
+//  NewMovieCollectionViewCell.swift
 //  Movie App
 //
-//  Created by user on 28.09.2022.
+//  Created by user on 22.10.2022.
 //
 
 import UIKit
 import Kingfisher
 
-class MovieCollectionViewCell: UICollectionViewCell {
-    
+class NewMovieCollectionViewCell: UICollectionViewCell {
+
     @IBOutlet weak var movieImage: UIImageView!
     
-    @IBOutlet weak var movieNameLabel: UILabel!
-    
+    @IBOutlet weak var movieTitle: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+       
         self.movieImage.layer.masksToBounds = true
         self.movieImage.layer.cornerRadius = 12
-
     }
+
     
     func configure(with data: [MovieModel], indexPath: IndexPath) {
         
@@ -29,19 +28,19 @@ class MovieCollectionViewCell: UICollectionViewCell {
         if !data.isEmpty {
             
             movieImage.isHidden = false
-            movieNameLabel.isHidden = false
-            movieNameLabel.isEnabled = true
+            movieTitle.isHidden = false
+            movieTitle.isEnabled = true
             
             if let title = data[indexPath.row].title {
                 
-                movieNameLabel.text = title
+                movieTitle.text = title
             }
             
             if let imagePath = data[indexPath.row].posterPath {
                 
                 let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-                             |> RoundCornerImageProcessor(cornerRadius: 0)
+                             |> RoundCornerImageProcessor(cornerRadius: 5)
                 movieImage.kf.indicatorType = .activity
                 movieImage.kf.setImage(
                     with: url,
@@ -66,8 +65,8 @@ class MovieCollectionViewCell: UICollectionViewCell {
                 cashe.memoryStorage.config.countLimit = 16
             } else {
                 movieImage.image = .strokedCheckmark
-                movieNameLabel.isHidden = false
-                movieNameLabel.isEnabled = true
+                movieTitle.isHidden = false
+                movieTitle.isEnabled = true
             }
 
         }

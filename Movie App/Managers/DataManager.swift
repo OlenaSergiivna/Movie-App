@@ -57,9 +57,10 @@ struct DataManager {
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
-        
+        print(Globals.movieGenres)
+        print(genre)
         let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(Globals.apiKey)&with_genres=\(genreId)&page=\(page)"
-        
+       
         let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
         
         movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
@@ -106,7 +107,7 @@ struct DataManager {
     func requestFavoriteMovies(completion: @escaping (_ success: Bool, _ favorites: [MovieModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
         let urlMovie = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
-        print(urlMovie)
+        //print(urlMovie)
         AF.request(urlMovie,
                    method: .get,
                    parameters: nil,

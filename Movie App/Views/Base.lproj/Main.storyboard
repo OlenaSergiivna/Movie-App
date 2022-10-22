@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,7 +43,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="top" secondItem="JcI-Fk-1Kv" secondAttribute="bottom" constant="30" id="0tc-1E-D0e"/>
@@ -71,17 +72,72 @@
             </objects>
             <point key="canvasLocation" x="-342" y="705"/>
         </scene>
+        <!--Main-->
+        <scene sceneID="z9F-sU-mbW">
+            <objects>
+                <viewController id="Ikp-O6-wNb" customClass="NewMovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dvm-Bj-TiL">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sSs-oq-gpI">
+                                <rect key="frame" x="0.0" y="356" width="390" height="240"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="yPO-Rh-cB0"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P0R-D4-kkk">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Lsl-4l-7Qa">
+                                        <rect key="frame" x="0.0" y="56" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="R9r-cl-13E">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ikp-O6-wNb" id="cxN-gN-CoV"/>
+                                    <outlet property="delegate" destination="Ikp-O6-wNb" id="pS4-Kv-Rnc"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="tQm-q8-jt7"/>
+                        <color key="backgroundColor" red="0.25098039215686274" green="0.32156862745098036" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="tQm-q8-jt7" firstAttribute="trailing" secondItem="sSs-oq-gpI" secondAttribute="trailing" id="0g5-4M-4IW"/>
+                            <constraint firstItem="sSs-oq-gpI" firstAttribute="leading" secondItem="tQm-q8-jt7" secondAttribute="leading" id="6cm-ix-IcI"/>
+                            <constraint firstItem="sSs-oq-gpI" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" constant="356" id="Qbb-Hz-Lxk"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Main" image="person.fill" catalog="system" id="QPp-tu-mzx">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
+                    <connections>
+                        <outlet property="moviesCollectionView" destination="sSs-oq-gpI" id="2Uy-Wr-hjp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xWe-0I-9Fn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3760" y="-1243.3649289099526"/>
+        </scene>
         <!--Movies-->
         <scene sceneID="MsX-b1-Lld">
             <objects>
                 <viewController storyboardIdentifier="GenresViewController" modalPresentationStyle="fullScreen" id="NWm-K3-4CP" customClass="MovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l9V-v2-0es">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="de5-S4-Mwr">
-                                <rect key="frame" x="0.0" y="56" width="390" height="705"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="91" width="390" height="670"/>
+                                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="dataSource" destination="NWm-K3-4CP" id="HUo-pR-S2d"/>
@@ -90,7 +146,8 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="r6x-CU-IGS"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="r6x-CU-IGS" firstAttribute="bottom" secondItem="de5-S4-Mwr" secondAttribute="bottom" id="AKw-q7-vBH"/>
                             <constraint firstItem="r6x-CU-IGS" firstAttribute="trailing" secondItem="de5-S4-Mwr" secondAttribute="trailing" id="NV8-IN-OjH"/>
@@ -100,6 +157,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="H7G-jw-ldM">
                         <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="nTP-FH-6BM">
+                            <color key="tintColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="0.75866133329884111" colorSpace="custom" customColorSpace="displayP3"/>
                             <connections>
                                 <action selector="logOutPressed:" destination="NWm-K3-4CP" id="90f-X9-6oB"/>
                             </connections>
@@ -160,14 +218,19 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" systemColor="systemIndigoColor"/>
-                        <tabBarAppearance key="standardAppearance"/>
+                        <color key="selectedImageTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="standardAppearance" backgroundEffect="systemMaterial">
+                            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="shadowColor" red="0.25098039220000001" green="0.32156862749999998" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="selectionIndicatorTintColor" red="0.25098039220000001" green="0.32156862749999998" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </tabBarAppearance>
                     </tabBar>
                     <connections>
                         <segue destination="9nC-t0-rlZ" kind="relationship" relationship="viewControllers" id="0kV-IV-3za"/>
                         <segue destination="fsJ-oz-VGe" kind="relationship" relationship="viewControllers" id="GfR-pZ-Onq"/>
                         <segue destination="Iuk-YE-J2F" kind="relationship" relationship="viewControllers" id="1Sx-5z-VV3"/>
                         <segue destination="wOV-Wt-ro3" kind="relationship" relationship="viewControllers" id="deZ-o3-P4V"/>
+                        <segue destination="Ikp-O6-wNb" kind="relationship" relationship="viewControllers" id="L62-Up-8Ee"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7dw-1Y-YY0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -182,11 +245,35 @@
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ot1-lr-XPX">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.97647064920000004" green="0.97647064920000004" blue="0.97647064920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="shadowColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="shadowColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QwY-NX-UbG">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <toolbarAppearance key="standardAppearance">
+                            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="shadowColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </toolbarAppearance>
+                        <toolbarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="shadowColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </toolbarAppearance>
+                    </toolbar>
                     <connections>
                         <segue destination="NWm-K3-4CP" kind="relationship" relationship="rootViewController" id="NVe-Po-DMG"/>
                     </connections>
@@ -286,7 +373,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
                                 <connections>
-                                    <action selector="addToFavoritesPressed:" destination="UlR-Nu-m3s" eventType="touchUpInside" id="fYU-j5-fp9"/>
+                                    <action selector="favoritesButtonPressed:" destination="UlR-Nu-m3s" eventType="touchUpInside" id="VB4-Vp-2Oh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -318,7 +405,7 @@
                     <navigationItem key="navigationItem" id="LWA-RL-EkC"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="favoritesButton" destination="QiK-j8-To5" id="U7K-q7-Gfo"/>
+                        <outlet property="favoritesButton" destination="QiK-j8-To5" id="tLs-hK-nDY"/>
                         <outlet property="mediaGenres" destination="7Ur-da-UOa" id="RCu-av-A2L"/>
                         <outlet property="mediaImage" destination="jv2-nb-BmL" id="nt4-cV-6AX"/>
                         <outlet property="mediaName" destination="XD2-SH-3dj" id="hqZ-PG-0Wk"/>
@@ -422,7 +509,9 @@
         <scene sceneID="Qbt-vi-vP7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fsJ-oz-VGe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="TV Shows" image="tv" catalog="system" id="Rkc-RJ-AFu"/>
+                    <tabBarItem key="tabBarItem" title="TV Shows" image="tv" catalog="system" id="Rkc-RJ-AFu">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0mK-10-hhX">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
@@ -442,13 +531,11 @@
         <image name="film" catalog="system" width="128" height="93"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="tv" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

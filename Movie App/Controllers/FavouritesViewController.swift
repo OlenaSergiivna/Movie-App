@@ -12,13 +12,16 @@ class FavouritesViewController: UIViewController {
     @IBOutlet weak var favouritesTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
-
-    var someMovies: [MovieModel] = []
+    
+    var viewModel = FavouritesViewControllerViewModel()
+    
+    var someMovies: [MovieModel] = [] {
+        didSet {
+            print("didset: \(someMovies.count)")
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
-        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
         
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else { return }
@@ -31,11 +34,21 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-    
-    
+    //        viewModel.someMovies.subscribe { favorites in
+    //
+    //            self.someMovies = favorites
+    //
+    //            self.favouritesTableView.reloadData()
+    //        }
+    //
+    //        viewModel.loadFavoriteMovies()
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
+        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
     }
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
@@ -132,7 +145,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configure(with: someMovies[indexPath.row])
             navigationController?.present(destinationViewController, animated: true)
-  
+            
         }
     }
 }
@@ -152,6 +165,6 @@ extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
                 
             }
         }
-       
+        
     }
 }

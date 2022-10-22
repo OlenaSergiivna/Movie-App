@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NewMovieCollectionViewCell" id="gTV-IL-0wX" customClass="NewMovieCollectionViewCell" customModule="Movie_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="128" height="220"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="128" height="220"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5VE-gk-H1P">
+                        <rect key="frame" x="8" y="0.0" width="120" height="180"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQM-Gb-qQK">
+                        <rect key="frame" x="8" y="182" width="118" height="36"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="5VE-gk-H1P" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0Mz-eR-Fmv"/>
+                <constraint firstAttribute="trailing" secondItem="kQM-Gb-qQK" secondAttribute="trailing" constant="2" id="0wB-Ag-t9l"/>
+                <constraint firstAttribute="bottom" secondItem="5VE-gk-H1P" secondAttribute="bottom" constant="40" id="1ym-aq-gPe"/>
+                <constraint firstAttribute="trailing" secondItem="5VE-gk-H1P" secondAttribute="trailing" id="7Qy-hj-0ND"/>
+                <constraint firstAttribute="bottom" secondItem="kQM-Gb-qQK" secondAttribute="bottom" constant="2" id="OA9-E5-L77"/>
+                <constraint firstItem="kQM-Gb-qQK" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Rfy-Kj-1nr"/>
+                <constraint firstItem="kQM-Gb-qQK" firstAttribute="top" secondItem="5VE-gk-H1P" secondAttribute="bottom" constant="2" id="fZZ-hR-xHG"/>
+                <constraint firstItem="5VE-gk-H1P" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="sU1-w2-45F"/>
+            </constraints>
+            <connections>
+                <outlet property="movieImage" destination="5VE-gk-H1P" id="YRK-fN-1xq"/>
+                <outlet property="movieTitle" destination="kQM-Gb-qQK" id="MbH-aW-vD9"/>
+            </connections>
+            <point key="canvasLocation" x="66" y="21"/>
+        </collectionViewCell>
+    </objects>
+</document>

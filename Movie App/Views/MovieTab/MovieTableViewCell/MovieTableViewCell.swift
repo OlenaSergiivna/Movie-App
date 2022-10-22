@@ -20,7 +20,6 @@ class MovieTableViewCell: UITableViewCell {
         print("!!! Deinit: \(self)") 
       }
     
-    
     weak var cellDelegate: MovieCollectionViewCellDelegate?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
@@ -43,10 +42,12 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
     }
+    
     
     
     override func prepareForReuse() {
@@ -71,6 +72,7 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
@@ -81,9 +83,13 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 200)
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

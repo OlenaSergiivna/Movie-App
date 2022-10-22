@@ -23,12 +23,12 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OqJ-KK-hW5">
                                 <rect key="frame" x="16.000000000000004" y="8" width="51.333333333333343" height="23"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.97647064920000004" green="0.97647064920000004" blue="0.97647064920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Trd-MI-ibr">
                                 <rect key="frame" x="8" y="39" width="339" height="168"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1a3-YJ-rm0">
                                     <size key="itemSize" width="288" height="162"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -52,7 +52,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="m7N-7S-EsH" secondAttribute="bottom" id="Wao-x9-wky"/>
                     <constraint firstItem="m7N-7S-EsH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Zft-P7-ez3"/>

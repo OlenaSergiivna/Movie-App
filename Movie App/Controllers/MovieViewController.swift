@@ -84,6 +84,10 @@ class MovieViewController: UIViewController {
             }
         }
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 }
 
 
