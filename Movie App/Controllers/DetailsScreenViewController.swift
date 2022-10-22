@@ -222,7 +222,7 @@ class DetailsScreenViewController: UIViewController {
                 
                 let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-                |> RoundCornerImageProcessor(cornerRadius: 10)
+                |> RoundCornerImageProcessor(cornerRadius: 20)
                 mediaImage.kf.indicatorType = .activity
                 mediaImage.kf.setImage(
                     with: url,
