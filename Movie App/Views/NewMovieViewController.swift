@@ -9,6 +9,10 @@ import UIKit
 
 class NewMovieViewController: UIViewController {
     
+    @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var avatarImage: UIImageView!
+    
     @IBOutlet weak var moviesCollectionView: UICollectionView!
     
     var moviesArray: [MovieModel] = []
@@ -22,6 +26,10 @@ class NewMovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        usernameLabel.text = "Hello, \(Globals.username)"
+        avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
+        avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
         
         // MARK: - Set up tab bar appearance
         let blurEffect = UIBlurEffect(style: .dark)
@@ -66,7 +74,12 @@ class NewMovieViewController: UIViewController {
         ])
         
         view.backgroundColor = .black
+        tabBarController?.tabBar.backgroundColor = .black
    
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 

@@ -43,10 +43,14 @@ class AuthenticationViewController: UIViewController {
             Globals.sessionId = id
             print("Session id: \(Globals.sessionId)")
             
-            NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] userId in
+            NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] id, username, avatar in
                 
-                Globals.userId = userId
+                Globals.userId = id
+                Globals.username = username
+                Globals.avatar = avatar
                 print("User id: \(Globals.userId)")
+                print("Username: \(Globals.username)")
+                print("User avatar: \(Globals.avatar)")
                 
                 if responseRequest == 200 {
                     print(responseRequest)

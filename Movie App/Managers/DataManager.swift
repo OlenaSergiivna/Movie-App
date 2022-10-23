@@ -57,8 +57,7 @@ struct DataManager {
     func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
         
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
-        print(Globals.movieGenres)
-        print(genre)
+        
         let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(Globals.apiKey)&with_genres=\(genreId)&page=\(page)"
        
         let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
@@ -210,27 +209,6 @@ struct DataManager {
     }
     
     
-    
-//    func requestFavorites(completion: @escaping ([MovieModel], Int) -> Void) {
-//
-//        let favouritesRequest = AF.request("https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1", method: .get)
-//
-//
-//        favouritesRequest.responseDecodable(of: ResultsMovie.self) { response in
-//            do {
-//                let data = try response.result.get().results
-//                guard let response = response.response?.statusCode else {
-//                    return
-//                }
-//                completion(data, response)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }
-//
-//    }
-    
- 
     
     // MARK: - Delete movie from Favorites list
     

@@ -99,7 +99,7 @@ struct NetworkManager {
     
     // MARK: - Get user's details
     
-    func getDetails(sessionId: String, completion: @escaping(Int) -> Void) {
+    func getDetails(sessionId: String, completion: @escaping(_ id: Int, _ username: String, _ avatar: String) -> Void) {
         
         let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
         let getDetailsSession = AF.request(getDetailsUrl, method: .get)
@@ -107,8 +107,8 @@ struct NetworkManager {
         getDetailsSession.responseDecodable(of: UserDetails.self) { response in
             
             do {
-                let userId = try response.result.get().id
-                completion(userId)
+                let userDetails = try response.result.get()
+                completion(userDetails.id, userDetails.username, userDetails.avatar.tmdb.avatar_path ?? "no avatar")
             } catch {
                 print("user id: \(error.localizedDescription)")
             }

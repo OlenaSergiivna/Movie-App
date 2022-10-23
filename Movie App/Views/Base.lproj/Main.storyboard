@@ -24,12 +24,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ENTER YOUR PASSWORD" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-im-XSq">
-                                <rect key="frame" x="16" y="442.66666666666669" width="358" height="50.666666666666686"/>
+                                <rect key="frame" x="16" y="458.66666666666669" width="358" height="50.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhE-RY-fiC">
-                                <rect key="frame" x="50" y="543.33333333333337" width="290" height="40"/>
+                                <rect key="frame" x="50" y="559.33333333333337" width="290" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="LKW-uF-uZJ"/>
                                 </constraints>
@@ -52,7 +52,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ek-uf-bcb">
-                                <rect key="frame" x="16" y="413.66666666666669" width="74" height="21"/>
+                                <rect key="frame" x="16" y="429.66666666666669" width="74" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -69,7 +69,7 @@
                             <constraint firstItem="JcI-Fk-1Kv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="PbL-fb-fQ6"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="VxC-SG-ten"/>
                             <constraint firstItem="e8j-W4-RKl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="aJj-nm-1Mx"/>
-                            <constraint firstItem="1ek-uf-bcb" firstAttribute="top" secondItem="JcI-Fk-1Kv" secondAttribute="bottom" constant="16" id="i50-68-2NO"/>
+                            <constraint firstItem="1ek-uf-bcb" firstAttribute="top" secondItem="JcI-Fk-1Kv" secondAttribute="bottom" constant="32" id="i50-68-2NO"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.06" id="jdp-fi-oKB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KhE-RY-fiC" secondAttribute="trailing" constant="50" id="kd1-fe-a1i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kl1-im-XSq" secondAttribute="trailing" constant="16" id="qs6-79-q08"/>
@@ -95,7 +95,7 @@
         <!--Main-->
         <scene sceneID="z9F-sU-mbW">
             <objects>
-                <viewController id="Ikp-O6-wNb" customClass="NewMovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Ikp-O6-wNb" customClass="NewMovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dvm-Bj-TiL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,20 +127,49 @@
                                     <outlet property="delegate" destination="Ikp-O6-wNb" id="pS4-Kv-Rnc"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, Olena" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtd-Gg-ZHT">
+                                <rect key="frame" x="74" y="32" width="112.66666666666669" height="25.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's find a really great movie for you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mn-PA-gJc">
+                                <rect key="frame" x="74" y="59.333333333333343" width="280" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nph-7m-lIk">
+                                <rect key="frame" x="16" y="34" width="50" height="46.666666666666671"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hNy-MT-xnf"/>
+                                    <constraint firstAttribute="width" constant="50" id="vou-SP-YHg"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tQm-q8-jt7"/>
-                        <color key="backgroundColor" red="0.25098039215686274" green="0.32156862745098036" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="tQm-q8-jt7" firstAttribute="trailing" secondItem="sSs-oq-gpI" secondAttribute="trailing" id="0g5-4M-4IW"/>
                             <constraint firstItem="sSs-oq-gpI" firstAttribute="leading" secondItem="tQm-q8-jt7" secondAttribute="leading" id="6cm-ix-IcI"/>
+                            <constraint firstItem="dtd-Gg-ZHT" firstAttribute="top" secondItem="nph-7m-lIk" secondAttribute="top" id="EgL-0s-1zu"/>
+                            <constraint firstItem="9mn-PA-gJc" firstAttribute="top" secondItem="dtd-Gg-ZHT" secondAttribute="bottom" constant="2" id="FYi-Do-Fot"/>
+                            <constraint firstItem="9mn-PA-gJc" firstAttribute="leading" secondItem="nph-7m-lIk" secondAttribute="trailing" constant="8" id="Ib8-09-dd8"/>
+                            <constraint firstItem="nph-7m-lIk" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" constant="32" id="Phv-fl-R1B"/>
                             <constraint firstItem="sSs-oq-gpI" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" constant="356" id="Qbb-Hz-Lxk"/>
+                            <constraint firstItem="dtd-Gg-ZHT" firstAttribute="leading" secondItem="nph-7m-lIk" secondAttribute="trailing" constant="8" id="f6A-l7-UAW"/>
+                            <constraint firstItem="nph-7m-lIk" firstAttribute="leading" secondItem="tQm-q8-jt7" secondAttribute="leading" constant="16" id="sKK-pb-TiL"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Main" image="person.fill" catalog="system" id="QPp-tu-mzx">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="avatarImage" destination="nph-7m-lIk" id="pqJ-u8-Oe6"/>
                         <outlet property="moviesCollectionView" destination="sSs-oq-gpI" id="2Uy-Wr-hjp"/>
+                        <outlet property="usernameLabel" destination="dtd-Gg-ZHT" id="EYV-72-P9Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWe-0I-9Fn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
