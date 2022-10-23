@@ -26,6 +26,7 @@ class AuthenticationViewController: UIViewController {
         super.viewDidLoad()
         
         resetForm()
+        AnimationService.shared.addAnimation(view: view)
         
     }
     
