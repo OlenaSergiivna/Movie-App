@@ -35,14 +35,14 @@ class NewMovieViewController: UIViewController {
                 
                 DataManager.shared.requestMoviesByGenre(genre: "Action", page: 1) { [weak self] movies in
                     guard let self else { return }
-
+                    
                     self.moviesArray = movies
                     self.configureSegmentedControl()
                     DispatchQueue.main.async {
                         self.moviesCollectionView.reloadData()
                     }
                 }
-
+                
             }
         }
         
@@ -50,18 +50,18 @@ class NewMovieViewController: UIViewController {
         avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
         
-        // MARK: - Set up tab bar appearance
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = tabBarController!.tabBar.bounds
-        blurView.autoresizingMask = .flexibleWidth
-        tabBarController!.tabBar.insertSubview(blurView, at: 0)
+//        // MARK: - Set up tab bar appearance
+//        let blurEffect = UIBlurEffect(style: .dark)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.frame = tabBarController!.tabBar.bounds
+//        blurView.autoresizingMask = .flexibleWidth
+//        tabBarController!.tabBar.insertSubview(blurView, at: 0)
         
-       
+        
         
         moviesCollectionView.register(UINib(nibName: "NewMovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewMovieCollectionViewCell")
         
-   }
+    }
     
     private func configureSegmentedControl() {
         let titles = Globals.movieGenres.map( { $0.name })
@@ -82,15 +82,31 @@ class NewMovieViewController: UIViewController {
         ])
         
         view.backgroundColor = .black
-        tabBarController?.tabBar.backgroundColor = .black
-   
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-
+    
+    @IBAction func logoutButtonTapped(_ sender: UIButton) {
+        print("tapped")
+        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
+            
+            guard let self else { return }
+            
+            if result == true {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+                self.present(viewController, animated: true)
+            } else {
+                print("false result")
+            }
+        }
+    }
+    
+    
     
     @IBAction func seeAllMoviesButtonTapped(_ sender: UIButton) {
         
@@ -99,13 +115,20 @@ class NewMovieViewController: UIViewController {
             print(destinationViewController)
             
             destinationViewController.loadViewIfNeeded()
-            //destinationViewController.configure(with: tappedCell)
             navigationController?.pushViewController(destinationViewController, animated: true)
             
         }
     }
     
+    
+    
+    override func viewWillLayoutSubviews() {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
 }
+
+
 
 
 extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
