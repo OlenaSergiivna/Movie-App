@@ -27,6 +27,25 @@ class NewMovieViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DataManager.shared.requestMovieGenres { data, statusCode in
+            
+            if statusCode == 200 {
+                
+                Globals.movieGenres = data
+                
+                DataManager.shared.requestMoviesByGenre(genre: "Action", page: 1) { [weak self] movies in
+                    guard let self else { return }
+
+                    self.moviesArray = movies
+                    self.configureSegmentedControl()
+                    DispatchQueue.main.async {
+                        self.moviesCollectionView.reloadData()
+                    }
+                }
+
+            }
+        }
+        
         usernameLabel.text = "Hello, \(Globals.username)"
         avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
@@ -38,30 +57,19 @@ class NewMovieViewController: UIViewController {
         blurView.autoresizingMask = .flexibleWidth
         tabBarController!.tabBar.insertSubview(blurView, at: 0)
         
-        configureSegmentedControl()
+       
         
         moviesCollectionView.register(UINib(nibName: "NewMovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewMovieCollectionViewCell")
         
-        
-        DataManager.shared.requestMoviesByGenre(genre: "Action", page: 1) { [weak self] movies in
-            guard let self else { return }
-            
-            self.moviesArray = movies
-            
-            DispatchQueue.main.async {
-                self.moviesCollectionView.reloadData()
-            }
-        }
-        
-    }
+   }
     
     private func configureSegmentedControl() {
         let titles = Globals.movieGenres.map( { $0.name })
         let config = SegmentedControlConfiguration(titles: titles,
-                                                   font: .boldSystemFont(ofSize: 18),
-                                                   spacing: 16,
-                                                   selectedLabelColor: .systemPink,
-                                                   unselectedLabelColor: .white,
+                                                   font: .systemFont(ofSize: 16, weight: .medium),
+                                                   spacing: 40,
+                                                   selectedLabelColor: .white,
+                                                   unselectedLabelColor: .gray,
                                                    selectedLineColor: .white)
         segmentedControlView.configure(config)
         view.addSubview(segmentedControlView)
@@ -81,6 +89,22 @@ class NewMovieViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+    
+
+    
+    @IBAction func seeAllMoviesButtonTapped(_ sender: UIButton) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
+            print(destinationViewController)
+            
+            destinationViewController.loadViewIfNeeded()
+            //destinationViewController.configure(with: tappedCell)
+            navigationController?.pushViewController(destinationViewController, animated: true)
+            
+        }
+    }
+    
 }
 
 

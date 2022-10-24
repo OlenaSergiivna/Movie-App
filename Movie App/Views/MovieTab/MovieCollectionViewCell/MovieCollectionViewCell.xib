@@ -22,19 +22,19 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lyf-8c-iYb">
                                 <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
-                                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <color key="tintColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="V4p-Ae-a0e">
                                 <rect key="frame" x="8" y="182" width="104" height="16"/>
-                                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <color key="tintColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Lyf-8c-iYb" firstAttribute="leading" secondItem="kLT-Ey-4zL" secondAttribute="leading" id="8ja-hO-ZHr"/>
                             <constraint firstAttribute="bottom" secondItem="V4p-Ae-a0e" secondAttribute="bottom" constant="2" id="DSi-dl-2ZY"/>
@@ -49,7 +49,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="kLT-Ey-4zL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="QsA-NT-TM3"/>
                 <constraint firstAttribute="trailing" secondItem="kLT-Ey-4zL" secondAttribute="trailing" id="Z7q-f8-z1A"/>

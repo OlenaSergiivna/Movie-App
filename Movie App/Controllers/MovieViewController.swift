@@ -9,6 +9,10 @@ import UIKit
 
 class MovieViewController: UIViewController {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var movieTableView: UITableView!
@@ -32,6 +36,8 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        //navigationItem.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         
         let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")

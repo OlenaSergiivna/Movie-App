@@ -28,7 +28,7 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Trd-MI-ibr">
                                 <rect key="frame" x="8" y="39" width="339" height="168"/>
-                                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1a3-YJ-rm0">
                                     <size key="itemSize" width="288" height="162"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -41,7 +41,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Trd-MI-ibr" secondAttribute="trailing" constant="8" id="03Q-d3-fxM"/>
                             <constraint firstAttribute="bottom" secondItem="Trd-MI-ibr" secondAttribute="bottom" id="2so-uN-jnz"/>
@@ -52,7 +52,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.24962806700000001" green="0.32334762810000001" blue="0.40001112220000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="m7N-7S-EsH" secondAttribute="bottom" id="Wao-x9-wky"/>
                     <constraint firstItem="m7N-7S-EsH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Zft-P7-ez3"/>
