@@ -1,46 +1,51 @@
 //
-//  NewMovieCollectionViewCell.swift
+//  PopularNowCollectionViewCell.swift
 //  Movie App
 //
-//  Created by user on 22.10.2022.
+//  Created by user on 25.10.2022.
 //
 
 import UIKit
 import Kingfisher
 
-class NewMovieCollectionViewCell: UICollectionViewCell {
+class PopularNowCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var movieNameLabel: UILabel!
     
-    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var movieImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-       
-        self.movieImage.layer.masksToBounds = true
-        self.movieImage.layer.cornerRadius = 12
+        
+//        self.movieImage.layer.masksToBounds = true
+//        self.movieImage.clipsToBounds = true
+//        self.movieImage.layer.cornerRadius = 15
+    
     }
+    
 
     
-    func configure(with data: [MovieModel], indexPath: IndexPath) {
+    func configure(with data: [TrendyMedia], indexPath: IndexPath) {
         
         // add case when name is empty but title is not
         if !data.isEmpty {
             
             movieImage.isHidden = false
-            movieTitle.isHidden = false
-            movieTitle.isEnabled = true
+            movieNameLabel.isHidden = false
+            movieNameLabel.isEnabled = true
             
-            if let title = data[indexPath.row].title {
-                
-                movieTitle.text = title
+            if let movieName = data[indexPath.row].name {
+                movieNameLabel.text = movieName
+            } else {
+                movieNameLabel.text = data[indexPath.row].title
             }
             
-            if let imagePath = data[indexPath.row].posterPath {
+            
+            if let imagePath = data[indexPath.row].backdropPath {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+                let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-                             |> RoundCornerImageProcessor(cornerRadius: 5)
+                             |> RoundCornerImageProcessor(cornerRadius: 10)
                 movieImage.kf.indicatorType = .activity
                 movieImage.kf.setImage(
                     with: url,
@@ -61,16 +66,20 @@ class NewMovieCollectionViewCell: UICollectionViewCell {
     //                }
     //            }
                 
-                let cashe = Kingfisher.ImageCache.default
-                cashe.memoryStorage.config.countLimit = 16
+//                let cashe = Kingfisher.ImageCache.default
+//                cashe.memoryStorage.config.countLimit = 16
+////                
+//                self.movieImage.layer.masksToBounds = true
+//                self.movieImage.layer.cornerRadius = 30
+                
             } else {
                 movieImage.image = .strokedCheckmark
-                movieTitle.isHidden = false
-                movieTitle.isEnabled = true
+                movieNameLabel.isHidden = false
+                movieNameLabel.isEnabled = true
             }
 
         }
         
     }
-    
+
 }

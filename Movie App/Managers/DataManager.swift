@@ -301,5 +301,25 @@ struct DataManager {
             }
         }
     }
+    
+    
+    
+    // MARK: - Search popular now media
+    
+    func requestTrendyMedia(completion: @escaping([TrendyMedia]) -> Void) {
+        
+        let trendyRequest = AF.request("https://api.themoviedb.org/3/trending/all/day?api_key=\(Globals.apiKey)&page=1", method: .get)
+    
+        trendyRequest.responseDecodable(of: Trends.self) { response in
+        
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
 }
 
