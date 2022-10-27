@@ -35,7 +35,8 @@ class PopularHeaderView: UICollectionReusableView {
     
     func setUpConstrains() {
         NSLayoutConstraint.activate([
-            popularLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            popularLabel.topAnchor.constraint(equalTo: topAnchor),
+            popularLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
         
     }

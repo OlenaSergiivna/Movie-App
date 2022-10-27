@@ -124,16 +124,6 @@ class NewMovieViewController: UIViewController {
     func setUpConstraints(){
         moviesCollectionView.setUp(to: view)
         
-//        NSLayoutConstraint.activate([
-//            popularHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            popularHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //popularHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            //popularHeaderView.heightAnchor.constraint(equalToConstant: 45),
-        //popularHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//        popularHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//        popularHeaderView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor),
-        //popularHeader.heightAnchor.constraint(equalToConstant: 45)
-//        ])
     }
     
     func configureUI(){
@@ -141,7 +131,6 @@ class NewMovieViewController: UIViewController {
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
         
         view.addSubview(moviesCollectionView)
-        //view.addSubview(popularHeaderView)
         
     }
     
@@ -166,21 +155,6 @@ class NewMovieViewController: UIViewController {
             }
         }
     }
-    
-    
-    
-    @IBAction func seeAllMoviesButtonTapped(_ sender: UIButton) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
-            print(destinationViewController)
-            
-            destinationViewController.loadViewIfNeeded()
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
-    }
-    
     
     
     override func viewWillLayoutSubviews() {
@@ -258,7 +232,7 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
                 return header
             default :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
-                
+                header.delegate = self
                 return header
             }
         } else {
@@ -314,8 +288,24 @@ extension UIView {
     func setUp(to superView: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: superView.topAnchor, constant: 180).isActive = true
-        leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
+        leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 8).isActive = true
         bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -8).isActive = true
     }
+}
+
+extension NewMovieViewController: MoviesHeaderViewDelegate {
+    func openAllMoviesVC() {
+        print("Button tapped")
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
+            print(destinationViewController)
+            
+            destinationViewController.loadViewIfNeeded()
+            navigationController?.pushViewController(destinationViewController, animated: true)
+            
+        }
+    }
+
 }
