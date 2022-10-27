@@ -19,6 +19,16 @@ class NewMovieViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
+//    lazy var popularHeaderView: PopularHeaderView = {
+//        let popular = PopularHeaderView()
+//        popular.translatesAutoresizingMaskIntoConstraints = false
+//        popular.isHidden = false
+//        popular.delegate = self
+//        return popular
+//    }()
+    
+
+    
     lazy var moviesCollectionView : UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -29,20 +39,22 @@ class NewMovieViewController: UIViewController {
         cv.register(UINib(nibName: "NewMovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewMovieCollectionViewCell")
         
         cv.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
+        
+        cv.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
+        
+        cv.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
     
         cv.backgroundColor = .black
         return cv
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         
-        view.addSubview(moviesCollectionView)
         setUpConstraints()
         configureCompositionalLayout()
-        view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
@@ -111,8 +123,27 @@ class NewMovieViewController: UIViewController {
     
     func setUpConstraints(){
         moviesCollectionView.setUp(to: view)
+        
+//        NSLayoutConstraint.activate([
+//            popularHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            popularHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            //popularHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            //popularHeaderView.heightAnchor.constraint(equalToConstant: 45),
+        //popularHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//        popularHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//        popularHeaderView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor),
+        //popularHeader.heightAnchor.constraint(equalToConstant: 45)
+//        ])
     }
     
+    func configureUI(){
+        view.backgroundColor = .black
+        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        
+        view.addSubview(moviesCollectionView)
+        //view.addSubview(popularHeaderView)
+        
+    }
     
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -194,14 +225,14 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             cell.movieImage.clipsToBounds = true
             cell.movieImage.contentMode = .scaleAspectFill
             cell.movieImage.layer.cornerRadius = 12
-             return cell
+            return cell
             
         default:
             
             guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "NewMovieCollectionViewCell", for: indexPath) as? NewMovieCollectionViewCell else {
                 return UICollectionViewCell()
             }
-
+            
             cell.configure(with: moviesArray, indexPath: indexPath)
             cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
             cell.movieImage.backgroundColor = .systemBackground
@@ -217,40 +248,31 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
     
     
     
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        if kind == "Header" {
-//
-//            switch indexPath.section {
-//            case 2 :
-//                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: FilterHeaderView.headerIdentifier, for: indexPath) as! FilterHeaderView
-//                header.delegate = self
-//                return header
-//            default :
-//                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: VeganSectionHeaderView.headerIdentifier, for: indexPath) as! VeganSectionHeaderView
-//                return header
-//            }
-//
-//        }else {
-//            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DividerFooterView.footerIdentifier, for: indexPath) as! DividerFooterView
-//
-//            return footer
-//        }
-//
-//    }
-    
-    
-    
-    
-    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == "Header" {
+            
+            switch indexPath.section {
+            case 0 :
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
+                
+                return header
+            default :
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
+                
+                return header
+            }
+        } else {
+            return UICollectionReusableView()
+        }
+    }
 }
-
-
-//extension NewMovieViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 128, height: 220)
-//    }
-//}
-//
+    
+    //extension NewMovieViewController: UICollectionViewDelegateFlowLayout {
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //        return CGSize(width: 128, height: 220)
+    //    }
+    //}
+    //
 
 //extension NewMovieViewController: SegmentedControlViewDelegate {
 //
@@ -282,16 +304,9 @@ extension NewMovieViewController {
                 return MainTabLayouts.shared.moviesSection()
             }
         }
-//        layout.register(SectionDecorationView.self, forDecorationViewOfKind: "SectionBackground")
         moviesCollectionView.setCollectionViewLayout(layout, animated: true)
     }
 }
-
-//extension FoodViewController: FilterActionDelegate {
-//    func didTabFilterBTN() {
-//        print("Open Filter")
-//    }
-//}
 
 
 extension UIView {

@@ -28,6 +28,8 @@
 		CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE170BD928E10CC9001323E4 /* SessionModel.swift */; };
 		CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */; };
 		CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */; };
+		CE2461A12909D59500E295AA /* PopularHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2461A02909D59500E295AA /* PopularHeaderView.swift */; };
+		CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */; };
 		CE2F03BA29073B5A001DFADE /* MainTabLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */; };
 		CE2F03BE29073CFB001DFADE /* PopularNowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F03BC29073CFB001DFADE /* PopularNowCollectionViewCell.swift */; };
 		CE2F03BF29073CFB001DFADE /* PopularNowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F03BD29073CFB001DFADE /* PopularNowCollectionViewCell.xib */; };
@@ -98,6 +100,8 @@
 		CE170BD928E10CC9001323E4 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
 		CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		CE2461A02909D59500E295AA /* PopularHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularHeaderView.swift; sourceTree = "<group>"; };
+		CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesHeaderView.swift; sourceTree = "<group>"; };
 		CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabLayouts.swift; sourceTree = "<group>"; };
 		CE2F03BC29073CFB001DFADE /* PopularNowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularNowCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE2F03BD29073CFB001DFADE /* PopularNowCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularNowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -330,6 +334,15 @@
 			path = FavoritesTab;
 			sourceTree = "<group>";
 		};
+		CE24619F2909D35000E295AA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				CE2461A02909D59500E295AA /* PopularHeaderView.swift */,
+				CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		CE2E29AA28ECE81C00C865E5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */,
+				CE24619F2909D35000E295AA /* Headers */,
 				CE2F03C029073DC1001DFADE /* MoviesCell */,
 				CE2F03BB29073C8B001DFADE /* PopularNowCell */,
 			);
@@ -598,6 +612,7 @@
 				CE4E5DDC2904563D0048E65C /* NewMovieViewController.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* FavoritesResponse.swift in Sources */,
 				CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */,
+				CE2461A12909D59500E295AA /* PopularHeaderView.swift in Sources */,
 				CEFA731D28F054CE00CD0872 /* RealmManager.swift in Sources */,
 				CEC003B628F780A5005B8B4E /* String+ isBlank.swift in Sources */,
 				CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */,
@@ -613,6 +628,7 @@
 				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,
 				CE6133A128EA028200778822 /* DataManager.swift in Sources */,
 				CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */,
+				CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */,
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,
 				CEC7BD5528E3A78700A7CDD6 /* MovieCollectionViewCell.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
