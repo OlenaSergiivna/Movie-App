@@ -41,13 +41,13 @@ class MainTabLayouts {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(120), heightDimension: .absolute(220))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 8)
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
-        section.orthogonalScrollingBehavior = .paging
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: "Header", alignment: .top)
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)), elementKind: "Header", alignment: .top)
         ]
         
         return section

@@ -19,16 +19,6 @@ class NewMovieViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
-//    lazy var popularHeaderView: PopularHeaderView = {
-//        let popular = PopularHeaderView()
-//        popular.translatesAutoresizingMaskIntoConstraints = false
-//        popular.isHidden = false
-//        popular.delegate = self
-//        return popular
-//    }()
-    
-
-    
     lazy var moviesCollectionView : UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -43,15 +33,16 @@ class NewMovieViewController: UIViewController {
         cv.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
         
         cv.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
-    
+        
         cv.backgroundColor = .black
         return cv
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         
+        configureUI()
         setUpConstraints()
         configureCompositionalLayout()
         
@@ -62,18 +53,18 @@ class NewMovieViewController: UIViewController {
                 
                 Globals.movieGenres = data
                 
-                DataManager.shared.requestMoviesByGenre(genre: "Action", page: 1) { [weak self] movies in
+                DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres.first?.name ?? "", page: 1) { [weak self] movies in
                     guard let self else { return }
                     
                     self.moviesArray = movies
-                    //self.configureSegmentedControl()
+            
                     DispatchQueue.main.async {
                         self.moviesCollectionView.reloadData()
                     }
                 }
-                
             }
         }
+        
         
         DataManager.shared.requestTrendyMedia { [weak self] media in
             guard let self else { return }
@@ -85,53 +76,35 @@ class NewMovieViewController: UIViewController {
             }
         }
         
-        usernameLabel.text = "Hello, \(Globals.username)"
-        avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
-        avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
+       configureUsersGreetingsView()
         
-//        // MARK: - Set up tab bar appearance
-//        let blurEffect = UIBlurEffect(style: .dark)
-//        let blurView = UIVisualEffectView(effect: blurEffect)
-//        blurView.frame = tabBarController!.tabBar.bounds
-//        blurView.autoresizingMask = .flexibleWidth
-//        tabBarController!.tabBar.insertSubview(blurView, at: 0)
-
+        //        // MARK: - Set up tab bar appearance
+        //        let blurEffect = UIBlurEffect(style: .dark)
+        //        let blurView = UIVisualEffectView(effect: blurEffect)
+        //        blurView.frame = tabBarController!.tabBar.bounds
+        //        blurView.autoresizingMask = .flexibleWidth
+        //        tabBarController!.tabBar.insertSubview(blurView, at: 0)
+        
         
     }
     
-//    private func configureSegmentedControl() {
-//        let titles = Globals.movieGenres.map( { $0.name })
-//        let config = SegmentedControlConfiguration(titles: titles,
-//                                                   font: .systemFont(ofSize: 16, weight: .medium),
-//                                                   spacing: 40,
-//                                                   selectedLabelColor: .white,
-//                                                   unselectedLabelColor: .gray,
-//                                                   selectedLineColor: .white)
-//        segmentedControlView.configure(config)
-//        view.addSubview(segmentedControlView)
-//
-//        NSLayoutConstraint.activate([
-//            segmentedControlView.bottomAnchor.constraint(equalTo: moviesCollectionView.topAnchor),
-//            segmentedControlView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            segmentedControlView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            segmentedControlView.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-//
-//
-//
-//    }
-    
+   
     func setUpConstraints(){
         moviesCollectionView.setUp(to: view)
         
     }
     
+    
     func configureUI(){
         view.backgroundColor = .black
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        
         view.addSubview(moviesCollectionView)
-        
+    }
+    
+    func configureUsersGreetingsView() {
+        usernameLabel.text = "Hello, \(Globals.username)"
+        avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
+        avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
     }
     
     
@@ -141,7 +114,7 @@ class NewMovieViewController: UIViewController {
     
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
-       
+        
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
             
             guard let self else { return }
@@ -160,9 +133,7 @@ class NewMovieViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
 }
-
 
 
 
@@ -213,13 +184,10 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             cell.movieImage.clipsToBounds = true
             cell.movieImage.contentMode = .scaleAspectFill
             cell.movieImage.layer.cornerRadius = 12
+            print(indexPath)
             return cell
-            
         }
-        
-        
     }
-    
     
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -233,6 +201,13 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             default :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
                 header.delegate = self
+                
+                header.segmentedControl.removeAllSegments()
+                for (index, genre) in Globals.movieGenres.enumerated() {
+                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
+                }
+                header.segmentedControl.selectedSegmentIndex = 0
+                
                 return header
             }
         } else {
@@ -240,33 +215,10 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
         }
     }
 }
-    
-    //extension NewMovieViewController: UICollectionViewDelegateFlowLayout {
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        return CGSize(width: 128, height: 220)
-    //    }
-    //}
-    //
 
-//extension NewMovieViewController: SegmentedControlViewDelegate {
-//
-//    func segmentedControl(didChange index: Int) {
-//        print("didChange index: \(index)")
-//        moviesCollectionView.contentOffset.x = 0
-//        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies in
-//            guard let self else { return }
-//
-//            self.moviesArray = movies
-//
-//            DispatchQueue.main.async {
-//                self.moviesCollectionView.reloadData()
-//            }
-//        }
-//    }
-//
-//}
 
 extension NewMovieViewController {
+    
     
     func configureCompositionalLayout() {
         
@@ -278,6 +230,7 @@ extension NewMovieViewController {
                 return MainTabLayouts.shared.moviesSection()
             }
         }
+        
         moviesCollectionView.setCollectionViewLayout(layout, animated: true)
     }
 }
@@ -294,10 +247,29 @@ extension UIView {
     }
 }
 
+
 extension NewMovieViewController: MoviesHeaderViewDelegate {
-    func openAllMoviesVC() {
-        print("Button tapped")
+    
+    func changeMovieGenre(index: Int) {
         
+        moviesCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
+        
+        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies in
+            guard let self else { return }
+            
+            self.moviesArray = movies
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                
+                self.moviesCollectionView.reloadItems(at: self.moviesCollectionView.indexPathsForVisibleItems)
+            }
+        }
+    }
+    
+    
+    func openAllMoviesVC() {
+  
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
             print(destinationViewController)
@@ -307,5 +279,4 @@ extension NewMovieViewController: MoviesHeaderViewDelegate {
             
         }
     }
-
 }

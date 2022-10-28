@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5VE-gk-H1P">
-                        <rect key="frame" x="8" y="0.0" width="120" height="180"/>
+                        <rect key="frame" x="0.0" y="0.0" width="128" height="180"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQM-Gb-qQK">
@@ -32,7 +32,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="5VE-gk-H1P" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0Mz-eR-Fmv"/>
+                <constraint firstItem="5VE-gk-H1P" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0Mz-eR-Fmv"/>
                 <constraint firstAttribute="trailing" secondItem="kQM-Gb-qQK" secondAttribute="trailing" constant="2" id="0wB-Ag-t9l"/>
                 <constraint firstAttribute="bottom" secondItem="5VE-gk-H1P" secondAttribute="bottom" constant="40" id="1ym-aq-gPe"/>
                 <constraint firstAttribute="trailing" secondItem="5VE-gk-H1P" secondAttribute="trailing" id="7Qy-hj-0ND"/>

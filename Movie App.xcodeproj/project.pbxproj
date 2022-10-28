@@ -48,7 +48,6 @@
 		CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* LoadingViewController.swift */; };
 		CE81D89D28FC7A4100D667A8 /* PaginationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* PaginationService.swift */; };
 		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
-		CE825C112904769E00388E4E /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE825C102904769E00388E4E /* SegmentedControlView.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* MovieViewController.swift */; };
@@ -120,7 +119,6 @@
 		CE70D57228F9DCE700536243 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		CE81D89C28FC7A4100D667A8 /* PaginationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationService.swift; sourceTree = "<group>"; };
 		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
-		CE825C102904769E00388E4E /* SegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
@@ -445,7 +443,6 @@
 			isa = PBXGroup;
 			children = (
 				CE2F03B829073B40001DFADE /* CompositionalLayout */,
-				CE825C102904769E00388E4E /* SegmentedControlView.swift */,
 			);
 			path = MainTab;
 			sourceTree = "<group>";
@@ -632,7 +629,6 @@
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,
 				CEC7BD5528E3A78700A7CDD6 /* MovieCollectionViewCell.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
-				CE825C112904769E00388E4E /* SegmentedControlView.swift in Sources */,
 				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,
 				CE0B873E28E4DCCA005CBA8A /* GenresModels.swift in Sources */,
 				CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */,
