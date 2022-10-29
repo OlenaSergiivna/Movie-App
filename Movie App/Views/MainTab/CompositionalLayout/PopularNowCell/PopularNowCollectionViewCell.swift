@@ -17,9 +17,9 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        self.movieImage.layer.masksToBounds = true
-//        self.movieImage.clipsToBounds = true
-//        self.movieImage.layer.cornerRadius = 15
+//        self.mediaImage.layer.masksToBounds = true
+//        self.mediaImage.clipsToBounds = true
+//        self.mediaImage.layer.cornerRadius = 15
     
     }
     
@@ -69,8 +69,8 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
 //                let cashe = Kingfisher.ImageCache.default
 //                cashe.memoryStorage.config.countLimit = 16
 ////                
-//                self.movieImage.layer.masksToBounds = true
-//                self.movieImage.layer.cornerRadius = 30
+//                self.mediaImage.layer.masksToBounds = true
+//                self.mediaImage.layer.cornerRadius = 30
                 
             } else {
                 movieImage.image = .strokedCheckmark

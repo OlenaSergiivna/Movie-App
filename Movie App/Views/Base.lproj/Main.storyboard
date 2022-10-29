@@ -91,10 +91,10 @@
             </objects>
             <point key="canvasLocation" x="586.15384615384619" y="704.50236966824639"/>
         </scene>
-        <!--New Movie View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="z9F-sU-mbW">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Ikp-O6-wNb" customClass="NewMovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Ikp-O6-wNb" customClass="MainViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dvm-Bj-TiL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -208,7 +208,7 @@
         <!--TV Shows-->
         <scene sceneID="IgZ-R7-gmh">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Waz-mJ-mGj" customClass="TVViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TVViewController" modalPresentationStyle="fullScreen" id="Waz-mJ-mGj" customClass="TVViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DK7-z4-P0U">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

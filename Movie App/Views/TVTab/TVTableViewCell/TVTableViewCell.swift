@@ -53,8 +53,8 @@ class TVTableViewCell: UITableViewCell {
         tvCollectionView.delegate = nil
         tvCollectionView.reloadData()
         
-//        moviesCollectionView.dataSource = self
-//        moviesCollectionView.delegate = self
+//        mainCollectionView.dataSource = self
+//        mainCollectionView.delegate = self
     }
     
 }

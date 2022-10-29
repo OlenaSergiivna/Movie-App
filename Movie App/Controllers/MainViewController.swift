@@ -1,5 +1,5 @@
 //
-//  NewMovieViewController.swift
+//  MainViewController.swift
 //  Movie App
 //
 //  Created by user on 22.10.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewMovieViewController: UIViewController {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var usernameLabel: UILabel!
     
@@ -21,14 +21,14 @@ class NewMovieViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
-    lazy var moviesCollectionView : UICollectionView = {
+    lazy var mainCollectionView : UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsVerticalScrollIndicator = false
         cv.delegate = self
         cv.dataSource = self
         
-        cv.register(UINib(nibName: "NewMovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "NewMovieCollectionViewCell")
+        cv.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
         
         cv.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
         
@@ -63,7 +63,7 @@ class NewMovieViewController: UIViewController {
                     self.moviesArray = movies
             
                     DispatchQueue.main.async {
-                        self.moviesCollectionView.reloadData()
+                        self.mainCollectionView.reloadData()
                     }
                 }
             }
@@ -77,7 +77,7 @@ class NewMovieViewController: UIViewController {
             self.trendyMediaArray = media
             
             DispatchQueue.main.async {
-                self.moviesCollectionView.reloadData()
+                self.mainCollectionView.reloadData()
             }
         }
         
@@ -95,7 +95,7 @@ class NewMovieViewController: UIViewController {
                     self.tvArray = movies
             
                     DispatchQueue.main.async {
-                        self.moviesCollectionView.reloadData()
+                        self.mainCollectionView.reloadData()
                     }
                 }
             }
@@ -113,7 +113,7 @@ class NewMovieViewController: UIViewController {
     
    
     func setUpConstraints(){
-        moviesCollectionView.setUp(to: view)
+        mainCollectionView.setUp(to: view)
         
     }
     
@@ -121,7 +121,7 @@ class NewMovieViewController: UIViewController {
     func configureUI(){
         view.backgroundColor = .black
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        view.addSubview(moviesCollectionView)
+        view.addSubview(mainCollectionView)
     }
     
     func configureUsersGreetingsView() {
@@ -160,7 +160,7 @@ class NewMovieViewController: UIViewController {
 
 
 
-extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -199,31 +199,31 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             
         case 1:
             
-            guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "NewMovieCollectionViewCell", for: indexPath) as? NewMovieCollectionViewCell else {
+            guard let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: "MediaCollectionViewCell", for: indexPath) as? MediaCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
             cell.configureMovie(with: moviesArray, indexPath: indexPath)
-            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.movieImage.backgroundColor = .systemBackground
-            cell.movieImage.clipsToBounds = true
-            cell.movieImage.contentMode = .scaleAspectFill
-            cell.movieImage.layer.cornerRadius = 12
+            cell.mediaImage.translatesAutoresizingMaskIntoConstraints = false
+            cell.mediaImage.backgroundColor = .systemBackground
+            cell.mediaImage.clipsToBounds = true
+            cell.mediaImage.contentMode = .scaleAspectFill
+            cell.mediaImage.layer.cornerRadius = 12
             print(indexPath)
             return cell
             
         default:
             
-            guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "NewMovieCollectionViewCell", for: indexPath) as? NewMovieCollectionViewCell else {
+            guard let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: "MediaCollectionViewCell", for: indexPath) as? MediaCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
             cell.configureTV(with: tvArray, indexPath: indexPath)
-            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.movieImage.backgroundColor = .systemBackground
-            cell.movieImage.clipsToBounds = true
-            cell.movieImage.contentMode = .scaleAspectFill
-            cell.movieImage.layer.cornerRadius = 12
+            cell.mediaImage.translatesAutoresizingMaskIntoConstraints = false
+            cell.mediaImage.backgroundColor = .systemBackground
+            cell.mediaImage.clipsToBounds = true
+            cell.mediaImage.contentMode = .scaleAspectFill
+            cell.mediaImage.layer.cornerRadius = 12
             print(indexPath)
             return cell
         }
@@ -270,7 +270,7 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
 }
 
 
-extension NewMovieViewController {
+extension MainViewController {
     
     
     func configureCompositionalLayout() {
@@ -286,7 +286,7 @@ extension NewMovieViewController {
             }
         }
         
-        moviesCollectionView.setCollectionViewLayout(layout, animated: true)
+        mainCollectionView.setCollectionViewLayout(layout, animated: true)
     }
 }
 
@@ -303,11 +303,11 @@ extension UIView {
 }
 
 
-extension NewMovieViewController: MoviesHeaderViewDelegate {
+extension MainViewController: MoviesHeaderViewDelegate {
     
     func changeMovieGenre(index: Int) {
         
-        moviesCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
+        mainCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
         
         DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies in
             guard let self else { return }
@@ -317,7 +317,7 @@ extension NewMovieViewController: MoviesHeaderViewDelegate {
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 
-                self.moviesCollectionView.reloadItems(at: self.moviesCollectionView.indexPathsForVisibleItems)
+                self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
             }
         }
     }
@@ -337,7 +337,7 @@ extension NewMovieViewController: MoviesHeaderViewDelegate {
 }
 
 
-extension NewMovieViewController: TVHeaderViewDelegate  {
+extension MainViewController: TVHeaderViewDelegate  {
     
     func openAllTVVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -351,7 +351,7 @@ extension NewMovieViewController: TVHeaderViewDelegate  {
     }
     
     func changeTVGenre(index: Int) {
-        moviesCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
+        mainCollectionView.scrollToItem(at:IndexPath(item: 0, section: 2), at: .right, animated: false)
         
         DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[index].name, page: 1) { [weak self] movies in
             guard let self else { return }
@@ -361,7 +361,7 @@ extension NewMovieViewController: TVHeaderViewDelegate  {
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 
-                self.moviesCollectionView.reloadItems(at: self.moviesCollectionView.indexPathsForVisibleItems)
+                self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
             }
         }
     }

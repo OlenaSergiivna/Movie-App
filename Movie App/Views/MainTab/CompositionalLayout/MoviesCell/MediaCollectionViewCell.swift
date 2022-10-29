@@ -1,5 +1,5 @@
 //
-//  NewMovieCollectionViewCell.swift
+//  MediaCollectionViewCell.swift
 //  Movie App
 //
 //  Created by user on 22.10.2022.
@@ -8,17 +8,17 @@
 import UIKit
 import Kingfisher
 
-class NewMovieCollectionViewCell: UICollectionViewCell {
+class MediaCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var movieImage: UIImageView!
+    @IBOutlet weak var mediaImage: UIImageView!
     
-    @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet weak var mediaTitle: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.movieImage.layer.masksToBounds = true
-        self.movieImage.layer.cornerRadius = 12
+        self.mediaImage.layer.masksToBounds = true
+        self.mediaImage.layer.cornerRadius = 12
     }
     
     
@@ -27,22 +27,22 @@ class NewMovieCollectionViewCell: UICollectionViewCell {
         // add case when name is empty but title is not
         if !data.isEmpty {
             
-            movieImage.isHidden = false
-            movieTitle.isHidden = false
-            movieTitle.isEnabled = true
+            mediaImage.isHidden = false
+            mediaTitle.isHidden = false
+            mediaTitle.isEnabled = true
             
             if let title = data[indexPath.row].title {
                 
-                movieTitle.text = title
+                mediaTitle.text = title
             }
             
             if let imagePath = data[indexPath.row].posterPath {
                 
                 let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-                let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 5)
-                movieImage.kf.indicatorType = .activity
-                movieImage.kf.setImage(
+                mediaImage.kf.indicatorType = .activity
+                mediaImage.kf.setImage(
                     with: url,
                     placeholder: UIImage(named: "loading"),
                     options: [
@@ -64,12 +64,12 @@ class NewMovieCollectionViewCell: UICollectionViewCell {
                 //                let cashe = Kingfisher.ImageCache.default
                 //                cashe.memoryStorage.config.countLimit = 16
                 
-                self.movieImage.layer.masksToBounds = true
-                self.movieImage.layer.cornerRadius = 12
+                self.mediaImage.layer.masksToBounds = true
+                self.mediaImage.layer.cornerRadius = 12
             } else {
-                movieImage.image = .strokedCheckmark
-                movieTitle.isHidden = false
-                movieTitle.isEnabled = true
+                mediaImage.image = .strokedCheckmark
+                mediaTitle.isHidden = false
+                mediaTitle.isEnabled = true
             }
         }
     }
@@ -80,20 +80,20 @@ class NewMovieCollectionViewCell: UICollectionViewCell {
         // add case when name is empty but title is not
         if !data.isEmpty {
             
-            movieImage.isHidden = false
-            movieTitle.isHidden = false
-            movieTitle.isEnabled = true
+            mediaImage.isHidden = false
+            mediaTitle.isHidden = false
+            mediaTitle.isEnabled = true
             
 
-            movieTitle.text = data[indexPath.row].name
+            mediaTitle.text = data[indexPath.row].name
            
             if let imagePath = data[indexPath.row].posterPath {
                 
                 let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-                let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+                let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 5)
-                movieImage.kf.indicatorType = .activity
-                movieImage.kf.setImage(
+                mediaImage.kf.indicatorType = .activity
+                mediaImage.kf.setImage(
                     with: url,
                     placeholder: UIImage(named: "loading"),
                     options: [
@@ -115,12 +115,12 @@ class NewMovieCollectionViewCell: UICollectionViewCell {
                 //                let cashe = Kingfisher.ImageCache.default
                 //                cashe.memoryStorage.config.countLimit = 16
                 
-                self.movieImage.layer.masksToBounds = true
-                self.movieImage.layer.cornerRadius = 12
+                self.mediaImage.layer.masksToBounds = true
+                self.mediaImage.layer.cornerRadius = 12
             } else {
-                movieImage.image = .strokedCheckmark
-                movieTitle.isHidden = false
-                movieTitle.isEnabled = true
+                mediaImage.image = .strokedCheckmark
+                mediaTitle.isHidden = false
+                mediaTitle.isEnabled = true
             }
             
         }
