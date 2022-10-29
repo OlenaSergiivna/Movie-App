@@ -14,11 +14,35 @@ class MediaCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var mediaTitle: UILabel!
     
+//    lazy var titlePaddingView: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return view
+//    }()
+//
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.mediaImage.layer.masksToBounds = true
         self.mediaImage.layer.cornerRadius = 12
+        //mediaImage.addSubview(titlePaddingView)
+        
+       
+//        NSLayoutConstraint.activate([
+//            titlePaddingView.bottomAnchor.constraint(equalTo: mediaImage.bottomAnchor),
+//            titlePaddingView.heightAnchor.constraint(equalToConstant: 40),
+//            titlePaddingView.leadingAnchor.constraint(equalTo: mediaImage.leadingAnchor),
+//            titlePaddingView.trailingAnchor.constraint(equalTo: mediaImage.trailingAnchor)
+//        ])
+//
+//        let blurEffect = UIBlurEffect(style: .light)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.translatesAutoresizingMaskIntoConstraints = false
+//        blurView.layer.masksToBounds = true
+//        blurView.frame = titlePaddingView.bounds
+//        titlePaddingView.insertSubview(blurView, at: 0)
     }
     
     
@@ -28,7 +52,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         if !data.isEmpty {
             
             mediaImage.isHidden = false
-            mediaTitle.isHidden = false
+            mediaTitle.isHidden = true
             mediaTitle.isEnabled = true
             
             if let title = data[indexPath.row].title {
@@ -38,7 +62,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
             
             if let imagePath = data[indexPath.row].posterPath {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+                let url = URL(string: "https://image.tmdb.org/t/p/w300/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 5)
                 mediaImage.kf.indicatorType = .activity

@@ -45,6 +45,10 @@
 		CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */; };
 		CE5B08332907415E003D9F85 /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
+		CE6EFD41290DC6AD00924F62 /* TheatresCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6EFD3F290DC6AD00924F62 /* TheatresCollectionViewCell.swift */; };
+		CE6EFD42290DC6AD00924F62 /* TheatresCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE6EFD40290DC6AD00924F62 /* TheatresCollectionViewCell.xib */; };
+		CE6EFD44290DC82600924F62 /* InTheatresHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6EFD43290DC82600924F62 /* InTheatresHeaderView.swift */; };
+		CE6EFD46290DCD0C00924F62 /* NowPlayingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6EFD45290DCD0C00924F62 /* NowPlayingModels.swift */; };
 		CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* LoadingViewController.swift */; };
 		CE81D89D28FC7A4100D667A8 /* PaginationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* PaginationService.swift */; };
 		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
@@ -117,6 +121,10 @@
 		CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewControllerViewModel.swift; sourceTree = "<group>"; };
 		CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		CE6EFD3F290DC6AD00924F62 /* TheatresCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheatresCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE6EFD40290DC6AD00924F62 /* TheatresCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TheatresCollectionViewCell.xib; sourceTree = "<group>"; };
+		CE6EFD43290DC82600924F62 /* InTheatresHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InTheatresHeaderView.swift; sourceTree = "<group>"; };
+		CE6EFD45290DCD0C00924F62 /* NowPlayingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingModels.swift; sourceTree = "<group>"; };
 		CE70D57228F9DCE700536243 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		CE81D89C28FC7A4100D667A8 /* PaginationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationService.swift; sourceTree = "<group>"; };
 		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
@@ -210,6 +218,7 @@
 				CE1437F128F38911002A7FBB /* TVModel.swift */,
 				CEC3408B28EF3FCD00F5275B /* FavoritesResponse.swift */,
 				CE4B415E29086F9800512AC0 /* TrendyMediaModels.swift */,
+				CE6EFD45290DCD0C00924F62 /* NowPlayingModels.swift */,
 			);
 			path = DataRequestModels;
 			sourceTree = "<group>";
@@ -340,6 +349,7 @@
 				CE2461A02909D59500E295AA /* PopularHeaderView.swift */,
 				CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */,
 				CECD9B1D290C88FF0013992F /* TVHeader.swift */,
+				CE6EFD43290DC82600924F62 /* InTheatresHeaderView.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -357,8 +367,9 @@
 			children = (
 				CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */,
 				CE24619F2909D35000E295AA /* Headers */,
-				CE2F03C029073DC1001DFADE /* MoviesCell */,
+				CE2F03C029073DC1001DFADE /* MediaCell */,
 				CE2F03BB29073C8B001DFADE /* PopularNowCell */,
+				CE6EFD3E290DC64500924F62 /* TheatresCell */,
 			);
 			path = CompositionalLayout;
 			sourceTree = "<group>";
@@ -372,13 +383,13 @@
 			path = PopularNowCell;
 			sourceTree = "<group>";
 		};
-		CE2F03C029073DC1001DFADE /* MoviesCell */ = {
+		CE2F03C029073DC1001DFADE /* MediaCell */ = {
 			isa = PBXGroup;
 			children = (
 				CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */,
 				CE4E5DD7290456190048E65C /* MediaCollectionViewCell.swift */,
 			);
-			path = MoviesCell;
+			path = MediaCell;
 			sourceTree = "<group>";
 		};
 		CE3682BA28FB151600B4A356 /* TVTableViewCell */ = {
@@ -412,6 +423,15 @@
 				CE3B0F8D2905BF6100616CF0 /* AnimationsService.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		CE6EFD3E290DC64500924F62 /* TheatresCell */ = {
+			isa = PBXGroup;
+			children = (
+				CE6EFD3F290DC6AD00924F62 /* TheatresCollectionViewCell.swift */,
+				CE6EFD40290DC6AD00924F62 /* TheatresCollectionViewCell.xib */,
+			);
+			path = TheatresCell;
 			sourceTree = "<group>";
 		};
 		CE9D61DE28E8EFCD0007287D /* Extensions */ = {
@@ -534,6 +554,7 @@
 				CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */,
 				CE2F03BF29073CFB001DFADE /* PopularNowCollectionViewCell.xib in Resources */,
 				CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */,
+				CE6EFD42290DC6AD00924F62 /* TheatresCollectionViewCell.xib in Resources */,
 				CE3682BE28FB154700B4A356 /* TVTableViewCell.xib in Resources */,
 				CEC7BD5228E39B9300A7CDD6 /* MovieTableViewCell.xib in Resources */,
 				CE169E4928EE34AF00FF9FB0 /* FavouritesTableViewCell.xib in Resources */,
@@ -596,6 +617,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6EFD41290DC6AD00924F62 /* TheatresCollectionViewCell.swift in Sources */,
+				CE6EFD44290DC82600924F62 /* InTheatresHeaderView.swift in Sources */,
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,
 				CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */,
 				CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */,
@@ -631,6 +654,7 @@
 				CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */,
 				CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */,
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,
+				CE6EFD46290DCD0C00924F62 /* NowPlayingModels.swift in Sources */,
 				CEC7BD5528E3A78700A7CDD6 /* MovieCollectionViewCell.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
 				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,

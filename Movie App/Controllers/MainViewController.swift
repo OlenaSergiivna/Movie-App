@@ -21,6 +21,8 @@ class MainViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
+    var inTheatresArray: [MovieModel] = []
+    
     lazy var mainCollectionView : UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -32,11 +34,15 @@ class MainViewController: UIViewController {
         
         cv.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
         
+        cv.register(UINib(nibName: "TheatresCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TheatresCollectionViewCell")
+        
         cv.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
         
         cv.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
         
         cv.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
+        
+        cv.register(InTheatresHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: InTheatresHeaderView.headerIdentifier)
         
         cv.backgroundColor = .black
         return cv
@@ -169,14 +175,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return trendyMediaArray.count
         case 1:
             return moviesArray.count
-        default:
+        case 2:
             return tvArray.count
+        default:
+            return inTheatresArray.count
         }
     }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
     
     
@@ -209,10 +217,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.mediaImage.clipsToBounds = true
             cell.mediaImage.contentMode = .scaleAspectFill
             cell.mediaImage.layer.cornerRadius = 12
-            print(indexPath)
+            
             return cell
             
-        default:
+        case 2:
             
             guard let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: "MediaCollectionViewCell", for: indexPath) as? MediaCollectionViewCell else {
                 return UICollectionViewCell()
@@ -224,9 +232,26 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             cell.mediaImage.clipsToBounds = true
             cell.mediaImage.contentMode = .scaleAspectFill
             cell.mediaImage.layer.cornerRadius = 12
-            print(indexPath)
+            
+            return cell
+            
+        default:
+            
+            guard let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: "TheatresCollectionViewCell", for: indexPath) as? TheatresCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            cell.configure(with: moviesArray, indexPath: indexPath)
+//            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
+//            cell.movieImage.backgroundColor = .systemBackground
+//            cell.movieImage.clipsToBounds = true
+//            cell.movieImage.contentMode = .scaleAspectFill
+//            cell.movieImage.layer.cornerRadius = 12
+           
             return cell
         }
+        
+    
         
     }
     
@@ -235,10 +260,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if kind == "Header" {
             
             switch indexPath.section {
+                
             case 0 :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
-                
                 return header
+                
             case 1 :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
                 header.delegate = self
@@ -250,7 +276,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 header.segmentedControl.selectedSegmentIndex = 0
                 
                 return header
-            default:
+                
+            case 2:
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
                 header.delegate = self
                 
@@ -262,6 +289,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
                 return header
                 
+            default:
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "InTheatresHeaderView", for: indexPath) as? InTheatresHeaderView else { return UICollectionReusableView() }
+                
+                return header
             }
         } else {
             return UICollectionReusableView()
@@ -281,8 +312,10 @@ extension MainViewController {
                 return MainTabLayouts.shared.popularNowSection()
             case 1 :
                 return MainTabLayouts.shared.moviesSection()
-            default:
+            case 2:
                return MainTabLayouts.shared.tvSection()
+            default:
+                return MainTabLayouts.shared.nowInTheatresSection()
             }
         }
         
@@ -349,6 +382,7 @@ extension MainViewController: TVHeaderViewDelegate  {
             
         }
     }
+    
     
     func changeTVGenre(index: Int) {
         mainCollectionView.scrollToItem(at:IndexPath(item: 0, section: 2), at: .right, animated: false)
