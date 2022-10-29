@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
-    var inTheatresArray: [MovieModel] = []
+    var nowPlayingMoviesArray: [MovieModel] = []
     
     lazy var mainCollectionView : UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
@@ -107,6 +107,16 @@ class MainViewController: UIViewController {
             }
         }
         
+        DataManager.shared.requestNowPlayingMovies { [weak self] data in
+            guard let self else { return }
+            
+            self.nowPlayingMoviesArray = data
+            
+            DispatchQueue.main.async {
+                self.mainCollectionView.reloadData()
+            }
+        }
+        
         //        // MARK: - Set up tab bar appearance
         //        let blurEffect = UIBlurEffect(style: .dark)
         //        let blurView = UIVisualEffectView(effect: blurEffect)
@@ -178,7 +188,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 2:
             return tvArray.count
         default:
-            return inTheatresArray.count
+            return nowPlayingMoviesArray.count
         }
     }
     
