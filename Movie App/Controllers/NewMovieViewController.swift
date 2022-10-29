@@ -17,6 +17,8 @@ class NewMovieViewController: UIViewController {
     
     var moviesArray: [MovieModel] = []
     
+    var tvArray: [TVModel] = []
+    
     var trendyMediaArray: [TrendyMedia] = []
     
     lazy var moviesCollectionView : UICollectionView = {
@@ -33,6 +35,8 @@ class NewMovieViewController: UIViewController {
         cv.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
         
         cv.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
+        
+        cv.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
         
         cv.backgroundColor = .black
         return cv
@@ -66,6 +70,7 @@ class NewMovieViewController: UIViewController {
         }
         
         
+        
         DataManager.shared.requestTrendyMedia { [weak self] media in
             guard let self else { return }
             
@@ -77,6 +82,24 @@ class NewMovieViewController: UIViewController {
         }
         
        configureUsersGreetingsView()
+        
+        DataManager.shared.requestTVGenres { data, statusCode in
+            
+            if statusCode == 200 {
+                
+                Globals.tvGenres = data
+                
+                DataManager.shared.requestTVByGenre(genre: Globals.tvGenres.first?.name ?? "", page: 1) { [weak self] movies in
+                    guard let self else { return }
+                    
+                    self.tvArray = movies
+            
+                    DispatchQueue.main.async {
+                        self.moviesCollectionView.reloadData()
+                    }
+                }
+            }
+        }
         
         //        // MARK: - Set up tab bar appearance
         //        let blurEffect = UIBlurEffect(style: .dark)
@@ -144,14 +167,16 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
         switch section {
         case 0 :
             return trendyMediaArray.count
-        default:
+        case 1:
             return moviesArray.count
+        default:
+            return tvArray.count
         }
     }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     
@@ -172,13 +197,28 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             cell.movieImage.layer.cornerRadius = 12
             return cell
             
+        case 1:
+            
+            guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "NewMovieCollectionViewCell", for: indexPath) as? NewMovieCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            cell.configureMovie(with: moviesArray, indexPath: indexPath)
+            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
+            cell.movieImage.backgroundColor = .systemBackground
+            cell.movieImage.clipsToBounds = true
+            cell.movieImage.contentMode = .scaleAspectFill
+            cell.movieImage.layer.cornerRadius = 12
+            print(indexPath)
+            return cell
+            
         default:
             
             guard let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "NewMovieCollectionViewCell", for: indexPath) as? NewMovieCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
-            cell.configure(with: moviesArray, indexPath: indexPath)
+            cell.configureTV(with: tvArray, indexPath: indexPath)
             cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
             cell.movieImage.backgroundColor = .systemBackground
             cell.movieImage.clipsToBounds = true
@@ -187,9 +227,10 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
             print(indexPath)
             return cell
         }
+        
     }
     
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == "Header" {
             
@@ -198,7 +239,7 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
                 
                 return header
-            default :
+            case 1 :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
                 header.delegate = self
                 
@@ -209,6 +250,18 @@ extension NewMovieViewController: UICollectionViewDelegate, UICollectionViewData
                 header.segmentedControl.selectedSegmentIndex = 0
                 
                 return header
+            default:
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
+                header.delegate = self
+                
+                header.segmentedControl.removeAllSegments()
+                for (index, genre) in Globals.tvGenres.enumerated() {
+                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
+                }
+                header.segmentedControl.selectedSegmentIndex = 0
+                
+                return header
+                
             }
         } else {
             return UICollectionReusableView()
@@ -226,8 +279,10 @@ extension NewMovieViewController {
             switch sectionIndex {
             case 0 :
                 return MainTabLayouts.shared.popularNowSection()
-            default :
+            case 1 :
                 return MainTabLayouts.shared.moviesSection()
+            default:
+               return MainTabLayouts.shared.tvSection()
             }
         }
         
@@ -279,4 +334,37 @@ extension NewMovieViewController: MoviesHeaderViewDelegate {
             
         }
     }
+}
+
+
+extension NewMovieViewController: TVHeaderViewDelegate  {
+    
+    func openAllTVVC() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "TVViewController") as? TVViewController {
+            print(destinationViewController)
+            
+            destinationViewController.loadViewIfNeeded()
+            navigationController?.pushViewController(destinationViewController, animated: true)
+            
+        }
+    }
+    
+    func changeTVGenre(index: Int) {
+        moviesCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
+        
+        DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[index].name, page: 1) { [weak self] movies in
+            guard let self else { return }
+            
+            self.tvArray = movies
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                
+                self.moviesCollectionView.reloadItems(at: self.moviesCollectionView.indexPathsForVisibleItems)
+            }
+        }
+    }
+    
+    
 }
