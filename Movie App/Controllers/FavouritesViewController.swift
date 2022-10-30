@@ -33,17 +33,8 @@ class FavouritesViewController: UIViewController {
             }
         }
     }
+
     
-    //        viewModel.someMovies.subscribe { favorites in
-    //
-    //            self.someMovies = favorites
-    //
-    //            self.favouritesTableView.reloadData()
-    //        }
-    //
-    //        viewModel.loadFavoriteMovies()
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
         

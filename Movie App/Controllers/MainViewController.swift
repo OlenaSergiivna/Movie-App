@@ -333,19 +333,57 @@ extension MainViewController {
         
         mainCollectionView.setCollectionViewLayout(layout, animated: true)
     }
-}
-
-
-extension UIView {
     
-    func setUp(to superView: UIView) {
-        translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: superView.topAnchor, constant: 180).isActive = true
-        leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 8).isActive = true
-        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -8).isActive = true
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.section {
+            
+            
+        case 0:
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+                
+                //destinationViewController.presentationController?.delegate = self
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configure(with: trendyMediaArray[indexPath.row])
+                navigationController?.present(destinationViewController, animated: true)
+            }
+        case 1:
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+                
+                //destinationViewController.presentationController?.delegate = self
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configure(with: moviesArray[indexPath.row])
+                navigationController?.present(destinationViewController, animated: true)
+                
+            }
+        case 2:
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+                
+                //destinationViewController.presentationController?.delegate = self
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configure(with: tvArray[indexPath.row])
+                navigationController?.present(destinationViewController, animated: true)
+                
+            }
+        default:
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+                
+                //destinationViewController.presentationController?.delegate = self
+                destinationViewController.loadViewIfNeeded()
+                destinationViewController.configure(with: moviesArray[indexPath.row])
+                navigationController?.present(destinationViewController, animated: true)
+                
+            }
+        }
     }
 }
+
 
 
 extension MainViewController: MoviesHeaderViewDelegate {
@@ -411,6 +449,16 @@ extension MainViewController: TVHeaderViewDelegate  {
             }
         }
     }
+}
+
+
+extension UIView {
     
-    
+    func setUp(to superView: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
+        topAnchor.constraint(equalTo: superView.topAnchor, constant: 150).isActive = true
+        leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 8).isActive = true
+        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -8).isActive = true
+    }
 }

@@ -105,7 +105,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         if !data.isEmpty {
             
             mediaImage.isHidden = false
-            mediaTitle.isHidden = false
+            mediaTitle.isHidden = true
             mediaTitle.isEnabled = true
             
 

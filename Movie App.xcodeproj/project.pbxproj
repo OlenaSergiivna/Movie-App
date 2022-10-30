@@ -276,11 +276,11 @@
 			children = (
 				CE14063628E0C57D00B67410 /* Main.storyboard */,
 				CEF2F1132907252300387B5D /* MainTab */,
+				CE08EB3728E33EE30038CC92 /* SearchTab */,
+				CE14A11C28FB4B1C003174FC /* DetailsScreen */,
+				CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */,
 				CEB3450D28E23E0A00451A6F /* MovieTab */,
 				CEFF39EE28FB0A8C00405F73 /* TVTab */,
-				CE08EB3728E33EE30038CC92 /* SearchTab */,
-				CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */,
-				CE14A11C28FB4B1C003174FC /* DetailsScreen */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,11 +290,11 @@
 			children = (
 				CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */,
 				CE4E5DDB2904563D0048E65C /* MainViewController.swift */,
-				CEB3450928E23E0100451A6F /* MovieViewController.swift */,
-				CEF4F66928FB0B60000BC6DA /* TVViewController.swift */,
 				CE08EB3828E33F320038CC92 /* SearchViewController.swift */,
 				CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */,
 				CEE9E16228E3707F000424DC /* DetailsScreenViewController.swift */,
+				CEB3450928E23E0100451A6F /* MovieViewController.swift */,
+				CEF4F66928FB0B60000BC6DA /* TVViewController.swift */,
 				CE70D57228F9DCE700536243 /* LoadingViewController.swift */,
 			);
 			path = Controllers;

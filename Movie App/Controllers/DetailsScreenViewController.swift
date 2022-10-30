@@ -178,8 +178,7 @@ class DetailsScreenViewController: UIViewController {
                 //                    print("Job failed: \(error.localizedDescription)")
                 //                }
                 //            }
-                let cashe = ImageCache.default
-                cashe.memoryStorage.config.countLimit = 16
+                
             } else {
                 mediaImage.image = .strokedCheckmark
             }
@@ -223,6 +222,86 @@ class DetailsScreenViewController: UIViewController {
                 let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 20)
+                mediaImage.kf.indicatorType = .activity
+                mediaImage.kf.setImage(
+                    with: url,
+                    placeholder: UIImage(named: "loading"),
+                    options: [
+                        .processor(processor),
+                        .scaleFactor(UIScreen.main.scale),
+                        .transition(.fade(1)),
+                        .cacheOriginalImage
+                    ])
+                //            {
+                //                result in
+                //                switch result {
+                //                case .success(let value):
+                //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+                //                case .failure(let error):
+                //                    print("Job failed: \(error.localizedDescription)")
+                //                }
+                //            }
+                let cashe = ImageCache.default
+                cashe.memoryStorage.config.countLimit = 16
+            } else {
+                mediaImage.image = .strokedCheckmark
+            }
+        } else if cell is TrendyMedia {
+            let cell = cell as! TrendyMedia
+            
+            mediaType = "movie"
+            media.append(cell)
+            mediaId = cell.id
+            
+            configureFavoriteButton(cell: cell)
+            if let title = cell.title  {
+                mediaName.text = title
+            } else {
+                mediaName.text = cell.name
+            }
+           
+            
+            mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+            
+            mediaOverview.text = cell.overview
+            
+            // MARK: Configuring movie genre
+            
+            var genresString = ""
+
+            for movieID in cell.genreIDS {
+                
+                if mediaType == "movie" {
+                let genres = Globals.movieGenres
+                    
+                for genre in genres {
+
+                        if movieID == genre.id {
+                            genresString.append("\(genre.name). ")
+                        }
+                    }
+                    
+                } else if mediaType == "tv" {
+                    let genres = Globals.tvGenres
+                    
+                    for genre in genres {
+                        
+                        if movieID == genre.id {
+                            genresString.append("\(genre.name). ")
+                        }
+                    }
+                }
+            }
+            
+            mediaGenres.text = String("\(genresString)".dropLast(2))
+            
+            // MARK: Configuring movie image
+            
+            if let imagePath = cell.posterPath {
+                
+                let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+                let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+                |> RoundCornerImageProcessor(cornerRadius: 10)
                 mediaImage.kf.indicatorType = .activity
                 mediaImage.kf.setImage(
                     with: url,
