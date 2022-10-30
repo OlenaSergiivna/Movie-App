@@ -17,6 +17,15 @@ class TheatresCollectionViewCell: UICollectionViewCell {
         
     }
     
+//    override func layoutSublayers(of layer: CALayer) {
+//        
+//        movieImage.translatesAutoresizingMaskIntoConstraints = false
+//        movieImage.backgroundColor = .systemBackground
+//        movieImage.clipsToBounds = true
+//        movieImage.contentMode = .scaleAspectFill
+//        movieImage.layer.cornerRadius = 12
+//    }
+    
     func configure(with data: [MovieModel], indexPath: IndexPath) {
         
         // add case when name is empty but title is not
@@ -26,7 +35,7 @@ class TheatresCollectionViewCell: UICollectionViewCell {
             
             if let imagePath = data[indexPath.row].posterPath {
                 
-                let url = URL(string: "https://image.tmdb.org/t/p/w300/\(imagePath)")
+                let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
                 let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
                              |> RoundCornerImageProcessor(cornerRadius: 10)
                 movieImage.kf.indicatorType = .activity

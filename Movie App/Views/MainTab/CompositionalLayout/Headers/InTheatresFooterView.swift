@@ -7,18 +7,18 @@
 
 import UIKit
 
-class InTheatresHeaderView: UICollectionReusableView {
+class InTheatresFooterView: UICollectionReusableView {
     
     //MARK: Properities
     
-    static let headerIdentifier = "InTheatresHeaderView"
+    static let footerIdentifier = "InTheatresFooterView"
     
     lazy var theatresLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.text = "Now in theatres"
-        label.font = UIFont.systemFont(ofSize: 25,weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         return label
     }()
     
@@ -38,7 +38,7 @@ class InTheatresHeaderView: UICollectionReusableView {
             theatresLabel.topAnchor.constraint(equalTo: topAnchor),
             theatresLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
-        
+
     }
     
     

@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
         
         cv.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
         
-        cv.register(InTheatresHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: InTheatresHeaderView.headerIdentifier)
+        cv.register(InTheatresFooterView.self, forSupplementaryViewOfKind: "Footer", withReuseIdentifier: InTheatresFooterView.footerIdentifier)
         
         cv.backgroundColor = .black
         return cv
@@ -111,6 +111,8 @@ class MainViewController: UIViewController {
             guard let self else { return }
             
             self.nowPlayingMoviesArray = data
+            print(data.count)
+            print(self.nowPlayingMoviesArray.count)
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
@@ -252,11 +254,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             
             cell.configure(with: moviesArray, indexPath: indexPath)
-//            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
-//            cell.movieImage.backgroundColor = .systemBackground
-//            cell.movieImage.clipsToBounds = true
-//            cell.movieImage.contentMode = .scaleAspectFill
-//            cell.movieImage.layer.cornerRadius = 12
+            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
+            cell.movieImage.backgroundColor = .systemBackground
+            cell.movieImage.clipsToBounds = true
+            cell.movieImage.contentMode = .scaleAspectFill
+            cell.movieImage.layer.cornerRadius = 12
            
             return cell
         }
@@ -287,7 +289,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
                 return header
                 
-            case 2:
+            default:
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
                 header.delegate = self
                 
@@ -298,15 +300,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 header.segmentedControl.selectedSegmentIndex = 0
                 
                 return header
-                
-            default:
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "InTheatresHeaderView", for: indexPath) as? InTheatresHeaderView else { return UICollectionReusableView() }
-                
-                return header
             }
+        } else if kind == "Footer" {
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "InTheatresFooterView", for: indexPath) as? InTheatresFooterView else { return UICollectionReusableView() }
+            
+            return footer
         } else {
             return UICollectionReusableView()
-        }
+        } 
+        
     }
 }
 

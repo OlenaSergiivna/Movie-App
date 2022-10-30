@@ -331,7 +331,7 @@ struct DataManager {
         let nowPlayingRequest = AF.request("https://api.themoviedb.org/3/movie/now_playing?api_key=\(Globals.apiKey)&language=en-US&page=1&region=US", method: .get)
    
         nowPlayingRequest.responseDecodable(of: NowPlayingResults.self) { response in
-        print(response)
+       
             do {
                 let data = try response.result.get().results
                 completion(data)

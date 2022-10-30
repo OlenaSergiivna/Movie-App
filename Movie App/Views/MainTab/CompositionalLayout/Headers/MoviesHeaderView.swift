@@ -112,7 +112,7 @@ class MoviesHeaderView: UICollectionReusableView {
             segmentedControlScrollView.topAnchor.constraint(equalTo: movieLabel.bottomAnchor, constant: 8),
             segmentedControlScrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             segmentedControlScrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            segmentedControlScrollView.heightAnchor.constraint(equalToConstant: 40),
+            segmentedControlScrollView.heightAnchor.constraint(equalToConstant: 30),
             
             segmentedControl.topAnchor.constraint(equalTo: segmentedControlScrollView.topAnchor),
             segmentedControl.leadingAnchor.constraint(equalTo: segmentedControlScrollView.leadingAnchor),

@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IBN-X8-bbK" firstAttribute="leading" secondItem="lSP-kj-VrB" secondAttribute="leading" id="5bI-Nf-fxH"/>
                             <constraint firstAttribute="trailing" secondItem="IBN-X8-bbK" secondAttribute="trailing" id="M2A-oa-QHF"/>
@@ -36,6 +35,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="lSP-kj-VrB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5oz-QT-64r"/>
                 <constraint firstItem="lSP-kj-VrB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Q1s-S6-kxc"/>
@@ -48,9 +48,4 @@
             <point key="canvasLocation" x="27.69230769230769" y="20.616113744075829"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

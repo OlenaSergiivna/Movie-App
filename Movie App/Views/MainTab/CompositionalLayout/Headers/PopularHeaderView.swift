@@ -18,7 +18,7 @@ class PopularHeaderView: UICollectionReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.text = "Popular now"
-        label.font = UIFont.systemFont(ofSize: 25,weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         return label
     }()
     
