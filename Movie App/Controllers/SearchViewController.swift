@@ -53,9 +53,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         return text.isEmpty
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureUI()
         searchTableView.keyboardDismissMode = .onDrag
         
         // MARK: - Setting refresh control programatically
@@ -107,6 +108,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             refreshControl.endRefreshing()
         }
         
+    }
+    
+    func configureUI(){
+        view.backgroundColor = .black
+        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
     }
         
     
@@ -319,7 +325,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     destinationViewController.loadViewIfNeeded()
                     destinationViewController.configure(with: searchResultsTV[indexPath.row])
-                    navigationController?.present(destinationViewController, animated: true)
+                    navigationController?.pushViewController(destinationViewController, animated: true)
+                    //navigationController?.present(destinationViewController, animated: true)
                 }
             } else {
                 print("tapped empty cell")

@@ -120,7 +120,7 @@ class DetailsScreenViewController: UIViewController {
         
         if let imagePath = cell.posterPath {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
             let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
             |> RoundCornerImageProcessor(cornerRadius: 10)
             mediaImage.kf.indicatorType = .activity

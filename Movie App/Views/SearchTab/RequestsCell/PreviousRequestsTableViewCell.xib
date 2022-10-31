@@ -24,11 +24,11 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW4-ha-GHY">
                                 <rect key="frame" x="16" y="16" width="335" height="56"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="tintColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="KW4-ha-GHY" secondAttribute="bottom" constant="16" id="Vhr-He-AsN"/>
                             <constraint firstItem="KW4-ha-GHY" firstAttribute="top" secondItem="NQt-Zw-YSn" secondAttribute="top" constant="16" id="oAW-Qu-WW6"/>
@@ -37,6 +37,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="NQt-Zw-YSn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8ZC-uA-1Qd"/>
                     <constraint firstItem="NQt-Zw-YSn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gLV-LQ-iJe"/>
@@ -45,15 +46,17 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="backView" destination="H2p-sc-9uM" id="JXh-kT-JGD"/>
                 <outlet property="requestLabel" destination="KW4-ha-GHY" id="WuY-Tl-Nwm"/>
             </connections>
             <point key="canvasLocation" x="60.769230769230766" y="36.255924170616112"/>
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

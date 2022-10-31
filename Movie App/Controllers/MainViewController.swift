@@ -52,10 +52,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        KingsfisherMemoryService.shared.setCasheLimits()
         configureUI()
         setUpConstraints()
         configureCompositionalLayout()
-        
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
@@ -111,21 +111,11 @@ class MainViewController: UIViewController {
             guard let self else { return }
             
             self.nowPlayingMoviesArray = data
-            print(data.count)
-            print(self.nowPlayingMoviesArray.count)
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
             }
         }
-        
-        //        // MARK: - Set up tab bar appearance
-        //        let blurEffect = UIBlurEffect(style: .dark)
-        //        let blurView = UIVisualEffectView(effect: blurEffect)
-        //        blurView.frame = tabBarController!.tabBar.bounds
-        //        blurView.autoresizingMask = .flexibleWidth
-        //        tabBarController!.tabBar.insertSubview(blurView, at: 0)
-        
         
     }
     
@@ -141,6 +131,7 @@ class MainViewController: UIViewController {
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
         view.addSubview(mainCollectionView)
     }
+    
     
     func configureUsersGreetingsView() {
         usernameLabel.text = "Hello, \(Globals.username)"
@@ -164,6 +155,9 @@ class MainViewController: UIViewController {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
                 self.present(viewController, animated: true)
+                
+                KingsfisherMemoryService.shared.clearCasheKF()
+                
             } else {
                 print("false result")
             }
@@ -428,6 +422,7 @@ extension MainViewController: TVHeaderViewDelegate  {
             print(destinationViewController)
             
             destinationViewController.loadViewIfNeeded()
+            self.presentationController
             navigationController?.pushViewController(destinationViewController, animated: true)
             
         }

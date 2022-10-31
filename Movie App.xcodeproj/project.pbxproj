@@ -52,6 +52,7 @@
 		CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* LoadingViewController.swift */; };
 		CE81D89D28FC7A4100D667A8 /* PaginationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* PaginationService.swift */; };
 		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
+		CEAB8572290FFEB700B8C668 /* KingsfisherMemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* MovieViewController.swift */; };
@@ -128,6 +129,7 @@
 		CE70D57228F9DCE700536243 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		CE81D89C28FC7A4100D667A8 /* PaginationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationService.swift; sourceTree = "<group>"; };
 		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
+		CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingsfisherMemoryService.swift; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				CECEF5ED28FDB5B100BCB039 /* AlamofireConnectionService.swift */,
 				CECEF5EF28FDBA6A00BCB039 /* ConnectionMonitorService.swift */,
 				CE3B0F8D2905BF6100616CF0 /* AnimationsService.swift */,
+				CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -634,6 +637,7 @@
 				CEF4F66A28FB0B60000BC6DA /* TVViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */,
 				CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */,
+				CEAB8572290FFEB700B8C668 /* KingsfisherMemoryService.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* FavoritesResponse.swift in Sources */,
 				CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */,
 				CE2461A12909D59500E295AA /* PopularHeaderView.swift in Sources */,

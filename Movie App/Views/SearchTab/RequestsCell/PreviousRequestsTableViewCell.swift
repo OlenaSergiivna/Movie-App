@@ -11,9 +11,11 @@ class PreviousRequestsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var requestLabel: UILabel!
     
+    @IBOutlet weak var backView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        //backView.backgroundColor = .
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -189,7 +189,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="H7G-jw-ldM">
-                        <barButtonItem key="rightBarButtonItem" title="Log out" style="done" id="nTP-FH-6BM">
+                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.forward" catalog="system" style="done" id="nTP-FH-6BM">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="logOutPressed:" destination="NWm-K3-4CP" id="90f-X9-6oB"/>
@@ -231,7 +231,14 @@
                             <constraint firstItem="gO4-62-ghq" firstAttribute="leading" secondItem="rtW-su-7UY" secondAttribute="leading" id="psX-Td-43K"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="TV Shows" id="SJP-xk-1A4"/>
+                    <navigationItem key="navigationItem" title="TV Shows" id="SJP-xk-1A4">
+                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.forward" catalog="system" style="done" id="60D-1g-RXL">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="logOutPressed:" destination="Waz-mJ-mGj" id="0yg-qc-vrH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
                     </connections>
@@ -279,7 +286,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
                                 <rect key="frame" x="0.0" y="56" width="390" height="705"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
@@ -296,7 +303,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
-                        <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="2US-Zm-31V">
+                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" style="done" id="2US-Zm-31V">
                             <color key="tintColor" systemColor="tintColor"/>
                             <connections>
                                 <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="RTr-zF-2h4"/>
@@ -315,7 +322,7 @@
         <!--Details Screen View Controller-->
         <scene sceneID="xEP-8q-wSa">
             <objects>
-                <viewController storyboardIdentifier="DetailsScreenViewController" modalPresentationStyle="pageSheet" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsScreenViewController" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffi-3O-7DL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -327,29 +334,29 @@
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="1200"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jv2-nb-BmL">
-                                                <rect key="frame" x="0.0" y="8" width="390" height="590.66666666666663"/>
+                                                <rect key="frame" x="16" y="16" width="358" height="422"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XD2-SH-3dj">
-                                                <rect key="frame" x="16" y="656" width="358" height="27.666666666666629"/>
+                                                <rect key="frame" x="16" y="495.33333333333331" width="358" height="27.666666666666686"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77u-Xz-Dv8">
-                                                <rect key="frame" x="15.999999999999996" y="614.66666666666663" width="58.666666666666657" height="25.333333333333371"/>
+                                                <rect key="frame" x="15.999999999999996" y="454" width="58.666666666666657" height="25.333333333333314"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
-                                                <rect key="frame" x="16" y="691.66666666666663" width="358" height="21"/>
+                                                <rect key="frame" x="16" y="531" width="358" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiK-j8-To5">
-                                                <rect key="frame" x="274.66666666666669" y="614.66666666666663" width="99.333333333333314" height="34.333333333333371"/>
+                                                <rect key="frame" x="274.66666666666669" y="454" width="99.333333333333314" height="34.333333333333314"/>
                                                 <color key="tintColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
@@ -358,7 +365,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
-                                                <rect key="frame" x="16" y="728.66666666666663" width="358" height="20.333333333333371"/>
+                                                <rect key="frame" x="16" y="568" width="358" height="20.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -371,7 +378,7 @@
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="BYb-IF-uTc"/>
                                             <constraint firstAttribute="trailing" secondItem="7Ur-da-UOa" secondAttribute="trailing" constant="16" id="IRF-1b-GBy"/>
                                             <constraint firstItem="77u-Xz-Dv8" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="16" id="LR5-Iq-5T8"/>
-                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" constant="8" id="Nca-6x-3Oo"/>
+                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" constant="16" id="Nca-6x-3Oo"/>
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="top" secondItem="7Ur-da-UOa" secondAttribute="bottom" constant="16" id="XHk-2Q-Zh7"/>
                                             <constraint firstAttribute="trailing" secondItem="XD2-SH-3dj" secondAttribute="trailing" constant="16" id="Zsj-2z-MEX"/>
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" constant="16" id="bSb-Bu-EqU"/>
@@ -380,8 +387,8 @@
                                             <constraint firstItem="XD2-SH-3dj" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="mgd-KO-i4J"/>
                                             <constraint firstItem="7Ur-da-UOa" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="mrb-z0-4Vf"/>
                                             <constraint firstItem="XD2-SH-3dj" firstAttribute="top" secondItem="77u-Xz-Dv8" secondAttribute="bottom" constant="16" id="nk1-Z9-Mr4"/>
-                                            <constraint firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" id="oa0-Kl-uxY"/>
-                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" id="pgj-y3-FyT"/>
+                                            <constraint firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" constant="16" id="oa0-Kl-uxY"/>
+                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" constant="16" id="pgj-y3-FyT"/>
                                             <constraint firstAttribute="height" constant="1200" id="tpM-Ip-GJL"/>
                                             <constraint firstAttribute="trailing" secondItem="H29-HP-q4a" secondAttribute="trailing" constant="16" id="yeh-6n-DPD"/>
                                             <constraint firstItem="7Ur-da-UOa" firstAttribute="top" secondItem="XD2-SH-3dj" secondAttribute="bottom" constant="8" id="zfs-hg-tWS"/>
@@ -393,7 +400,7 @@
                                     <constraint firstAttribute="bottom" secondItem="R8Y-jt-hdd" secondAttribute="bottom" id="Lac-p5-e5z"/>
                                     <constraint firstAttribute="trailing" secondItem="R8Y-jt-hdd" secondAttribute="trailing" id="ckf-S3-3Jn"/>
                                     <constraint firstItem="R8Y-jt-hdd" firstAttribute="leading" secondItem="LH6-zr-cIT" secondAttribute="leading" id="eSI-oo-dFs"/>
-                                    <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="LH6-zr-cIT" secondAttribute="height" multiplier="0.7" id="vFa-Xt-v20"/>
+                                    <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="LH6-zr-cIT" secondAttribute="height" multiplier="0.5" id="vFa-Xt-v20"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -421,7 +428,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ea1-0A-f0J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9282" y="-571"/>
+            <point key="canvasLocation" x="10210.76923076923" y="-571.56398104265395"/>
         </scene>
         <!--Favourites View Controller-->
         <scene sceneID="DDJ-Kd-BMO">
@@ -450,7 +457,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ouz-4a-Hl3">
-                        <barButtonItem key="leftBarButtonItem" title="Log out" style="done" id="oDt-MV-A6u">
+                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" style="done" id="oDt-MV-A6u">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="logOutButtonPressed:" destination="lSx-JY-h29" id="cdB-yn-OaB"/>
@@ -579,6 +586,26 @@
             </objects>
             <point key="canvasLocation" x="4689.2307692307695" y="-1243.3649289099526"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="h0h-Za-1vw">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oOP-Kn-CNH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Yb-ct-3pZ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adb-0o-FyJ">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UlR-Nu-m3s" kind="relationship" relationship="rootViewController" id="Iz6-Bs-g61"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="9281.538461538461" y="-571.56398104265395"/>
+        </scene>
     </scenes>
     <resources>
         <image name="heart" catalog="system" width="128" height="107"/>
@@ -586,6 +613,7 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.rectangle.fill" catalog="system" width="128" height="93"/>
         <image name="play.tv" catalog="system" width="128" height="95"/>
+        <image name="rectangle.portrait.and.arrow.forward" catalog="system" width="128" height="109"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="109"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="tv" catalog="system" width="128" height="95"/>
