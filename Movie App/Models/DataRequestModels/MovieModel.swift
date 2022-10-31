@@ -95,4 +95,24 @@ extension MovieModel {
         self.video = movieRealm.video
         
     }
+    
+    
+    init(from trendyMedia: TrendyMedia) {
+        
+        self.adult = trendyMedia.adult
+        self.backdropPath = trendyMedia.backdropPath
+        self.id = trendyMedia.id
+        self.originalLanguage = trendyMedia.originalLanguage
+        self.overview = trendyMedia.overview
+        self.posterPath = trendyMedia.posterPath
+        self.releaseDate = trendyMedia.releaseDate
+        self.genreIDS = trendyMedia.genreIDS
+        self.popularity = trendyMedia.popularity
+        self.voteAverage = trendyMedia.voteAverage
+        self.voteCount = trendyMedia.voteCount
+        self.title = trendyMedia.title
+        self.originalTitle = trendyMedia.originalTitle
+        self.video = trendyMedia.video
+        
+    }
 }

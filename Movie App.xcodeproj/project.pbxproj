@@ -343,7 +343,7 @@
 			path = FavoritesTab;
 			sourceTree = "<group>";
 		};
-		CE24619F2909D35000E295AA /* Headers */ = {
+		CE24619F2909D35000E295AA /* Headers&Footers */ = {
 			isa = PBXGroup;
 			children = (
 				CE2461A02909D59500E295AA /* PopularHeaderView.swift */,
@@ -351,7 +351,7 @@
 				CECD9B1D290C88FF0013992F /* TVHeader.swift */,
 				CE6EFD43290DC82600924F62 /* InTheatresFooterView.swift */,
 			);
-			path = Headers;
+			path = "Headers&Footers";
 			sourceTree = "<group>";
 		};
 		CE2E29AA28ECE81C00C865E5 /* ViewModels */ = {
@@ -366,10 +366,10 @@
 			isa = PBXGroup;
 			children = (
 				CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */,
-				CE24619F2909D35000E295AA /* Headers */,
 				CE2F03C029073DC1001DFADE /* MediaCell */,
 				CE2F03BB29073C8B001DFADE /* PopularNowCell */,
-				CE6EFD3E290DC64500924F62 /* TheatresCell */,
+				CE6EFD3E290DC64500924F62 /* InTheatresCell */,
+				CE24619F2909D35000E295AA /* Headers&Footers */,
 			);
 			path = CompositionalLayout;
 			sourceTree = "<group>";
@@ -425,13 +425,13 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
-		CE6EFD3E290DC64500924F62 /* TheatresCell */ = {
+		CE6EFD3E290DC64500924F62 /* InTheatresCell */ = {
 			isa = PBXGroup;
 			children = (
 				CE6EFD3F290DC6AD00924F62 /* TheatresCollectionViewCell.swift */,
 				CE6EFD40290DC6AD00924F62 /* TheatresCollectionViewCell.xib */,
 			);
-			path = TheatresCell;
+			path = InTheatresCell;
 			sourceTree = "<group>";
 		};
 		CE9D61DE28E8EFCD0007287D /* Extensions */ = {

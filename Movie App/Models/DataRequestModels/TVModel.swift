@@ -87,4 +87,23 @@ extension TVModel {
         self.voteAverage = tvRealm.voteAverage
         self.voteCount = tvRealm.voteCount
     }
+    
+    
+    init(from trendyMedia: TrendyMedia) {
+        
+        self.backdropPath = trendyMedia.backdropPath
+        self.firstAirDate = trendyMedia.firstAirDate
+        self.genreIDS = trendyMedia.genreIDS
+        self.id = trendyMedia.id
+        self.name = trendyMedia.name ?? ""
+        self.originCountry = trendyMedia.originCountry ?? []
+        self.originalLanguage = trendyMedia.originalLanguage
+        self.originalName = trendyMedia.originalName ?? ""
+        self.overview = trendyMedia.overview ?? ""
+        self.popularity = trendyMedia.popularity
+        self.posterPath = trendyMedia.posterPath
+        self.voteAverage = trendyMedia.voteAverage
+        self.voteCount = trendyMedia.voteCount
+        
+    }
 }
