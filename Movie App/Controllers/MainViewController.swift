@@ -163,11 +163,6 @@ class MainViewController: UIViewController {
             }
         }
     }
-    
-    
-    override func viewWillLayoutSubviews() {
-        self.navigationController?.isNavigationBarHidden = true
-    }
 }
 
 
@@ -422,7 +417,7 @@ extension MainViewController: TVHeaderViewDelegate  {
             print(destinationViewController)
             
             destinationViewController.loadViewIfNeeded()
-            self.presentationController
+            
             navigationController?.pushViewController(destinationViewController, animated: true)
             
         }

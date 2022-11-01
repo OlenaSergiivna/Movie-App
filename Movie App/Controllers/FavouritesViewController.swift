@@ -37,6 +37,7 @@ class FavouritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         
         let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
@@ -56,6 +57,20 @@ class FavouritesViewController: UIViewController {
                 print("false result")
             }
         }
+    }
+    
+    func configureUI(){
+        view.backgroundColor = .black
+        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        //        navigationItem.titleView?.backgroundColor = .black
+//        let appearence = UINavigationBarAppearance()
+//        appearence.configureWithOpaqueBackground()
+//        appearence.titleTextAttributes = [.foregroundColor : UIColor.white]
+//        appearence.backgroundColor = .systemPink
+//        let proxy = UINavigationBar.appearance()
+//        proxy.tintColor = .white
+//        proxy.standardAppearance = appearence
+//        proxy.scrollEdgeAppearance = appearence
     }
 }
 

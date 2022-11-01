@@ -33,11 +33,9 @@ class MovieViewController: UIViewController {
     
     var totalPagesCount = 10
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        //navigationItem.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        configureUI()
         
         let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")
@@ -91,9 +89,17 @@ class MovieViewController: UIViewController {
         }
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .darkContent
-//    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
+    func configureUI(){
+        view.backgroundColor = .black
+        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        //navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+    }
 }
 
 

@@ -100,19 +100,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, Olena" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtd-Gg-ZHT">
-                                <rect key="frame" x="56.000000000000007" y="104" width="104.66666666666669" height="23"/>
+                                <rect key="frame" x="56.000000000000007" y="56" width="104.66666666666669" height="23"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's find a really great movie for you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mn-PA-gJc">
-                                <rect key="frame" x="56.000000000000014" y="129" width="238.33333333333337" height="17"/>
+                                <rect key="frame" x="56.000000000000014" y="81" width="238.33333333333337" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nph-7m-lIk">
-                                <rect key="frame" x="8" y="106" width="40" height="36.666666666666671"/>
+                                <rect key="frame" x="8" y="58.000000000000007" width="40" height="36.666666666666664"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -121,7 +121,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AW5-OT-EwE">
-                                <rect key="frame" x="354" y="114" width="20" height="20"/>
+                                <rect key="frame" x="354" y="66" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="3bS-ut-ZxR"/>
                                     <constraint firstAttribute="height" constant="20" id="ggr-9I-aQ1"/>
@@ -142,7 +142,7 @@
                             <constraint firstItem="AW5-OT-EwE" firstAttribute="centerY" secondItem="nph-7m-lIk" secondAttribute="centerY" id="7ce-8X-oPo"/>
                             <constraint firstItem="nph-7m-lIk" firstAttribute="leading" secondItem="dvm-Bj-TiL" secondAttribute="leading" constant="8" id="Kjc-pZ-xL5"/>
                             <constraint firstItem="9mn-PA-gJc" firstAttribute="top" secondItem="dtd-Gg-ZHT" secondAttribute="bottom" constant="2" id="PJT-Wp-Ykv"/>
-                            <constraint firstItem="nph-7m-lIk" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" constant="48" id="Qc9-M7-bq0"/>
+                            <constraint firstItem="nph-7m-lIk" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" id="Qc9-M7-bq0"/>
                             <constraint firstItem="dtd-Gg-ZHT" firstAttribute="leading" secondItem="nph-7m-lIk" secondAttribute="trailing" constant="8" id="dXZ-Vw-6b5"/>
                             <constraint firstItem="tQm-q8-jt7" firstAttribute="trailing" secondItem="AW5-OT-EwE" secondAttribute="trailing" constant="16" id="f2K-lk-Yiw"/>
                             <constraint firstItem="dtd-Gg-ZHT" firstAttribute="top" secondItem="nph-7m-lIk" secondAttribute="top" id="qgD-zf-q12"/>
@@ -162,13 +162,13 @@
         <!--Movies-->
         <scene sceneID="MsX-b1-Lld">
             <objects>
-                <viewController storyboardIdentifier="MovieViewController" id="NWm-K3-4CP" customClass="MovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieViewController" modalPresentationStyle="fullScreen" id="NWm-K3-4CP" customClass="MovieViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l9V-v2-0es">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="753"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="de5-S4-Mwr">
-                                <rect key="frame" x="0.0" y="91" width="390" height="719"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="719"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -189,15 +189,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="H7G-jw-ldM">
-                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.forward" catalog="system" style="done" id="nTP-FH-6BM">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="rectangle.portrait.and.arrow.right" catalog="system" id="ycS-cf-d3t">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="logOutPressed:" destination="NWm-K3-4CP" id="90f-X9-6oB"/>
+                                <action selector="logOutPressed:" destination="NWm-K3-4CP" id="vVP-ho-wte"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="logOutButton" destination="nTP-FH-6BM" id="qct-mV-SMn"/>
+                        <outlet property="logOutButton" destination="ycS-cf-d3t" id="acY-Ge-8U7"/>
                         <outlet property="movieTableView" destination="de5-S4-Mwr" id="tch-Qg-NCU"/>
                     </connections>
                 </viewController>
@@ -210,12 +210,13 @@
             <objects>
                 <viewController storyboardIdentifier="TVViewController" modalPresentationStyle="fullScreen" id="Waz-mJ-mGj" customClass="TVViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DK7-z4-P0U">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="753"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-62-ghq">
-                                <rect key="frame" x="0.0" y="91" width="390" height="719"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="719"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Waz-mJ-mGj" id="1fN-5U-n3K"/>
                                     <outlet property="delegate" destination="Waz-mJ-mGj" id="YZp-Cy-GcV"/>
@@ -223,7 +224,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rtW-su-7UY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rtW-su-7UY" firstAttribute="bottom" secondItem="gO4-62-ghq" secondAttribute="bottom" id="MWz-Sg-ghT"/>
                             <constraint firstItem="rtW-su-7UY" firstAttribute="trailing" secondItem="gO4-62-ghq" secondAttribute="trailing" id="NcX-rS-cll"/>
@@ -232,14 +233,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="TV Shows" id="SJP-xk-1A4">
-                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.forward" catalog="system" style="done" id="60D-1g-RXL">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" id="NJE-JS-R21">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="logOutPressed:" destination="Waz-mJ-mGj" id="0yg-qc-vrH"/>
+                                <action selector="logOutPressed:" destination="Waz-mJ-mGj" id="NN0-I6-7tJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logOutButton" destination="NJE-JS-R21" id="KeV-Lp-c5h"/>
                         <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
                     </connections>
                 </viewController>
@@ -287,6 +289,8 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
                                 <rect key="frame" x="0.0" y="56" width="390" height="705"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
@@ -294,7 +298,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="asY-tv-9hg"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
                             <constraint firstItem="asY-tv-9hg" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
@@ -448,7 +452,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iHP-dF-Zyf"/>
-                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BXX-mq-JTR" firstAttribute="leading" secondItem="iHP-dF-Zyf" secondAttribute="leading" id="3XF-EB-2tf"/>
                             <constraint firstItem="iHP-dF-Zyf" firstAttribute="trailing" secondItem="BXX-mq-JTR" secondAttribute="trailing" id="OPZ-Pm-c5z"/>
@@ -484,8 +488,13 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="k26-D9-fZh">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -508,6 +517,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hnI-tI-3lM">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -521,14 +535,23 @@
         <!--TV Shows-->
         <scene sceneID="Qbt-vi-vP7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fsJ-oz-VGe" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="fsJ-oz-VGe" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="TV Shows" image="tv" catalog="system" id="Rkc-RJ-AFu">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0mK-10-hhX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0mK-10-hhX">
                         <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -542,13 +565,12 @@
         <!--Navigation Controller-->
         <scene sceneID="BWj-UL-s1l">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Shl-Ad-AOY" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Shl-Ad-AOY" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="YNU-fd-fym">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="YNU-fd-fym">
                         <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -589,7 +611,6 @@
         <!--Navigation Controller-->
         <scene sceneID="h0h-Za-1vw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oOP-Kn-CNH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Yb-ct-3pZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adb-0o-FyJ">
@@ -603,6 +624,7 @@
                         <segue destination="UlR-Nu-m3s" kind="relationship" relationship="rootViewController" id="Iz6-Bs-g61"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oOP-Kn-CNH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="9281.538461538461" y="-571.56398104265395"/>
         </scene>
@@ -613,15 +635,11 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.rectangle.fill" catalog="system" width="128" height="93"/>
         <image name="play.tv" catalog="system" width="128" height="95"/>
-        <image name="rectangle.portrait.and.arrow.forward" catalog="system" width="128" height="109"/>
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="109"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="tv" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

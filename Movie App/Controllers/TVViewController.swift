@@ -17,12 +17,12 @@ class TVViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let nibMovieCell = UINib(nibName: "TVTableViewCell", bundle: nil)
         tvTableView.register(nibMovieCell, forCellReuseIdentifier: "TVTableViewCell")
         
         // MARK: - Fetch tv shows data
-        
+        configureUI()
         loadContent()
     
     }
@@ -70,6 +70,17 @@ class TVViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
+    func configureUI(){
+        view.backgroundColor = .black
+        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
     }
 }
 

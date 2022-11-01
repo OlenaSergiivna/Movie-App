@@ -113,6 +113,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     func configureUI(){
         view.backgroundColor = .black
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
+        navigationItem.titleView?.backgroundColor = .black
+//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
     }
         
     
