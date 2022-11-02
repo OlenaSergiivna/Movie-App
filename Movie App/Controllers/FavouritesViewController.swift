@@ -15,11 +15,7 @@ class FavouritesViewController: UIViewController {
     
     var viewModel = FavouritesViewControllerViewModel()
     
-    var someMovies: [MovieModel] = [] {
-        didSet {
-            print("didset: \(someMovies.count)")
-        }
-    }
+    var someMovies: [MovieModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -33,7 +29,7 @@ class FavouritesViewController: UIViewController {
             }
         }
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,21 +39,23 @@ class FavouritesViewController: UIViewController {
         favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
     }
     
+    
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
             guard let self else { return }
             
-            if result == true {
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self.present(viewController, animated: true)
-            } else {
+            guard result == true else {
                 print("false result")
+                return
             }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+            self.present(viewController, animated: true)
         }
     }
+    
     
     func configureUI(){
         view.backgroundColor = .black
@@ -65,6 +63,7 @@ class FavouritesViewController: UIViewController {
         
         configureNavBar()
     }
+    
     
     func configureNavBar() {
         
@@ -80,12 +79,11 @@ class FavouritesViewController: UIViewController {
 }
 
 
-extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
+extension FavouritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return someMovies.count
     }
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,14 +95,27 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    
+}
+
+extension FavouritesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 230
-        
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
+            
+            destinationViewController.presentationController?.delegate = self
+            destinationViewController.loadViewIfNeeded()
+            destinationViewController.configure(with: someMovies[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
+            
+        }
+    }
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -145,23 +156,7 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-            
-            destinationViewController.presentationController?.delegate = self
-            destinationViewController.loadViewIfNeeded()
-            destinationViewController.configure(with: someMovies[indexPath.row])
-            navigationController?.present(destinationViewController, animated: true)
-            
-        }
-    }
 }
-
-
 
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
@@ -176,6 +171,5 @@ extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
                 
             }
         }
-        
     }
 }
