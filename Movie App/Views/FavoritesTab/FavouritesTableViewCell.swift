@@ -25,47 +25,46 @@ class FavouritesTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-  
+        
     }
     
     func configure(with data: MovieModel) {
         
-        if let title = data.title, let overview = data.overview {
-            
-            movieTitleLabel.text = title
-            overviewLabel.text = overview
-            someBackView.layer.masksToBounds = true
-            someBackView.layer.cornerRadius = 10
-        }
-          
-            
-       if let imagePath = data.posterPath {
-            
-            let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-                         |> RoundCornerImageProcessor(cornerRadius: 5)
-            movieImage.kf.indicatorType = .activity
-            movieImage.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "loading"),
-                options: [
-                    .processor(processor),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-//            {
-//                result in
-//                switch result {
-//                case .success(let value):
-//                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-//                case .failure(let error):
-//                    print("Job failed: \(error.localizedDescription)")
-//                }
-//            }
-           
-        } else {
+        guard let title = data.title, let overview = data.overview else {
             return
         }
+        
+        movieTitleLabel.text = title
+        overviewLabel.text = overview
+        someBackView.layer.masksToBounds = true
+        someBackView.layer.cornerRadius = 10
+        
+        
+        guard let imagePath = data.posterPath else {
+            return
+        }
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
+        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+        |> RoundCornerImageProcessor(cornerRadius: 5)
+        movieImage.kf.indicatorType = .activity
+        movieImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "loading"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        //            {
+        //                result in
+        //                switch result {
+        //                case .success(let value):
+        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+        //                case .failure(let error):
+        //                    print("Job failed: \(error.localizedDescription)")
+        //                }
+        //            }
     }
 }

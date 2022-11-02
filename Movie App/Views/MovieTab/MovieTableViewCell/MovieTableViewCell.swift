@@ -10,9 +10,7 @@ import Kingfisher
 
 protocol MovieCollectionViewCellDelegate: AnyObject {
     func collectionView(collectionviewcell: MovieCollectionViewCell?, index: Int, didTappedInTableViewCell: MovieTableViewCell)
-    // other delegate methods that you can define to perform action in viewcontroller
 }
-
 
 class MovieTableViewCell: UITableViewCell {
     
@@ -28,14 +26,13 @@ class MovieTableViewCell: UITableViewCell {
     
     var moviesArray: [MovieModel] = [] {
         didSet {
-            
+
             moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
-            
+
             moviesCollectionView.dataSource = self
             moviesCollectionView.delegate = self
-            
+
             DispatchQueue.main.async {
-                
                 self.moviesCollectionView.reloadData()
             }
         }
@@ -61,7 +58,7 @@ class MovieTableViewCell: UITableViewCell {
     
 }
 
-extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MovieTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if !moviesArray.isEmpty {
@@ -82,22 +79,22 @@ extension MovieTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         cell.configure(with: moviesArray, indexPath: indexPath)
         return cell
     }
+}
+
+extension MovieTableViewCell: UICollectionViewDelegate {
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let cell = moviesCollectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell else { return }
+        
+           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+        }
+    }
+
+
+extension MovieTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 200)
     }
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if let cell = moviesCollectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell {
-           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
-        }
-        
-    }
-    
 }
-

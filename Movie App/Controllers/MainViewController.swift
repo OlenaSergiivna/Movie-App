@@ -51,30 +51,51 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         KingsfisherMemoryService.shared.setCasheLimits()
+        
         configureUI()
         setUpConstraints()
         configureCompositionalLayout()
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
-            if statusCode == 200 {
-                
-                Globals.movieGenres = data
-                
-                DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres.first?.name ?? "", page: 1) { [weak self] movies in
-                    guard let self else { return }
-                    
-                    self.moviesArray = movies
+            guard statusCode == 200 else {
+                return
+            }
             
-                    DispatchQueue.main.async {
-                        self.mainCollectionView.reloadData()
-                    }
+            Globals.movieGenres = data
+            
+            DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres.first?.name ?? "", page: 1) { [weak self] movies in
+                guard let self else { return }
+                
+                self.moviesArray = movies
+                
+                DispatchQueue.main.async {
+                    self.mainCollectionView.reloadData()
                 }
             }
         }
         
+        
+        DataManager.shared.requestTVGenres { data, statusCode in
+            
+            guard statusCode == 200 else {
+                return
+            }
+            
+            Globals.tvGenres = data
+            
+            DataManager.shared.requestTVByGenre(genre: Globals.tvGenres.first?.name ?? "", page: 1) { [weak self] movies in
+                guard let self else { return }
+                
+                self.tvArray = movies
+                
+                DispatchQueue.main.async {
+                    self.mainCollectionView.reloadData()
+                }
+            }
+        }
         
         
         DataManager.shared.requestTrendyMedia { [weak self] media in
@@ -87,26 +108,7 @@ class MainViewController: UIViewController {
             }
         }
         
-       //configureUsersGreetingsView()
-        
-        DataManager.shared.requestTVGenres { data, statusCode in
-            
-            if statusCode == 200 {
-                
-                Globals.tvGenres = data
-                
-                DataManager.shared.requestTVByGenre(genre: Globals.tvGenres.first?.name ?? "", page: 1) { [weak self] movies in
-                    guard let self else { return }
-                    
-                    self.tvArray = movies
-            
-                    DispatchQueue.main.async {
-                        self.mainCollectionView.reloadData()
-                    }
-                }
-            }
-        }
-        
+       
         DataManager.shared.requestNowPlayingMovies { [weak self] data in
             guard let self else { return }
             
@@ -116,14 +118,13 @@ class MainViewController: UIViewController {
                 self.mainCollectionView.reloadData()
             }
         }
-        
     }
     
-   
+    
     func setUpConstraints(){
         mainCollectionView.setUp(to: view)
-        
     }
+    
     
     func configureTabBar() {
         
@@ -144,6 +145,7 @@ class MainViewController: UIViewController {
         
     }
     
+    
     func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
@@ -155,6 +157,7 @@ class MainViewController: UIViewController {
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
     }
+    
     
     func configureUI(){
         view.backgroundColor = .black
@@ -185,33 +188,63 @@ class MainViewController: UIViewController {
             
             guard let self else { return }
             
-            if result == true {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self.present(viewController, animated: true)
-                
-                KingsfisherMemoryService.shared.clearCasheKF()
-                
-            } else {
+            guard result == true else {
                 print("false result")
+                return
             }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+            self.present(viewController, animated: true)
+            
+            KingsfisherMemoryService.shared.clearCasheKF()
         }
     }
 }
 
 
+extension MainViewController  {
+    
+    func configureCompositionalLayout() {
+        
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+            
+            switch sectionIndex {
+                
+            case 0 :
+                return MainTabLayouts.shared.popularNowSection()
+                
+            case 1 :
+                return MainTabLayouts.shared.moviesSection()
+                
+            case 2:
+                return MainTabLayouts.shared.tvSection()
+                
+            default:
+                return MainTabLayouts.shared.nowInTheatresSection()
+            }
+        }
+        
+        mainCollectionView.setCollectionViewLayout(layout, animated: true)
+    }
+}
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+
+extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         switch section {
+            
         case 0 :
             return trendyMediaArray.count
+            
         case 1:
             return moviesArray.count
+            
         case 2:
             return tvArray.count
+            
         default:
             return nowPlayingMoviesArray.count
         }
@@ -232,12 +265,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PopularNowCollectionViewCell", for: indexPath) as? PopularNowCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            
             cell.configure(with: trendyMediaArray, indexPath: indexPath)
-            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.movieImage.backgroundColor = .systemBackground
-            cell.movieImage.clipsToBounds = true
-            cell.movieImage.contentMode = .scaleAspectFill
-            cell.movieImage.layer.cornerRadius = 12
             return cell
             
         case 1:
@@ -247,12 +276,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             
             cell.configureMovie(with: moviesArray, indexPath: indexPath)
-            cell.mediaImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.mediaImage.backgroundColor = .systemBackground
-            cell.mediaImage.clipsToBounds = true
-            cell.mediaImage.contentMode = .scaleAspectFill
-            cell.mediaImage.layer.cornerRadius = 12
-            
             return cell
             
         case 2:
@@ -262,12 +285,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             
             cell.configureTV(with: tvArray, indexPath: indexPath)
-            cell.mediaImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.mediaImage.backgroundColor = .systemBackground
-            cell.mediaImage.clipsToBounds = true
-            cell.mediaImage.contentMode = .scaleAspectFill
-            cell.mediaImage.layer.cornerRadius = 12
-            
             return cell
             
         default:
@@ -277,20 +294,11 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             
             cell.configure(with: moviesArray, indexPath: indexPath)
-            cell.movieImage.translatesAutoresizingMaskIntoConstraints = false
-            cell.movieImage.backgroundColor = .systemBackground
-            cell.movieImage.clipsToBounds = true
-            cell.movieImage.contentMode = .scaleAspectFill
-            cell.movieImage.layer.cornerRadius = 12
-           
             return cell
         }
-        
-    
-        
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == "Header" {
             
@@ -298,13 +306,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
             case 0 :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
+                
                 return header
                 
             case 1 :
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
-                header.delegate = self
                 
+                header.delegate = self
                 header.segmentedControl.removeAllSegments()
+                
                 for (index, genre) in Globals.movieGenres.enumerated() {
                     header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
                 }
@@ -314,9 +324,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
             default:
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
-                header.delegate = self
                 
+                header.delegate = self
                 header.segmentedControl.removeAllSegments()
+                
                 for (index, genre) in Globals.tvGenres.enumerated() {
                     header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
                 }
@@ -324,85 +335,41 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 
                 return header
             }
-        } else if kind == "Footer" {
+            
+        } else {
             guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "InTheatresFooterView", for: indexPath) as? InTheatresFooterView else { return UICollectionReusableView() }
             
             return footer
-        } else {
-            return UICollectionReusableView()
-        } 
-        
+        }
     }
 }
 
 
-extension MainViewController {
-    
-    
-    func configureCompositionalLayout() {
-        
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
-            switch sectionIndex {
-            case 0 :
-                return MainTabLayouts.shared.popularNowSection()
-            case 1 :
-                return MainTabLayouts.shared.moviesSection()
-            case 2:
-               return MainTabLayouts.shared.tvSection()
-            default:
-                return MainTabLayouts.shared.nowInTheatresSection()
-            }
-        }
-        
-        mainCollectionView.setCollectionViewLayout(layout, animated: true)
-    }
+extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
+        destinationViewController.loadViewIfNeeded()
+        
         switch indexPath.section {
             
-            
         case 0:
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-                
-                //destinationViewController.presentationController?.delegate = self
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configure(with: trendyMediaArray[indexPath.row])
-                navigationController?.present(destinationViewController, animated: true)
-            }
+            destinationViewController.configure(with: trendyMediaArray[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
+            
         case 1:
+            destinationViewController.configure(with: moviesArray[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-                
-                //destinationViewController.presentationController?.delegate = self
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configure(with: moviesArray[indexPath.row])
-                navigationController?.present(destinationViewController, animated: true)
-                
-            }
         case 2:
+            destinationViewController.configure(with: tvArray[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-                
-                //destinationViewController.presentationController?.delegate = self
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configure(with: tvArray[indexPath.row])
-                navigationController?.present(destinationViewController, animated: true)
-                
-            }
         default:
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-                
-                //destinationViewController.presentationController?.delegate = self
-                destinationViewController.loadViewIfNeeded()
-                destinationViewController.configure(with: moviesArray[indexPath.row])
-                navigationController?.present(destinationViewController, animated: true)
-                
-            }
+            destinationViewController.configure(with: moviesArray[indexPath.row])
+            navigationController?.present(destinationViewController, animated: true)
         }
     }
 }
@@ -420,9 +387,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
             
             self.moviesArray = movies
             
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                
+            DispatchQueue.main.async {
                 self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
             }
         }
@@ -430,15 +395,12 @@ extension MainViewController: MoviesHeaderViewDelegate {
     
     
     func openAllMoviesVC() {
-  
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController {
-            print(destinationViewController)
-            
-            destinationViewController.loadViewIfNeeded()
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController else { return }
+        
+        destinationViewController.loadViewIfNeeded()
+        navigationController?.pushViewController(destinationViewController, animated: true)
     }
 }
 
@@ -447,14 +409,10 @@ extension MainViewController: TVHeaderViewDelegate  {
     
     func openAllTVVC() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "TVViewController") as? TVViewController {
-            print(destinationViewController)
-            
-            destinationViewController.loadViewIfNeeded()
-            
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "TVViewController") as? TVViewController else { return }
+        
+        destinationViewController.loadViewIfNeeded()
+        navigationController?.pushViewController(destinationViewController, animated: true)
     }
     
     
@@ -466,9 +424,7 @@ extension MainViewController: TVHeaderViewDelegate  {
             
             self.tvArray = movies
             
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                
+            DispatchQueue.main.async {
                 self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
             }
         }

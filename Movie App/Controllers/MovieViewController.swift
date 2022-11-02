@@ -93,12 +93,23 @@ class MovieViewController: UIViewController {
         return .darkContent
     }
     
+    
     func configureUI(){
         view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        //navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        configureNavBar()
+    }
+    
+    
+    func configureNavBar() {
         
-//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.configureWithOpaqueBackground()
+        barAppearance.backgroundColor = .black
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
 }
 

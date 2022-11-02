@@ -26,8 +26,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
     func configure(with data: [MovieModel], indexPath: IndexPath) {
         
         // add case when name is empty but title is not
-        if !data.isEmpty {
-            
+        guard !data.isEmpty else {
+            movieImage.image = .strokedCheckmark
+            return
+        }
             movieImage.isHidden = false
             movieNameLabel.isHidden = false
             movieNameLabel.isEnabled = true
@@ -69,9 +71,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
                 movieNameLabel.isHidden = false
                 movieNameLabel.isEnabled = true
             }
-
-        }
-        
     }
     
 }

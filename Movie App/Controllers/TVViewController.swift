@@ -79,8 +79,20 @@ class TVViewController: UIViewController {
     func configureUI(){
         view.backgroundColor = .black
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+
+        configureNavBar()
+    }
+    
+    func configureNavBar() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.configureWithOpaqueBackground()
+        barAppearance.backgroundColor = .black
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
 }
 

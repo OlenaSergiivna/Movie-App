@@ -60,16 +60,7 @@ class TVHeaderView: UICollectionReusableView {
         segmentedControl.tintColor = .clear
         segmentedControl.selectedSegmentTintColor = .systemPink
        
-//        segmentedControl.layer.borderWidth = 1
-//        segmentedControl.layer.cornerRadius = 5
-//        segmentedControl.layer.masksToBounds = true
-//        segmentedControl.layer.borderColor = .init(gray: 0.5, alpha: 0.1)
-//
         segmentedControl.insertSegment(withTitle: "", at: 0, animated: true)
-        
-        
-        //segmentedControl.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
-        //segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .selected, barMetrics: .default)
         
         // Change text color and the font of the NOT selected (normal) segment
         segmentedControl.setTitleTextAttributes([
@@ -97,7 +88,6 @@ class TVHeaderView: UICollectionReusableView {
         [tvLabel, seeAllButton, segmentedControlScrollView].forEach( {addSubview($0)} )
         
         setUpConstrains()
-        //changeSegmentedControlLinePosition()
     }
     
     func setUpConstrains() {
@@ -144,9 +134,3 @@ class TVHeaderView: UICollectionReusableView {
     }
     
 }
-
-//class NoSwipeSegmentedControl: UISegmentedControl {
-//    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-//}
