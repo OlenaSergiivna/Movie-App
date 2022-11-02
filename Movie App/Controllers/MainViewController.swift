@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         KingsfisherMemoryService.shared.setCasheLimits()
         configureUI()
         setUpConstraints()
@@ -87,7 +87,7 @@ class MainViewController: UIViewController {
             }
         }
         
-       configureUsersGreetingsView()
+       //configureUsersGreetingsView()
         
         DataManager.shared.requestTVGenres { data, statusCode in
             
@@ -125,11 +125,45 @@ class MainViewController: UIViewController {
         
     }
     
+    func configureTabBar() {
+        
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithOpaqueBackground()
+        tabAppearance.backgroundColor = .black
+        tabAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.systemPink]
+        tabAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+        tabAppearance.stackedLayoutAppearance.selected.iconColor = .systemPink
+        tabAppearance.stackedLayoutAppearance.normal.iconColor = .white
+        
+        tabBarController?.tabBar.standardAppearance = tabAppearance
+        tabBarController?.tabBar.scrollEdgeAppearance = tabAppearance
+        
+        tabBarController?.tabBar.items?[0].title = NSLocalizedString("Main", comment: "")
+        tabBarController?.tabBar.items?[1].title = NSLocalizedString("Search", comment: "")
+        tabBarController?.tabBar.items?[2].title = NSLocalizedString("Favourites", comment: "")
+        
+    }
+    
+    func configureNavBar() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.configureWithOpaqueBackground()
+        barAppearance.backgroundColor = .black
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
+    }
     
     func configureUI(){
         view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
         view.addSubview(mainCollectionView)
+        
+        configureTabBar()
+        configureNavBar()
+        configureUsersGreetingsView()
+        
     }
     
     
@@ -140,10 +174,10 @@ class MainViewController: UIViewController {
     }
     
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
+    //    override var preferredStatusBarStyle: UIStatusBarStyle {
+    //        return .darkContent
+    //    }
+    //
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
         

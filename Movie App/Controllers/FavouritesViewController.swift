@@ -62,15 +62,20 @@ class FavouritesViewController: UIViewController {
     func configureUI(){
         view.backgroundColor = .black
         tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        //        navigationItem.titleView?.backgroundColor = .black
-//        let appearence = UINavigationBarAppearance()
-//        appearence.configureWithOpaqueBackground()
-//        appearence.titleTextAttributes = [.foregroundColor : UIColor.white]
-//        appearence.backgroundColor = .systemPink
-//        let proxy = UINavigationBar.appearance()
-//        proxy.tintColor = .white
-//        proxy.standardAppearance = appearence
-//        proxy.scrollEdgeAppearance = appearence
+        
+        configureNavBar()
+    }
+    
+    func configureNavBar() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.configureWithOpaqueBackground()
+        barAppearance.backgroundColor = .black
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
 }
 

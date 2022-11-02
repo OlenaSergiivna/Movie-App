@@ -56,6 +56,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
         searchTableView.keyboardDismissMode = .onDrag
         
@@ -112,9 +113,21 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     func configureUI(){
         view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-        navigationItem.titleView?.backgroundColor = .black
-//        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        
+        configureNavBar()
+
+    }
+    
+    func configureNavBar() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.configureWithOpaqueBackground()
+        barAppearance.backgroundColor = .black
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
         
     
