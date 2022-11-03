@@ -325,12 +325,12 @@
         <!--Details Screen View Controller-->
         <scene sceneID="xEP-8q-wSa">
             <objects>
-                <viewController storyboardIdentifier="DetailsScreenViewController" modalPresentationStyle="fullScreen" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsScreenViewController" extendedLayoutIncludesOpaqueBars="YES" modalPresentationStyle="fullScreen" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffi-3O-7DL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-zr-cIT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-zr-cIT">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8Y-jt-hdd">
@@ -375,7 +375,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="QiK-j8-To5" secondAttribute="trailing" constant="16" id="0qQ-4r-Hu2"/>
                                             <constraint firstItem="QiK-j8-To5" firstAttribute="top" secondItem="77u-Xz-Dv8" secondAttribute="top" id="4Fe-wm-ktU"/>
@@ -399,7 +399,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.38431372549999998" green="0.76862745099999996" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="R8Y-jt-hdd" secondAttribute="bottom" id="Lac-p5-e5z"/>
                                     <constraint firstAttribute="trailing" secondItem="R8Y-jt-hdd" secondAttribute="trailing" id="ckf-S3-3Jn"/>
@@ -635,6 +635,7 @@
             <point key="canvasLocation" x="9281.538461538461" y="-571.56398104265395"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>

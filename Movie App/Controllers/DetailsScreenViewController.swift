@@ -77,12 +77,11 @@ class DetailsScreenViewController: UIViewController {
     func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
-        //barAppearance.configureWithOpaqueBackground()
         barAppearance.configureWithTransparentBackground()
         barAppearance.backgroundColor = .clear
         barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-       
+        
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
     }
