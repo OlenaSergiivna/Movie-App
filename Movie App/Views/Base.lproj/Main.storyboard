@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -325,41 +325,42 @@
         <!--Details Screen View Controller-->
         <scene sceneID="xEP-8q-wSa">
             <objects>
-                <viewController storyboardIdentifier="DetailsScreenViewController" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsScreenViewController" modalPresentationStyle="fullScreen" id="UlR-Nu-m3s" customClass="DetailsScreenViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffi-3O-7DL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-zr-cIT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="LH6-zr-cIT">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R8Y-jt-hdd">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="1200"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jv2-nb-BmL">
-                                                <rect key="frame" x="16" y="16" width="358" height="422"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jv2-nb-BmL">
+                                                <rect key="frame" x="0.0" y="0.0" width="390" height="620.33333333333337"/>
+                                                <color key="backgroundColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="0.75866133329999996" colorSpace="custom" customColorSpace="displayP3"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XD2-SH-3dj">
-                                                <rect key="frame" x="16" y="495.33333333333331" width="358" height="27.666666666666686"/>
+                                                <rect key="frame" x="16" y="677.66666666666663" width="358" height="27.666666666666629"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77u-Xz-Dv8">
-                                                <rect key="frame" x="15.999999999999996" y="454" width="58.666666666666657" height="25.333333333333314"/>
+                                                <rect key="frame" x="15.999999999999996" y="636.33333333333337" width="58.666666666666657" height="25.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Ur-da-UOa">
-                                                <rect key="frame" x="16" y="531" width="358" height="21"/>
+                                                <rect key="frame" x="16" y="713.33333333333337" width="358" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiK-j8-To5">
-                                                <rect key="frame" x="274.66666666666669" y="454" width="99.333333333333314" height="34.333333333333314"/>
+                                                <rect key="frame" x="274.66666666666669" y="636.33333333333337" width="99.333333333333314" height="34.333333333333371"/>
                                                 <color key="tintColor" red="0.81156641240000005" green="0.2077318132" blue="0.24702638390000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
@@ -368,7 +369,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H29-HP-q4a">
-                                                <rect key="frame" x="16" y="568" width="358" height="20.333333333333371"/>
+                                                <rect key="frame" x="16" y="750.33333333333337" width="358" height="20.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -381,7 +382,7 @@
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="BYb-IF-uTc"/>
                                             <constraint firstAttribute="trailing" secondItem="7Ur-da-UOa" secondAttribute="trailing" constant="16" id="IRF-1b-GBy"/>
                                             <constraint firstItem="77u-Xz-Dv8" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" constant="16" id="LR5-Iq-5T8"/>
-                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" constant="16" id="Nca-6x-3Oo"/>
+                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" id="Nca-6x-3Oo"/>
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="top" secondItem="7Ur-da-UOa" secondAttribute="bottom" constant="16" id="XHk-2Q-Zh7"/>
                                             <constraint firstAttribute="trailing" secondItem="XD2-SH-3dj" secondAttribute="trailing" constant="16" id="Zsj-2z-MEX"/>
                                             <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" constant="16" id="bSb-Bu-EqU"/>
@@ -390,20 +391,21 @@
                                             <constraint firstItem="XD2-SH-3dj" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="mgd-KO-i4J"/>
                                             <constraint firstItem="7Ur-da-UOa" firstAttribute="leading" secondItem="77u-Xz-Dv8" secondAttribute="leading" id="mrb-z0-4Vf"/>
                                             <constraint firstItem="XD2-SH-3dj" firstAttribute="top" secondItem="77u-Xz-Dv8" secondAttribute="bottom" constant="16" id="nk1-Z9-Mr4"/>
-                                            <constraint firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" constant="16" id="oa0-Kl-uxY"/>
-                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" constant="16" id="pgj-y3-FyT"/>
+                                            <constraint firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" id="oa0-Kl-uxY"/>
+                                            <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" id="pgj-y3-FyT"/>
                                             <constraint firstAttribute="height" constant="1200" id="tpM-Ip-GJL"/>
                                             <constraint firstAttribute="trailing" secondItem="H29-HP-q4a" secondAttribute="trailing" constant="16" id="yeh-6n-DPD"/>
                                             <constraint firstItem="7Ur-da-UOa" firstAttribute="top" secondItem="XD2-SH-3dj" secondAttribute="bottom" constant="8" id="zfs-hg-tWS"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" red="0.38431372549999998" green="0.76862745099999996" blue="0.52941176469999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="R8Y-jt-hdd" firstAttribute="top" secondItem="LH6-zr-cIT" secondAttribute="top" id="8wu-xc-DLW"/>
                                     <constraint firstAttribute="bottom" secondItem="R8Y-jt-hdd" secondAttribute="bottom" id="Lac-p5-e5z"/>
                                     <constraint firstAttribute="trailing" secondItem="R8Y-jt-hdd" secondAttribute="trailing" id="ckf-S3-3Jn"/>
                                     <constraint firstItem="R8Y-jt-hdd" firstAttribute="leading" secondItem="LH6-zr-cIT" secondAttribute="leading" id="eSI-oo-dFs"/>
-                                    <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="LH6-zr-cIT" secondAttribute="height" multiplier="0.5" id="vFa-Xt-v20"/>
+                                    <constraint firstItem="jv2-nb-BmL" firstAttribute="height" secondItem="LH6-zr-cIT" secondAttribute="height" multiplier="0.735" id="vFa-Xt-v20"/>
+                                    <constraint firstItem="R8Y-jt-hdd" firstAttribute="top" secondItem="LH6-zr-cIT" secondAttribute="top" id="wLV-Fr-l2N"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -422,6 +424,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="favoritesButton" destination="QiK-j8-To5" id="tLs-hK-nDY"/>
+                        <outlet property="mainBackView" destination="R8Y-jt-hdd" id="1j6-44-Kou"/>
+                        <outlet property="mainScrollView" destination="LH6-zr-cIT" id="gWu-tF-G1J"/>
                         <outlet property="mediaGenres" destination="7Ur-da-UOa" id="RCu-av-A2L"/>
                         <outlet property="mediaImage" destination="jv2-nb-BmL" id="nt4-cV-6AX"/>
                         <outlet property="mediaName" destination="XD2-SH-3dj" id="hqZ-PG-0Wk"/>

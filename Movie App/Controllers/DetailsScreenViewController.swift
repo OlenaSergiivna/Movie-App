@@ -48,11 +48,43 @@ class DetailsScreenViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var mainScrollView: UIScrollView!
+    
+    @IBOutlet weak var mainBackView: UIView!
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tabBarController?.tabBar.isHidden = true
+        
+        mediaImage.translatesAutoresizingMaskIntoConstraints = false
+        mediaImage.backgroundColor = .systemBackground
+        mediaImage.clipsToBounds = true
+        mediaImage.contentMode = .scaleAspectFill
+       
+        mediaImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        mediaImage.layer.cornerRadius = 20
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavBar()
+    }
+    
+    
+    func configureNavBar() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        //barAppearance.configureWithOpaqueBackground()
+        barAppearance.configureWithTransparentBackground()
+        barAppearance.backgroundColor = .clear
+        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+       
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     
@@ -122,14 +154,14 @@ class DetailsScreenViewController: UIViewController {
             
             let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
             let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 10)
+            |> RoundCornerImageProcessor(cornerRadius: 0)
             mediaImage.kf.indicatorType = .activity
             mediaImage.kf.setImage(
                 with: url,
-                placeholder: UIImage(named: "loading"),
+                //placeholder: UIImage(named: "loading"),
                 options: [
                     .processor(processor),
-                    .scaleFactor(UIScreen.main.scale),
+                    .scaleFactor(3), //UIScreen.main.scale
                     .transition(.fade(1)),
                     .cacheOriginalImage
                 ])
