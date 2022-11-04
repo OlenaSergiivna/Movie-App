@@ -49,6 +49,11 @@ class MainViewController: UIViewController {
     }()
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -160,6 +165,8 @@ class MainViewController: UIViewController {
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        
+       
     }
     
     
@@ -366,15 +373,15 @@ extension MainViewController: UICollectionViewDelegate {
             
         case 1:
             destinationViewController.configure(with: moviesArray[indexPath.row])
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
             
         case 2:
             destinationViewController.configure(with: tvArray[indexPath.row])
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
             
         default:
             destinationViewController.configure(with: moviesArray[indexPath.row])
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
         }
     }
 }
@@ -385,7 +392,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
     
     func changeMovieGenre(index: Int) {
         
-        mainCollectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .right, animated: false)
+        mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .right, animated: false)
         
         DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies in
             guard let self else { return }

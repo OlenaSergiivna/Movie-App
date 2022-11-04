@@ -21,6 +21,14 @@ class TVCollectionViewCell: UICollectionViewCell {
     }
     
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        tvImage.image = nil
+        tvNameLabel.text = nil
+    }
+    
+    
     func configure(with data: [TVModel], indexPath: IndexPath) {
         
         // add case when name is empty but title is not

@@ -15,6 +15,10 @@ class TVViewController: UIViewController {
     
     var tappedCell: TVModel!
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,7 +153,7 @@ extension TVViewController: TVCollectionViewCellDelegate {
             
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configure(with: tappedCell)
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
             
         }
     }

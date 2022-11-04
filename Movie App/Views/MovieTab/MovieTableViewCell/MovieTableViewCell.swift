@@ -39,12 +39,10 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
     }
-    
     
     
     override func prepareForReuse() {
@@ -52,11 +50,9 @@ class MovieTableViewCell: UITableViewCell {
         moviesCollectionView.dataSource = nil
         moviesCollectionView.delegate = nil
         moviesCollectionView.reloadData()
-        
     }
-    
-    
 }
+
 
 extension MovieTableViewCell: UICollectionViewDataSource {
     

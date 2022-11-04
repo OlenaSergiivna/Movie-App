@@ -53,6 +53,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         return text.isEmpty
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -302,7 +306,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     destinationViewController.loadViewIfNeeded()
                     destinationViewController.configure(with: searchResultsMovie[indexPath.row])
-                    navigationController?.present(destinationViewController, animated: true)
+                    navigationController?.pushViewController(destinationViewController, animated: true)
           
                 }
             } else {
@@ -341,7 +345,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     destinationViewController.loadViewIfNeeded()
                     destinationViewController.configure(with: searchResultsTV[indexPath.row])
                     navigationController?.pushViewController(destinationViewController, animated: true)
-                    //navigationController?.present(destinationViewController, animated: true)
                 }
             } else {
                 print("tapped empty cell")

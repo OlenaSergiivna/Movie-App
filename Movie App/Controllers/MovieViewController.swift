@@ -33,6 +33,12 @@ class MovieViewController: UIViewController {
     
     var totalPagesCount = 10
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -110,6 +116,10 @@ class MovieViewController: UIViewController {
         
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
 }
 
@@ -168,7 +178,7 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
             
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configure(with: tappedCell)
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
             
         }
     }

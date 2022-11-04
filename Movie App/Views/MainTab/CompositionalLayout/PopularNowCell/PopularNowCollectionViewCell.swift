@@ -54,9 +54,10 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
         
         if let movieName = data[indexPath.row].name {
             movieNameLabel.text = movieName
+        } else {
+            movieNameLabel.text = data[indexPath.row].title
         }
         
-        movieNameLabel.text = data[indexPath.row].title
         
         guard let imagePath = data[indexPath.row].backdropPath else {
             

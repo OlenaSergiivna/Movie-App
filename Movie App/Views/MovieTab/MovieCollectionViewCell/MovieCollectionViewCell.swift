@@ -20,8 +20,16 @@ class MovieCollectionViewCell: UICollectionViewCell {
         
         self.movieImage.layer.masksToBounds = true
         self.movieImage.layer.cornerRadius = 12
-
     }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        movieImage.image = nil
+        movieNameLabel.text = nil
+    }
+    
     
     func configure(with data: [MovieModel], indexPath: IndexPath) {
         

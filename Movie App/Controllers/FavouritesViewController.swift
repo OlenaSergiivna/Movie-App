@@ -18,6 +18,8 @@ class FavouritesViewController: UIViewController {
     var someMovies: [MovieModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
+    
+        tabBarController?.tabBar.isHidden = false
         
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else { return }
@@ -112,7 +114,7 @@ extension FavouritesViewController: UITableViewDelegate {
             destinationViewController.presentationController?.delegate = self
             destinationViewController.loadViewIfNeeded()
             destinationViewController.configure(with: someMovies[indexPath.row])
-            navigationController?.present(destinationViewController, animated: true)
+            navigationController?.pushViewController(destinationViewController, animated: true)
             
         }
     }
