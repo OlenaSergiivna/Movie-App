@@ -342,9 +342,21 @@ struct DataManager {
         }
     }
     
-    func getMediaTrailer() {
+    func getMediaTrailer(id: Int, completion: @escaping([TrailerModel]) -> Void) {
         
-        let trailerRequest = " "
+        let trailerRequest = AF.request("https://api.themoviedb.org/3/movie/\(id)/videos?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        trailerRequest.responseDecodable(of: ResultsTrailers.self ) { response in
+            
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+        
     }
 }
 

@@ -100,7 +100,7 @@ class DetailsScreenViewController: UIViewController {
     
         configureUI()
         
-        trailerPlayer.load(withVideoId: "Ym7uX_6HEd8")
+        
     }
     
     
@@ -213,6 +213,18 @@ class DetailsScreenViewController: UIViewController {
             //                    print("Job failed: \(error.localizedDescription)")
             //                }
             //            }
+            
+            guard cell.video != nil else {
+                return
+            }
+            
+            DataManager.shared.getMediaTrailer(id: cell.id) { [weak self] data in
+                
+                guard let self, let key = data.first?.key else { return }
+                
+                self.trailerPlayer.load(withVideoId: key)
+            }
+     
             
         } else {
             mediaImage.image = .strokedCheckmark
