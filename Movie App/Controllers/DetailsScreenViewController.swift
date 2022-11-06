@@ -97,7 +97,7 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+       trailerPlayer.isHidden = true
         configureUI()
         
         
@@ -219,10 +219,14 @@ class DetailsScreenViewController: UIViewController {
             }
             
             DataManager.shared.getMediaTrailer(id: cell.id) { [weak self] data in
-                
+               
                 guard let self, let key = data.first?.key else { return }
                 
                 self.trailerPlayer.load(withVideoId: key)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.trailerPlayer.isHidden = false
+                }
             }
      
             
