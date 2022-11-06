@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import youtube_ios_player_helper
 
 // add popup message when media has been added to favorites list or deleted from it
 
@@ -15,6 +16,8 @@ class DetailsScreenViewController: UIViewController {
     deinit {
         print("!!! Deinit: \(self)")
     }
+    
+    @IBOutlet weak var trailerPlayer: YTPlayerView!
     
     @IBOutlet weak var mediaImage: UIImageView!
     
@@ -58,21 +61,58 @@ class DetailsScreenViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
-        mediaImage.backgroundColor = .systemBackground
+        
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
-       
+        
         mediaImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         mediaImage.layer.cornerRadius = 20
+        
+        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = mediaImage.bounds.integral
+//
+//        gradientLayer.type = .axial
+//        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
+//        gradientLayer.locations = [0.5, 1.0]
+//        gradientLayer.shouldRasterize = true
+//        mediaImage.layer.insertSublayer(gradientLayer, at: 0)
+//
+//
+//        DispatchQueue.main.async {
+//            self.mediaImage.layer.sublayers?[0].frame = self.mediaImage.bounds.integral
+//
+//        }
+        
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        paddingView.clipsToBounds = true
+        paddingView.contentMode = .scaleAspectFill
+        paddingView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        paddingView.layer.cornerRadius = 20
     }
     
+    
+    @IBOutlet weak var paddingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        configureUI()
         
-        configureNavBar()
+        trailerPlayer.load(withVideoId: "Ym7uX_6HEd8")
     }
     
+    
+    
+    func configureUI() {
+        
+        view.backgroundColor = .black
+        configureNavBar()
+        
+    }
+    
+
     
     func configureNavBar() {
         

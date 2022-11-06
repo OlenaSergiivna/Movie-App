@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //ConnectionkMonitor.shared.startMonitoring()
+        //ConnectionMonitor.shared.startMonitoring()
         
         return true
     }

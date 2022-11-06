@@ -341,5 +341,10 @@ struct DataManager {
             }
         }
     }
+    
+    func getMediaTrailer() {
+        
+        let trailerRequest = " "
+    }
 }
 

@@ -8,9 +8,9 @@
 import Foundation
 import Network
 
-final class ConnectionkMonitor {
+final class ConnectionMonitor {
     
-    static let shared = ConnectionkMonitor()
+    static let shared = ConnectionMonitor()
     
     private let queue = DispatchQueue.global()
     private let monitor: NWPathMonitor
