@@ -360,27 +360,20 @@ extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
-        destinationViewController.loadViewIfNeeded()
-        
         switch indexPath.section {
             
         case 0:
-            destinationViewController.configure(with: trendyMediaArray[indexPath.row])
-            navigationController?.pushViewController(destinationViewController, animated: true)
+            DetailsService.shared.openDetailsScreen(with: trendyMediaArray[indexPath.row], navigationController: navigationController)
             
         case 1:
-            destinationViewController.configure(with: moviesArray[indexPath.row])
-            navigationController?.pushViewController(destinationViewController, animated: true)
+            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
             
         case 2:
-            destinationViewController.configure(with: tvArray[indexPath.row])
-            navigationController?.pushViewController(destinationViewController, animated: true)
+            DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], navigationController: navigationController)
+
             
         default:
-            destinationViewController.configure(with: moviesArray[indexPath.row])
-            navigationController?.pushViewController(destinationViewController, animated: true)
+            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
         }
     }
 }
