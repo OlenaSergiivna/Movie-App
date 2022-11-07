@@ -148,7 +148,7 @@ extension FavouritesViewController: UITableViewDelegate {
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         
-        RepositoryService.shared.movieFavoritesCashing {[weak self] data in
+        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
             guard let self else { return }
             
             self.someMovies = data

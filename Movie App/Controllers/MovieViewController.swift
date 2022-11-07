@@ -41,13 +41,11 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         
         let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")
         
-        // MARK: - Fetch movie data
-        
+        configureUI()
         loadContent()
     
     }
@@ -59,13 +57,11 @@ class MovieViewController: UIViewController {
             
             guard let self else { return }
             
-            if result == true {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self.present(viewController, animated: true)
-            } else {
-                print("false result")
-            }
+            guard result == true else { return }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+            self.present(viewController, animated: true)
         }
     }
     
@@ -77,27 +73,21 @@ class MovieViewController: UIViewController {
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
-            if statusCode == 200 {
-                
-                Globals.movieGenres = data
-                
-                DispatchQueue.main.async {
-                    
-                    self.movieTableView.reloadData()
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    
-                    loadingVC.remove()
-                    
-                }
+            guard statusCode == 200 else { return }
+            Globals.movieGenres = data
+            
+            DispatchQueue.main.async {
+                self.movieTableView.reloadData()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                loadingVC.remove()
             }
         }
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .darkContent
+//    }
     
     
     func configureUI(){
@@ -138,16 +128,12 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        // Set cell's delegate
-        
         cell.cellDelegate = self
-        
         cell.genreLabel.text = Globals.movieGenres[indexPath.row].name
         
-        
         DispatchQueue.main.async {
+            
             DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) { movies in
-                
                 cell.moviesArray = movies
             }
         }
@@ -158,7 +144,6 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 240
     }
     
@@ -171,15 +156,7 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
     func collectionView(collectionviewcell: MovieCollectionViewCell?, index: Int, didTappedInTableViewCell: MovieTableViewCell) {
         let cells = didTappedInTableViewCell.moviesArray
         self.tappedCell = cells[index]
-        print("You tapped the cell \(index) with title \(tappedCell.title ?? "0")")
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-            
-            destinationViewController.loadViewIfNeeded()
-            destinationViewController.configure(with: tappedCell)
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
+        DetailsService.shared.openDetailsScreen(with: tappedCell, navigationController: navigationController)
     }
 }
