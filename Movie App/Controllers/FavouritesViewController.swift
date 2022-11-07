@@ -18,7 +18,7 @@ class FavouritesViewController: UIViewController {
     var someMovies: [MovieModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
-    
+        
         tabBarController?.tabBar.isHidden = false
         
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
@@ -60,9 +60,8 @@ class FavouritesViewController: UIViewController {
     
     
     func configureUI(){
-        view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
         
+        view.backgroundColor = .black
         configureNavBar()
     }
     
@@ -108,15 +107,7 @@ extension FavouritesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-            
-            destinationViewController.presentationController?.delegate = self
-            destinationViewController.loadViewIfNeeded()
-            destinationViewController.configure(with: someMovies[indexPath.row])
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
+        DetailsService.shared.openDetailsScreen(with: someMovies[indexPath.row], navigationController: navigationController)
     }
     
     
@@ -127,27 +118,20 @@ extension FavouritesViewController: UITableViewDelegate {
             guard let self else { return }
             
             DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
-                //print("delete movie from favorites result: \(result)")
                 
                 guard let self else { return }
                 
-                if result == 200 {
+                guard result == 200 else { return }
+                
+                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) {
                     
-                    RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) { [weak self] in
-                        //print("deleted from realm")
-                        
+                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                         guard let self else { return }
                         
-                        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-                            //print("favorites in cell cashing: \(favorites)")
-                            guard let self else { return }
-                            
-                            self.someMovies = favorites
-                            
-                            DispatchQueue.main.async {
-                                
-                                self.favouritesTableView.reloadData()
-                            }
+                        self.someMovies = favorites
+                        
+                        DispatchQueue.main.async {
+                            self.favouritesTableView.reloadData()
                         }
                     }
                 }
@@ -159,6 +143,7 @@ extension FavouritesViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
+
 
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {

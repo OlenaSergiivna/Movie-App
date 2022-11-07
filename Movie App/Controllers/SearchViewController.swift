@@ -302,7 +302,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     self.searchResultsTV = results
                     
                     DispatchQueue.main.async {
-                        
                         self.searchTableView.reloadData()
                     }
                     
