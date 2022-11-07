@@ -22,13 +22,12 @@ class TVViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadContent()
+        
         let nibMovieCell = UINib(nibName: "TVTableViewCell", bundle: nil)
         tvTableView.register(nibMovieCell, forCellReuseIdentifier: "TVTableViewCell")
         
-        // MARK: - Fetch tv shows data
         configureUI()
-        loadContent()
-    
     }
     
     
@@ -37,17 +36,13 @@ class TVViewController: UIViewController {
             
             guard let self else { return }
             
-            if result == true {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-                self.present(viewController, animated: true)
-                
-            } else {
-                print("false result")
-            }
+            guard result == true else { return }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
+            self.present(viewController, animated: true)
         }
     }
-    
     
     
     func loadContent() {
@@ -57,35 +52,32 @@ class TVViewController: UIViewController {
         
         DataManager.shared.requestTVGenres { data, statusCode in
             
-            if statusCode == 200 {
-                
-                Globals.tvGenres = data
-                
-                DispatchQueue.main.async {
-                    
-                    self.tvTableView.reloadData()
-
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    
-                    loadingVC.remove()
-                    
-                }
+            guard statusCode == 200 else { return }
+            
+            Globals.tvGenres = data
+            
+            DispatchQueue.main.async {
+                self.tvTableView.reloadData()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                loadingVC.remove()
             }
         }
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
     
-    func configureUI(){
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .darkContent
+//    }
+    
+    
+    func configureUI() {
+        
         view.backgroundColor = .black
-        tabBarItem.standardAppearance = tabBarItem.scrollEdgeAppearance
-
         configureNavBar()
     }
+    
     
     func configureNavBar() {
         
@@ -101,7 +93,6 @@ class TVViewController: UIViewController {
 }
 
 
-
 extension TVViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,23 +106,18 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        // Set cell's delegate
-        
         cell.cellDelegate = self
-        
         cell.genreLabel.text = Globals.tvGenres[indexPath.row].name
         
         
         DispatchQueue.main.async {
             DataManager.shared.requestTVByGenre(genre: cell.genreLabel.text!, page: 1) { tv in
-                
                 cell.tvArray = tv
             }
         }
-
+        
         return cell
     }
-    
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -141,21 +127,12 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-
 extension TVViewController: TVCollectionViewCellDelegate {
     func collectionView(collectionviewcell: TVCollectionViewCell?, index: Int, didTappedInTableViewCell: TVTableViewCell) {
-        let cells = didTappedInTableViewCell.tvArray
-        self.tappedCell = cells[index]
-        print("You tapped the cell \(index) with title \(tappedCell.name)")
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController {
-            
-            destinationViewController.loadViewIfNeeded()
-            destinationViewController.configure(with: tappedCell)
-            navigationController?.pushViewController(destinationViewController, animated: true)
-            
-        }
+        let cells = didTappedInTableViewCell.tvArray
+        tappedCell = cells[index]
+        
+        DetailsService.shared.openDetailsScreen(with: tappedCell, navigationController: navigationController)
     }
-    
 }
