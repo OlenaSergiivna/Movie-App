@@ -16,9 +16,10 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         
         let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .white
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         view.addSubview(spinner)
