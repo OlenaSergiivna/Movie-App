@@ -307,7 +307,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     destinationViewController.loadViewIfNeeded()
                     destinationViewController.configure(with: searchResultsMovie[indexPath.row])
                     navigationController?.pushViewController(destinationViewController, animated: true)
-          
                 }
             } else {
                 print("tapped empty cell")

@@ -57,7 +57,8 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+//        trailerPlayer.backgroundColor = UIColor.systemPink
+        trailerPlayer.delegate = self
         tabBarController?.tabBar.isHidden = true
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
@@ -69,20 +70,20 @@ class DetailsScreenViewController: UIViewController {
         mediaImage.layer.cornerRadius = 20
         
         
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = mediaImage.bounds.integral
-//
-//        gradientLayer.type = .axial
-//        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
-//        gradientLayer.locations = [0.5, 1.0]
-//        gradientLayer.shouldRasterize = true
-//        mediaImage.layer.insertSublayer(gradientLayer, at: 0)
-//
-//
-//        DispatchQueue.main.async {
-//            self.mediaImage.layer.sublayers?[0].frame = self.mediaImage.bounds.integral
-//
-//        }
+        //        let gradientLayer = CAGradientLayer()
+        //        gradientLayer.frame = mediaImage.bounds.integral
+        //
+        //        gradientLayer.type = .axial
+        //        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
+        //        gradientLayer.locations = [0.5, 1.0]
+        //        gradientLayer.shouldRasterize = true
+        //        mediaImage.layer.insertSublayer(gradientLayer, at: 0)
+        //
+        //
+        //        DispatchQueue.main.async {
+        //            self.mediaImage.layer.sublayers?[0].frame = self.mediaImage.bounds.integral
+        //
+        //        }
         
         paddingView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -97,10 +98,8 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       trailerPlayer.isHidden = true
+        
         configureUI()
-        
-        
     }
     
     
@@ -109,12 +108,11 @@ class DetailsScreenViewController: UIViewController {
         
         view.backgroundColor = .black
         configureNavBar()
-        
     }
     
-
     
-    func configureNavBar() {
+    
+    private func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.configureWithTransparentBackground()
@@ -157,7 +155,7 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    func configureMovieCell(_ cell: MovieModel) {
+    private func configureMovieCell(_ cell: MovieModel) {
         
         mediaType = "movie"
         media.append(cell)
@@ -189,54 +187,43 @@ class DetailsScreenViewController: UIViewController {
         
         // MARK: Configuring movie image
         
-        if let imagePath = cell.posterPath {
-            
-            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 0)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                //placeholder: UIImage(named: "loading"),
-                options: [
-                    .processor(processor),
-                    .scaleFactor(3), //UIScreen.main.scale
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
-            
-            guard cell.video != nil else {
-                return
-            }
-            
-            DataManager.shared.getMediaTrailer(id: cell.id) { [weak self] data in
-               
-                guard let self, let key = data.first?.key else { return }
-                
-                self.trailerPlayer.load(withVideoId: key)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.trailerPlayer.isHidden = false
-                }
-            }
-     
-            
-        } else {
+        guard let imagePath = cell.posterPath else {
             mediaImage.image = .strokedCheckmark
+            return
         }
+        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
+        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+        |> RoundCornerImageProcessor(cornerRadius: 0)
+        mediaImage.kf.indicatorType = .activity
+        mediaImage.kf.setImage(
+            with: url,
+            //placeholder: UIImage(named: "loading"),
+            options: [
+                .processor(processor),
+                .scaleFactor(3), //UIScreen.main.scale
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        //            {
+        //                result in
+        //                switch result {
+        //                case .success(let value):
+        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+        //                case .failure(let error):
+        //                    print("Job failed: \(error.localizedDescription)")
+        //                }
+        //            }
+        
+        guard cell.video != nil else {
+            return
+        }
+        
+        configureTrailer(with: cell.id)
+        
     }
     
     
-    func configureTVCell(_ cell: TVModel) {
+    private func configureTVCell(_ cell: TVModel) {
         
         mediaType = "tv"
         media.append(cell)
@@ -269,38 +256,40 @@ class DetailsScreenViewController: UIViewController {
         
         // MARK: Configuring tv image
         
-        if let imagePath = cell.posterPath {
+        guard let imagePath = cell.posterPath else {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 20)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "loading"),
-                options: [
-                    .processor(processor),
-                    .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
-            
-        } else {
             mediaImage.image = .strokedCheckmark
+            return
         }
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+        |> RoundCornerImageProcessor(cornerRadius: 20)
+        mediaImage.kf.indicatorType = .activity
+        mediaImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "loading"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        //            {
+        //                result in
+        //                switch result {
+        //                case .success(let value):
+        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+        //                case .failure(let error):
+        //                    print("Job failed: \(error.localizedDescription)")
+        //                }
+        //            }
+        
+        configureTrailer(with: cell.id)
     }
     
     
-    func configureFavoriteButton<T>(cell: T) {
+    private func configureFavoriteButton<T>(cell: T) {
         
         if cell is MovieModel {
             
@@ -347,6 +336,20 @@ class DetailsScreenViewController: UIViewController {
         }
     }
     
+    
+    private func configureTrailer(with id: Int) {
+        
+        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
+            
+            guard let self, let key = data.first?.key else { return }
+            
+            self.trailerPlayer.load(withVideoId: key)
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                self.trailerPlayer.isHidden = false
+//            }
+        }
+    }
     
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
@@ -401,3 +404,9 @@ class DetailsScreenViewController: UIViewController {
     }
 }
 
+extension DetailsScreenViewController: YTPlayerViewDelegate {
+    
+    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
+        return UIColor.clear
+    }
+}

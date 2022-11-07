@@ -370,7 +370,6 @@ extension MainViewController: UICollectionViewDelegate {
             destinationViewController.configure(with: trendyMediaArray[indexPath.row])
             navigationController?.pushViewController(destinationViewController, animated: true)
             
-            
         case 1:
             destinationViewController.configure(with: moviesArray[indexPath.row])
             navigationController?.pushViewController(destinationViewController, animated: true)
