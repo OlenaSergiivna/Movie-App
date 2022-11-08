@@ -29,7 +29,6 @@ class TVTableViewCell: UITableViewCell {
             tvCollectionView.delegate = self
             
             DispatchQueue.main.async {
-                
                 self.tvCollectionView.reloadData()
             }
         }
