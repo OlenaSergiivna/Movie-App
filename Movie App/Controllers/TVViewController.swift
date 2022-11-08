@@ -15,10 +15,6 @@ class TVViewController: UIViewController {
     
     var tappedCell: TVModel!
     
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +24,13 @@ class TVViewController: UIViewController {
         tvTableView.register(nibMovieCell, forCellReuseIdentifier: "TVTableViewCell")
         
         configureUI()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
     }
     
     

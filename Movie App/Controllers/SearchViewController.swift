@@ -34,11 +34,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,6 +57,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     
     @objc func updatateTableView(refreshControl: UIRefreshControl) {
         pageCount = 1

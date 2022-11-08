@@ -33,12 +33,6 @@ class MovieViewController: UIViewController {
     
     var totalPagesCount = 10
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,9 +41,14 @@ class MovieViewController: UIViewController {
         
         configureUI()
         loadContent()
-    
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
+    }
     
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {

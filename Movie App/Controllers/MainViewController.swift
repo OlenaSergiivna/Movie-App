@@ -50,7 +50,17 @@ class MainViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.isHidden = false
     }
     
     
@@ -186,10 +196,6 @@ class MainViewController: UIViewController {
     }
     
     
-    //    override var preferredStatusBarStyle: UIStatusBarStyle {
-    //        return .darkContent
-    //    }
-    //
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
         
@@ -198,7 +204,7 @@ class MainViewController: UIViewController {
             guard let self else { return }
             
             guard result == true else {
-                print("false result")
+                print("log out failed")
                 return
             }
             

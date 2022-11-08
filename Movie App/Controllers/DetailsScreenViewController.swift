@@ -59,7 +59,6 @@ class DetailsScreenViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         trailerPlayer.delegate = self
-        tabBarController?.tabBar.isHidden = true
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
         
@@ -91,9 +90,10 @@ class DetailsScreenViewController: UIViewController {
         paddingView.contentMode = .scaleAspectFill
         paddingView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         paddingView.layer.cornerRadius = 20
+
     }
     
-    
+   
     @IBOutlet weak var paddingView: UIView!
     
     override func viewDidLoad() {
@@ -102,18 +102,25 @@ class DetailsScreenViewController: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tabBarController?.tabBar.isHidden = true
+    }
+    
     
     
     func configureUI() {
         
         view.backgroundColor = .black
         configureNavBar()
+        
     }
     
     
     
     private func configureNavBar() {
-        
+       
         let barAppearance = UINavigationBarAppearance()
         barAppearance.configureWithTransparentBackground()
         barAppearance.backgroundColor = .clear
@@ -122,6 +129,7 @@ class DetailsScreenViewController: UIViewController {
         
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
     }
     
     

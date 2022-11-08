@@ -17,10 +17,20 @@ class FavouritesViewController: UIViewController {
     
     var someMovies: [MovieModel] = []
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+        
+        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
+        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
-        
+        // move?
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else { return }
             
@@ -32,14 +42,6 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-        
-        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
-        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
-    }
     
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
