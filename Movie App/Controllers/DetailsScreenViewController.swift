@@ -199,7 +199,6 @@ class DetailsScreenViewController: UIViewController {
         mediaImage.kf.indicatorType = .activity
         mediaImage.kf.setImage(
             with: url,
-            //placeholder: UIImage(named: "loading"),
             options: [
                 .processor(processor),
                 .scaleFactor(3), //UIScreen.main.scale
@@ -260,16 +259,15 @@ class DetailsScreenViewController: UIViewController {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w500/\(imagePath)")
+        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
         let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 20)
+        |> RoundCornerImageProcessor(cornerRadius: 0)
         mediaImage.kf.indicatorType = .activity
         mediaImage.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "loading"),
             options: [
                 .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
+                .scaleFactor(3),
                 .transition(.fade(1)),
                 .cacheOriginalImage
             ])
