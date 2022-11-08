@@ -47,10 +47,7 @@ class FavouritesViewController: UIViewController {
         NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
             guard let self else { return }
             
-            guard result == true else {
-                print("false result")
-                return
-            }
+            guard result == true else { return }
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
@@ -70,7 +67,7 @@ class FavouritesViewController: UIViewController {
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.configureWithOpaqueBackground()
-        barAppearance.backgroundColor = .black
+        barAppearance.backgroundColor = .clear
         barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
@@ -93,10 +90,10 @@ extension FavouritesViewController: UITableViewDataSource {
         }
         
         cell.configure(with: someMovies[indexPath.row])
-        
         return cell
     }
 }
+
 
 extension FavouritesViewController: UITableViewDelegate {
     

@@ -21,6 +21,8 @@ class FavouritesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        movieImage.layer.masksToBounds = true
+        movieImage.layer.cornerRadius = 5
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -41,12 +43,14 @@ class FavouritesTableViewCell: UITableViewCell {
         
         
         guard let imagePath = data.posterPath else {
+            
+            movieImage.image = .strokedCheckmark
             return
         }
         
         let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
         let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
+        |> RoundCornerImageProcessor(cornerRadius: 0)
         movieImage.kf.indicatorType = .activity
         movieImage.kf.setImage(
             with: url,

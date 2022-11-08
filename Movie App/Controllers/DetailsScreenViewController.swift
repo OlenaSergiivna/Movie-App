@@ -57,7 +57,7 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        trailerPlayer.backgroundColor = UIColor.systemPink
+
         trailerPlayer.delegate = self
         tabBarController?.tabBar.isHidden = true
         
@@ -188,9 +188,11 @@ class DetailsScreenViewController: UIViewController {
         // MARK: Configuring movie image
         
         guard let imagePath = cell.posterPath else {
+            
             mediaImage.image = .strokedCheckmark
             return
         }
+        
         let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
         let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
         |> RoundCornerImageProcessor(cornerRadius: 0)
@@ -214,12 +216,9 @@ class DetailsScreenViewController: UIViewController {
         //                }
         //            }
         
-        guard cell.video != nil else {
-            return
-        }
+        guard cell.video != nil else { return }
         
         configureTrailer(with: cell.id)
-        
     }
     
     
@@ -230,7 +229,6 @@ class DetailsScreenViewController: UIViewController {
         mediaId = cell.id
         
         configureFavoriteButton(cell: cell)
-        
         
         mediaName.text = cell.name
         mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
