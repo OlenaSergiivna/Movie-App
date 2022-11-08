@@ -26,8 +26,9 @@ class MovieTableViewCell: UITableViewCell {
     
     var moviesArray: [MovieModel] = [] {
         didSet {
-
-            moviesCollectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+            
+            let nibTVCollectionViewCell = UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+            moviesCollectionView.register(nibTVCollectionViewCell, forCellWithReuseIdentifier: "MovieCollectionViewCell")
 
             moviesCollectionView.dataSource = self
             moviesCollectionView.delegate = self
@@ -57,13 +58,11 @@ class MovieTableViewCell: UITableViewCell {
 extension MovieTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !moviesArray.isEmpty {
-            return moviesArray.count
-        } else {
+        guard moviesArray.isEmpty else {
             return 4
         }
+        return moviesArray.count
     }
-    
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,6 +75,7 @@ extension MovieTableViewCell: UICollectionViewDataSource {
         return cell
     }
 }
+
 
 extension MovieTableViewCell: UICollectionViewDelegate {
     

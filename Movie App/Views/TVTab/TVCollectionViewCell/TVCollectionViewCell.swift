@@ -38,9 +38,7 @@ class TVCollectionViewCell: UICollectionViewCell {
         tvNameLabel.isEnabled = true
         
         // add case when name is empty but title is not
-        guard !data.isEmpty else {
-            return
-        }
+        guard !data.isEmpty else { return }
         
         tvNameLabel.text = data[indexPath.row].name
         

@@ -9,8 +9,8 @@ import UIKit
 
 protocol TVCollectionViewCellDelegate: AnyObject {
     func collectionView(collectionviewcell: TVCollectionViewCell?, index: Int, didTappedInTableViewCell: TVTableViewCell)
-    // other delegate methods that you can define to perform action in viewcontroller
 }
+
 
 class TVTableViewCell: UITableViewCell {
 
@@ -23,7 +23,8 @@ class TVTableViewCell: UITableViewCell {
     var tvArray: [TVModel] = [] {
         didSet {
             
-            self.tvCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
+            let nibTVCollectionViewCell = UINib(nibName: "TVCollectionViewCell", bundle: nil)
+            tvCollectionView.register(nibTVCollectionViewCell, forCellWithReuseIdentifier: "TVCollectionViewCell")
             
             tvCollectionView.dataSource = self
             tvCollectionView.delegate = self
@@ -34,40 +35,31 @@ class TVTableViewCell: UITableViewCell {
         }
     }
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.tvCollectionView.register(UINib(nibName: "TVCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TVCollectionViewCell")
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        
-    }
     
     override func prepareForReuse() {
         
         tvCollectionView.dataSource = nil
         tvCollectionView.delegate = nil
         tvCollectionView.reloadData()
-        
-
     }
-    
 }
-
 
 
 extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !tvArray.isEmpty {
-            return tvArray.count
-        } else {
+        guard !tvArray.isEmpty else {
             return 4
         }
+        return tvArray.count
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -79,6 +71,7 @@ extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 120, height: 200)
     }
@@ -87,10 +80,9 @@ extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let cell = tvCollectionView.cellForItem(at: indexPath) as? TVCollectionViewCell {
-           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
-        }
-        
+        guard let cell = tvCollectionView.cellForItem(at: indexPath) as? TVCollectionViewCell else { return }
+
+        cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
     }
     
 }
