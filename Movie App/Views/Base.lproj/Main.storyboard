@@ -100,19 +100,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, Olena" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtd-Gg-ZHT">
-                                <rect key="frame" x="56.000000000000007" y="56" width="104.66666666666669" height="23"/>
+                                <rect key="frame" x="56.000000000000007" y="88" width="104.66666666666669" height="23"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's find a really great movie for you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mn-PA-gJc">
-                                <rect key="frame" x="56.000000000000014" y="81" width="238.33333333333337" height="17"/>
+                                <rect key="frame" x="56.000000000000014" y="113" width="238.33333333333337" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nph-7m-lIk">
-                                <rect key="frame" x="8" y="58.000000000000007" width="40" height="36.666666666666664"/>
+                                <rect key="frame" x="8" y="90" width="40" height="36.666666666666671"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -121,14 +121,14 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AW5-OT-EwE">
-                                <rect key="frame" x="354" y="66" width="20" height="20"/>
+                                <rect key="frame" x="346" y="98" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="3bS-ut-ZxR"/>
                                     <constraint firstAttribute="height" constant="20" id="ggr-9I-aQ1"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="rectangle.portrait.and.arrow.right" catalog="system">
-                                    <color key="baseForegroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="logoutButtonTapped:" destination="Ikp-O6-wNb" eventType="touchUpInside" id="40i-Z9-e8G"/>
@@ -142,9 +142,9 @@
                             <constraint firstItem="AW5-OT-EwE" firstAttribute="centerY" secondItem="nph-7m-lIk" secondAttribute="centerY" id="7ce-8X-oPo"/>
                             <constraint firstItem="nph-7m-lIk" firstAttribute="leading" secondItem="dvm-Bj-TiL" secondAttribute="leading" constant="8" id="Kjc-pZ-xL5"/>
                             <constraint firstItem="9mn-PA-gJc" firstAttribute="top" secondItem="dtd-Gg-ZHT" secondAttribute="bottom" constant="2" id="PJT-Wp-Ykv"/>
-                            <constraint firstItem="nph-7m-lIk" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" id="Qc9-M7-bq0"/>
+                            <constraint firstItem="nph-7m-lIk" firstAttribute="top" secondItem="tQm-q8-jt7" secondAttribute="top" constant="32" id="Qc9-M7-bq0"/>
                             <constraint firstItem="dtd-Gg-ZHT" firstAttribute="leading" secondItem="nph-7m-lIk" secondAttribute="trailing" constant="8" id="dXZ-Vw-6b5"/>
-                            <constraint firstItem="tQm-q8-jt7" firstAttribute="trailing" secondItem="AW5-OT-EwE" secondAttribute="trailing" constant="16" id="f2K-lk-Yiw"/>
+                            <constraint firstItem="tQm-q8-jt7" firstAttribute="trailing" secondItem="AW5-OT-EwE" secondAttribute="trailing" constant="24" id="f2K-lk-Yiw"/>
                             <constraint firstItem="dtd-Gg-ZHT" firstAttribute="top" secondItem="nph-7m-lIk" secondAttribute="top" id="qgD-zf-q12"/>
                         </constraints>
                     </view>
