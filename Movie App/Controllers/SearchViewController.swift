@@ -103,7 +103,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(updatateTableView), for: .valueChanged)
         searchTableView.refreshControl = refreshControl
-        refreshControl.tintColor = .systemTeal
+        refreshControl.tintColor = .white
         refreshControl.attributedTitle = NSAttributedString("Refreshing")
         refreshControl.sizeToFit()
     }

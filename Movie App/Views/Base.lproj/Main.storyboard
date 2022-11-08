@@ -307,7 +307,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
                         <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" style="done" id="2US-Zm-31V">
-                            <color key="tintColor" systemColor="tintColor"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="logOutButtonPressed:" destination="OCX-eD-hX2" id="RTr-zF-2h4"/>
                             </connections>
@@ -678,9 +678,6 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

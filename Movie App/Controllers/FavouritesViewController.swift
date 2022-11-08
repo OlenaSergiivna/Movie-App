@@ -30,7 +30,7 @@ class FavouritesViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
-        // move?
+        
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else { return }
             
