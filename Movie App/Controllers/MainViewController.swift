@@ -48,6 +48,8 @@ class MainViewController: UIViewController {
         return cv
     }()
     
+    var scrollTimer = Timer()
+    var scrollRunCount = 1
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,12 +57,18 @@ class MainViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
         
+        scrollTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+//        RunLoop.current.add(scrollTimer, forMode: .common)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         navigationController?.navigationBar.isHidden = false
+        
+        scrollRunCount = 0
+        scrollTimer.invalidate()
+        
     }
     
     
@@ -123,7 +131,7 @@ class MainViewController: UIViewController {
             }
         }
         
-       
+        
         DataManager.shared.requestNowPlayingMovies { [weak self] data in
             guard let self else { return }
             
@@ -134,6 +142,22 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    @objc func startTimer(theTimer: Timer) {
+        MainTabLayouts.shared.flag = true
+        mainCollectionView.collectionViewLayout.invalidateLayout()
+        mainCollectionView.scrollToItem(at: IndexPath(item: scrollRunCount, section: 0), at: .centeredHorizontally, animated: true)
+        MainTabLayouts.shared.flag = false
+        mainCollectionView.collectionViewLayout.invalidateLayout()
+        
+        scrollRunCount += 1
+        
+        if scrollRunCount == 20 {
+            scrollRunCount = 0
+        }
+        
+    }
+    
     
     
     func setUpConstraints(){
@@ -282,6 +306,16 @@ extension MainViewController: UICollectionViewDataSource {
             }
             
             cell.configure(with: trendyMediaArray, indexPath: indexPath)
+            
+            //            var rowIndex = indexPath.row
+            //            let itemsCount = trendyMediaArray.count
+            //            if rowIndex < itemsCount {
+            //                print("row index: \(rowIndex) - items count: \(itemsCount)")
+            //                rowIndex += 1
+            //            } else {
+            //                rowIndex = 0
+            //            }
+            
             return cell
             
         case 1:
@@ -374,7 +408,7 @@ extension MainViewController: UICollectionViewDelegate {
             
         case 2:
             DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], navigationController: navigationController)
-
+            
             
         default:
             DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
