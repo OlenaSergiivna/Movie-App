@@ -48,7 +48,11 @@ class MainViewController: UIViewController {
         return cv
     }()
     
-    var scrollTimer = Timer()
+    var scrollTimer = Timer() {
+        willSet {
+            scrollTimer.invalidate()
+        }
+    }
     var scrollRunCount = 1
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +62,6 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         scrollTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
-//        RunLoop.current.add(scrollTimer, forMode: .common)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,15 +69,17 @@ class MainViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = false
         
-        scrollRunCount = 0
         scrollTimer.invalidate()
+        scrollTimer = Timer()
+
+        print("invalidated")
         
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         KingsfisherMemoryService.shared.setCasheLimits()
         
         configureUI()
@@ -483,4 +488,22 @@ extension UIView {
         bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
         trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -8).isActive = true
     }
+}
+
+extension MainViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let visibleIndex = mainCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: "Footer")
+       
+        if visibleIndex == [IndexPath(indexes: [2,0])] {
+            print(visibleIndex)
+            scrollTimer.invalidate()
+            scrollTimer = Timer()
+            print("invalidated")
+        } else {
+            print("started")
+            scrollTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+        }
+    }
+    
 }

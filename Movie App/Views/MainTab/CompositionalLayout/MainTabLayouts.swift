@@ -28,7 +28,6 @@ class MainTabLayouts {
         section.boundarySupplementaryItems = [
             .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30)), elementKind: "Header", alignment: .top)
         ]
-        print(flag)
         return section
     }
     
