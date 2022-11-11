@@ -14,9 +14,26 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImage: UIImageView!
     
+    var delegate: PopularNowDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        addSwipeRecognizer()
+    }
+    
+    
+    func addSwipeRecognizer() {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PopularNowCollectionViewCell.cellSwiped(sender:)))
+        swipeGestureRecognizer.direction = .left
+        swipeGestureRecognizer.delegate = self
+        self.addGestureRecognizer(swipeGestureRecognizer)
+        self.isUserInteractionEnabled = true
+    }
+    
+    
+    @objc func cellSwiped(sender: UISwipeGestureRecognizer) {
+        delegate?.popularNowSwiped()
     }
     
     
@@ -90,4 +107,15 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
         //            }
     }
     
+}
+
+
+extension PopularNowCollectionViewCell: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+protocol PopularNowDelegate {
+    func popularNowSwiped()
 }

@@ -50,9 +50,12 @@ class MainViewController: UIViewController {
     
     var scrollTimer = Timer() {
         willSet {
+            print("timer will set")
+            
             scrollTimer.invalidate()
         }
     }
+    
     var scrollRunCount = 1
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,18 +64,15 @@ class MainViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
         
-        scrollTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+        scrollTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+        RunLoop.current.add(scrollTimer, forMode: .common)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         navigationController?.navigationBar.isHidden = false
-        
         scrollTimer.invalidate()
-        scrollTimer = Timer()
-
-        print("invalidated")
         
     }
     
@@ -162,6 +162,7 @@ class MainViewController: UIViewController {
         }
         
     }
+    
     
     
     
@@ -311,16 +312,7 @@ extension MainViewController: UICollectionViewDataSource {
             }
             
             cell.configure(with: trendyMediaArray, indexPath: indexPath)
-            
-            //            var rowIndex = indexPath.row
-            //            let itemsCount = trendyMediaArray.count
-            //            if rowIndex < itemsCount {
-            //                print("row index: \(rowIndex) - items count: \(itemsCount)")
-            //                rowIndex += 1
-            //            } else {
-            //                rowIndex = 0
-            //            }
-            
+            cell.delegate = self
             return cell
             
         case 1:
@@ -435,7 +427,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
             self.moviesArray = movies
             
             DispatchQueue.main.async {
-                self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
+                self.mainCollectionView.reloadInputViews()
             }
         }
     }
@@ -490,20 +482,29 @@ extension UIView {
     }
 }
 
+
 extension MainViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let visibleIndex = mainCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: "Footer")
-       
-        if visibleIndex == [IndexPath(indexes: [2,0])] {
-            print(visibleIndex)
+        let visibleFooterIndex = mainCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: "Footer")
+        
+        if visibleFooterIndex == [IndexPath(indexes: [2,0])] {
             scrollTimer.invalidate()
-            scrollTimer = Timer()
             print("invalidated")
         } else {
             print("started")
-            scrollTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+            scrollTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+            RunLoop.current.add(scrollTimer, forMode: .common)
         }
+    }
+}
+
+
+extension MainViewController: PopularNowDelegate {
+    
+    func popularNowSwiped() {
+        scrollTimer.invalidate()
+        print("invalidated")
     }
     
 }
