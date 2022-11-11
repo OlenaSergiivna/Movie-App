@@ -50,13 +50,15 @@ class MainViewController: UIViewController {
     
     var scrollTimer = Timer() {
         willSet {
-            print("timer will set")
-            
             scrollTimer.invalidate()
         }
     }
     
-    var scrollRunCount = 1
+    var scrollRunCount = 1 {
+        didSet {
+            print(scrollRunCount)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -64,8 +66,7 @@ class MainViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
         
-        scrollTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
-        RunLoop.current.add(scrollTimer, forMode: .common)
+        setUpScrollTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,7 +80,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        setUpNotifications()
+        
         KingsfisherMemoryService.shared.setCasheLimits()
         
         configureUI()
@@ -148,6 +151,31 @@ class MainViewController: UIViewController {
         }
     }
     
+
+    func setUpNotifications() {
+        let mainNotificationCenter = NotificationCenter.default
+        
+        mainNotificationCenter.addObserver(self, selector: #selector(appWasHiddenOnBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    
+    @objc func appWasHiddenOnBackground() {
+        scrollTimer.invalidate()
+    }
+    
+    
+    @objc func appWasReturnedOnForeground() {
+        setUpScrollTimer()
+    }
+    
+    
+    func setUpScrollTimer() {
+        scrollTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
+        RunLoop.current.add(scrollTimer, forMode: .common)
+    }
+    
+    
     @objc func startTimer(theTimer: Timer) {
         MainTabLayouts.shared.flag = true
         mainCollectionView.collectionViewLayout.invalidateLayout()
@@ -162,8 +190,6 @@ class MainViewController: UIViewController {
         }
         
     }
-    
-    
     
     
     func setUpConstraints(){
@@ -486,15 +512,13 @@ extension UIView {
 extension MainViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         let visibleFooterIndex = mainCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: "Footer")
         
         if visibleFooterIndex == [IndexPath(indexes: [2,0])] {
             scrollTimer.invalidate()
-            print("invalidated")
         } else {
-            print("started")
-            scrollTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.startTimer(theTimer:)), userInfo: nil, repeats: true)
-            RunLoop.current.add(scrollTimer, forMode: .common)
+            setUpScrollTimer()
         }
     }
 }
@@ -504,7 +528,7 @@ extension MainViewController: PopularNowDelegate {
     
     func popularNowSwiped() {
         scrollTimer.invalidate()
-        print("invalidated")
     }
     
 }
+

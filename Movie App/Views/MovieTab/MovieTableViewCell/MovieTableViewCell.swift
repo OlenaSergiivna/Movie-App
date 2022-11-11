@@ -14,10 +14,6 @@ protocol MovieCollectionViewCellDelegate: AnyObject {
 
 class MovieTableViewCell: UITableViewCell {
     
-    deinit {
-        print("!!! Deinit: \(self)") 
-      }
-    
     weak var cellDelegate: MovieCollectionViewCellDelegate?
     
     @IBOutlet weak var moviesCollectionView: UICollectionView!
