@@ -358,5 +358,10 @@ struct DataManager {
         }
         
     }
+    
+    
+    func getMediaCast() {
+        
+    }
 }
 

@@ -94,7 +94,7 @@
         <!--Main-->
         <scene sceneID="z9F-sU-mbW">
             <objects>
-                <viewController title="Main" modalPresentationStyle="fullScreen" id="Ikp-O6-wNb" customClass="MainViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" title="Main" modalPresentationStyle="fullScreen" id="Ikp-O6-wNb" customClass="MainViewController" customModule="Movie_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dvm-Bj-TiL">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
