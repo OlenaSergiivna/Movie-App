@@ -360,8 +360,20 @@ struct DataManager {
     }
     
     
-    func getMediaCast() {
+    func getMediaCast(mediaType: String, mediaId: Int, completion: @escaping([Cast]) -> Void) {
         
+        let castRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/credits?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        castRequest.responseDecodable(of: CastResults.self ) { response in
+            
+            do {
+                let data = try response.result.get().cast
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
     }
 }
 
