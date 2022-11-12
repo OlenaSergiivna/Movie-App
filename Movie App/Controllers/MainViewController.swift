@@ -451,9 +451,10 @@ extension MainViewController: MoviesHeaderViewDelegate {
             guard let self else { return }
             
             self.moviesArray = movies
-            
+           
             DispatchQueue.main.async {
-                self.mainCollectionView.reloadInputViews()
+                let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 1 })
+                self.mainCollectionView.reloadItems(at: items)
             }
         }
     }
@@ -490,7 +491,8 @@ extension MainViewController: TVHeaderViewDelegate  {
             self.tvArray = movies
             
             DispatchQueue.main.async {
-                self.mainCollectionView.reloadItems(at: self.mainCollectionView.indexPathsForVisibleItems)
+                let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 2 })
+                self.mainCollectionView.reloadItems(at: items)
             }
         }
     }
