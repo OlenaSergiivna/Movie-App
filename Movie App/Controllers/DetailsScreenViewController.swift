@@ -17,6 +17,8 @@ class DetailsScreenViewController: UIViewController {
         print("!!! Deinit: \(self)")
     }
     
+    @IBOutlet weak var castCollectionView: UICollectionView!
+    
     @IBOutlet weak var trailerPlayer: YTPlayerView!
     
     @IBOutlet weak var mediaImage: UIImageView!
@@ -50,6 +52,8 @@ class DetailsScreenViewController: UIViewController {
             }
         }
     }
+    
+    var castArray: [Cast] = []
     
     @IBOutlet weak var mainScrollView: UIScrollView!
     
@@ -98,6 +102,11 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        castCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: "CastCollectionViewCell")
+        
+        castCollectionView.dataSource = self
+        castCollectionView.delegate = self
         
         configureUI()
     }
@@ -226,6 +235,8 @@ class DetailsScreenViewController: UIViewController {
         guard cell.video != nil else { return }
         
         configureTrailer(with: cell.id)
+        
+        configureMediaCast(with: cell.id)
     }
     
     
@@ -290,6 +301,8 @@ class DetailsScreenViewController: UIViewController {
         //            }
         
         configureTrailer(with: cell.id)
+        
+        configureMediaCast(with: cell.id)
     }
     
     
@@ -348,10 +361,6 @@ class DetailsScreenViewController: UIViewController {
             guard let self, let key = data.first?.key else { return }
             
             self.trailerPlayer.load(withVideoId: key)
-            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                self.trailerPlayer.isHidden = false
-//            }
         }
     }
     
@@ -368,17 +377,16 @@ class DetailsScreenViewController: UIViewController {
                 
                 guard let self else { return }
                 
-                if response == 200 {
+                guard response == 200 else { return }
+                
+                if self.mediaType == "movie" {
                     
-                    if self.mediaType == "movie" {
-                        
-                        RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
-                        }
-                        
-                    } else if self.mediaType == "tv" {
-                        
-                        RealmManager.shared.delete(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
-                        }
+                    RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
+                    }
+                    
+                } else if self.mediaType == "tv" {
+                    
+                    RealmManager.shared.delete(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
                     }
                 }
             }
@@ -393,16 +401,30 @@ class DetailsScreenViewController: UIViewController {
                 
                 guard let self else { return }
                 
-                if response == 200 {
-                    if self.mediaType == "movie" {
-                        
-                        RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media as! [MovieModel])
-                        
-                    } else if self.mediaType == "tv" {
-                        
-                        RealmManager.shared.saveFavoriteTVInRealm(tvShows: self.media as! [TVModel])
-                    }
+                guard response == 200 else { return }
+                
+                if self.mediaType == "movie" {
+                    
+                    RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media as! [MovieModel])
+                    
+                } else if self.mediaType == "tv" {
+                    
+                    RealmManager.shared.saveFavoriteTVInRealm(tvShows: self.media as! [TVModel])
                 }
+            }
+        }
+    }
+    
+    
+    func configureMediaCast(with id: Int) {
+        
+        DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] cast in
+            guard let self else { return }
+            
+            self.castArray = cast
+            
+            DispatchQueue.main.async {
+                self.castCollectionView.reloadData()
             }
         }
     }
@@ -412,5 +434,42 @@ extension DetailsScreenViewController: YTPlayerViewDelegate {
     
     func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
         return UIColor.clear
+    }
+}
+
+
+extension DetailsScreenViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        guard !castArray.isEmpty else { return 0 }
+        return castArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "CastCollectionViewCell", for: indexPath) as? CastCollectionViewCell else {
+           
+            return UICollectionViewCell()
+        }
+        
+        cell.layoutIfNeeded()
+        cell.configure(with: castArray[indexPath.row])
+        return cell
+    }
+    
+    
+}
+
+
+extension DetailsScreenViewController: UICollectionViewDelegate {
+    
+}
+
+
+extension DetailsScreenViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 88, height: 160)
     }
 }

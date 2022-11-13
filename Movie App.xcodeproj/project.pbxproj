@@ -52,6 +52,7 @@
 		CE6EFD46290DCD0C00924F62 /* NowPlayingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6EFD45290DCD0C00924F62 /* NowPlayingModels.swift */; };
 		CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70D57228F9DCE700536243 /* LoadingViewController.swift */; };
 		CE7D60AE292018F500127F87 /* CastModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D60AD292018F500127F87 /* CastModels.swift */; };
+		CE7D60B02920392000127F87 /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D60AF2920392000127F87 /* CastCollectionViewCell.swift */; };
 		CE81D89D28FC7A4100D667A8 /* PaginationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* PaginationService.swift */; };
 		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
 		CE9E9649291892EF001FD56B /* DetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E9648291892EF001FD56B /* DetailsService.swift */; };
@@ -132,6 +133,7 @@
 		CE6EFD45290DCD0C00924F62 /* NowPlayingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingModels.swift; sourceTree = "<group>"; };
 		CE70D57228F9DCE700536243 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		CE7D60AD292018F500127F87 /* CastModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastModels.swift; sourceTree = "<group>"; };
+		CE7D60AF2920392000127F87 /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE81D89C28FC7A4100D667A8 /* PaginationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationService.swift; sourceTree = "<group>"; };
 		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
 		CE9E9648291892EF001FD56B /* DetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsService.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		CE14A11C28FB4B1C003174FC /* DetailsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				CE7D60AF2920392000127F87 /* CastCollectionViewCell.swift */,
 			);
 			path = DetailsScreen;
 			sourceTree = "<group>";
@@ -671,6 +674,7 @@
 				CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */,
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,
 				CE6EFD46290DCD0C00924F62 /* NowPlayingModels.swift in Sources */,
+				CE7D60B02920392000127F87 /* CastCollectionViewCell.swift in Sources */,
 				CEC7BD5528E3A78700A7CDD6 /* MovieCollectionViewCell.swift in Sources */,
 				CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */,
 				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,
