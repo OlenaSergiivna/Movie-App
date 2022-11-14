@@ -42,7 +42,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         configureUI()
         searchTableView.keyboardDismissMode = .onDrag
         
-        // UserDefaults.standard.removeObject(forKey: "requests")
+//        UserDefaults.standard.removeObject(forKey: "requests")
+//        UserDefaults.standard.removeObject(forKey: "mediaType")
         
         // MARK: - Registration nibs
         

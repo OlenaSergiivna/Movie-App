@@ -66,7 +66,7 @@ class MainViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
         
-        setUpScrollTimer()
+        setUpTimerIfSectionIsVisible()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -166,7 +166,7 @@ class MainViewController: UIViewController {
     
     
     @objc func appWasReturnedOnForeground() {
-        setUpScrollTimer()
+        setUpTimerIfSectionIsVisible()
     }
     
     
@@ -514,6 +514,11 @@ extension UIView {
 extension MainViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        setUpTimerIfSectionIsVisible()
+    }
+    
+    func setUpTimerIfSectionIsVisible() {
         
         let visibleFooterIndex = mainCollectionView.indexPathsForVisibleSupplementaryElements(ofKind: "Footer")
         
