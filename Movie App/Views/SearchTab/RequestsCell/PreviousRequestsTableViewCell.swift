@@ -13,20 +13,26 @@ class PreviousRequestsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var backView: UIView!
     
+    @IBOutlet weak var mediaTypeLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.backgroundColor = .black
+//        backView.layer.borderColor = UIColor.darkGray.cgColor
+//        backView.layer.borderWidth = 1
+//        backView.layer.cornerRadius = 10
     }
     
-    
-    func configureRequest(with data: String) {
+    func configureRequest(request: String, type: String) {
         
-        requestLabel.text = data
+        requestLabel.text = request
+        mediaTypeLabel.text = type
+        
     }
     
 }

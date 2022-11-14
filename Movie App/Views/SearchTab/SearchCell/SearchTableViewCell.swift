@@ -18,13 +18,15 @@ class SearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
         
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.movieImage.layer.masksToBounds = true
+        self.movieImage.layer.cornerRadius = 12
+    }
     
     
     func configureMovie(with data: MovieModel) {
@@ -52,7 +54,7 @@ class SearchTableViewCell: UITableViewCell {
         
         let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
         let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
+        |> RoundCornerImageProcessor(cornerRadius: 0)
         movieImage.kf.indicatorType = .activity
         movieImage.kf.setImage(
             with: url,

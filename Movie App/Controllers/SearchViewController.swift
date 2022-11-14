@@ -22,6 +22,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     private var previousSearchRequests: [String] = []
     
+    private var previousSearchRequestsType: [String] = []
+    
     var pageCount = 1 {
         didSet {
             print("page count: \(pageCount)")
@@ -40,7 +42,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         configureUI()
         searchTableView.keyboardDismissMode = .onDrag
         
-        //UserDefaults.standard.removeObject(forKey: "requests")
+        // UserDefaults.standard.removeObject(forKey: "requests")
         
         // MARK: - Registration nibs
         
@@ -52,8 +54,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         
         // MARK: - Get data from UserDefaults
-        if let value = UserDefaults.standard.stringArray(forKey: "requests") {
-            previousSearchRequests = value
+        if let requests = UserDefaults.standard.stringArray(forKey: "requests"), let types = UserDefaults.standard.stringArray(forKey: "mediaType") {
+            previousSearchRequests = requests
+            previousSearchRequestsType = types
         }
         
     }
@@ -62,6 +65,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
+        searchController.searchBar.searchTextField.textColor = .white
+        searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .normal)
+        searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+        searchController.searchBar.showsScopeBar = true
     }
     
     
@@ -205,11 +212,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     return UITableViewCell()
                 }
                 
-                cell.configureRequest(with: previousSearchRequests[indexPath.row])
+                cell.configureRequest(request: previousSearchRequests[indexPath.row], type: previousSearchRequestsType[indexPath.row])
                 return cell
                 
             } else {
-                return UITableViewCell()
+                let cell = UITableViewCell()
+                cell.backgroundColor = .black
+                return cell
                 
             }
             
@@ -230,7 +239,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     return UITableViewCell()
                 }
                 
-                cell.configureRequest(with: previousSearchRequests[indexPath.row])
+                cell.configureRequest(request: previousSearchRequests[indexPath.row], type: previousSearchRequestsType[indexPath.row])
+               
                 return cell
                 
             } else {
@@ -246,7 +256,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-        
     }
     
     
@@ -265,6 +274,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 searchController.searchBar.endEditing(true)
                 searchController.searchBar.resignFirstResponder()
                 displayStatus = true
+                
                 let text = previousSearchRequests[indexPath.row]
                 let searchText = text.replacingOccurrences(of: " ", with: "%20")
                 searchController.searchBar.text = text
@@ -284,7 +294,25 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else if cell is SearchTableViewCell {
                 print("movie cell tapped")
                 
+               // cell?.selectionStyle = .default
+                
                 DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], navigationController: navigationController)
+                
+                guard let title = searchResultsMovie[indexPath.row].title else { return }
+                
+                guard !previousSearchRequests.contains(where: { ($0 == searchResultsMovie[indexPath.row].title )}) else { return }
+                
+                previousSearchRequests.insert(title, at: 0)
+                previousSearchRequestsType.insert("Movie", at: 0)
+                
+                if previousSearchRequests.count > 10 {
+                    previousSearchRequests.removeLast()
+                    print("removed last ")
+                }
+                
+                UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
+                UserDefaults.standard.set(previousSearchRequestsType, forKey: "mediaType")
+                print("requests updated in UD")
             }
             
         case 1:
@@ -313,6 +341,22 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 print("tv cell tapped")
                 
                 DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], navigationController: navigationController)
+                
+                let title = searchResultsTV[indexPath.row].name
+                
+                guard !previousSearchRequests.contains(where: { ($0 == searchResultsTV[indexPath.row].name )}) else { return }
+                
+                previousSearchRequests.insert(title, at: 0)
+                previousSearchRequestsType.insert("TV Show", at: 0)
+                
+                if previousSearchRequests.count > 10 {
+                    previousSearchRequests.removeLast()
+                    print("removed last ")
+                }
+                
+                UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
+                UserDefaults.standard.set(previousSearchRequestsType, forKey: "mediaType")
+                print("requests updated in UD")
             }
             
         default:
@@ -380,6 +424,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
     }
+    
 }
 
 
@@ -437,26 +482,26 @@ extension SearchViewController: UISearchResultsUpdating {
     
     
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
-        guard let text = searchController.searchBar.text else { return }
-        
-        let preSearchText = text.trimmingCharacters(in: .whitespaces)
-        let searchText = preSearchText.trimmingCharacters(in: .punctuationCharacters)
-        
-        guard searchText.count > 2 && !previousSearchRequests.contains(where: { ($0 == searchText)}) else { return }
-        
-        previousSearchRequests.insert(searchText.capitalized, at: 0)
-        print("inserted: \(searchText)")
-        
-        if previousSearchRequests.count > 10 {
-            previousSearchRequests.removeLast()
-            print("removed last ")
-        }
-        
-        UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
-        print("requeests updated in UD")
-    }
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//
+//        guard let text = searchController.searchBar.text else { return }
+//
+//        let preSearchText = text.trimmingCharacters(in: .whitespaces)
+//        let searchText = preSearchText.trimmingCharacters(in: .punctuationCharacters)
+//
+//        guard searchText.count > 2 && !previousSearchRequests.contains(where: { ($0 == searchText)}) else { return }
+//
+//        previousSearchRequests.insert(searchText.capitalized, at: 0)
+//        print("inserted: \(searchText)")
+//
+//        if previousSearchRequests.count > 10 {
+//            previousSearchRequests.removeLast()
+//            print("removed last ")
+//        }
+//
+//        UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
+//        print("requeests updated in UD")
+//    }
 }
 
 
@@ -495,4 +540,5 @@ extension SearchViewController: UISearchBarDelegate {
             self.searchTableView.reloadData()
         }
     }
+    
 }
