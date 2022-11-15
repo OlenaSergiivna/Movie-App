@@ -166,7 +166,12 @@ class MainViewController: UIViewController {
     
     
     @objc func appWasReturnedOnForeground() {
-        setUpTimerIfSectionIsVisible()
+        
+        let selectedTabIndex = tabBarController?.selectedIndex
+
+        if selectedTabIndex == 0 {
+            setUpTimerIfSectionIsVisible()
+        }
     }
     
     

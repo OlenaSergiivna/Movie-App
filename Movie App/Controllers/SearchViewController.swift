@@ -128,7 +128,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         definesPresentationContext = true
         
         searchController.searchBar.searchTextField.delegate = self
-        searchController.searchBar.searchTextField.clearButtonMode = .never
+        searchController.searchBar.searchTextField.clearButtonMode = .unlessEditing
     }
     
     
@@ -274,6 +274,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if cell is PreviousRequestsTableViewCell {
                 searchController.searchBar.endEditing(true)
                 searchController.searchBar.resignFirstResponder()
+                //searchController.searchBar.searchTextField.clearButtonMode = .always
+                
                 displayStatus = true
                 
                 let text = previousSearchRequests[indexPath.row]
@@ -480,36 +482,17 @@ extension SearchViewController: UISearchResultsUpdating {
             return
         }
     }
-    
-    
-    
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//
-//        guard let text = searchController.searchBar.text else { return }
-//
-//        let preSearchText = text.trimmingCharacters(in: .whitespaces)
-//        let searchText = preSearchText.trimmingCharacters(in: .punctuationCharacters)
-//
-//        guard searchText.count > 2 && !previousSearchRequests.contains(where: { ($0 == searchText)}) else { return }
-//
-//        previousSearchRequests.insert(searchText.capitalized, at: 0)
-//        print("inserted: \(searchText)")
-//
-//        if previousSearchRequests.count > 10 {
-//            previousSearchRequests.removeLast()
-//            print("removed last ")
-//        }
-//
-//        UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
-//        print("requeests updated in UD")
-//    }
 }
-
 
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        
+        guard let text = searchController.searchBar.text else { return }
+        print("text: \(text)")
+        guard !text.isEmpty else {
+            searchController.searchBar.resignFirstResponder()
+            return
+        }
         pageCount = 1
         updateSearchResults(for: searchController)
         searchTableView.reloadData()
