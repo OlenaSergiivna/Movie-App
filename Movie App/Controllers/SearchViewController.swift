@@ -122,7 +122,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
-        searchController.searchBar.placeholder = "Search"
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.placeholder = "Movies"
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.scopeButtonTitles = ["Movies","TV Shows"]
         definesPresentationContext = true
@@ -510,10 +511,17 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         guard let text = searchController.searchBar.text else { return }
         print("text: \(text)")
-        guard !text.isEmpty else {
+        
+        if !text.isEmpty {
             searchController.searchBar.resignFirstResponder()
-            return
         }
+        
+        if selectedScope == 0 {
+            searchController.searchBar.placeholder = "Movie"
+        } else if selectedScope == 1 {
+            searchController.searchBar.placeholder = "TV Shows"
+        }
+        
         pageCount = 1
         updateSearchResults(for: searchController)
         searchTableView.reloadData()
