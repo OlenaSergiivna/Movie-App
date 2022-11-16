@@ -18,16 +18,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQt-Zw-YSn">
-                        <rect key="frame" x="0.0" y="16" width="367" height="50"/>
+                        <rect key="frame" x="0.0" y="8" width="367" height="66"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KW4-ha-GHY">
-                                <rect key="frame" x="16" y="16" width="335" height="18"/>
+                                <rect key="frame" x="16" y="16" width="335" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hq3-A0-jx4">
-                                <rect key="frame" x="16" y="34" width="35" height="15"/>
+                                <rect key="frame" x="16" y="50" width="35" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -46,9 +46,9 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="NQt-Zw-YSn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="8ZC-uA-1Qd"/>
+                    <constraint firstItem="NQt-Zw-YSn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="8ZC-uA-1Qd"/>
                     <constraint firstItem="NQt-Zw-YSn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gLV-LQ-iJe"/>
-                    <constraint firstAttribute="bottom" secondItem="NQt-Zw-YSn" secondAttribute="bottom" constant="16" id="h94-7f-bfA"/>
+                    <constraint firstAttribute="bottom" secondItem="NQt-Zw-YSn" secondAttribute="bottom" constant="8" id="h94-7f-bfA"/>
                     <constraint firstAttribute="trailing" secondItem="NQt-Zw-YSn" secondAttribute="trailing" id="z9f-Y7-gF7"/>
                 </constraints>
             </tableViewCellContentView>

@@ -38,9 +38,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        searchTableView.layoutMargins = .zero
         configureUI()
         searchTableView.keyboardDismissMode = .onDrag
+       
         
 //        UserDefaults.standard.removeObject(forKey: "requests")
 //        UserDefaults.standard.removeObject(forKey: "mediaType")
@@ -69,7 +70,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchController.searchBar.searchTextField.textColor = .white
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .normal)
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
-        searchController.searchBar.showsScopeBar = true
     }
     
     
@@ -188,6 +188,27 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             return 0
         }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UITableViewHeaderFooterView()
+        
+        var contentConfig = UIListContentConfiguration.plainHeader()
+        contentConfig.text = "Resent searches"
+        contentConfig.textProperties.color = .white
+        contentConfig.textProperties.font = .systemFont(ofSize: 16, weight: .bold)
+        
+        var backConfig = UIBackgroundConfiguration.listPlainHeaderFooter()
+        backConfig.backgroundColor = .clear
+        
+        headerView.contentConfiguration = contentConfig
+        headerView.backgroundConfiguration = backConfig
+        
+        searchTableView.layoutMargins.left = 16
+        
+        return headerView
     }
     
     
