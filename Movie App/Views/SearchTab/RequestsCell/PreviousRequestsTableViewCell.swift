@@ -20,19 +20,34 @@ class PreviousRequestsTableViewCell: UITableViewCell {
         
     }
     
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = .black
-//        backView.layer.borderColor = UIColor.darkGray.cgColor
-//        backView.layer.borderWidth = 1
-//        backView.layer.cornerRadius = 10
     }
     
-    func configureRequest(request: String, type: String) {
+    func configureRequest<T>(with data: T) {
         
-        requestLabel.text = request
-        mediaTypeLabel.text = type
-        
+        if let data = data as? Media {
+            switch data {
+                
+            case .movie(let movie):
+                requestLabel.text = movie.title
+                mediaTypeLabel.text = "Movie"
+                
+            case .tvShow(let tvShow):
+                requestLabel.text = tvShow.name
+                mediaTypeLabel.text = "TV Show"
+            }
+        } else if let data = data as? MovieModel {
+            
+            requestLabel.text = data.title
+            mediaTypeLabel.text = "Movie"
+            
+        } else if let data = data as? TVModel {
+            
+            requestLabel.text = data.name
+            mediaTypeLabel.text = "TV Show"
+        }
     }
-    
 }

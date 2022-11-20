@@ -146,19 +146,13 @@ class DetailsScreenViewController: UIViewController {
     
     func configure<T>(with cell: T) {
         
-        if cell is MovieModel {
-            
-            let cell = cell as! MovieModel
+        if let cell = cell as? MovieModel {
             configureMovieCell(cell)
             
-        } else if cell is TVModel {
-            
-            let cell = cell as! TVModel
+        } else if let cell = cell as? TVModel {
             configureTVCell(cell)
             
-        } else if cell is TrendyMedia {
-            
-            let cell = cell as! TrendyMedia
+        } else if let cell = cell as? TrendyMedia {
             
             if cell.mediaType == "movie" {
                 let cell = MovieModel(from: cell)
@@ -167,6 +161,16 @@ class DetailsScreenViewController: UIViewController {
             } else if cell.mediaType == "tv" {
                 let cell = TVModel(from: cell)
                 configureTVCell(cell)
+            }
+            
+        } else if let cell = cell as? Media {
+            switch cell {
+                
+            case .movie(let movie):
+                configureMovieCell(movie)
+                
+            case .tvShow(let tvShow):
+                configureTVCell(tvShow)
             }
         }
     }
@@ -366,7 +370,6 @@ class DetailsScreenViewController: UIViewController {
     
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
-        print("button tapped")
         
         if isFavorite {
             favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)

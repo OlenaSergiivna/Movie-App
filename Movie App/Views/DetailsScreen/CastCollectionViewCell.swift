@@ -66,7 +66,6 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with data: Cast) {
-        print(data)
         castLabel.text = data.name
 
         guard let profilePath = data.profilePath else {
@@ -88,14 +87,14 @@ class CastCollectionViewCell: UICollectionViewCell {
                 .transition(.fade(1)),
 
             ])
-                    {
-                        result in
-                        switch result {
-                        case .success(let value):
-                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
-                        case .failure(let error):
-                            print("Job failed: \(error.localizedDescription)")
-                        }
-                    }
+//                    {
+//                        result in
+//                        switch result {
+//                        case .success(let value):
+//                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
+//                        case .failure(let error):
+//                            print("Job failed: \(error.localizedDescription)")
+//                        }
+//                    }
     }
 }

@@ -25,7 +25,7 @@ struct Avatar: Codable {
 
 
 struct Gravatar: Codable {
-    var hash: Double
+    var hash: String
 }
 
 

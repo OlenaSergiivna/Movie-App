@@ -20,16 +20,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     private var searchResultsMovie: [MovieModel] = []
     
-    private var previousSearchRequests: [String] = []
-    
-    private var previousSearchRequestsType: [String] = []
-    
-    var pageCount = 1 {
+    private var previousSearchRequests: [Media] = [] {
         didSet {
-            print("page count: \(pageCount)")
+            print("previousSearchRequests: \(previousSearchRequests)")
         }
     }
     
+    var pageCount = 1
+
     var displayStatus = false
     
     var totalPagesCount = 10
@@ -41,10 +39,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchTableView.layoutMargins = .zero
         configureUI()
         searchTableView.keyboardDismissMode = .onDrag
-       
         
-//        UserDefaults.standard.removeObject(forKey: "requests")
-//        UserDefaults.standard.removeObject(forKey: "mediaType")
+        
+        //UserDefaults.standard.removeObject(forKey: "searchResults")
         
         // MARK: - Registration nibs
         
@@ -56,12 +53,20 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         
         // MARK: - Get data from UserDefaults
-        if let requests = UserDefaults.standard.stringArray(forKey: "requests"), let types = UserDefaults.standard.stringArray(forKey: "mediaType") {
-            previousSearchRequests = requests
-            previousSearchRequestsType = types
-        }
         
+        //print(UserDefaults.standard.object(forKey: "searchResults"))
+        if let movie = UserDefaults.standard.object(forKey: "searchResults") as? Data {
+            let decoder = JSONDecoder()
+            do {
+                
+                if let movieDecoded = try? decoder.decode([Media].self, from: movie ) {
+                    previousSearchRequests = movieDecoded
+                    print(previousSearchRequests)
+                }
+            }
+        }
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -235,7 +240,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     return UITableViewCell()
                 }
                 
-                cell.configureRequest(request: previousSearchRequests[indexPath.row], type: previousSearchRequestsType[indexPath.row])
+                cell.configureRequest(with: previousSearchRequests[indexPath.row])
                 return cell
                 
             } else {
@@ -261,8 +266,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
                     return UITableViewCell()
                 }
-                
-                cell.configureRequest(request: previousSearchRequests[indexPath.row], type: previousSearchRequestsType[indexPath.row])
+                //print(previousSearchRequests[indexPath.row])
+                cell.configureRequest(with: previousSearchRequests[indexPath.row])
                
                 return cell
                 
@@ -296,91 +301,66 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if cell is PreviousRequestsTableViewCell {
                 searchController.searchBar.endEditing(true)
                 searchController.searchBar.resignFirstResponder()
-                //searchController.searchBar.searchTextField.clearButtonMode = .always
                 
-                displayStatus = true
+                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], navigationController: navigationController)
                 
-                let text = previousSearchRequests[indexPath.row]
-                let searchText = text.replacingOccurrences(of: " ", with: "%20")
-                searchController.searchBar.text = text
-                
-                DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] results in
-                    guard let self else { return }
-                    
-                    self.searchResultsMovie = results
-                    
-                    DispatchQueue.main.async {
-                        self.searchTableView.reloadData()
-                    }
-                    
-                    self.displayStatus = false
-                }
                 
             } else if cell is SearchTableViewCell {
                 print("movie cell tapped")
                 
-               // cell?.selectionStyle = .default
-                
                 DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], navigationController: navigationController)
                 
-                guard let title = searchResultsMovie[indexPath.row].title else { return }
+                guard !previousSearchRequests.contains(.movie(searchResultsMovie[indexPath.row])) else {return}
                 
-                guard !previousSearchRequests.contains(where: { ($0 == searchResultsMovie[indexPath.row].title )}) else { return }
-                
-                previousSearchRequests.insert(title, at: 0)
-                previousSearchRequestsType.insert("Movie", at: 0)
+                previousSearchRequests.insert(.movie(searchResultsMovie[indexPath.row]), at: 0)
                 
                 if previousSearchRequests.count > 10 {
                     previousSearchRequests.removeLast()
                     print("removed last ")
                 }
                 
-                UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
-                UserDefaults.standard.set(previousSearchRequestsType, forKey: "mediaType")
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(previousSearchRequests) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "searchResults")
+                }
+                
                 print("requests updated in UD")
+                
+                
             }
             
         case 1:
             
             if cell is PreviousRequestsTableViewCell {
                 searchController.searchBar.resignFirstResponder()
-                displayStatus = true
                 
-                let text = previousSearchRequests[indexPath.row]
-                let searchText = text.replacingOccurrences(of: " ", with: "%20")
-                searchController.searchBar.text = text
+                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], navigationController: navigationController)
                 
                 
-                DataManager.shared.searchTV(with: searchText, page: 1) { [weak self] results in
-                    guard let self else { return }
-                    
-                    self.searchResultsTV = results
-                    
-                    DispatchQueue.main.async {
-                        self.searchTableView.reloadData()
-                    }
-                    
-                    self.displayStatus = false
-                }
             } else if cell is SearchTableViewCell {
                 print("tv cell tapped")
                 
                 DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], navigationController: navigationController)
                 
-                let title = searchResultsTV[indexPath.row].name
+                guard !previousSearchRequests.contains(.tvShow(searchResultsTV[indexPath.row])) else {return}
                 
-                guard !previousSearchRequests.contains(where: { ($0 == searchResultsTV[indexPath.row].name )}) else { return }
-                
-                previousSearchRequests.insert(title, at: 0)
-                previousSearchRequestsType.insert("TV Show", at: 0)
+                previousSearchRequests.insert(.tvShow(searchResultsTV[indexPath.row]), at: 0)
                 
                 if previousSearchRequests.count > 10 {
                     previousSearchRequests.removeLast()
                     print("removed last ")
                 }
                 
-                UserDefaults.standard.set(previousSearchRequests, forKey: "requests")
-                UserDefaults.standard.set(previousSearchRequestsType, forKey: "mediaType")
+                
+                
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(previousSearchRequests) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "searchResults")
+                }
+                
                 print("requests updated in UD")
             }
             
@@ -510,7 +490,6 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         guard let text = searchController.searchBar.text else { return }
-        print("text: \(text)")
         
         if !text.isEmpty {
             searchController.searchBar.resignFirstResponder()

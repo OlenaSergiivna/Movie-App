@@ -21,7 +21,7 @@ struct AnimationService {
         view.addSubview(animation)
         
         animation.play { finished in
-            print("animation finished")
+            //print("animation finished")
             
         }
     }

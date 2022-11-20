@@ -19,7 +19,7 @@ struct ResultsTV: Codable {
     }
 }
 
-struct TVModel: Codable {
+struct TVModel: Codable, Hashable {
     var backdropPath: String?
     let firstAirDate: String?
     let genreIDS: [Int]
