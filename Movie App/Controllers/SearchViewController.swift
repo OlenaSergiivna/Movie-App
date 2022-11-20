@@ -509,24 +509,11 @@ extension SearchViewController: UISearchBarDelegate {
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        
-        switch selectedIndex {
-            
-        case 0:
-            searchResultsMovie = []
-            pageCount = 1
-            searchController.searchBar.resignFirstResponder()
-            
-        case 1:
-            searchResultsTV = []
-            pageCount = 1
-            searchController.searchBar.resignFirstResponder()
-            
-        default:
-            return
-        }
+
+        searchResultsMovie = []
+        searchResultsTV = []
+        pageCount = 1
+        searchController.searchBar.resignFirstResponder()
         
         DispatchQueue.main.async {
             self.searchTableView.reloadData()

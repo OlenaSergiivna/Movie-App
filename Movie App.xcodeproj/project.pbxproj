@@ -42,7 +42,7 @@
 		CE4E5DD9290456190048E65C /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E5DD7290456190048E65C /* MediaCollectionViewCell.swift */; };
 		CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E5DDB2904563D0048E65C /* MainViewController.swift */; };
 		CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */; };
-		CE538AC5292822E600E9F1E2 /* SearchMediaRealmModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE538AC4292822E600E9F1E2 /* SearchMediaRealmModels.swift */; };
+		CE538AC5292822E600E9F1E2 /* MediaEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE538AC4292822E600E9F1E2 /* MediaEnum.swift */; };
 		CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */; };
 		CE5B08332907415E003D9F85 /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
@@ -124,7 +124,7 @@
 		CE4E5DD7290456190048E65C /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE4E5DDB2904563D0048E65C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
-		CE538AC4292822E600E9F1E2 /* SearchMediaRealmModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMediaRealmModels.swift; sourceTree = "<group>"; };
+		CE538AC4292822E600E9F1E2 /* MediaEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEnum.swift; sourceTree = "<group>"; };
 		CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewControllerViewModel.swift; sourceTree = "<group>"; };
 		CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -259,6 +259,7 @@
 		CE14062F28E0C57D00B67410 /* Movie App */ = {
 			isa = PBXGroup;
 			children = (
+				CE63195C292AC38E00DBD71D /* Enums */,
 				CE2E29AA28ECE81C00C865E5 /* ViewModels */,
 				CE6133A228EA35B900778822 /* Managers */,
 				CE08EB3E28E352560038CC92 /* Data */,
@@ -442,6 +443,14 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		CE63195C292AC38E00DBD71D /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				CE538AC4292822E600E9F1E2 /* MediaEnum.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		CE6EFD3E290DC64500924F62 /* InTheatresCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,7 +503,6 @@
 				CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */,
 				CED374E428F619C1006D95A9 /* SearchMovieRealmModel.swift */,
 				CED374E628F61A5C006D95A9 /* SearchTVRealmModel.swift */,
-				CE538AC4292822E600E9F1E2 /* SearchMediaRealmModels.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -635,7 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE538AC5292822E600E9F1E2 /* SearchMediaRealmModels.swift in Sources */,
+				CE538AC5292822E600E9F1E2 /* MediaEnum.swift in Sources */,
 				CE6EFD41290DC6AD00924F62 /* TheatresCollectionViewCell.swift in Sources */,
 				CE6EFD44290DC82600924F62 /* InTheatresFooterView.swift in Sources */,
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,

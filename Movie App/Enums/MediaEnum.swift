@@ -1,5 +1,5 @@
 //
-//  SearchMediaRealmModels.swift
+//  MediaEnum.swift
 //  Movie App
 //
 //  Created by user on 18.11.2022.
