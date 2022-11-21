@@ -9,7 +9,7 @@ import UIKit
 
 class FavouritesViewController: UIViewController {
     
-    @IBOutlet weak var favouritesTableView: UITableView!
+    @IBOutlet weak var favouritesCollectionView: UICollectionView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
@@ -21,8 +21,11 @@ class FavouritesViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         
-        let nibFavouritesCell = UINib(nibName: "FavouritesTableViewCell", bundle: nil)
-        favouritesTableView.register(nibFavouritesCell, forCellReuseIdentifier: "FavouritesTableViewCell")
+        favouritesCollectionView.delegate = self
+        favouritesCollectionView.dataSource = self
+        
+        let nibFavouritesCell = UINib(nibName: "FavouritesCollectionViewCell", bundle: nil)
+        favouritesCollectionView.register(nibFavouritesCell, forCellWithReuseIdentifier: "FavouritesCollectionViewCell")
     }
     
     
@@ -37,7 +40,7 @@ class FavouritesViewController: UIViewController {
             self.someMovies = favorites
             
             DispatchQueue.main.async {
-                self.favouritesTableView.reloadData()
+                self.favouritesCollectionView.reloadData()
             }
         }
     }
@@ -79,67 +82,87 @@ class FavouritesViewController: UIViewController {
 }
 
 
-extension FavouritesViewController: UITableViewDataSource {
+extension FavouritesViewController: UICollectionViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("some movies: \(someMovies.count)")
         return someMovies.count
     }
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = favouritesTableView.dequeueReusableCell(withIdentifier: "FavouritesTableViewCell", for: indexPath) as? FavouritesTableViewCell else {
-            return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = favouritesCollectionView.dequeueReusableCell(withReuseIdentifier: "FavouritesCollectionViewCell", for: indexPath) as? FavouritesCollectionViewCell else {
+            
+            return UICollectionViewCell()
         }
         
+        cell.layoutIfNeeded()
         cell.configure(with: someMovies[indexPath.row])
-        return cell
+        
+       return cell
     }
+    
 }
 
 
-extension FavouritesViewController: UITableViewDelegate {
+extension FavouritesViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230
-    }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         DetailsService.shared.openDetailsScreen(with: someMovies[indexPath.row], navigationController: navigationController)
     }
     
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
-            
-            guard let self else { return }
-            
-            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
-                
-                guard let self else { return }
-                
-                guard result == 200 else { return }
-                
-                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) {
-                    
-                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-                        guard let self else { return }
-                        
-                        self.someMovies = favorites
-                        
-                        DispatchQueue.main.async {
-                            self.favouritesTableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
-        
-        deleteAction.backgroundColor = .systemRed
-        
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        
+//        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
+//            
+//            guard let self else { return }
+//            
+//            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
+//                
+//                guard let self else { return }
+//                
+//                guard result == 200 else { return }
+//                
+//                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) {
+//                    
+//                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+//                        guard let self else { return }
+//                        
+//                        self.someMovies = favorites
+//                        
+//                        DispatchQueue.main.async {
+//                            self.favouritesCollectionView.reloadData()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        
+//        deleteAction.backgroundColor = .systemRed
+//        
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
+}
+
+
+extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: view.frame.width / 2, height: view.frame.height / 2.62)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
 
@@ -153,9 +176,11 @@ extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
             self.someMovies = data
             
             DispatchQueue.main.async {
-                self.favouritesTableView.reloadData()
+                self.favouritesCollectionView.reloadData()
                 
             }
         }
     }
 }
+
+

@@ -23,8 +23,8 @@
 		CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064928E0F1B100B67410 /* NetworkManager.swift */; };
 		CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064B28E0F38D00B67410 /* TokenModel.swift */; };
 		CE1437F228F38911002A7FBB /* TVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1437F128F38911002A7FBB /* TVModel.swift */; };
-		CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE169E4628EE34AF00FF9FB0 /* FavouritesTableViewCell.swift */; };
-		CE169E4928EE34AF00FF9FB0 /* FavouritesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE169E4728EE34AF00FF9FB0 /* FavouritesTableViewCell.xib */; };
+		CE169E4828EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE169E4628EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift */; };
+		CE169E4928EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE169E4728EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib */; };
 		CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE170BD928E10CC9001323E4 /* SessionModel.swift */; };
 		CE23DF0128F4D45D006A16EB /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */; };
 		CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */; };
@@ -105,8 +105,8 @@
 		CE14064928E0F1B100B67410 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE14064B28E0F38D00B67410 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		CE1437F128F38911002A7FBB /* TVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVModel.swift; sourceTree = "<group>"; };
-		CE169E4628EE34AF00FF9FB0 /* FavouritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCell.swift; sourceTree = "<group>"; };
-		CE169E4728EE34AF00FF9FB0 /* FavouritesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouritesTableViewCell.xib; sourceTree = "<group>"; };
+		CE169E4628EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE169E4728EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouritesCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE170BD928E10CC9001323E4 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
 		CE23DEFF28F4D45D006A16EB /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
@@ -259,10 +259,10 @@
 		CE14062F28E0C57D00B67410 /* Movie App */ = {
 			isa = PBXGroup;
 			children = (
-				CE63195C292AC38E00DBD71D /* Enums */,
 				CE2E29AA28ECE81C00C865E5 /* ViewModels */,
 				CE6133A228EA35B900778822 /* Managers */,
 				CE08EB3E28E352560038CC92 /* Data */,
+				CE63195C292AC38E00DBD71D /* Enums */,
 				CE14064428E0EC1200B67410 /* Models */,
 				CE14064528E0EC1C00B67410 /* Views */,
 				CE14064628E0EC2400B67410 /* Controllers */,
@@ -353,8 +353,8 @@
 		CE169E3E28EE30AA00FF9FB0 /* FavoritesTab */ = {
 			isa = PBXGroup;
 			children = (
-				CE169E4628EE34AF00FF9FB0 /* FavouritesTableViewCell.swift */,
-				CE169E4728EE34AF00FF9FB0 /* FavouritesTableViewCell.xib */,
+				CE169E4628EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift */,
+				CE169E4728EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib */,
 			);
 			path = FavoritesTab;
 			sourceTree = "<group>";
@@ -583,7 +583,7 @@
 				CE6EFD42290DC6AD00924F62 /* TheatresCollectionViewCell.xib in Resources */,
 				CE3682BE28FB154700B4A356 /* TVTableViewCell.xib in Resources */,
 				CEC7BD5228E39B9300A7CDD6 /* MovieTableViewCell.xib in Resources */,
-				CE169E4928EE34AF00FF9FB0 /* FavouritesTableViewCell.xib in Resources */,
+				CE169E4928EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib in Resources */,
 				CEF714A52905C8B000441D25 /* movie.json in Resources */,
 				CE14063A28E0C57F00B67410 /* Assets.xcassets in Resources */,
 				CE14064828E0ED7D00B67410 /* Podfile in Resources */,
@@ -654,7 +654,7 @@
 				CE64C1602917335A00D1BBA6 /* TrailerModels.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CECD9B1E290C88FF0013992F /* TVHeader.swift in Sources */,
-				CE169E4828EE34AF00FF9FB0 /* FavouritesTableViewCell.swift in Sources */,
+				CE169E4828EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift in Sources */,
 				CE2F03BE29073CFB001DFADE /* PopularNowCollectionViewCell.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */,
@@ -855,6 +855,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -886,6 +887,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -22,7 +22,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     private var previousSearchRequests: [Media] = [] {
         didSet {
-            print("previousSearchRequests: \(previousSearchRequests)")
+            print("previousSearchRequests: \(previousSearchRequests.count)")
         }
     }
     
@@ -61,7 +61,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
                 
                 if let movieDecoded = try? decoder.decode([Media].self, from: movie ) {
                     previousSearchRequests = movieDecoded
-                    print(previousSearchRequests)
                 }
             }
         }

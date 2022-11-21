@@ -512,23 +512,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BXX-mq-JTR">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="bcQ-HJ-MZr">
                                 <rect key="frame" x="0.0" y="56" width="390" height="705"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="lSx-JY-h29" id="DKn-AB-QYe"/>
-                                    <outlet property="delegate" destination="lSx-JY-h29" id="3cX-Ap-DC4"/>
-                                </connections>
-                            </tableView>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mUD-4K-C72">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iHP-dF-Zyf"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BXX-mq-JTR" firstAttribute="leading" secondItem="iHP-dF-Zyf" secondAttribute="leading" id="3XF-EB-2tf"/>
-                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="trailing" secondItem="BXX-mq-JTR" secondAttribute="trailing" id="OPZ-Pm-c5z"/>
-                            <constraint firstItem="BXX-mq-JTR" firstAttribute="top" secondItem="iHP-dF-Zyf" secondAttribute="top" id="cDj-Op-82V"/>
-                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="bottom" secondItem="BXX-mq-JTR" secondAttribute="bottom" id="jzN-gG-6Um"/>
+                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="bottom" secondItem="bcQ-HJ-MZr" secondAttribute="bottom" id="Bqt-Wh-e61"/>
+                            <constraint firstItem="bcQ-HJ-MZr" firstAttribute="leading" secondItem="iHP-dF-Zyf" secondAttribute="leading" id="EfE-Dx-ga6"/>
+                            <constraint firstItem="iHP-dF-Zyf" firstAttribute="trailing" secondItem="bcQ-HJ-MZr" secondAttribute="trailing" id="hST-vK-VIz"/>
+                            <constraint firstItem="bcQ-HJ-MZr" firstAttribute="top" secondItem="iHP-dF-Zyf" secondAttribute="top" id="y3B-vg-TT2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favourites" id="ouz-4a-Hl3">
@@ -540,7 +542,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="favouritesTableView" destination="BXX-mq-JTR" id="zBS-Ki-Lrx"/>
+                        <outlet property="favouritesCollectionView" destination="bcQ-HJ-MZr" id="KAF-3X-XVb"/>
                         <outlet property="logOutButton" destination="oDt-MV-A6u" id="vAq-qx-hM0"/>
                     </connections>
                 </viewController>
