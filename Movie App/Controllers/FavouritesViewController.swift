@@ -23,9 +23,22 @@ class FavouritesViewController: UIViewController {
         
         favouritesCollectionView.delegate = self
         favouritesCollectionView.dataSource = self
+        favouritesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
         let nibFavouritesCell = UINib(nibName: "FavouritesCollectionViewCell", bundle: nil)
         favouritesCollectionView.register(nibFavouritesCell, forCellWithReuseIdentifier: "FavouritesCollectionViewCell")
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        favouritesCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        favouritesCollectionView.frame = self.view.bounds
     }
     
     
@@ -100,6 +113,10 @@ extension FavouritesViewController: UICollectionViewDataSource {
         cell.layoutIfNeeded()
         cell.configure(with: someMovies[indexPath.row])
         
+        if UIDevice.current.orientation.isLandscape {
+            cell.someBackView.backgroundColor = UIColor.clear
+        }
+        
        return cell
     }
     
@@ -151,10 +168,24 @@ extension FavouritesViewController: UICollectionViewDelegate {
 extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: view.frame.width / 2, height: view.frame.height / 2.62)
+        
+        let orientation = UIDevice.current.orientation
+        
+        guard orientation.isLandscape else {
+            
+            return CGSize(width: view.frame.width / 2.0, height: view.frame.height / 2.62)
+        }
+        
+        return CGSize(width: view.frame.width / 4.0, height: view.frame.height / 1.1 )
     }
     
+    
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//
+//        //favouritesCollectionView.reloadData()
+//        favouritesCollectionView.collectionViewLayout.invalidateLayout()
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
