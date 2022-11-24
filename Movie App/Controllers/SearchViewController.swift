@@ -265,7 +265,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
                     return UITableViewCell()
                 }
-                //print(previousSearchRequests[indexPath.row])
+                
                 cell.configureRequest(with: previousSearchRequests[indexPath.row])
                
                 return cell
@@ -282,6 +282,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if !searchResultsMovie.isEmpty || !searchResultsTV.isEmpty {
+
+            return view.frame.height / 6
+        }
         return UITableView.automaticDimension
     }
     

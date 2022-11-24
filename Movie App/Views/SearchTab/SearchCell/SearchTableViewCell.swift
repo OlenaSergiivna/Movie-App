@@ -14,6 +14,17 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var movieImage: UIImageView!
     
+    @IBOutlet weak var movieBackView: UIView!
+    
+    @IBOutlet weak var genresLabel: UILabel!
+    
+    @IBOutlet weak var ratingButton: UIButton!
+    
+    @IBOutlet weak var releaseYearButton: UIButton!
+    
+    @IBOutlet weak var productionCountryButton: UIButton!
+    
+    @IBOutlet var mediaLabelsCollection: [UIButton]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,8 +35,19 @@ class SearchTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.movieImage.layer.masksToBounds = true
-        self.movieImage.layer.cornerRadius = 12
+        movieImage.layer.masksToBounds = true
+        movieImage.layer.cornerRadius = 5
+        
+        movieBackView.layer.masksToBounds = true
+        movieBackView.layer.cornerRadius = 10
+        
+        mediaLabelsCollection.forEach { button in
+            button.layer.masksToBounds = true
+            
+            button.backgroundColor = UIColor(red: 23, green: 23, blue: 23, alpha: 1)
+            button.titleLabel?.textColor = .white
+            button.layer.cornerRadius = 15
+        }
     }
     
     
@@ -46,6 +68,27 @@ class SearchTableViewCell: UITableViewCell {
         
         movieTitle.text = title
         
+        guard let releaseDate = data.releaseDate else { return }
+        
+        releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
+        
+        ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        
+        var genresString = ""
+        let genres = Globals.movieGenres
+        
+        for movieID in data.genreIDS {
+            
+            for genre in genres {
+                
+                if movieID == genre.id {
+                    genresString.append("\(genre.name). ")
+                }
+            }
+        }
+        
+        genresLabel.text = String("\(genresString)".dropLast(2))
+        
         guard let imagePath = data.posterPath else {
             
             movieImage.image = .strokedCheckmark
@@ -54,11 +97,10 @@ class SearchTableViewCell: UITableViewCell {
         
         let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
         let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
+        |> RoundCornerImageProcessor(cornerRadius: 5)
         movieImage.kf.indicatorType = .activity
         movieImage.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "loading"),
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
@@ -85,6 +127,24 @@ class SearchTableViewCell: UITableViewCell {
         movieTitle.isEnabled = true
         
         movieTitle.text = data.name
+        releaseYearButton.setTitle(data.firstAirDate, for: .normal)
+        
+        ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        
+        var genresString = ""
+        let genres = Globals.tvGenres
+        
+        for tvID in data.genreIDS {
+            
+            for genre in genres {
+                
+                if tvID == genre.id {
+                    genresString.append("\(genre.name). ")
+                }
+            }
+        }
+        
+        genresLabel.text = String("\(genresString)".dropLast(2))
         
         guard let imagePath = data.posterPath else {
             

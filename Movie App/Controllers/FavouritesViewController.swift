@@ -113,10 +113,6 @@ extension FavouritesViewController: UICollectionViewDataSource {
         cell.layoutIfNeeded()
         cell.configure(with: someMovies[indexPath.row])
         
-        if UIDevice.current.orientation.isLandscape {
-            cell.someBackView.backgroundColor = UIColor.clear
-        }
-        
        return cell
     }
     
@@ -130,7 +126,8 @@ extension FavouritesViewController: UICollectionViewDelegate {
         DetailsService.shared.openDetailsScreen(with: someMovies[indexPath.row], navigationController: navigationController)
     }
     
-    
+// move to contextual menu
+
 //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //        
 //        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
