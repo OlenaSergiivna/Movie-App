@@ -11,6 +11,7 @@ struct PaginationService {
     
     static let shared = PaginationService()
     
+    private init() {}
     
     var pageCount = 1
     

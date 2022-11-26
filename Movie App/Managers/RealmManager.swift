@@ -15,8 +15,7 @@ struct RealmManager {
     
     static let shared = RealmManager()
     
-    private init() { }
-    
+    private init() {}
     
     // MARK: - Delete all data from Realm
     

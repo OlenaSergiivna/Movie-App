@@ -11,6 +11,7 @@ struct RepositoryService {
     
     static let shared = RepositoryService()
     
+    private init() {}
     
     // MARK: - Cashing movies from Favorites list
     

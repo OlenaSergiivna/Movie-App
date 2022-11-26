@@ -12,8 +12,9 @@ struct KingsfisherMemoryService {
     
     static let shared = KingsfisherMemoryService()
     
-    let cashe = ImageCache.default
+    private init() {}
     
+    let cashe = ImageCache.default
     
     func setCasheLimits() {
         cashe.memoryStorage.config.totalCostLimit = 50 * 1024 * 1024

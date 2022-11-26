@@ -11,6 +11,8 @@ struct DetailsService {
     
     static let shared = DetailsService()
     
+    private init() {}
+    
     func openDetailsScreen<T>(with data: T, navigationController: UINavigationController?) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

@@ -12,6 +12,8 @@ struct DataManager {
     
     static let shared = DataManager()
     
+    private init() {}
+    
     func requestMovieGenres(completion: @escaping([Genre], Int) -> Void) {
         
         let request = AF.request("https://api.themoviedb.org/3/genre/movie/list?api_key=\(Globals.apiKey)", method: .get)
@@ -299,9 +301,9 @@ struct DataManager {
     func requestTrendyMedia(completion: @escaping([TrendyMedia]) -> Void) {
         
         let trendyRequest = AF.request("https://api.themoviedb.org/3/trending/all/day?api_key=\(Globals.apiKey)&page=1", method: .get)
-    
-        trendyRequest.responseDecodable(of: Trends.self) { response in
         
+        trendyRequest.responseDecodable(of: Trends.self) { response in
+            
             do {
                 let data = try response.result.get().results
                 completion(data)
@@ -317,11 +319,11 @@ struct DataManager {
     // MARK: - Request now playing movies
     
     func requestNowPlayingMovies(completion: @escaping([MovieModel]) -> Void) {
-   
+        
         let nowPlayingRequest = AF.request("https://api.themoviedb.org/3/movie/now_playing?api_key=\(Globals.apiKey)&language=en-US&page=1&region=US", method: .get)
-   
+        
         nowPlayingRequest.responseDecodable(of: NowPlayingResults.self) { response in
-       
+            
             do {
                 let data = try response.result.get().results
                 completion(data)
@@ -331,6 +333,7 @@ struct DataManager {
             }
         }
     }
+    
     
     func getMediaTrailer(id: Int, mediaType: String, completion: @escaping([TrailerModel]) -> Void) {
         
@@ -358,6 +361,23 @@ struct DataManager {
             
             do {
                 let data = try response.result.get().cast
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    
+    func getMediaDetails(mediaType: String, mediaId: Int, completion: @escaping(MovieDetailedModel) -> Void) {
+       
+        let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        movieDetailsRequest.responseDecodable(of: MovieDetailedModel.self ) { response in
+            
+            do {
+                let data = try response.result.get()
                 completion(data)
             } catch {
                 print(error.localizedDescription)

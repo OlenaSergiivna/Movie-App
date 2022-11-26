@@ -12,6 +12,8 @@ struct NetworkManager {
     
     static let shared = NetworkManager()
     
+    private init() {}
+    
     private let apiKey = "b718f4e2921daaf000e347114cf44187"
     
     

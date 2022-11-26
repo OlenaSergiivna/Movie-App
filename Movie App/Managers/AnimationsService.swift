@@ -12,6 +12,8 @@ struct AnimationService {
     
     static let shared = AnimationService()
     
+    private init() {}
+    
     func addAnimation(view: UIView) {
         
         let animation = AnimationView(name: "movie")

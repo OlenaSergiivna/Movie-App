@@ -177,13 +177,6 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     }
     
     
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//
-//        //favouritesCollectionView.reloadData()
-//        favouritesCollectionView.collectionViewLayout.invalidateLayout()
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
