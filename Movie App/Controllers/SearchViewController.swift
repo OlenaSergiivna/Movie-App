@@ -282,14 +282,28 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if !searchResultsMovie.isEmpty || !searchResultsTV.isEmpty {
-
+        
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        let orientation = UIDevice.current.orientation
+        
+        switch selectedIndex {
+            
+        case 0:
+            guard !searchResultsMovie.isEmpty else {
+                return UITableView.automaticDimension
+            }
             return view.frame.height / 6
+            
+        case 1:
+            guard !searchResultsTV.isEmpty else {
+                return UITableView.automaticDimension
+            }
+            return view.frame.height / 6
+           
+        default:
+            return UITableView.automaticDimension
         }
-        return UITableView.automaticDimension
     }
-    
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // response: what if the is no movies/tv shows on request?
