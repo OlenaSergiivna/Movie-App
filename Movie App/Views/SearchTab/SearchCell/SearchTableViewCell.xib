@@ -32,8 +32,32 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Fantasy Adventure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-99-AEz">
+                                <rect key="frame" x="106" y="30.000000000000004" width="260" height="15.666666666666668"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4Sq-eg-itR">
-                                <rect key="frame" x="106.00000000000001" y="53.666666666666657" width="201.33333333333337" height="34.333333333333343"/>
+                                <rect key="frame" x="106" y="53.666666666666657" width="151" height="34.333333333333343"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohE-La-efc">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="2022">
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cvM-5Z-yJn">
+                                        <rect key="frame" x="66" y="0.0" width="85" height="34.333333333333336"/>
+                                        <color key="tintColor" red="0.97647064920000004" green="0.97647064920000004" blue="0.97647064920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Country"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
+                                <rect key="frame" x="106.00000000000001" y="96" width="139.33333333333337" height="34.333333333333343"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
                                         <rect key="frame" x="0.0" y="0.0" width="48.333333333333336" height="34.333333333333336"/>
@@ -42,40 +66,38 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohE-La-efc">
-                                        <rect key="frame" x="50.333333333333343" y="0.0" width="64" height="34.333333333333336"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
+                                        <rect key="frame" x="56.333333333333343" y="0.0" width="83" height="34.333333333333336"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="2022">
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cvM-5Z-yJn">
-                                        <rect key="frame" x="116.33333333333334" y="0.0" width="85" height="34.333333333333336"/>
-                                        <color key="tintColor" red="0.97647064920000004" green="0.97647064920000004" blue="0.97647064920000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Country"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="2h 39m"/>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Fantasy Adventure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-99-AEz">
-                                <rect key="frame" x="106" y="30.000000000000004" width="260" height="15.666666666666668"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-RA-8tp">
+                                <rect key="frame" x="16" y="16" width="74" height="14.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.090196078431372548" green="0.090000003576278687" blue="0.090000003576278687" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="top" secondItem="1ob-sE-y4A" secondAttribute="top" constant="8" id="3bK-fY-P0v"/>
                             <constraint firstItem="jgg-99-AEz" firstAttribute="leading" secondItem="aNz-fr-71Q" secondAttribute="leading" id="Cut-yy-cwo"/>
-                            <constraint firstItem="4Sq-eg-itR" firstAttribute="top" secondItem="jgg-99-AEz" secondAttribute="bottom" constant="8" id="Iff-Tu-Zgy"/>
+                            <constraint firstItem="3Z4-ss-OAt" firstAttribute="leading" secondItem="oBk-RA-8tp" secondAttribute="leading" constant="-8" id="GBx-s2-wMZ"/>
+                            <constraint firstItem="oBk-RA-8tp" firstAttribute="top" secondItem="3Z4-ss-OAt" secondAttribute="top" constant="8" id="J4T-zp-7O7"/>
                             <constraint firstItem="4Sq-eg-itR" firstAttribute="leading" secondItem="jgg-99-AEz" secondAttribute="leading" id="Jf5-xn-8Uc"/>
+                            <constraint firstItem="4Sq-eg-itR" firstAttribute="top" secondItem="jgg-99-AEz" secondAttribute="bottom" constant="8" id="KB3-s6-EQo"/>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="leading" secondItem="1ob-sE-y4A" secondAttribute="leading" constant="8" id="TcB-LP-PVZ"/>
                             <constraint firstItem="aNz-fr-71Q" firstAttribute="top" secondItem="3Z4-ss-OAt" secondAttribute="top" id="fAM-J0-17c"/>
+                            <constraint firstItem="dD6-Ba-KoE" firstAttribute="top" secondItem="4Sq-eg-itR" secondAttribute="bottom" constant="8" id="gyb-nD-ex7"/>
                             <constraint firstItem="aNz-fr-71Q" firstAttribute="leading" secondItem="3Z4-ss-OAt" secondAttribute="trailing" constant="8" id="kp8-al-bKr"/>
                             <constraint firstAttribute="trailing" secondItem="jgg-99-AEz" secondAttribute="trailing" constant="16" id="o2P-2p-l9f"/>
+                            <constraint firstItem="dD6-Ba-KoE" firstAttribute="leading" secondItem="4Sq-eg-itR" secondAttribute="leading" id="s66-UF-kgZ"/>
                             <constraint firstAttribute="bottom" secondItem="3Z4-ss-OAt" secondAttribute="bottom" constant="8" id="tYe-lp-xK3"/>
                             <constraint firstItem="jgg-99-AEz" firstAttribute="top" secondItem="aNz-fr-71Q" secondAttribute="bottom" constant="4" id="uqV-aG-J7X"/>
+                            <constraint firstItem="3Z4-ss-OAt" firstAttribute="trailing" secondItem="oBk-RA-8tp" secondAttribute="trailing" constant="8" id="xmx-cI-k8P"/>
                             <constraint firstAttribute="trailing" secondItem="aNz-fr-71Q" secondAttribute="trailing" constant="16" id="ykd-rZ-opi"/>
                         </constraints>
                     </view>
@@ -91,6 +113,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="backLabel" destination="oBk-RA-8tp" id="1cc-6k-UPP"/>
                 <outlet property="genresLabel" destination="jgg-99-AEz" id="i5Z-CO-PVY"/>
                 <outlet property="movieBackView" destination="1ob-sE-y4A" id="oj7-wV-aFF"/>
                 <outlet property="movieImage" destination="3Z4-ss-OAt" id="fe9-XH-fYW"/>
@@ -98,9 +121,11 @@
                 <outlet property="productionCountryButton" destination="cvM-5Z-yJn" id="j3t-QF-HaE"/>
                 <outlet property="ratingButton" destination="69S-Dz-R9h" id="ppC-1C-bKV"/>
                 <outlet property="releaseYearButton" destination="ohE-La-efc" id="JUu-lo-lWj"/>
-                <outletCollection property="mediaLabelsCollection" destination="69S-Dz-R9h" collectionClass="NSMutableArray" id="Hxc-Cz-PCg"/>
+                <outlet property="runtimeButton" destination="Yuf-oa-hjb" id="qH4-Wg-l5O"/>
                 <outletCollection property="mediaLabelsCollection" destination="ohE-La-efc" collectionClass="NSMutableArray" id="Or8-TU-nEq"/>
                 <outletCollection property="mediaLabelsCollection" destination="cvM-5Z-yJn" collectionClass="NSMutableArray" id="upu-Gq-Duo"/>
+                <outletCollection property="mediaLabelsCollection" destination="69S-Dz-R9h" collectionClass="NSMutableArray" id="Hxc-Cz-PCg"/>
+                <outletCollection property="mediaLabelsCollection" destination="Yuf-oa-hjb" collectionClass="NSMutableArray" id="q9Y-47-iEi"/>
             </connections>
             <point key="canvasLocation" x="104.61538461538461" y="58.293838862559241"/>
         </tableViewCell>

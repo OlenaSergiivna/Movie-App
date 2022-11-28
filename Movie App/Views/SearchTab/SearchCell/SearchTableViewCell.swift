@@ -29,6 +29,13 @@ class SearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.selectionStyle = .none
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
         
     }
     
@@ -44,7 +51,7 @@ class SearchTableViewCell: UITableViewCell {
         mediaLabelsCollection.forEach { button in
             button.layer.masksToBounds = true
             
-            button.backgroundColor = UIColor(red: 23, green: 23, blue: 23, alpha: 1)
+            button.backgroundColor = #colorLiteral(red: 0.1176470444, green: 0.1176470444, blue: 0.1176470444, alpha: 1)
             button.titleLabel?.textColor = .white
             button.layer.cornerRadius = 15
         }
@@ -91,7 +98,11 @@ class SearchTableViewCell: UITableViewCell {
         
         guard let imagePath = data.posterPath else {
             
-            movieImage.image = .strokedCheckmark
+            movieImage.backgroundColor = .lightGray
+            backLabel.isHidden = false
+            backLabel.text = title
+            backLabel.textColor = .gray
+            
             return
         }
         

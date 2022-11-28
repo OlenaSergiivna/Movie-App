@@ -37,9 +37,10 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTableView.layoutMargins = .zero
-        configureUI()
         searchTableView.keyboardDismissMode = .onDrag
+        searchTableView.delegate = self
         
+        configureUI()
         
         //UserDefaults.standard.removeObject(forKey: "searchResults")
         
