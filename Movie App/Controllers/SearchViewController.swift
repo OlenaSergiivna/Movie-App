@@ -197,8 +197,30 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        30
+        
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
+        switch selectedIndex {
+            
+        case 0:
+            if !searchResultsMovie.isEmpty {
+                return 0
+            } else {
+                return 30
+            }
+            
+        case 1:
+            if !searchResultsTV.isEmpty {
+                return 0
+            } else {
+                return 30
+            }
+            
+        default:
+            return 0
+        }
     }
+     
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
