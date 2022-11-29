@@ -196,25 +196,37 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        30
+    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let headerView = UITableViewHeaderFooterView()
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
+        headerView.backgroundColor = .black
         
-        var contentConfig = UIListContentConfiguration.plainHeader()
-        contentConfig.text = "Resent searches"
-        contentConfig.textProperties.color = .white
-        contentConfig.textProperties.font = .systemFont(ofSize: 16, weight: .bold)
+        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.minX + 16, y: 5, width: headerView.frame.size.width - (headerView.frame.size.width / 4.5 + 8), height: 15))
+        headerView.addSubview(headerLabel)
         
-        var backConfig = UIBackgroundConfiguration.listPlainHeaderFooter()
-        backConfig.backgroundColor = .clear
+        headerLabel.text = "Resent searches"
+        headerLabel.textColor = .white
+        headerLabel.font = .systemFont(ofSize: 16, weight: .semibold)
         
-        headerView.contentConfiguration = contentConfig
-        headerView.backgroundConfiguration = backConfig
+        let clearButton = UIButton(frame: CGRect(x: headerView.frame.maxX - (headerView.frame.size.width / 4.5 - 8), y: 5, width: headerView.frame.size.width / 4.5, height: 15))
+        headerView.addSubview(clearButton)
+        clearButton.setTitle("Clear all", for: .normal)
+        clearButton.setTitleColor(.systemPink, for: .normal)
+        clearButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
+        clearButton.contentMode = .center
         
-        searchTableView.layoutMargins.left = 16
-        
+        clearButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
+
         return headerView
+    }
+    
+    
+    @objc func cleanSearchHistory() {
+        print("cleaning...")
     }
     
     
