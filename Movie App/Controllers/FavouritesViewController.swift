@@ -166,9 +166,11 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let orientation = UIDevice.current.orientation
+        let isWidthBigger = {
+            return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
         
-        guard orientation.isLandscape else {
+        guard isWidthBigger() else {
             
             return CGSize(width: view.frame.width / 2.0, height: view.frame.height / 2.62)
         }

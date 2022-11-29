@@ -20,6 +20,7 @@ struct DetailsService {
         destinationViewController.loadViewIfNeeded()
         
         destinationViewController.configure(with: data)
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        navigationController?.present(destinationViewController, animated: true)
+        //navigationController?.pushViewController(destinationViewController, animated: true)
     }
 }

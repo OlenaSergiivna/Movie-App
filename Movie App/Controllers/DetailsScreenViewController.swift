@@ -66,10 +66,11 @@ class DetailsScreenViewController: UIViewController {
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
         
+        
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
         
-        mediaImage.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        mediaImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         mediaImage.layer.cornerRadius = 20
         
         

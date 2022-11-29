@@ -185,6 +185,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
@@ -237,7 +238,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     @objc func cleanSearchHistory() {
-        print("cleaning...")
+        
         previousSearchRequests.removeAll()
         saveInUserDefaults(previousSearchRequests)
         searchTableView.reloadData()
@@ -321,7 +322,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        let orientation = UIDevice.current.orientation
+        
+        let isWidthBigger = {
+            return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
         
         switch selectedIndex {
             
@@ -329,13 +333,25 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             guard !searchResultsMovie.isEmpty else {
                 return UITableView.automaticDimension
             }
-            return view.frame.height / 6
+            
+            if isWidthBigger() {
+                return view.frame.height / 2.5
+            } else {
+                return view.frame.height / 6
+            }
+                
+            
             
         case 1:
             guard !searchResultsTV.isEmpty else {
                 return UITableView.automaticDimension
             }
-            return view.frame.height / 6
+           
+            if isWidthBigger() {
+                return view.frame.height / 2.5
+            } else {
+                return view.frame.height / 6
+            }
            
         default:
             return UITableView.automaticDimension
