@@ -150,17 +150,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             self.present(viewController, animated: true)
         }
     }
-    
-    
-    
-    func deleteAll(from array: inout [String], key: String, completion: () -> Void) {
-        
-        array.removeAll()
-        UserDefaults.standard.set(array, forKey: key)
-        completion()
-        
-    }
-    
 }
 
 
@@ -249,6 +238,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     @objc func cleanSearchHistory() {
         print("cleaning...")
+        previousSearchRequests.removeAll()
+        saveInUserDefaults(previousSearchRequests)
+        searchTableView.reloadData()
+    }
+    
+    
+    func saveInUserDefaults(_ data: [Media] ) {
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(data) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "searchResults")
+        }
     }
     
     
@@ -371,15 +373,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     print("removed last ")
                 }
                 
-                
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(previousSearchRequests) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "searchResults")
-                }
-                
+                saveInUserDefaults(previousSearchRequests)
                 print("requests updated in UD")
-                
                 
             }
             
@@ -405,13 +400,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     print("removed last ")
                 }
                 
-                
-                
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(previousSearchRequests) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "searchResults")
-                }
+                saveInUserDefaults(previousSearchRequests)
                 
                 print("requests updated in UD")
             }
@@ -572,4 +561,21 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] action, view, completion in
+            action.backgroundColor = .systemPink
+            view.backgroundColor = .orange
+            guard let self else { return }
+            
+            self.previousSearchRequests.remove(at: indexPath.row)
+            self.saveInUserDefaults(self.previousSearchRequests)
+            self.searchTableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+        deleteAction.backgroundColor = .systemRed
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
 }

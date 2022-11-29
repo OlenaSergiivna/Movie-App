@@ -25,7 +25,7 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var mediaName: UILabel!
     
-    @IBOutlet weak var mediaRating: UILabel!
+    @IBOutlet weak var mediaRating: UIButton!
     
     @IBOutlet weak var mediaGenres: UILabel!
     
@@ -185,7 +185,10 @@ class DetailsScreenViewController: UIViewController {
         configureFavoriteButton(cell: cell)
         
         mediaName.text = cell.title
-        mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+        
+        if cell.voteAverage > 0 {
+            mediaRating.setTitle("★ \(round((cell.voteAverage * 100))/100)", for: .normal)
+        }
         
         mediaOverview.text = cell.overview
         
@@ -253,7 +256,10 @@ class DetailsScreenViewController: UIViewController {
         configureFavoriteButton(cell: cell)
         
         mediaName.text = cell.name
-        mediaRating.text = "★ \(round((cell.voteAverage * 100))/100)"
+        
+        if cell.voteAverage > 0 {
+            mediaRating.setTitle("★ \(round((cell.voteAverage * 100))/100)", for: .normal)
+        }
         
         mediaOverview.text = cell.overview
         

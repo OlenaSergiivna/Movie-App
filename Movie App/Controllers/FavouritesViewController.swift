@@ -188,20 +188,20 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        
-        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
-            guard let self else { return }
-            
-            self.someMovies = data
-            
-            DispatchQueue.main.async {
-                self.favouritesCollectionView.reloadData()
-                
-            }
-        }
-    }
-}
+//extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
+//    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+//        
+//        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
+//            guard let self else { return }
+//            
+//            self.someMovies = data
+//            
+//            DispatchQueue.main.async {
+//                self.favouritesCollectionView.reloadData()
+//                
+//            }
+//        }
+//    }
+//}
 
 
