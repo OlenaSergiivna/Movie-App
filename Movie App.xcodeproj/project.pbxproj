@@ -57,6 +57,7 @@
 		CE7D60B02920392000127F87 /* CastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7D60AF2920392000127F87 /* CastCollectionViewCell.swift */; };
 		CE81D89D28FC7A4100D667A8 /* PaginationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89C28FC7A4100D667A8 /* PaginationService.swift */; };
 		CE81D89F28FC895700D667A8 /* UIViewController+ add+removeChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */; };
+		CE8A8AEB2937DF53000970E9 /* GetStartedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A8AEA2937DF53000970E9 /* GetStartedViewController.swift */; };
 		CE9E9649291892EF001FD56B /* DetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E9648291892EF001FD56B /* DetailsService.swift */; };
 		CEAB8572290FFEB700B8C668 /* KingsfisherMemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
@@ -140,6 +141,7 @@
 		CE7D60AF2920392000127F87 /* CastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE81D89C28FC7A4100D667A8 /* PaginationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationService.swift; sourceTree = "<group>"; };
 		CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ add+removeChildView.swift"; sourceTree = "<group>"; };
+		CE8A8AEA2937DF53000970E9 /* GetStartedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartedViewController.swift; sourceTree = "<group>"; };
 		CE9E9648291892EF001FD56B /* DetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsService.swift; sourceTree = "<group>"; };
 		CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingsfisherMemoryService.swift; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		CE14064628E0EC2400B67410 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE8A8AEA2937DF53000970E9 /* GetStartedViewController.swift */,
 				CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */,
 				CE4E5DDB2904563D0048E65C /* MainViewController.swift */,
 				CE08EB3828E33F320038CC92 /* SearchViewController.swift */,
@@ -685,6 +688,7 @@
 				CE0B874028E4E919005CBA8A /* MovieModel.swift in Sources */,
 				CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */,
 				CE6133A128EA028200778822 /* DataManager.swift in Sources */,
+				CE8A8AEB2937DF53000970E9 /* GetStartedViewController.swift in Sources */,
 				CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */,
 				CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */,
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,

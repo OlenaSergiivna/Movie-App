@@ -25,6 +25,9 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loginTextField.textColor = .systemGray
+        passTextField.textColor = .systemGray
+        
         resetForm()
         AnimationService.shared.addAnimation(view: view)
         
