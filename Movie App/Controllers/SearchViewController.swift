@@ -162,7 +162,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else if !previousSearchRequests.isEmpty {
                 return previousSearchRequests.count
             } else {
-                return 10
+                return 0
             }
             
         case 1:
@@ -172,7 +172,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else if !previousSearchRequests.isEmpty {
                 return previousSearchRequests.count
             } else {
-                return 10
+                return 0
             }
             
         default:
@@ -188,14 +188,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         switch selectedIndex {
             
         case 0:
-            if !searchResultsMovie.isEmpty {
+            if previousSearchRequests.isEmpty || !searchResultsMovie.isEmpty {
                 return 0
             } else {
                 return 30
             }
             
         case 1:
-            if !searchResultsTV.isEmpty {
+            if previousSearchRequests.isEmpty || !searchResultsTV.isEmpty {
                 return 0
             } else {
                 return 30

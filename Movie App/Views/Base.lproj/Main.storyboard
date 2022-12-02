@@ -359,11 +359,8 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vjG-lJ-t35">
                                 <rect key="frame" x="0.0" y="56" width="390" height="705"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" systemColor="secondaryLabelColor"/>
+                                <color key="separatorColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="OCX-eD-hX2" id="oXd-CD-6a9"/>
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
@@ -378,9 +375,6 @@
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="asY-tv-9hg" secondAttribute="top" id="UKz-mY-Px1"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="asY-tv-9hg" secondAttribute="leading" id="mzI-Ep-zxD"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
                         <barButtonItem key="rightBarButtonItem" image="rectangle.portrait.and.arrow.right" catalog="system" style="done" id="2US-Zm-31V">
@@ -785,8 +779,8 @@
         <image name="rectangle.portrait.and.arrow.right" catalog="system" width="128" height="109"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="tv" catalog="system" width="128" height="95"/>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

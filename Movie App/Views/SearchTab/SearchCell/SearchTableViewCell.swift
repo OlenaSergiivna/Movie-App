@@ -41,6 +41,15 @@ class SearchTableViewCell: UITableViewCell {
         
     }
     
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        productionCountryButton.setTitle(nil, for: .normal)
+        runtimeButton.setTitle(nil, for: .normal)
+    }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
