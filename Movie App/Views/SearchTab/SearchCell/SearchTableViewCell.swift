@@ -24,6 +24,14 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var productionCountryButton: UIButton!
     
+    @IBOutlet weak var runtimeButton: UIButton!
+    
+    @IBOutlet weak var backLabel: UILabel!
+    
+    @IBOutlet weak var firstStackView: UIStackView!
+    
+    @IBOutlet weak var secondStackView: UIStackView!
+    
     @IBOutlet var mediaLabelsCollection: [UIButton]!
     
     override func awakeFromNib() {
@@ -33,15 +41,12 @@ class SearchTableViewCell: UITableViewCell {
         
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        backLabel.isHidden = true
+        
+        movieImage.backgroundColor = .clear
         movieImage.layer.masksToBounds = true
         movieImage.layer.cornerRadius = 5
         
@@ -50,7 +55,7 @@ class SearchTableViewCell: UITableViewCell {
         
         mediaLabelsCollection.forEach { button in
             button.layer.masksToBounds = true
-            
+            button.clipsToBounds = true
             button.backgroundColor = #colorLiteral(red: 0.1176470444, green: 0.1176470444, blue: 0.1176470444, alpha: 1)
             button.titleLabel?.textColor = .white
             button.layer.cornerRadius = 15
@@ -62,24 +67,43 @@ class SearchTableViewCell: UITableViewCell {
         
         guard let title = data.title else {
             
-            movieImage.image = .strokedCheckmark
+            movieImage.backgroundColor = .lightGray
             movieTitle.isHidden = true
             movieTitle.isEnabled = false
             
             return
         }
         
+        releaseYearButton.isHidden = false
+        ratingButton.isHidden = false
+        firstStackView.isHidden = false
+        productionCountryButton.isHidden = false
+        runtimeButton.isHidden = false
+        secondStackView.isHidden = false
         movieImage.isHidden = false
         movieTitle.isHidden = false
-        movieTitle.isEnabled = true
+        
         
         movieTitle.text = title
         
-        guard let releaseDate = data.releaseDate else { return }
         
-        releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
+        if let releaseDate = data.releaseDate {
+            
+            if !releaseDate.isEmpty {
+                releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
+            } else {
+                releaseYearButton.isHidden = true
+            }
+        } else {
+            releaseYearButton.isHidden = true
+        }
         
-        ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        
+        if data.voteAverage > 0 {
+            ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        } else {
+            ratingButton.isHidden = true
+        }
         
         var genresString = ""
         let genres = Globals.movieGenres
@@ -96,12 +120,47 @@ class SearchTableViewCell: UITableViewCell {
         
         genresLabel.text = String("\(genresString)".dropLast(2))
         
+        
+        DataManager.shared.getMediaDetails(mediaType: "movie", mediaId: data.id) { [weak self] details in
+            guard let self else { return }
+            
+            
+            if let productionCountryName = details.productionCounries.first?.name {
+                self.productionCountryButton.setTitle(productionCountryName, for: .normal)
+            } else {
+                self.productionCountryButton.isHidden = true
+            }
+            
+            
+            if let runtime = details.runtime {
+                if runtime > 0 {
+                    let timeInHours = self.calculateTime(Float(runtime))
+                    self.runtimeButton.setTitle(String(timeInHours), for: .normal)
+                } else {
+                    self.runtimeButton.isHidden = true
+                }
+            } else {
+                self.runtimeButton.isHidden = true
+            }
+            
+            
+            if self.releaseYearButton.isHidden && self.productionCountryButton.isHidden {
+                self.firstStackView.isHidden = true
+            }
+            
+            
+            if self.ratingButton.isHidden && self.runtimeButton.isHidden {
+                self.secondStackView.isHidden = true
+            }
+        }
+        
+        
         guard let imagePath = data.posterPath else {
             
             movieImage.backgroundColor = .lightGray
             backLabel.isHidden = false
             backLabel.text = title
-            backLabel.textColor = .gray
+            backLabel.textColor = .systemGray
             
             return
         }
@@ -133,14 +192,34 @@ class SearchTableViewCell: UITableViewCell {
     
     func configureTV(with data: TVModel) {
         
+        releaseYearButton.isHidden = false
+        ratingButton.isHidden = false
+        firstStackView.isHidden = false
+        productionCountryButton.isHidden = false
+        runtimeButton.isHidden = false
+        secondStackView.isHidden = false
         movieImage.isHidden = false
         movieTitle.isHidden = false
-        movieTitle.isEnabled = true
         
         movieTitle.text = data.name
-        releaseYearButton.setTitle(data.firstAirDate, for: .normal)
         
-        ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        if let firstAirDate = data.firstAirDate {
+            
+            if !firstAirDate.isEmpty {
+                releaseYearButton.setTitle(String("\(firstAirDate)".dropLast(6)), for: .normal)
+            } else {
+                releaseYearButton.isHidden = true
+            }
+        } else {
+            releaseYearButton.isHidden = true
+        }
+        
+        
+        if data.voteAverage > 0 {
+            ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
+        } else {
+            ratingButton.isHidden = true
+        }
         
         var genresString = ""
         let genres = Globals.tvGenres
@@ -157,9 +236,46 @@ class SearchTableViewCell: UITableViewCell {
         
         genresLabel.text = String("\(genresString)".dropLast(2))
         
+        DataManager.shared.getMediaDetails(mediaType: "tv", mediaId: data.id) { [weak self] details in
+            guard let self else { return }
+            
+            
+            if let productionCountryName = details.productionCounries.first?.name {
+                self.productionCountryButton.setTitle(productionCountryName, for: .normal)
+            } else {
+                self.productionCountryButton.isHidden = true
+            }
+            
+            
+            if let runtime = details.runtime {
+                if runtime > 0 {
+                    let timeInHours = self.calculateTime(Float(runtime))
+                    self.runtimeButton.setTitle(String(timeInHours), for: .normal)
+                } else {
+                    self.runtimeButton.isHidden = true
+                }
+            } else {
+                self.runtimeButton.isHidden = true
+            }
+            
+            
+            if self.releaseYearButton.isHidden && self.productionCountryButton.isHidden {
+                self.firstStackView.isHidden = true
+            }
+            
+            
+            if self.ratingButton.isHidden && self.runtimeButton.isHidden {
+                self.secondStackView.isHidden = true
+            }
+        }
+        
         guard let imagePath = data.posterPath else {
             
-            movieImage.image = .strokedCheckmark
+            movieImage.backgroundColor = .lightGray
+            backLabel.isHidden = false
+            backLabel.text = data.name
+            backLabel.textColor = .systemGray
+            
             return
         }
         
@@ -185,5 +301,15 @@ class SearchTableViewCell: UITableViewCell {
         //                    print("Job failed: \(error.localizedDescription)")
         //                }
         //            }
+    }
+    
+    private func calculateTime(_ timeValue: Float) -> String {
+        let timeMeasure = Measurement(value: Double(timeValue), unit: UnitDuration.minutes)
+        let hours = timeMeasure.converted(to: .hours)
+        if hours.value > 1 {
+            let minutes = timeMeasure.value.truncatingRemainder(dividingBy: 60)
+            return String(format: "%.f %@ %.f %@", hours.value, "h", minutes, "min")
+        }
+        return String(format: "%.f %@", timeMeasure.value, "min")
     }
 }

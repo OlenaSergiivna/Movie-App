@@ -6,13 +6,13 @@
 //
 
 import Foundation
-import RxSwift
-import RxCocoa
+//import RxSwift
+//import RxCocoa
 
 
 class FavouritesViewControllerViewModel {
     
-    var someMovies = BehaviorRelay<[MovieModel]>(value: [])
+    //var someMovies = BehaviorRelay<[MovieModel]>(value: [])
     
     //var bag = DisposeBag()
     
@@ -21,7 +21,7 @@ class FavouritesViewControllerViewModel {
         RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
             guard let self else { return }
             
-            self.someMovies.accept(favorites)
+            //self.someMovies.accept(favorites)
             
 //            self.someMovies.onNext(favorites)
 //            self.someMovies.onCompleted()

@@ -7,9 +7,6 @@
 
 import UIKit
 
-// rearch requests saving on scroll + on movie tap
-//make search requests table view editable
-
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var searchTableView: UITableView!
@@ -27,7 +24,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     }
     
     var pageCount = 1
-
+    
     var displayStatus = false
     
     var totalPagesCount = 10
@@ -42,7 +39,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         configureUI()
         
-        //UserDefaults.standard.removeObject(forKey: "searchResults")
         
         // MARK: - Registration nibs
         
@@ -55,7 +51,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         // MARK: - Get data from UserDefaults
         
-        //print(UserDefaults.standard.object(forKey: "searchResults"))
         if let movie = UserDefaults.standard.object(forKey: "searchResults") as? Data {
             let decoder = JSONDecoder()
             do {
@@ -66,7 +61,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -210,7 +205,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return 0
         }
     }
-     
+    
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -232,7 +227,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         clearButton.contentMode = .center
         
         clearButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
-
+        
         return headerView
     }
     
@@ -305,11 +300,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 cell.configureRequest(with: previousSearchRequests[indexPath.row])
-               
+                
                 return cell
                 
             } else {
-                return UITableViewCell()
+                let cell = UITableViewCell()
+                cell.backgroundColor = .black
+                return cell
             }
             
         default:
@@ -339,27 +336,26 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 return view.frame.height / 6
             }
-                
             
             
         case 1:
             guard !searchResultsTV.isEmpty else {
                 return UITableView.automaticDimension
             }
-           
+            
             if isWidthBigger() {
                 return view.frame.height / 2.5
             } else {
                 return view.frame.height / 6
             }
-           
+            
         default:
             return UITableView.automaticDimension
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // response: what if the is no movies/tv shows on request?
+        
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         let cell = searchTableView.cellForRow(at: indexPath)
@@ -417,7 +413,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 saveInUserDefaults(previousSearchRequests)
-                
                 print("requests updated in UD")
             }
             
@@ -543,6 +538,7 @@ extension SearchViewController: UISearchResultsUpdating {
     }
 }
 
+
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -566,7 +562,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-
+        
         searchResultsMovie = []
         searchResultsTV = []
         pageCount = 1
@@ -580,18 +576,48 @@ extension SearchViewController: UISearchBarDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] action, view, completion in
-            action.backgroundColor = .systemPink
-            view.backgroundColor = .orange
-            guard let self else { return }
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
+        switch selectedIndex {
             
-            self.previousSearchRequests.remove(at: indexPath.row)
-            self.saveInUserDefaults(self.previousSearchRequests)
-            self.searchTableView.deleteRows(at: [indexPath], with: .fade)
+        case 0:
+            guard searchResultsMovie.isEmpty else {
+                return UISwipeActionsConfiguration()
+            }
+            
+            let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] action, view, completion in
+                action.backgroundColor = .systemPink
+                view.backgroundColor = .orange
+                guard let self else { return }
+                
+                self.previousSearchRequests.remove(at: indexPath.row)
+                self.saveInUserDefaults(self.previousSearchRequests)
+                self.searchTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            deleteAction.backgroundColor = .systemRed
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+            
+        case 1:
+            guard searchResultsTV.isEmpty else {
+                return UISwipeActionsConfiguration()
+            }
+            
+            let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] action, view, completion in
+                action.backgroundColor = .systemPink
+                view.backgroundColor = .orange
+                guard let self else { return }
+                
+                self.previousSearchRequests.remove(at: indexPath.row)
+                self.saveInUserDefaults(self.previousSearchRequests)
+                self.searchTableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            deleteAction.backgroundColor = .systemRed
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+            
+        default:
+            return UISwipeActionsConfiguration()
         }
-        
-        deleteAction.backgroundColor = .systemRed
-        
-        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
