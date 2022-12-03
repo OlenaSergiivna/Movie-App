@@ -212,19 +212,36 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 30))
         headerView.backgroundColor = .black
         
-        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.minX + 16, y: 5, width: headerView.frame.size.width - (headerView.frame.size.width / 4.5 + 8), height: 15))
+        let headerLabel = UILabel()
         headerView.addSubview(headerLabel)
         
         headerLabel.text = "Resent searches"
         headerLabel.textColor = .white
         headerLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let clearButton = UIButton(frame: CGRect(x: headerView.frame.maxX - (headerView.frame.size.width / 4.5 - 8), y: 5, width: headerView.frame.size.width / 4.5, height: 15))
+        NSLayoutConstraint.activate([
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            headerLabel.heightAnchor.constraint(equalToConstant: 15)
+             ])
+        
+        let clearButton = UIButton()
+
         headerView.addSubview(clearButton)
+        
         clearButton.setTitle("Clear all", for: .normal)
         clearButton.setTitleColor(.systemPink, for: .normal)
         clearButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .regular)
         clearButton.contentMode = .center
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            clearButton.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),
+            clearButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16),
+            clearButton.heightAnchor.constraint(equalToConstant: 15)
+    
+             ])
         
         clearButton.addTarget(self, action: #selector(cleanSearchHistory), for: .touchUpInside)
         
