@@ -123,7 +123,15 @@ extension FavouritesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        DetailsService.shared.openDetailsScreen(with: someMovies[indexPath.row], navigationController: navigationController)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
+        
+        destinationViewController.presentationController?.delegate = self
+        destinationViewController.loadViewIfNeeded()
+        
+        destinationViewController.configure(with: someMovies[indexPath.row])
+        navigationController?.present(destinationViewController, animated: true)
+        
     }
     
 // move to contextual menu
@@ -190,20 +198,20 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-//extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
-//    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-//        
-//        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
-//            guard let self else { return }
-//            
-//            self.someMovies = data
-//            
-//            DispatchQueue.main.async {
-//                self.favouritesCollectionView.reloadData()
-//                
-//            }
-//        }
-//    }
-//}
+extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+       
+        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
+            guard let self else { return }
+            
+            self.someMovies = data
+            
+            DispatchQueue.main.async {
+                self.favouritesCollectionView.reloadData()
+                
+            }
+        }
+    }
+}
 
 
