@@ -246,7 +246,7 @@ struct DataManager {
         
         addToFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
-                let result = try response.result.get()
+                let _ = try response.result.get()
                 if let response = response.response?.statusCode {
                     completion(response)
                 }

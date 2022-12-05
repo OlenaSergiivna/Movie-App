@@ -29,7 +29,7 @@ class AuthenticationViewController: UIViewController {
         passTextField.textColor = .systemGray
         
         resetForm()
-        AnimationService.shared.addAnimation(view: view)
+        //AnimationService.shared.addAnimation(view: view)
         
     }
     
