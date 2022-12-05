@@ -37,7 +37,19 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure(with data: MovieModel) {
+    func configure<T>(with data: T) {
+        
+        if let data = data as? MovieModel {
+            
+            configureMovie(with: data)
+            
+        } else if let data = data as? TVModel {
+            configureTVShow(with: data)
+        }
+    }
+    
+    
+    private func configureMovie(with data: MovieModel) {
         
         guard let title = data.title else { return }
         
@@ -73,4 +85,40 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
         //                }
         //            }
     }
+    
+    private func configureTVShow(with data: TVModel) {
+
+        movieTitleLabel.text = data.name
+        mediaTypeLabel.text = "TV Show"
+        
+        
+        guard let imagePath = data.posterPath else {
+            
+            movieImage.image = .strokedCheckmark
+            return
+        }
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
+        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
+        |> RoundCornerImageProcessor(cornerRadius: 0)
+        movieImage.kf.indicatorType = .activity
+        movieImage.kf.setImage(
+            with: url,
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ])
+        //            {
+        //                result in
+        //                switch result {
+        //                case .success(let value):
+        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+        //                case .failure(let error):
+        //                    print("Job failed: \(error.localizedDescription)")
+        //                }
+        //            }
+    }
+    
 }

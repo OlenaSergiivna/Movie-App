@@ -13,13 +13,22 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
+    @IBOutlet weak var favoritesSegmentedControl: UISegmentedControl!
+    
     var viewModel = FavouritesViewControllerViewModel()
     
-    var someMovies: [MovieModel] = []
+    var favoriteMovies: [MovieModel] = []
+    
+    var favoriteTVShows: [TVModel] = []
+    
+    let isWidthBigger = {
+        return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        setUpNotifications()
         
         favouritesCollectionView.delegate = self
         favouritesCollectionView.dataSource = self
@@ -29,11 +38,6 @@ class FavouritesViewController: UIViewController {
         favouritesCollectionView.register(nibFavouritesCell, forCellWithReuseIdentifier: "FavouritesCollectionViewCell")
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        favouritesCollectionView.collectionViewLayout.invalidateLayout()
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -41,21 +45,73 @@ class FavouritesViewController: UIViewController {
         favouritesCollectionView.frame = self.view.bounds
     }
     
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        let isWidthBigger = {
+            return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        }
+        
+        if isWidthBigger() {
+            tabBarController?.tabBar.isHidden = false
+        } else {
+            tabBarController?.tabBar.isHidden = true
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = false
+        configureSegmentedControl()
         
-        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-            guard let self else { return }
-            
-            self.someMovies = favorites
-            
-            DispatchQueue.main.async {
-                self.favouritesCollectionView.reloadData()
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+        
+        case 0:
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
+                
+                self.favoriteMovies = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
             }
+            
+        case 1:
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
+                
+                self.favoriteTVShows = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+            }
+            
+        default:
+            return
         }
+    }
+    
+    func setUpNotifications() {
+        let mainNotificationCenter = NotificationCenter.default
+        
+        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    
+    @objc func appWasReturnedOnForeground() {
+        
+       if isWidthBigger() {
+            tabBarController?.tabBar.isHidden = true
+       } else {
+           tabBarController?.tabBar.isHidden = false
+       }
+       
     }
     
     
@@ -84,22 +140,74 @@ class FavouritesViewController: UIViewController {
     func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
-        barAppearance.configureWithOpaqueBackground()
-        barAppearance.backgroundColor = .clear
+        barAppearance.configureWithDefaultBackground()
+        barAppearance.backgroundColor = .black
         barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
     }
+    
+    
+    func configureSegmentedControl() {
+        favoritesSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .normal)
+        favoritesSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
+    }
+    
+    @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+        
+        case 0:
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
+                
+                self.favoriteMovies = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+            }
+            
+        case 1:
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
+                
+                self.favoriteTVShows = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+            }
+            
+        default:
+            return
+        }
+    }
+    
 }
 
 
 extension FavouritesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("some movies: \(someMovies.count)")
-        return someMovies.count
+       
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+            
+        case 0:
+            return favoriteMovies.count
+            
+        case 1:
+            return favoriteTVShows.count
+            
+        default:
+            return 0
+        }
     }
     
     
@@ -111,11 +219,24 @@ extension FavouritesViewController: UICollectionViewDataSource {
         }
         
         cell.layoutIfNeeded()
-        cell.configure(with: someMovies[indexPath.row])
         
-       return cell
+        
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+            
+        case 0:
+            cell.configure(with: favoriteMovies[indexPath.row])
+            
+        case 1:
+            cell.configure(with: favoriteTVShows[indexPath.row])
+            
+        default:
+            return UICollectionViewCell()
+        }
+        
+        return cell
     }
-    
 }
 
 
@@ -129,9 +250,22 @@ extension FavouritesViewController: UICollectionViewDelegate {
         destinationViewController.presentationController?.delegate = self
         destinationViewController.loadViewIfNeeded()
         
-        destinationViewController.configure(with: someMovies[indexPath.row])
-        navigationController?.present(destinationViewController, animated: true)
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
+        
+        switch selectedIndex {
+            
+        case 0:
+            destinationViewController.configure(with: favoriteMovies[indexPath.row])
+            
+        case 1:
+            destinationViewController.configure(with: favoriteTVShows[indexPath.row])
+            
+        default:
+            return
+        }
+        
+        navigationController?.present(destinationViewController, animated: true)
     }
     
 // move to contextual menu
@@ -142,18 +276,18 @@ extension FavouritesViewController: UICollectionViewDelegate {
 //            
 //            guard let self else { return }
 //            
-//            DataManager.shared.deleteFromFavorites(id: self.someMovies[indexPath.row].id, type: "movie") { [weak self] result in
+//            DataManager.shared.deleteFromFavorites(id: self.favoriteMovies[indexPath.row].id, type: "movie") { [weak self] result in
 //                
 //                guard let self else { return }
 //                
 //                guard result == 200 else { return }
 //                
-//                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.someMovies[indexPath.row].id) {
+//                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.favoriteMovies[indexPath.row].id) {
 //                    
 //                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
 //                        guard let self else { return }
 //                        
-//                        self.someMovies = favorites
+//                        self.favoriteMovies = favorites
 //                        
 //                        DispatchQueue.main.async {
 //                            self.favouritesCollectionView.reloadData()
@@ -174,16 +308,13 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let isWidthBigger = {
-            return UIScreen.main.bounds.width > UIScreen.main.bounds.height
-        }
         
         guard isWidthBigger() else {
             
             return CGSize(width: view.frame.width / 2.0, height: view.frame.height / 2.62)
         }
         
-        return CGSize(width: view.frame.width / 4.0, height: view.frame.height / 1.1 )
+        return CGSize(width: view.frame.width / 4.0, height: view.frame.height / 1.2 )
     }
     
     
@@ -201,15 +332,34 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
        
-        RepositoryService.shared.movieFavoritesCashing { [weak self] data in
-            guard let self else { return }
-            
-            self.someMovies = data
-            
-            DispatchQueue.main.async {
-                self.favouritesCollectionView.reloadData()
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+        
+        case 0:
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
                 
+                self.favoriteMovies = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
             }
+            
+        case 1:
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+                guard let self else { return }
+                
+                self.favoriteTVShows = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+            }
+            
+        default:
+            return
         }
     }
 }

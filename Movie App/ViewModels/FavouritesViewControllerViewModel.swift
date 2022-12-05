@@ -12,19 +12,19 @@ import Foundation
 
 class FavouritesViewControllerViewModel {
     
-    //var someMovies = BehaviorRelay<[MovieModel]>(value: [])
+    //var favoriteMovies = BehaviorRelay<[MovieModel]>(value: [])
     
     //var bag = DisposeBag()
     
     func loadFavoriteMovies() {
         
-        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-            guard let self else { return }
+//        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+            //guard let self else { return }
             
-            //self.someMovies.accept(favorites)
+            //self.favoriteMovies.accept(favorites)
             
-//            self.someMovies.onNext(favorites)
-//            self.someMovies.onCompleted()
-        }
+//            self.favoriteMovies.onNext(favorites)
+//            self.favoriteMovies.onCompleted()
+//        }
     }
 }
