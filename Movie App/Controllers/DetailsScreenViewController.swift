@@ -33,6 +33,8 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var favoritesButton: UIButton!
     
+    @IBOutlet weak var similarLabel: UILabel!
+    
     var media: [Any] = []
     
     var mediaId: Int = 0
@@ -59,6 +61,8 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var mainBackView: UIView!
     
+    var isExpanded = false
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -73,22 +77,6 @@ class DetailsScreenViewController: UIViewController {
         mediaImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         mediaImage.layer.cornerRadius = 20
         
-        
-        //        let gradientLayer = CAGradientLayer()
-        //        gradientLayer.frame = mediaImage.bounds.integral
-        //
-        //        gradientLayer.type = .axial
-        //        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.4).cgColor]
-        //        gradientLayer.locations = [0.5, 1.0]
-        //        gradientLayer.shouldRasterize = true
-        //        mediaImage.layer.insertSublayer(gradientLayer, at: 0)
-        //
-        //
-        //        DispatchQueue.main.async {
-        //            self.mediaImage.layer.sublayers?[0].frame = self.mediaImage.bounds.integral
-        //
-        //        }
-        
         paddingView.translatesAutoresizingMaskIntoConstraints = false
         
         paddingView.clipsToBounds = true
@@ -98,7 +86,35 @@ class DetailsScreenViewController: UIViewController {
 
     }
     
-   
+    
+    
+    @IBAction func watchButtonTapped(_ sender: UIButton) {
+    }
+    
+    
+    @IBAction func owerviewButtonTapped(_ sender: UIButton) {
+        
+        if isExpanded {
+            mediaOverview.numberOfLines = 3
+            isExpanded = false
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+            
+            
+            
+        } else {
+            
+            mediaOverview.numberOfLines = 0
+            isExpanded = true
+            
+            UIView.animate(withDuration: 1.0) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
     @IBOutlet weak var paddingView: UIView!
     
     override func viewDidLoad() {
@@ -145,27 +161,27 @@ class DetailsScreenViewController: UIViewController {
     
     // MARK: - Configuring DetailsScreen with data depends on tapped cell type
     
-    func configure<T>(with cell: T) {
+    func configure<T>(with data: T) {
         
-        if let cell = cell as? MovieModel {
-            configureMovieCell(cell)
+        if let data = data as? MovieModel {
+            configureMovieCell(data)
             
-        } else if let cell = cell as? TVModel {
-            configureTVCell(cell)
+        } else if let data = data as? TVModel {
+            configureTVCell(data)
             
-        } else if let cell = cell as? TrendyMedia {
+        } else if let data = data as? TrendyMedia {
             
-            if cell.mediaType == "movie" {
-                let cell = MovieModel(from: cell)
-                configureMovieCell(cell)
+            if data.mediaType == "movie" {
+                let data = MovieModel(from: data)
+                configureMovieCell(data)
                 
-            } else if cell.mediaType == "tv" {
-                let cell = TVModel(from: cell)
-                configureTVCell(cell)
+            } else if data.mediaType == "tv" {
+                let data = TVModel(from: data)
+                configureTVCell(data)
             }
             
-        } else if let cell = cell as? Media {
-            switch cell {
+        } else if let data = data as? Media {
+            switch data {
                 
             case .movie(let movie):
                 configureMovieCell(movie)
@@ -177,42 +193,47 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    private func configureMovieCell(_ cell: MovieModel) {
+    private func configureMovieCell(_ movie: MovieModel) {
         
         mediaType = "movie"
-        media.append(cell)
-        mediaId = cell.id
+        media.append(movie)
+        mediaId = movie.id
         
-        configureFavoriteButton(cell: cell)
+        configureFavoriteButton(movie)
         
-        mediaName.text = cell.title
+        mediaName.text = movie.title
         
-        if cell.voteAverage > 0 {
-            mediaRating.setTitle("★ \(round((cell.voteAverage * 100))/100)", for: .normal)
+        if movie.voteAverage > 0 {
+            mediaRating.setTitle("★ \(round((movie.voteAverage * 100))/100)", for: .normal)
         }
         
-        mediaOverview.text = cell.overview
+        mediaOverview.text = movie.overview
         
         // MARK: Configuring movie genre
         
-        var genresString = ""
+        var yearGenresString = ""
+        
+        if let releaseYear = movie.releaseDate {
+            yearGenresString = "\(releaseYear.dropLast(6)). "
+        }
+        
         let genres = Globals.movieGenres
         
-        for movieID in cell.genreIDS {
+        for movieID in movie.genreIDS {
             
             for genre in genres {
                 
                 if movieID == genre.id {
-                    genresString.append("\(genre.name). ")
+                    yearGenresString.append("\(genre.name) • ")
                 }
             }
         }
         
-        mediaGenres.text = String("\(genresString)".dropLast(2))
+        mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
         // MARK: Configuring movie image
         
-        guard let imagePath = cell.posterPath else {
+        guard let imagePath = movie.posterPath else {
             
             mediaImage.image = .strokedCheckmark
             return
@@ -240,50 +261,58 @@ class DetailsScreenViewController: UIViewController {
         //                }
         //            }
         
-        guard cell.video != nil else { return }
+        guard movie.video != nil else { return }
         
-        configureTrailer(with: cell.id)
+        configureTrailer(with: movie.id)
         
-        configureMediaCast(with: cell.id)
+        configureMediaCast(with: movie.id)
+        
+        configureSimilarMedia(movie)
+        
     }
     
     
-    private func configureTVCell(_ cell: TVModel) {
+    private func configureTVCell(_ tvShow: TVModel) {
         
         mediaType = "tv"
-        media.append(cell)
-        mediaId = cell.id
+        media.append(tvShow)
+        mediaId = tvShow.id
         
-        configureFavoriteButton(cell: cell)
+        configureFavoriteButton(tvShow)
         
-        mediaName.text = cell.name
+        mediaName.text = tvShow.name
         
-        if cell.voteAverage > 0 {
-            mediaRating.setTitle("★ \(round((cell.voteAverage * 100))/100)", for: .normal)
+        if tvShow.voteAverage > 0 {
+            mediaRating.setTitle("★ \(round((tvShow.voteAverage * 100))/100)", for: .normal)
         }
         
-        mediaOverview.text = cell.overview
+        mediaOverview.text = tvShow.overview
         
         // MARK: Configuring tv genre
         
-        var genresString = ""
+        var yearGenresString = ""
+        
+        if let releaseYear = tvShow.firstAirDate {
+            yearGenresString = "\(releaseYear.dropLast(6)). "
+        }
+        
         let genres = Globals.tvGenres
         
-        for tvID in cell.genreIDS {
+        for tvID in tvShow.genreIDS {
             
             for genre in genres {
                 
                 if tvID == genre.id {
-                    genresString.append("\(genre.name). ")
+                    yearGenresString.append("\(genre.name) • ")
                 }
             }
         }
         
-        mediaGenres.text = String("\(genresString)".dropLast(2))
+        mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
         // MARK: Configuring tv image
         
-        guard let imagePath = cell.posterPath else {
+        guard let imagePath = tvShow.posterPath else {
             
             mediaImage.image = .strokedCheckmark
             return
@@ -311,17 +340,19 @@ class DetailsScreenViewController: UIViewController {
         //                }
         //            }
         
-        configureTrailer(with: cell.id)
+        configureTrailer(with: tvShow.id)
         
-        configureMediaCast(with: cell.id)
+        configureMediaCast(with: tvShow.id)
+        
+        configureSimilarMedia(tvShow)
     }
     
     
-    private func configureFavoriteButton<T>(cell: T) {
+    private func configureFavoriteButton<T>(_ data: T) {
         
-        if cell is MovieModel {
+        if data is MovieModel {
             
-            let cell = cell as! MovieModel
+            let cell = data as! MovieModel
             
             // MARK: - Request favorite movies list
             
@@ -340,9 +371,9 @@ class DetailsScreenViewController: UIViewController {
                 }
             }
             
-        } else if cell is TVModel {
+        } else if data is TVModel {
             
-            let cell = cell as! TVModel
+            let cell = data as! TVModel
             
             // MARK: - Request favorite tv shows list
             
@@ -436,6 +467,32 @@ class DetailsScreenViewController: UIViewController {
             DispatchQueue.main.async {
                 self.castCollectionView.reloadData()
             }
+        }
+    }
+    
+    
+    func configureSimilarMedia<T>(_ media: T) {
+        
+        if let media = media as? MovieModel {
+            
+            DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movie in
+                guard let self else { return }
+                
+                self.similarLabel.text = "Movie: \(movie.first?.title)"
+            }
+            
+        } else if let media = media as? TVModel {
+            
+            DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tv in
+                guard let self else { return }
+                
+                self.similarLabel.text = "TV: \(tv.first?.name)"
+            }
+        }
+    }
+    
+    func configureMediaProviders<T>(_ media: T) {
+        if let media = media as? MovieModel {
         }
     }
 }
