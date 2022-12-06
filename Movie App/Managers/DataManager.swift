@@ -385,5 +385,39 @@ struct DataManager {
             }
         }
     }
+    
+    
+    func getSimilarMovies(movieId: Int, completion: @escaping([MovieModel]) -> Void) {
+    
+        let similarMoviesRequest = AF.request("https://api.themoviedb.org/3/movie/\(movieId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        similarMoviesRequest.responseDecodable(of: ResultsMovie.self ) { response in
+            
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    
+    func getSimilarTVShows(mediaId: Int, completion: @escaping([TVModel]) -> Void) {
+    
+        let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        similarTVShowsRequest.responseDecodable(of: ResultsTV.self ) { response in
+            
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
 }
 
