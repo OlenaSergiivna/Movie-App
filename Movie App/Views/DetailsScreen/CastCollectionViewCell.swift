@@ -17,7 +17,7 @@ class CastCollectionViewCell: UICollectionViewCell {
     
     private let castImage: UIImageView = {
         let castImage = UIImageView()
-        //castImage.image = .strokedCheckmark
+        castImage.translatesAutoresizingMaskIntoConstraints = false
         castImage.contentMode = .scaleAspectFill
         castImage.clipsToBounds = true
         castImage.layer.cornerRadius = 20
@@ -27,35 +27,63 @@ class CastCollectionViewCell: UICollectionViewCell {
     
     private let castLabel: UILabel = {
         let castLabel = UILabel()
+        castLabel.translatesAutoresizingMaskIntoConstraints = false
         castLabel.text = ""
         castLabel.textColor = .white
+        castLabel.textAlignment = .center
         castLabel.contentMode = .center
         castLabel.font = .systemFont(ofSize: 10)
+        castLabel.adjustsFontSizeToFitWidth = true
         return castLabel
+    }()
+    
+    private let characterLabel: UILabel = {
+        let characterLabel = UILabel()
+        characterLabel.translatesAutoresizingMaskIntoConstraints = false
+        characterLabel.text = "Hello"
+        characterLabel.textColor = .darkGray
+        characterLabel.contentMode = .center
+        characterLabel.textAlignment = .center
+        characterLabel.font = .systemFont(ofSize: 8)
+        characterLabel.adjustsFontSizeToFitWidth = true
+        characterLabel.minimumScaleFactor = 0.1
+        return characterLabel
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
-        contentView.backgroundColor = .clear
+       
         contentView.addSubview(castImage)
         contentView.addSubview(castLabel)
+        contentView.addSubview(characterLabel)
        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        castLabel.frame = CGRect(x: 5,
-                                 y: contentView.frame.size.height - 24,
-                                 width: contentView.frame.size.width,
-                                 height: 16)
-        
-        castImage.frame = CGRect(x: 0,
-                                 y: 0,
-                                 width: contentView.frame.size.width - 8,
-                                 height: contentView.frame.size.height - 40)
+        NSLayoutConstraint.activate([
+            
+            castImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            castImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            castImage.widthAnchor.constraint(equalToConstant: 88),
+            castImage.heightAnchor.constraint(equalToConstant: contentView.frame.size.height - 30),
+            
+            castLabel.topAnchor.constraint(equalTo: castImage.bottomAnchor, constant: 4),
+            castLabel.leadingAnchor.constraint(greaterThanOrEqualTo: castImage.leadingAnchor),
+            castLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castImage.trailingAnchor),
+            castLabel.centerXAnchor.constraint(equalTo: castImage.centerXAnchor),
+            
+            characterLabel.topAnchor.constraint(equalTo: castLabel.bottomAnchor, constant: 4),
+            characterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            characterLabel.leadingAnchor.constraint(greaterThanOrEqualTo: castLabel.leadingAnchor),
+            characterLabel.centerXAnchor.constraint(equalTo: castLabel.centerXAnchor),
+            characterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castLabel.trailingAnchor)
+        ])
+
+            
     }
     
     override func prepareForReuse() {
@@ -63,10 +91,12 @@ class CastCollectionViewCell: UICollectionViewCell {
         
         castImage.image = nil
         castLabel.text = nil
+        characterLabel.text = nil
     }
     
     func configure(with data: Cast) {
         castLabel.text = data.name
+        characterLabel.text = data.character
 
         guard let profilePath = data.profilePath else {
 

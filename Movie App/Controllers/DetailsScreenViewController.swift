@@ -33,8 +33,6 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var favoritesButton: UIButton!
     
-    @IBOutlet weak var similarLabel: UILabel!
-    
     var media: [Any] = []
     
     var mediaId: Int = 0
@@ -478,7 +476,6 @@ class DetailsScreenViewController: UIViewController {
             DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movie in
                 guard let self else { return }
                 
-                self.similarLabel.text = "Movie: \(movie.first?.title)"
             }
             
         } else if let media = media as? TVModel {
@@ -486,7 +483,6 @@ class DetailsScreenViewController: UIViewController {
             DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tv in
                 guard let self else { return }
                 
-                self.similarLabel.text = "TV: \(tv.first?.name)"
             }
         }
     }
