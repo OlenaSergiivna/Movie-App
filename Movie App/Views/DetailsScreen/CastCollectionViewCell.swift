@@ -46,7 +46,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         characterLabel.textAlignment = .center
         characterLabel.font = .systemFont(ofSize: 8)
         characterLabel.adjustsFontSizeToFitWidth = true
-        characterLabel.minimumScaleFactor = 0.1
+        characterLabel.minimumScaleFactor = 0.3
         return characterLabel
     }()
     
@@ -58,17 +58,11 @@ class CastCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(castImage)
         contentView.addSubview(castLabel)
         contentView.addSubview(characterLabel)
-       
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
         
         NSLayoutConstraint.activate([
             
             castImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            castImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            castImage.widthAnchor.constraint(equalToConstant: 88),
+            castImage.widthAnchor.constraint(equalToConstant: contentView.frame.size.width),
             castImage.heightAnchor.constraint(equalToConstant: contentView.frame.size.height - 30),
             
             castLabel.topAnchor.constraint(equalTo: castImage.bottomAnchor, constant: 4),
@@ -82,8 +76,12 @@ class CastCollectionViewCell: UICollectionViewCell {
             characterLabel.centerXAnchor.constraint(equalTo: castLabel.centerXAnchor),
             characterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castLabel.trailingAnchor)
         ])
-
-            
+    }
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+      
     }
     
     override func prepareForReuse() {
@@ -95,9 +93,21 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with data: Cast) {
+        
         castLabel.text = data.name
-        characterLabel.text = data.character
-
+        
+        
+        if let characterString = data.character {
+            characterLabel.text = characterString
+            
+            if let index = characterString.range(of: "/")?.lowerBound {
+                let substring = characterString[..<index]
+                
+                characterLabel.text = String(substring.dropLast(1))
+            }
+        }
+        
+        
         guard let profilePath = data.profilePath else {
 
             castImage.image = .strokedCheckmark

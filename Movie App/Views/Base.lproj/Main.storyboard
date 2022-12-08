@@ -615,12 +615,6 @@
                                                         </collectionViewFlowLayout>
                                                         <cells/>
                                                     </collectionView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WqT-Iy-DEs">
-                                                        <rect key="frame" x="16" y="644.99999999999989" width="343" height="20.333333333333371"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N9M-Bw-Zbn">
                                                         <rect key="frame" x="16" y="89.333333333333258" width="343" height="35"/>
                                                         <state key="normal" title="Button"/>
@@ -637,11 +631,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="QiK-j8-To5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6H7-6j-d2l" secondAttribute="leading" constant="20" symbolic="YES" id="0ag-DY-OFW"/>
                                                     <constraint firstItem="XD2-SH-3dj" firstAttribute="top" secondItem="6H7-6j-d2l" secondAttribute="top" constant="16" id="1A6-83-tKp"/>
                                                     <constraint firstItem="QiK-j8-To5" firstAttribute="trailing" secondItem="6H7-6j-d2l" secondAttribute="trailing" constant="-16" id="33W-R6-47z"/>
                                                     <constraint firstItem="6hJ-XR-amG" firstAttribute="trailing" secondItem="H29-HP-q4a" secondAttribute="trailing" id="4f7-iS-1g3"/>
                                                     <constraint firstItem="N9M-Bw-Zbn" firstAttribute="leading" secondItem="7Ur-da-UOa" secondAttribute="leading" id="5w5-ha-SKt"/>
-                                                    <constraint firstAttribute="trailing" secondItem="WqT-Iy-DEs" secondAttribute="trailing" constant="16" id="6VI-fg-LMv"/>
                                                     <constraint firstAttribute="trailing" secondItem="6H7-ar-rVA" secondAttribute="trailing" constant="16" id="7Nd-PE-t8v"/>
                                                     <constraint firstItem="Wqw-Fj-U2E" firstAttribute="leading" secondItem="rNN-id-mKZ" secondAttribute="leading" id="7vs-lY-AQx"/>
                                                     <constraint firstAttribute="trailing" secondItem="7Ur-da-UOa" secondAttribute="trailing" constant="16" id="8RY-fc-keF"/>
@@ -649,7 +643,6 @@
                                                     <constraint firstItem="7Ur-da-UOa" firstAttribute="top" secondItem="XD2-SH-3dj" secondAttribute="bottom" constant="2" id="GEO-cB-iKL"/>
                                                     <constraint firstItem="QiK-j8-To5" firstAttribute="centerY" secondItem="XD2-SH-3dj" secondAttribute="centerY" id="HOZ-x7-nok"/>
                                                     <constraint firstItem="6H7-ar-rVA" firstAttribute="leading" secondItem="rNN-id-mKZ" secondAttribute="leading" id="IEm-R5-rdG"/>
-                                                    <constraint firstItem="WqT-Iy-DEs" firstAttribute="top" secondItem="6H7-ar-rVA" secondAttribute="bottom" constant="16" id="Kd0-ca-gMy"/>
                                                     <constraint firstItem="rNN-id-mKZ" firstAttribute="top" secondItem="H29-HP-q4a" secondAttribute="bottom" constant="16" id="Ljr-JK-1zT"/>
                                                     <constraint firstItem="6hJ-XR-amG" firstAttribute="top" secondItem="H29-HP-q4a" secondAttribute="top" id="LpO-kH-C4Z"/>
                                                     <constraint firstItem="H29-HP-q4a" firstAttribute="leading" secondItem="XD2-SH-3dj" secondAttribute="leading" id="M2w-fF-Yiy"/>
@@ -658,7 +651,6 @@
                                                     <constraint firstItem="rNN-id-mKZ" firstAttribute="leading" secondItem="H29-HP-q4a" secondAttribute="leading" id="SMe-OF-Oe9"/>
                                                     <constraint firstItem="y1N-ro-Aeg" firstAttribute="top" secondItem="rNN-id-mKZ" secondAttribute="bottom" constant="8" id="T7G-uC-CiQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="H29-HP-q4a" secondAttribute="trailing" constant="16" id="UdQ-L5-vCa"/>
-                                                    <constraint firstItem="WqT-Iy-DEs" firstAttribute="leading" secondItem="6H7-6j-d2l" secondAttribute="leading" constant="16" id="X4G-ky-dIs"/>
                                                     <constraint firstItem="XD2-SH-3dj" firstAttribute="leading" secondItem="6H7-6j-d2l" secondAttribute="leading" constant="40" id="ZvO-XK-2lh"/>
                                                     <constraint firstItem="6H7-ar-rVA" firstAttribute="top" secondItem="Wqw-Fj-U2E" secondAttribute="bottom" constant="8" id="doO-qJ-8YF"/>
                                                     <constraint firstItem="6hJ-XR-amG" firstAttribute="leading" secondItem="H29-HP-q4a" secondAttribute="leading" id="ifX-MG-8RS"/>
@@ -709,6 +701,7 @@
                                             <constraint firstItem="2TT-Ef-3JK" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" constant="50" id="KJG-Xd-LQy"/>
                                             <constraint firstItem="jv2-nb-BmL" firstAttribute="top" secondItem="R8Y-jt-hdd" secondAttribute="top" id="Nca-6x-3Oo"/>
                                             <constraint firstItem="6H7-6j-d2l" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" id="cJk-Ds-HUh"/>
+                                            <constraint firstItem="2TT-Ef-3JK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="R8Y-jt-hdd" secondAttribute="leading" constant="20" symbolic="YES" id="gzc-G3-Ly1"/>
                                             <constraint firstItem="6H7-6j-d2l" firstAttribute="top" secondItem="jv2-nb-BmL" secondAttribute="bottom" id="mXT-7t-JNU"/>
                                             <constraint firstAttribute="trailing" secondItem="jv2-nb-BmL" secondAttribute="trailing" id="oa0-Kl-uxY"/>
                                             <constraint firstItem="jv2-nb-BmL" firstAttribute="leading" secondItem="R8Y-jt-hdd" secondAttribute="leading" id="pgj-y3-FyT"/>
@@ -751,7 +744,6 @@
                         <outlet property="mediaOverview" destination="H29-HP-q4a" id="Mgv-YA-xlR"/>
                         <outlet property="mediaRating" destination="2TT-Ef-3JK" id="gVh-Uc-YFw"/>
                         <outlet property="paddingView" destination="6H7-6j-d2l" id="eqa-kJ-5zS"/>
-                        <outlet property="similarLabel" destination="WqT-Iy-DEs" id="io7-9Z-VzN"/>
                         <outlet property="trailerPlayer" destination="y1N-ro-Aeg" id="IJQ-i5-blG"/>
                     </connections>
                 </viewController>
