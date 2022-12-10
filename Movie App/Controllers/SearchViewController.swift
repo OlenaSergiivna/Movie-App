@@ -38,6 +38,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchTableView.delegate = self
         
         configureUI()
+        setUpNotifications()
         
         
         // MARK: - Registration nibs
@@ -144,6 +145,18 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
             let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
             self.present(viewController, animated: true)
         }
+    }
+    
+    func setUpNotifications() {
+        let mainNotificationCenter = NotificationCenter.default
+        
+        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    
+    @objc func appWasReturnedOnForeground() {
+        
+        tabBarController?.tabBar.isHidden = false
     }
 }
 

@@ -23,8 +23,7 @@ struct ResultsReviews: Codable {
 struct ReviewsModel: Codable {
     let author: String
     let authorDetails: AuthorDetails
-    let content, createdAt, id, updatedAt: String
-    let url: String
+    let content, createdAt, id, updatedAt, url: String
 
     enum CodingKeys: String, CodingKey {
         case author
@@ -41,7 +40,7 @@ struct ReviewsModel: Codable {
 struct AuthorDetails: Codable {
     let name, username: String
     let avatarPath: String?
-    let rating: Int?
+    let rating: Double?
 
     enum CodingKeys: String, CodingKey {
         case name, username

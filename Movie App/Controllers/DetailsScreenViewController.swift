@@ -96,10 +96,8 @@ class DetailsScreenViewController: UIViewController {
         paddingView.layer.cornerRadius = 20
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.async {
             self.changeHeight()
-            print("height after: \(self.collectionHeightConstraint.constant)")
-            print("content height after: \(self.detailsScreenCollectionView.contentSize.height)")
         }
     }
     
@@ -568,7 +566,7 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return castArray.count
             
         case 1:
-            return reviewsArray.count
+           return reviewsArray.count
             
         default:
             return similarArray.count
@@ -616,9 +614,6 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard !reviewsArray.isEmpty else {
-            return 2
-        }
         return 3
     }
     
@@ -633,8 +628,11 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return header
             
         case 1:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
             
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
+//            if reviewsArray.isEmpty {
+//                header.isHidden = true
+//            }
             return header
             
         default:
@@ -658,17 +656,17 @@ extension DetailsScreenViewController  {
                 return DetailsScreenLayouts.shared.mediaCastSection()
                 
             case 1:
+                guard !self.reviewsArray.isEmpty else { return nil }
+                
                 return DetailsScreenLayouts.shared.mediaReviewsSection()
                 
             default:
+                guard !self.similarArray.isEmpty else { return nil }
+                
                 return DetailsScreenLayouts.shared.similarMediaSection()
             }
         }
         
         detailsScreenCollectionView.setCollectionViewLayout(layout, animated: true)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: (collectionView.frame.width - 4) / 5, height: 160)
-//    }
 }

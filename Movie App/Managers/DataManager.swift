@@ -155,7 +155,6 @@ struct DataManager {
     func requestFavoriteTVShows(completion: @escaping (_ success: Bool, _ favorites: [TVModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
         let urlTV = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
-        print(urlTV)
         
         AF.request(urlTV,
                    method: .get,
@@ -217,14 +216,12 @@ struct DataManager {
         ]
         
         let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)"
-        print(deleteURL)
         
         let deleteFromFavoritesRequest = AF.request(deleteURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
         deleteFromFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
                 let result = try response.result.get()
-                print(result)
                 if let response = response.response?.statusCode {
                     completion(response)
                 }
@@ -409,6 +406,23 @@ struct DataManager {
         let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarTVShowsRequest.responseDecodable(of: ResultsTV.self ) { response in
+            
+            do {
+                let data = try response.result.get().results
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    
+    func getReviews(mediaType: String, mediaId: Int, completion: @escaping([ReviewsModel]) -> Void) {
+    
+        let mediaReviewsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/reviews?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        mediaReviewsRequest.responseDecodable(of: ResultsReviews.self ) { response in
             
             do {
                 let data = try response.result.get().results
