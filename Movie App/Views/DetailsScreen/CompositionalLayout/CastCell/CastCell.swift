@@ -9,6 +9,8 @@ import UIKit
 import Kingfisher
 
 class CastCollectionViewCell: UICollectionViewCell {
+    
+    static let cellIdentifier = "CastCollectionViewCell"
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -81,6 +83,8 @@ class CastCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        
       
     }
     

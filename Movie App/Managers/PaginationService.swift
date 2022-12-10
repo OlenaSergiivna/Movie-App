@@ -9,9 +9,9 @@ import UIKit
 
 struct PaginationService {
     
-    static let shared = PaginationService()
-    
-    private init() {}
+    //    static let shared = PaginationService()
+    //
+    //    private init() {}
     
     var pageCount = 1
     
@@ -21,32 +21,117 @@ struct PaginationService {
     
     var searchText = ""
     
-    var searchResultsMovie: [MovieModel] = []
-    
-    
-//    mutating func paginate(indexPath: IndexPath, searchTableView: UITableView) {
+//    mutating func paginate<T: Sequence>(indexPath: IndexPath, tableView: UITableView, searchController: UISearchController, searchResultsArray: inout [T]) {
 //
-//        if ((indexPath.row == searchResultsMovie.count - 5) && totalPagesCount > pageCount) {
+//        guard let text = searchController.searchBar.text else { return }
+//        let searchText = text.replacingOccurrences(of: " ", with: "%20")
 //
-//            displayStatus = true
-//            pageCount += 1
+//        if searchResultsArray is [MovieModel] {
+//            guard indexPath.row == searchResultsArray.count - 5, totalPagesCount > pageCount else { return }
 //
-//            //                DispatchQueue.main.async {
-//            //                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
-//            //
-//            //                }
+//            self.displayStatus = true
+//            self.pageCount += 1
 //
 //            DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
-//
-//                searchResultsMovie.append(contentsOf: result)
+//                searchResultsArray.append(contentsOf: result as! [T])
 //
 //                DispatchQueue.main.async {
-//
-//                    searchTableView.reloadData()
+//                    tableView.reloadData()
 //                }
 //
-//                displayStatus = false
-//            }
+////                self.displayStatus = false
+//        }
+//
+//
+////        if searchResultsArray is [MovieModel] {
+////
+////            guard indexPath.row == searchResultsArray.count - 5, totalPagesCount > pageCount else { return }
+////
+////            self.displayStatus = true
+////            self.pageCount += 1
+////
+////            DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
+////                searchResultsArray.append(contentsOf: result as! T)
+////
+////                DispatchQueue.main.async {
+////                    tableView.reloadData()
+////                }
+////
+//////                self.displayStatus = false
+////            }
 //        }
 //    }
+    
+    
+    
+    
+    
+    //        if let searchResultsArray = searchResultsArray as? [TVModel] {
+    //            paginateAsTVShow()
+    //        }
+    
+    
+    //        DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
+    //
+    //            searchResultsArray.append(contentsOf: result)
+    //
+    //            DispatchQueue.main.async {
+    //
+    //                tableView.reloadData()
+    //            }
+    //            displayStatus = false
+    //        }
+    
+    private mutating func paginateAsMovie(indexPath: IndexPath, tableView: UITableView, searchResultsArray: inout [MovieModel] ) {
+        
+        //        guard indexPath.row == searchResultsArray.count - 5, totalPagesCount > pageCount else {
+        //            return
+        //        }
+        //
+        //        self.displayStatus = true
+        //        self.pageCount += 1
+        //
+        //        DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
+        //            searchResultsArray.append(contentsOf: result)
+        //
+        //            DispatchQueue.main.async {
+        //                tableView.reloadData()
+        //            }
+        //
+        //            self.displayStatus = false
+        //        }
+        //
+        //    }
+        
+    }
+    private func paginateAsTVShow() {
+        
+    }
+    
+    
+    //    mutating func paginate(indexPath: IndexPath, searchTableView: UITableView) {
+    //
+    //        if ((indexPath.row == searchResultsMovie.count - 5) && totalPagesCount > pageCount) {
+    //
+    //            displayStatus = true
+    //            pageCount += 1
+    //
+    //            //                DispatchQueue.main.async {
+    //            //                    self.searchTableView.reloadSections(IndexSet(integer: 1), with: .none)
+    //            //
+    //            //                }
+    //
+    //            DataManager.shared.searchMovie(with: searchText, page: pageCount) { result in
+    //
+    //                searchResultsMovie.append(contentsOf: result)
+    //
+    //                DispatchQueue.main.async {
+    //
+    //                    searchTableView.reloadData()
+    //                }
+    //
+    //                displayStatus = false
+    //            }
+    //        }
+    //    }
 }

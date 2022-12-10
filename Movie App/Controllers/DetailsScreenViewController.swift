@@ -17,7 +17,7 @@ class DetailsScreenViewController: UIViewController {
         print("!!! Deinit: \(self)")
     }
     
-    @IBOutlet weak var castCollectionView: UICollectionView!
+    // MARK: - Properties and outlets
     
     @IBOutlet weak var trailerPlayer: YTPlayerView!
     
@@ -33,11 +33,28 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var favoritesButton: UIButton!
     
+    @IBOutlet weak var mainScrollView: UIScrollView!
+    
+    @IBOutlet weak var mainBackView: UIView!
+    
+    @IBOutlet weak var paddingView: UIView!
+    
+    @IBOutlet weak var detailsScreenCollectionView: UICollectionView!
+    
     var media: [Any] = []
     
     var mediaId: Int = 0
     
     var mediaType: String = ""
+    
+    var castArray: [Cast] = []
+    
+    var reviewsArray: [ReviewsModel] = []
+    
+    var similarArray: [Any] = []
+    
+    
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
     var isFavorite: Bool = false {
         didSet {
@@ -53,35 +70,37 @@ class DetailsScreenViewController: UIViewController {
         }
     }
     
-    var castArray: [Cast] = []
-    
-    @IBOutlet weak var mainScrollView: UIScrollView!
-    
-    @IBOutlet weak var mainBackView: UIView!
-    
     var isExpanded = false
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         trailerPlayer.delegate = self
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
-        
         mediaImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         mediaImage.layer.cornerRadius = 20
         
         paddingView.translatesAutoresizingMaskIntoConstraints = false
-        
         paddingView.clipsToBounds = true
         paddingView.contentMode = .scaleAspectFill
         paddingView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         paddingView.layer.cornerRadius = 20
-
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.changeHeight()
+            print("height after: \(self.collectionHeightConstraint.constant)")
+            print("content height after: \(self.detailsScreenCollectionView.contentSize.height)")
+        }
     }
     
     
@@ -89,6 +108,7 @@ class DetailsScreenViewController: UIViewController {
     @IBAction func watchButtonTapped(_ sender: UIButton) {
     }
     
+    // MARK: - Making overview text expandable by tap
     
     @IBAction func owerviewButtonTapped(_ sender: UIButton) {
         
@@ -99,9 +119,7 @@ class DetailsScreenViewController: UIViewController {
             UIView.animate(withDuration: 1.0) {
                 self.view.layoutIfNeeded()
             }
-            
-            
-            
+                
         } else {
             
             mediaOverview.numberOfLines = 0
@@ -112,20 +130,33 @@ class DetailsScreenViewController: UIViewController {
             }
         }
     }
-    
-    @IBOutlet weak var paddingView: UIView!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        castCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: "CastCollectionViewCell")
-        
-        castCollectionView.dataSource = self
-        castCollectionView.delegate = self
+ 
+        detailsScreenCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.cellIdentifier)
+            
+        detailsScreenCollectionView.register(ReviewsCollectionViewCell.self, forCellWithReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier)
+            
+        detailsScreenCollectionView.register(SimilarMediaCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier)
+            
+        detailsScreenCollectionView.register(CastHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: CastHeaderView.headerIdentifier)
+            
+        detailsScreenCollectionView.register(ReviewsHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: ReviewsHeaderView.headerIdentifier)
+            
+        detailsScreenCollectionView.register(SimilarHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SimilarHeaderView.headerIdentifier)
+            
+        detailsScreenCollectionView.backgroundColor = .black
         
         configureUI()
+        setUpcollectionView()
+        configureCompositionalLayout()
+        
+        self.view.layoutIfNeeded()
     }
     
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -133,18 +164,16 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    
     func configureUI() {
-        
         view.backgroundColor = .black
-        configureNavBar()
         
+        configureNavBar()
     }
     
     
     
     private func configureNavBar() {
-       
+        
         let barAppearance = UINavigationBarAppearance()
         barAppearance.configureWithTransparentBackground()
         barAppearance.backgroundColor = .clear
@@ -153,6 +182,18 @@ class DetailsScreenViewController: UIViewController {
         
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
+    }
+    
+    func setUpcollectionView() {
+        
+        detailsScreenCollectionView.showsVerticalScrollIndicator = false
+        detailsScreenCollectionView.delegate = self
+        detailsScreenCollectionView.dataSource = self
+        detailsScreenCollectionView.alwaysBounceVertical = false
+        detailsScreenCollectionView.bounces = false
+        detailsScreenCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        detailsScreenCollectionView.backgroundColor = .clear
         
     }
     
@@ -231,39 +272,40 @@ class DetailsScreenViewController: UIViewController {
         
         // MARK: Configuring movie image
         
-        guard let imagePath = movie.posterPath else {
+        if let imagePath = movie.posterPath {
             
+            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+            |> RoundCornerImageProcessor(cornerRadius: 0)
+            mediaImage.kf.indicatorType = .activity
+            mediaImage.kf.setImage(
+                with: url,
+                options: [
+                    .processor(processor),
+                    .scaleFactor(3), //UIScreen.main.scale
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+            //            {
+            //                result in
+            //                switch result {
+            //                case .success(let value):
+            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+            //                case .failure(let error):
+            //                    print("Job failed: \(error.localizedDescription)")
+            //                }
+            //            }
+        } else {
             mediaImage.image = .strokedCheckmark
-            return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(3), //UIScreen.main.scale
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
-        
-        guard movie.video != nil else { return }
-        
-        configureTrailer(with: movie.id)
+        if movie.video != nil {
+            configureTrailer(with: movie.id)
+        }
         
         configureMediaCast(with: movie.id)
+        
+        configureReviews(mediaType: "movie", mediaId: movie.id)
         
         configureSimilarMedia(movie)
         
@@ -310,37 +352,39 @@ class DetailsScreenViewController: UIViewController {
         
         // MARK: Configuring tv image
         
-        guard let imagePath = tvShow.posterPath else {
+        if let imagePath = tvShow.posterPath {
             
+            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
+            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
+            |> RoundCornerImageProcessor(cornerRadius: 0)
+            mediaImage.kf.indicatorType = .activity
+            mediaImage.kf.setImage(
+                with: url,
+                options: [
+                    .processor(processor),
+                    .scaleFactor(3),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+            //            {
+            //                result in
+            //                switch result {
+            //                case .success(let value):
+            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
+            //                case .failure(let error):
+            //                    print("Job failed: \(error.localizedDescription)")
+            //                }
+            //            }
+            
+        } else {
             mediaImage.image = .strokedCheckmark
-            return
         }
-        
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(3),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
         
         configureTrailer(with: tvShow.id)
         
         configureMediaCast(with: tvShow.id)
+        
+        configureReviews(mediaType: "tv", mediaId: tvShow.id)
         
         configureSimilarMedia(tvShow)
     }
@@ -348,9 +392,7 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureFavoriteButton<T>(_ data: T) {
         
-        if data is MovieModel {
-            
-            let cell = data as! MovieModel
+        if let data = data as? MovieModel {
             
             // MARK: - Request favorite movies list
             
@@ -361,7 +403,7 @@ class DetailsScreenViewController: UIViewController {
                 
                 // MARK: - Check if movie is already in favorite list & set isFavorite property
                 
-                if favorites.contains(where: { $0.id == cell.id }) {
+                if favorites.contains(where: { $0.id == data.id }) {
                     self.isFavorite = true
                     
                 } else {
@@ -369,20 +411,18 @@ class DetailsScreenViewController: UIViewController {
                 }
             }
             
-        } else if data is TVModel {
-            
-            let cell = data as! TVModel
+        } else if let data = data as? TVModel {
             
             // MARK: - Request favorite tv shows list
             
             DataManager.shared.requestFavoriteTVShows { [weak self] success, favorites, _, _ in
                 guard let self else { return }
                 
-                if let favorites = favorites {
+                guard let favorites = favorites else { return }
                     
                     // MARK: - Check if tv show is already in favorite list & set isFavorite property
                     
-                    if favorites.contains(where: { $0.id == cell.id }) {
+                    if favorites.contains(where: { $0.id == data.id }) {
                         self.isFavorite = true
                         
                     } else {
@@ -391,9 +431,8 @@ class DetailsScreenViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    
+        
+        
     private func configureTrailer(with id: Int) {
         
         DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
@@ -463,7 +502,20 @@ class DetailsScreenViewController: UIViewController {
             self.castArray = cast
             
             DispatchQueue.main.async {
-                self.castCollectionView.reloadData()
+                self.detailsScreenCollectionView.reloadData()
+            }
+        }
+    }
+    
+    
+    func configureReviews(mediaType: String, mediaId: Int) {
+        DataManager.shared.getReviews(mediaType: mediaType, mediaId: mediaId) { [weak self] reviews in
+            guard let self else { return }
+           
+            self.reviewsArray = reviews
+
+            DispatchQueue.main.async {
+                self.detailsScreenCollectionView.reloadData()
             }
         }
     }
@@ -473,16 +525,16 @@ class DetailsScreenViewController: UIViewController {
         
         if let media = media as? MovieModel {
             
-            DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movie in
+            DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movies in
                 guard let self else { return }
-                
+                self.similarArray = movies
             }
             
         } else if let media = media as? TVModel {
             
-            DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tv in
+            DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tvShows in
                 guard let self else { return }
-                
+                self.similarArray = tvShows
             }
         }
     }
@@ -501,38 +553,122 @@ extension DetailsScreenViewController: YTPlayerViewDelegate {
 }
 
 
-extension DetailsScreenViewController: UICollectionViewDataSource {
+extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func changeHeight() {
+        collectionHeightConstraint.constant = detailsScreenCollectionView.contentSize.height
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        guard !castArray.isEmpty else { return 0 }
-        return castArray.count
+        switch section {
+            
+        case 0:
+            return castArray.count
+            
+        case 1:
+            return reviewsArray.count
+            
+        default:
+            return similarArray.count
+        }
+        
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "CastCollectionViewCell", for: indexPath) as? CastCollectionViewCell else {
-           
-            return UICollectionViewCell()
+        switch indexPath.section {
+            
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCollectionViewCell.cellIdentifier, for: indexPath) as? CastCollectionViewCell else {
+                
+                return UICollectionViewCell()
+            }
+            
+            cell.layoutIfNeeded()
+            cell.configure(with: castArray[indexPath.row])
+            return cell
+            
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier, for: indexPath) as? ReviewsCollectionViewCell else {
+                
+                return UICollectionViewCell()
+            }
+            
+            cell.layoutIfNeeded()
+            cell.configure(with: reviewsArray[indexPath.row])
+            return cell
+            
+        default:
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier, for: indexPath) as? SimilarMediaCollectionViewCell else {
+                
+                return UICollectionViewCell()
+            }
+            
+            cell.layoutIfNeeded()
+            cell.configure(with: similarArray[indexPath.row])
+            return cell
+        }
+    }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard !reviewsArray.isEmpty else {
+            return 2
+        }
+        return 3
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch indexPath.section {
+            
+        case 0:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CastHeaderView.headerIdentifier, for: indexPath) as? CastHeaderView else { return UICollectionReusableView() }
+            
+            return header
+            
+        case 1:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
+            
+            return header
+            
+        default:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SimilarHeaderView.headerIdentifier, for: indexPath) as? SimilarHeaderView else { return UICollectionReusableView() }
+            
+            return header
+        }
+    }
+}
+
+
+extension DetailsScreenViewController  {
+    
+    func configureCompositionalLayout() {
+        
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+            
+            switch sectionIndex {
+                
+            case 0 :
+                return DetailsScreenLayouts.shared.mediaCastSection()
+                
+            case 1:
+                return DetailsScreenLayouts.shared.mediaReviewsSection()
+                
+            default:
+                return DetailsScreenLayouts.shared.similarMediaSection()
+            }
         }
         
-        cell.layoutIfNeeded()
-        cell.configure(with: castArray[indexPath.row])
-        return cell
+        detailsScreenCollectionView.setCollectionViewLayout(layout, animated: true)
     }
     
-    
-}
-
-
-extension DetailsScreenViewController: UICollectionViewDelegate {
-    
-}
-
-
-extension DetailsScreenViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 88, height: 160)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: (collectionView.frame.width - 4) / 5, height: 160)
+//    }
 }

@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     
     var scrollRunCount = 1 {
         didSet {
-            print(scrollRunCount)
+            //print(scrollRunCount)
         }
     }
     
@@ -198,7 +198,7 @@ class MainViewController: UIViewController {
     
     
     func setUpConstraints(){
-        mainCollectionView.setUp(to: view)
+        mainCollectionView.setUpMainCV(to: view)
     }
     
     
@@ -506,7 +506,7 @@ extension MainViewController: TVHeaderViewDelegate  {
 
 extension UIView {
     
-    func setUp(to superView: UIView) {
+    func setUpMainCV(to superView: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: superView.topAnchor, constant: 150).isActive = true
         leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 8).isActive = true
