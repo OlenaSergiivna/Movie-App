@@ -15,7 +15,7 @@ class SimilarHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
-        label.text = "Similar media"
+        label.text = "More Like This"
         label.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
         return label
     }()

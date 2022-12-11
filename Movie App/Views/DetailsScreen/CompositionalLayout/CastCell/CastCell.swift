@@ -81,13 +81,6 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
     
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-      
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         

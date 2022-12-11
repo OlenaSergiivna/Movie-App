@@ -19,8 +19,6 @@ class DetailsScreenViewController: UIViewController {
     
     // MARK: - Properties and outlets
     
-    @IBOutlet weak var trailerPlayer: YTPlayerView!
-    
     @IBOutlet weak var mediaImage: UIImageView!
     
     @IBOutlet weak var mediaName: UILabel!
@@ -53,6 +51,8 @@ class DetailsScreenViewController: UIViewController {
     
     var similarArray: [Any] = []
     
+    var trailersArray: [TrailerModel] = []
+    
     
     @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
@@ -81,8 +81,6 @@ class DetailsScreenViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        trailerPlayer.delegate = self
-        
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
@@ -104,6 +102,12 @@ class DetailsScreenViewController: UIViewController {
     
     
     @IBAction func watchButtonTapped(_ sender: UIButton) {
+        //configureMediaProviders(<#T##media: T##T#>)
+    }
+    
+    func configureMediaProviders<T>(_ media: T) {
+        //if let media = media as? MovieModel {
+        //}
     }
     
     // MARK: - Making overview text expandable by tap
@@ -132,12 +136,16 @@ class DetailsScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        detailsScreenCollectionView.register(TrailerCollectionViewCell.self, forCellWithReuseIdentifier: TrailerCollectionViewCell.cellIdentifier)
  
         detailsScreenCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.cellIdentifier)
             
         detailsScreenCollectionView.register(ReviewsCollectionViewCell.self, forCellWithReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier)
             
         detailsScreenCollectionView.register(SimilarMediaCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier)
+        
+        detailsScreenCollectionView.register(TrailerHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TrailerHeaderView.headerIdentifier)
             
         detailsScreenCollectionView.register(CastHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: CastHeaderView.headerIdentifier)
             
@@ -434,13 +442,17 @@ class DetailsScreenViewController: UIViewController {
     private func configureTrailer(with id: Int) {
         
         DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
+            guard let self else { return }
             
-            guard let self, let key = data.first?.key else { return }
+            guard let first = data.first else { return }
+            self.trailersArray.append(first)
             
-            self.trailerPlayer.load(withVideoId: key)
+            DispatchQueue.main.async {
+                self.detailsScreenCollectionView.reloadData()
+            }
+            
         }
     }
-    
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
         
@@ -526,6 +538,10 @@ class DetailsScreenViewController: UIViewController {
             DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movies in
                 guard let self else { return }
                 self.similarArray = movies
+                
+                DispatchQueue.main.async {
+                    self.detailsScreenCollectionView.reloadData()
+                }
             }
             
         } else if let media = media as? TVModel {
@@ -533,12 +549,11 @@ class DetailsScreenViewController: UIViewController {
             DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tvShows in
                 guard let self else { return }
                 self.similarArray = tvShows
+                
+                DispatchQueue.main.async {
+                    self.detailsScreenCollectionView.reloadData()
+                }
             }
-        }
-    }
-    
-    func configureMediaProviders<T>(_ media: T) {
-        if let media = media as? MovieModel {
         }
     }
 }
@@ -567,6 +582,9 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             
         case 1:
            return reviewsArray.count
+            
+        case 2:
+            return trailersArray.count
             
         default:
             return similarArray.count
@@ -599,6 +617,17 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             cell.configure(with: reviewsArray[indexPath.row])
             return cell
             
+        case 2:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrailerCollectionViewCell", for: indexPath) as? TrailerCollectionViewCell else {
+
+                return UICollectionViewCell()
+            }
+
+            cell.layoutIfNeeded()
+            cell.trailerPlayer.delegate = self
+            cell.trailerPlayer.load(withVideoId: trailersArray[indexPath.row].key)
+            return cell
+            
         default:
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier, for: indexPath) as? SimilarMediaCollectionViewCell else {
@@ -614,7 +643,7 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 4
     }
     
     
@@ -628,11 +657,13 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return header
             
         case 1:
-            
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
-//            if reviewsArray.isEmpty {
-//                header.isHidden = true
-//            }
+
+            return header
+            
+        case 2:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: "TrailerHeaderView", for: indexPath) as? TrailerHeaderView else { return UICollectionReusableView() }
+
             return header
             
         default:
@@ -648,7 +679,8 @@ extension DetailsScreenViewController  {
     
     func configureCompositionalLayout() {
         
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, enviroment in
+            guard let self else { return nil }
             
             switch sectionIndex {
                 
@@ -659,6 +691,11 @@ extension DetailsScreenViewController  {
                 guard !self.reviewsArray.isEmpty else { return nil }
                 
                 return DetailsScreenLayouts.shared.mediaReviewsSection()
+                
+            case 2:
+                guard !self.trailersArray.isEmpty else { return nil }
+                
+                return DetailsScreenLayouts.shared.trailersSection()
                 
             default:
                 guard !self.similarArray.isEmpty else { return nil }
