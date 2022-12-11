@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class CastCollectionViewCell: UICollectionViewCell {
     
@@ -56,7 +55,7 @@ class CastCollectionViewCell: UICollectionViewCell {
     private let characterLabel: UILabel = {
         let characterLabel = UILabel()
         characterLabel.translatesAutoresizingMaskIntoConstraints = false
-        characterLabel.text = "Hello"
+        characterLabel.text = ""
         characterLabel.textColor = .darkGray
         characterLabel.contentMode = .center
         characterLabel.textAlignment = .center
@@ -113,17 +112,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         
         castLabel.text = data.name
         
-        
-        if let characterString = data.character {
-            characterLabel.text = characterString
-            
-            if let index = characterString.range(of: "/")?.lowerBound {
-                let substring = characterString[..<index]
-                
-                characterLabel.text = String(substring.dropLast(1))
-            }
-        }
-        
+        configureCharacterLabel(data: data)
         
         guard let profilePath = data.profilePath else {
 
@@ -131,28 +120,29 @@ class CastCollectionViewCell: UICollectionViewCell {
             backLabel.text = data.name
             return
         }
-
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(profilePath)")
         
-        let processor = DownsamplingImageProcessor(size: castImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        castImage.kf.indicatorType = .activity
-        castImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-
-            ])
-//                    {
-//                        result in
-//                        switch result {
-//                        case .success(let value):
-//                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
-//                        case .failure(let error):
-//                            print("Job failed: \(error.localizedDescription)")
-//                        }
-//                    }
+        KingsfisherManager.shared.setImage(profilePath: profilePath, image: castImage)
+    }
+    
+    
+    private func configureCharacterLabel(data: Cast) {
+        
+        guard let characterString = data.character else {
+            characterLabel.text = "  "
+            return
+        }
+        
+        guard !characterString.isEmpty else {
+            characterLabel.text = "  "
+            return
+        }
+        
+        characterLabel.text = characterString
+        
+        if let index = characterString.range(of: "/")?.lowerBound {
+            let substring = characterString[..<index]
+            
+            characterLabel.text = String(substring.dropLast(1))
+        }
     }
 }

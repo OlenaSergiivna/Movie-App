@@ -69,6 +69,7 @@
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB1EDCD2946195D0023D0F8 /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */; };
 		CEB1EDCF29461DE10023D0F8 /* TrailerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDCE29461DE10023D0F8 /* TrailerHeaderView.swift */; };
+		CEB1EDD1294676D00023D0F8 /* KingsfisherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* MovieViewController.swift */; };
 		CEBEC23A293ECC5200A2AB72 /* ProvidersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBEC239293ECC5200A2AB72 /* ProvidersModel.swift */; };
@@ -164,6 +165,7 @@
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
 		CEB1EDCE29461DE10023D0F8 /* TrailerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerHeaderView.swift; sourceTree = "<group>"; };
+		CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingsfisherManager.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		CEBEC239293ECC5200A2AB72 /* ProvidersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersModel.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				CEAB8571290FFEB700B8C668 /* KingsfisherMemoryService.swift */,
 				CE9E9648291892EF001FD56B /* DetailsService.swift */,
 				CE5CB7B52937F2040099EE09 /* KeychainManager.swift */,
+				CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */,
 				CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */,
 				CE6EFD46290DCD0C00924F62 /* NowPlayingModels.swift in Sources */,
+				CEB1EDD1294676D00023D0F8 /* KingsfisherManager.swift in Sources */,
 				CE7D60B02920392000127F87 /* CastCell.swift in Sources */,
 				CEBEC23A293ECC5200A2AB72 /* ProvidersModel.swift in Sources */,
 				CEE071062942859100A8C226 /* SimilarHeaderView.swift in Sources */,

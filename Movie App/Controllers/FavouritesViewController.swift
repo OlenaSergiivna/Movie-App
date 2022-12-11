@@ -189,7 +189,7 @@ class FavouritesViewController: UIViewController {
             }
             
         case 1:
-            if self.favoriteMovies.isEmpty {
+            if self.favoriteTVShows.isEmpty {
                 
                 loadingVC = LoadingViewController()
                 if let loadingVC = loadingVC {
@@ -316,9 +316,9 @@ extension FavouritesViewController: UICollectionViewDelegate {
 //                    
 //                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
 //                        guard let self else { return }
-//                        
+//
 //                        self.favoriteMovies = favorites
-//                        
+//
 //                        DispatchQueue.main.async {
 //                            self.favouritesCollectionView.reloadData()
 //                        }
@@ -326,9 +326,9 @@ extension FavouritesViewController: UICollectionViewDelegate {
 //                }
 //            }
 //        }
-//        
+//
 //        deleteAction.backgroundColor = .systemRed
-//        
+//
 //        return UISwipeActionsConfiguration(actions: [deleteAction])
 //    }
 }
