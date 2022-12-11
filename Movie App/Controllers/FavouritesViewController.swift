@@ -21,6 +21,8 @@ class FavouritesViewController: UIViewController {
     
     var favoriteTVShows: [TVModel] = []
     
+    var loadingVC: LoadingViewController?
+    
     let isWidthBigger = {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
     }
@@ -69,8 +71,17 @@ class FavouritesViewController: UIViewController {
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
-        
+            
         case 0:
+            
+            if self.favoriteMovies.isEmpty {
+                
+                loadingVC = LoadingViewController()
+                if let loadingVC = loadingVC {
+                    add(loadingVC)
+                }
+            }
+            
             RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                 guard let self else { return }
                 
@@ -78,6 +89,11 @@ class FavouritesViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.loadingVC?.remove()
+                    self.loadingVC = nil
                 }
             }
             
@@ -106,12 +122,12 @@ class FavouritesViewController: UIViewController {
     
     @objc func appWasReturnedOnForeground() {
         
-       if isWidthBigger() {
+        if isWidthBigger() {
             tabBarController?.tabBar.isHidden = true
-       } else {
-           tabBarController?.tabBar.isHidden = false
-       }
-       
+        } else {
+            tabBarController?.tabBar.isHidden = false
+        }
+        
     }
     
     
@@ -160,7 +176,7 @@ class FavouritesViewController: UIViewController {
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
-        
+            
         case 0:
             RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                 guard let self else { return }
@@ -173,6 +189,14 @@ class FavouritesViewController: UIViewController {
             }
             
         case 1:
+            if self.favoriteMovies.isEmpty {
+                
+                loadingVC = LoadingViewController()
+                if let loadingVC = loadingVC {
+                    add(loadingVC)
+                }
+            }
+            
             RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
                 guard let self else { return }
                 
@@ -181,6 +205,12 @@ class FavouritesViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.loadingVC?.remove()
+                    self.loadingVC = nil
+                }
+                
             }
             
         default:
@@ -194,7 +224,7 @@ class FavouritesViewController: UIViewController {
 extension FavouritesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       
+        
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
@@ -321,7 +351,7 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
@@ -331,11 +361,11 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
 
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-       
+        
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
-        
+            
         case 0:
             RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                 guard let self else { return }
