@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class TVCollectionViewCell: UICollectionViewCell {
     
@@ -48,28 +47,6 @@ class TVCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: tvImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        tvImage.kf.indicatorType = .activity
-        tvImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "loading"),
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
-        
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: tvImage)
     }
 }

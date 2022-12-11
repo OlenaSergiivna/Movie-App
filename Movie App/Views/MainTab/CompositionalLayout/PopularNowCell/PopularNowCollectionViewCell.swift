@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class PopularNowCollectionViewCell: UICollectionViewCell {
     
@@ -41,7 +40,7 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         self.movieImage.translatesAutoresizingMaskIntoConstraints = false
-        self.movieImage.backgroundColor = .systemBackground
+        self.movieImage.backgroundColor = .clear
         self.movieImage.clipsToBounds = true
         self.movieImage.contentMode = .scaleAspectFill
         self.movieImage.layer.cornerRadius = 12
@@ -83,30 +82,8 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 10)
-        movieImage.kf.indicatorType = .activity
-        movieImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "loading"),
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, cornerRadius: 10)
     }
-    
 }
 
 

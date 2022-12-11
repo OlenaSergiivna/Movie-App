@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class FavouritesCollectionViewCell: UICollectionViewCell {
     
@@ -63,27 +62,7 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        movieImage.kf.indicatorType = .activity
-        movieImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage)
     }
     
     private func configureTVShow(with data: TVModel) {
@@ -98,27 +77,6 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        movieImage.kf.indicatorType = .activity
-        movieImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage)
     }
-    
 }

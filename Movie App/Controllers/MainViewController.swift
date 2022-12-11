@@ -83,7 +83,7 @@ class MainViewController: UIViewController {
         
         setUpNotifications()
         
-        KingsfisherMemoryService.shared.setCasheLimits()
+        KingsfisherManager.shared.setCasheLimits()
         
         configureUI()
         setUpConstraints()
@@ -273,7 +273,7 @@ class MainViewController: UIViewController {
             let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
             self.present(viewController, animated: true)
             
-            KingsfisherMemoryService.shared.clearCasheKF()
+            KingsfisherManager.shared.clearCasheKF()
         }
     }
 }

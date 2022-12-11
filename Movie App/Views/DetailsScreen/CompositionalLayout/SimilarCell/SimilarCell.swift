@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class SimilarMediaCollectionViewCell: UICollectionViewCell {
     
@@ -76,19 +75,13 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
     }
     
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-      
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         mediaImage.image = nil
         mediaName.text = nil
     }
+    
     
     func configure<T>(with data: T) {
         
@@ -110,28 +103,7 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(backdropPath)")
-        
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-
-            ])
-//                    {
-//                        result in
-//                        switch result {
-//                        case .success(let value):
-//                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
-//                        case .failure(let error):
-//                            print("Job failed: \(error.localizedDescription)")
-//                        }
-//                    }
+        KingsfisherManager.shared.setImage(profilePath: backdropPath, image: mediaImage)
     }
     
     
@@ -145,28 +117,7 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(backdropPath)")
-        
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-
-            ])
-//                    {
-//                        result in
-//                        switch result {
-//                        case .success(let value):
-//                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
-//                        case .failure(let error):
-//                            print("Job failed: \(error.localizedDescription)")
-//                        }
-//                    }
+        KingsfisherManager.shared.setImage(profilePath: backdropPath, image: mediaImage)
     }
 }
 

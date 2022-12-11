@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import youtube_ios_player_helper
 
 // add popup message when media has been added to favorites list or deleted from it
@@ -280,27 +279,8 @@ class DetailsScreenViewController: UIViewController {
         
         if let imagePath = movie.posterPath {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 0)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                options: [
-                    .processor(processor),
-                    .scaleFactor(3), //UIScreen.main.scale
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
+            KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, scaleFactor: 3)
+            
         } else {
             mediaImage.image = .strokedCheckmark
         }
@@ -360,27 +340,7 @@ class DetailsScreenViewController: UIViewController {
         
         if let imagePath = tvShow.posterPath {
             
-            let url = URL(string: "https://image.tmdb.org/t/p/original/\(imagePath)")
-            let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-            |> RoundCornerImageProcessor(cornerRadius: 0)
-            mediaImage.kf.indicatorType = .activity
-            mediaImage.kf.setImage(
-                with: url,
-                options: [
-                    .processor(processor),
-                    .scaleFactor(3),
-                    .transition(.fade(1)),
-                    .cacheOriginalImage
-                ])
-            //            {
-            //                result in
-            //                switch result {
-            //                case .success(let value):
-            //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-            //                case .failure(let error):
-            //                    print("Job failed: \(error.localizedDescription)")
-            //                }
-            //            }
+            KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, scaleFactor: 3)
             
         } else {
             mediaImage.image = .strokedCheckmark

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class MediaCollectionViewCell: UICollectionViewCell {
     
@@ -31,7 +30,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         
         mediaImage.translatesAutoresizingMaskIntoConstraints = false
-        mediaImage.backgroundColor = .systemBackground
+        mediaImage.backgroundColor = .clear
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
         mediaImage.layer.cornerRadius = 12
@@ -60,28 +59,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w300/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "loading"),
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, cornerRadius: 5)
     }
     
     
@@ -108,27 +86,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: mediaImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
-        mediaImage.kf.indicatorType = .activity
-        mediaImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "loading"),
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, cornerRadius: 5)
     }
 }

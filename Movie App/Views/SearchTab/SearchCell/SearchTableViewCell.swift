@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class SearchTableViewCell: UITableViewCell {
     
@@ -174,27 +173,7 @@ class SearchTableViewCell: UITableViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
-        movieImage.kf.indicatorType = .activity
-        movieImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, cornerRadius: 5)
     }
     
     
@@ -288,29 +267,9 @@ class SearchTableViewCell: UITableViewCell {
             return
         }
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w200/\(imagePath)")
-        let processor = DownsamplingImageProcessor(size: movieImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 5)
-        movieImage.kf.indicatorType = .activity
-        movieImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "loading"),
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-                .cacheOriginalImage
-            ])
-        //            {
-        //                result in
-        //                switch result {
-        //                case .success(let value):
-        //                    print("Task done for: \(value.source.url?.absoluteString ?? "")")
-        //                case .failure(let error):
-        //                    print("Job failed: \(error.localizedDescription)")
-        //                }
-        //            }
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, cornerRadius: 5)
     }
+    
     
     private func calculateTime(_ timeValue: Float) -> String {
         let timeMeasure = Measurement(value: Double(timeValue), unit: UnitDuration.minutes)

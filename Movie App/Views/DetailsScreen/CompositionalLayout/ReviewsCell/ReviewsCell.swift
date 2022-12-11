@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class ReviewsCollectionViewCell: UICollectionViewCell {
     
@@ -122,28 +121,7 @@ class ReviewsCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        let url = URL(string: "https://image.tmdb.org/t/p/original/\(avatarPath)")
-
-        let processor = DownsamplingImageProcessor(size: personsImage.bounds.size)
-        |> RoundCornerImageProcessor(cornerRadius: 0)
-        personsImage.kf.indicatorType = .activity
-        personsImage.kf.setImage(
-            with: url,
-            options: [
-                .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
-                .transition(.fade(1)),
-
-            ])
-//                    {
-//                        result in
-//                        switch result {
-//                        case .success(let value):
-//                            print("Task done for: \(value.source.url?.absoluteString ?? "")")
-//                        case .failure(let error):
-//                            print("Job failed: \(error.localizedDescription)")
-//                        }
-//                    }
+        KingsfisherManager.shared.setImage(profilePath: avatarPath, image: personsImage)
     }
 }
 

@@ -14,7 +14,7 @@ struct KingsfisherManager {
     
     private init() {}
     
-    func setImage(profilePath: String, image: UIImageView, cornerRadius: CGFloat = 0) {
+    func setImage(profilePath: String, image: UIImageView, cornerRadius: CGFloat = 0, scaleFactor: CGFloat = UIScreen.main.scale) {
         
         let url = URL(string: "https://image.tmdb.org/t/p/original/\(profilePath)")
         
@@ -25,7 +25,7 @@ struct KingsfisherManager {
             with: url,
             options: [
                 .processor(processor),
-                .scaleFactor(UIScreen.main.scale),
+                .scaleFactor(scaleFactor),
                 .transition(.fade(1)),
 
             ])
@@ -39,4 +39,17 @@ struct KingsfisherManager {
 //                        }
 //                    }
     }
+    
+    private let cashe = ImageCache.default
+    
+    
+    func setCasheLimits() {
+        cashe.memoryStorage.config.totalCostLimit = 50 * 1024 * 1024
+    }
+    
+    
+    func clearCasheKF() {
+        cashe.memoryStorage.removeAll()
+    }
+    
 }
