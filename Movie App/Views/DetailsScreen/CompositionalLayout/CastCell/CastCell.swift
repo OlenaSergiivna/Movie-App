@@ -27,6 +27,19 @@ class CastCollectionViewCell: UICollectionViewCell {
     }()
     
     
+    private let backLabel: UILabel = {
+        let backLabel = UILabel()
+        backLabel.translatesAutoresizingMaskIntoConstraints = false
+        backLabel.isHidden = true
+        backLabel.text = ""
+        backLabel.textColor = .darkGray
+        backLabel.numberOfLines = 3
+        backLabel.font = .systemFont(ofSize: 12, weight: .bold)
+        backLabel.adjustsFontSizeToFitWidth = true
+        return backLabel
+    }()
+    
+    
     private let castLabel: UILabel = {
         let castLabel = UILabel()
         castLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +51,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         castLabel.adjustsFontSizeToFitWidth = true
         return castLabel
     }()
+    
     
     private let characterLabel: UILabel = {
         let characterLabel = UILabel()
@@ -57,6 +71,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.clipsToBounds = true
        
+        castImage.addSubview(backLabel)
         contentView.addSubview(castImage)
         contentView.addSubview(castLabel)
         contentView.addSubview(characterLabel)
@@ -76,7 +91,11 @@ class CastCollectionViewCell: UICollectionViewCell {
             characterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             characterLabel.leadingAnchor.constraint(greaterThanOrEqualTo: castLabel.leadingAnchor),
             characterLabel.centerXAnchor.constraint(equalTo: castLabel.centerXAnchor),
-            characterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castLabel.trailingAnchor)
+            characterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castLabel.trailingAnchor),
+            
+            backLabel.topAnchor.constraint(equalTo: castImage.topAnchor, constant: 8),
+            backLabel.leadingAnchor.constraint(equalTo: castImage.leadingAnchor, constant: 8),
+            backLabel.trailingAnchor.constraint(equalTo: castImage.trailingAnchor, constant: -8)
         ])
     }
     
@@ -84,6 +103,7 @@ class CastCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        backLabel.isHidden = true
         castImage.image = nil
         castLabel.text = nil
         characterLabel.text = nil
@@ -107,7 +127,8 @@ class CastCollectionViewCell: UICollectionViewCell {
         
         guard let profilePath = data.profilePath else {
 
-            castImage.image = .strokedCheckmark
+            backLabel.isHidden = false
+            backLabel.text = data.name
             return
         }
 
