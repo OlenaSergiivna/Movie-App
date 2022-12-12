@@ -504,14 +504,39 @@
                                     <outlet property="delegate" destination="OCX-eD-hX2" id="MEi-sy-QnW"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ma5-2O-YmU">
+                                <rect key="frame" x="0.0" y="56" width="375" height="673"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, no results on your request 🫠" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmX-rZ-dyP">
+                                        <rect key="frame" x="16" y="324.66666666666669" width="343" height="24"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstItem="JmX-rZ-dyP" firstAttribute="centerY" secondItem="ma5-2O-YmU" secondAttribute="centerY" id="8nt-SF-AoG"/>
+                                    <constraint firstItem="JmX-rZ-dyP" firstAttribute="leading" secondItem="ma5-2O-YmU" secondAttribute="leading" constant="16" id="Qdo-j5-UyH"/>
+                                    <constraint firstAttribute="trailing" secondItem="JmX-rZ-dyP" secondAttribute="trailing" constant="16" id="jZH-VX-vSS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lem-QP-zi0"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lem-QP-zi0" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="2yd-4R-v1f"/>
+                            <constraint firstItem="ma5-2O-YmU" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="8O1-Tf-35U"/>
+                            <constraint firstItem="lem-QP-zi0" firstAttribute="bottom" secondItem="vjG-lJ-t35" secondAttribute="bottom" id="Ada-JJ-AGX"/>
                             <constraint firstItem="lem-QP-zi0" firstAttribute="trailing" secondItem="vjG-lJ-t35" secondAttribute="trailing" id="HdI-8p-Tr4"/>
+                            <constraint firstItem="lem-QP-zi0" firstAttribute="trailing" secondItem="ma5-2O-YmU" secondAttribute="trailing" id="S2x-1y-VoV"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="top" secondItem="lem-QP-zi0" secondAttribute="top" id="UKz-mY-Px1"/>
+                            <constraint firstItem="ma5-2O-YmU" firstAttribute="leading" secondItem="vjG-lJ-t35" secondAttribute="leading" id="hn9-y8-INB"/>
                             <constraint firstItem="vjG-lJ-t35" firstAttribute="leading" secondItem="lem-QP-zi0" secondAttribute="leading" id="mzI-Ep-zxD"/>
+                            <constraint firstItem="ma5-2O-YmU" firstAttribute="top" secondItem="vjG-lJ-t35" secondAttribute="top" id="u4b-SZ-Snj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="fwB-jR-TFM">
@@ -524,6 +549,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logOutButton" destination="2US-Zm-31V" id="6X2-8V-rzc"/>
+                        <outlet property="noSearchResultsView" destination="ma5-2O-YmU" id="acZ-e6-ngk"/>
                         <outlet property="searchTableView" destination="vjG-lJ-t35" id="7qo-9b-jDt"/>
                     </connections>
                 </viewController>

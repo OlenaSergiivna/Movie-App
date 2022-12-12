@@ -13,15 +13,13 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
+    @IBOutlet weak var noSearchResultsView: UIView!
+    
     private var searchResultsTV: [TVModel] = []
     
     private var searchResultsMovie: [MovieModel] = []
     
-    private var previousSearchRequests: [Media] = [] {
-        didSet {
-            print("previousSearchRequests: \(previousSearchRequests.count)")
-        }
-    }
+    private var previousSearchRequests: [Media] = []
     
     var pageCount = 1
     
@@ -67,7 +65,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        searchTableView.isUserInteractionEnabled = true
+        noSearchResultsView.isHidden = true
+        
         tabBarController?.tabBar.isHidden = false
+        
         searchController.searchBar.searchTextField.textColor = .white
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .normal)
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
@@ -516,7 +518,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 extension SearchViewController: UISearchResultsUpdating {
-    // response: what if the is no results on request?
     
     func updateSearchResults(for searchController: UISearchController) {
         
@@ -543,6 +544,14 @@ extension SearchViewController: UISearchResultsUpdating {
                 }
                 
                 self.displayStatus = false
+                
+                if results.isEmpty {
+                    self.noSearchResultsView.isHidden = false
+                    self.searchTableView.isUserInteractionEnabled = false
+                } else {
+                    self.noSearchResultsView.isHidden = true
+                    self.searchTableView.isUserInteractionEnabled = true
+                }
             }
             
         case 1:
@@ -560,6 +569,14 @@ extension SearchViewController: UISearchResultsUpdating {
                 }
                 
                 self.displayStatus = false
+                
+                if results.isEmpty {
+                    self.noSearchResultsView.isHidden = false
+                    self.searchTableView.isUserInteractionEnabled = false
+                } else {
+                    self.noSearchResultsView.isHidden = true
+                    self.searchTableView.isUserInteractionEnabled = true
+                }
             }
             
         default:
@@ -592,6 +609,9 @@ extension SearchViewController: UISearchBarDelegate {
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchTableView.isUserInteractionEnabled = true
+        noSearchResultsView.isHidden = true
         
         searchResultsMovie = []
         searchResultsTV = []
