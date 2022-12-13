@@ -259,22 +259,7 @@ class MainViewController: UIViewController {
     
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
-        
-        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            
-            guard let self else { return }
-            
-            guard result == true else {
-                print("log out failed")
-                return
-            }
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-            self.present(viewController, animated: true)
-            
-            KingsfisherManager.shared.clearCasheKF()
-        }
+        NetworkManager.shared.logOutAndGetBackToLoginView(self)
     }
 }
 

@@ -52,16 +52,7 @@ class MovieViewController: UIViewController {
     
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
-        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            
-            guard let self else { return }
-            
-            guard result == true else { return }
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-            self.present(viewController, animated: true)
-        }
+        NetworkManager.shared.logOutAndGetBackToLoginView(self)
     }
     
     
@@ -84,9 +75,6 @@ class MovieViewController: UIViewController {
             }
         }
     }
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .darkContent
-//    }
     
     
     func configureUI(){

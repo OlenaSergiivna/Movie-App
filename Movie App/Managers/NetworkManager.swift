@@ -14,16 +14,13 @@ struct NetworkManager {
     
     private init() {}
     
-    private let apiKey = "b718f4e2921daaf000e347114cf44187"
-    
-    
     // MARK: - Main autentication request: Request token + Validate token + Create session
     
     func requestAuthentication(username: String, password: String, completion: @escaping((String, Int, Int, Int) -> Void)) {
         
         // MARK: - First: Request token
         
-        let requestTokenUrl = "https://api.themoviedb.org/3/authentication/token/new?api_key=\(apiKey)"
+        let requestTokenUrl = "https://api.themoviedb.org/3/authentication/token/new?api_key=\(Globals.apiKey)"
         let tokenRequest = AF.request(requestTokenUrl, method: .get)
         
         tokenRequest.responseDecodable(of: Token.self) { response in
@@ -53,7 +50,7 @@ struct NetworkManager {
     
     private func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Int) -> ()) {
         
-        let validateTokenUrl = "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(apiKey)&username=\(username)&password=\(password)&request_token=\(token)"
+        let validateTokenUrl = "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(Globals.apiKey)&username=\(username)&password=\(password)&request_token=\(token)"
         
         let tokenValidation = AF.request(validateTokenUrl, method: .post)
         
@@ -80,7 +77,7 @@ struct NetworkManager {
     
     private func createSession(token: String, completion: @escaping(String, Int) -> Void) {
         
-        let sessionUrl = "https://api.themoviedb.org/3/authentication/session/new?api_key=\(apiKey)&request_token=\(token)"
+        let sessionUrl = "https://api.themoviedb.org/3/authentication/session/new?api_key=\(Globals.apiKey)&request_token=\(token)"
         let creatingSession = AF.request(sessionUrl, method: .get)
         
         creatingSession.responseDecodable(of: Session.self) { response in
@@ -103,7 +100,7 @@ struct NetworkManager {
     
     func getDetails(sessionId: String, completion: @escaping(_ id: Int, _ username: String, _ avatar: String) -> Void) {
         
-        let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(apiKey)&session_id=\(sessionId)"
+        let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(Globals.apiKey)&session_id=\(sessionId)"
         let getDetailsSession = AF.request(getDetailsUrl, method: .get)
         
         getDetailsSession.responseDecodable(of: UserDetails.self) { response in
@@ -121,18 +118,53 @@ struct NetworkManager {
     
     // MARK: - Log out (delete current session)
     
-    func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
+   private func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
         
-        let logOutUrl = "https://api.themoviedb.org/3/authentication/session?api_key=\(apiKey)&session_id=\(sessionId)"
+        let logOutUrl = "https://api.themoviedb.org/3/authentication/session?api_key=\(Globals.apiKey)&session_id=\(sessionId)"
         let logOutSession = AF.request(logOutUrl, method: .delete)
         
         logOutSession.responseDecodable(of: LogOut.self) { response in
             do {
                 let result = try response.result.get().success
-                print("Log out: \(result)")
+                print("Logged out: \(result)")
                 completion(result)
             } catch {
                 print("Log out: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
+    func logOutAndGetBackToLoginView(_ controller: UIViewController) {
+        
+        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { result in
+            guard result else { return }
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "GetStartedViewController")
+            
+            controller.present(destinationViewController, animated: true)
+            
+            KingsfisherManager.shared.clearCasheKF()
+            
+            // add clear realm and User Defaults
+            
+        }
+        
+    }
+    
+    func createGuestSession(completion: @escaping(Bool) -> Void) {
+    
+        let guestSessionUrl = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=\(Globals.apiKey)"
+        let guestSession = AF.request(guestSessionUrl, method: .get)
+        
+        guestSession.responseDecodable(of: GuestSessionModel.self) { response in
+            do {
+                let result = try response.result.get().success
+                print("Logged in as a guest: \(result)")
+                completion(result)
+            } catch {
+                print("Logged in as a guest: \(error.localizedDescription)")
             }
         }
     }

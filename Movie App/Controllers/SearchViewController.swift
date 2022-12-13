@@ -137,17 +137,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
-        
-        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            guard let self else { return }
-            
-            guard result == true else { return }
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-            self.present(viewController, animated: true)
-        }
+        NetworkManager.shared.logOutAndGetBackToLoginView(self)
     }
+    
     
     func setUpNotifications() {
         let mainNotificationCenter = NotificationCenter.default

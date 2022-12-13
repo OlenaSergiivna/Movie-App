@@ -41,7 +41,14 @@ class GetStartedViewController: UIViewController {
     
     @IBAction func guestSessionButtonPressed(_ sender: UIButton) {
         print("waiting for guest session...")
+        
+        NetworkManager.shared.createGuestSession { success in
+            guard success else { return }
+            
+            Globals.isGuestSession = true
+            
+            self.performSegue(withIdentifier: "guestSessionSegue", sender: nil)
+
+        }
     }
-    
-    
 }

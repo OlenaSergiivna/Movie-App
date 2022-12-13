@@ -8,8 +8,6 @@
 import UIKit
 import youtube_ios_player_helper
 
-// add popup message when media has been added to favorites list or deleted from it
-
 class DetailsScreenViewController: UIViewController {
     
     deinit {
@@ -70,12 +68,6 @@ class DetailsScreenViewController: UIViewController {
     }
     
     var isExpanded = false
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -164,6 +156,12 @@ class DetailsScreenViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if Globals.isGuestSession {
+            favoritesButton.isHidden = true
+        } else {
+            favoritesButton.isHidden = false
+        }
         
         tabBarController?.tabBar.isHidden = true
     }
@@ -357,6 +355,8 @@ class DetailsScreenViewController: UIViewController {
     
     
     private func configureFavoriteButton<T>(_ data: T) {
+        
+        guard !Globals.isGuestSession else { return }
         
         if let data = data as? MovieModel {
             

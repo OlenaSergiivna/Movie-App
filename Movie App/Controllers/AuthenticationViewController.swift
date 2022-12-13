@@ -42,6 +42,7 @@ class AuthenticationViewController: UIViewController {
         
         NetworkManager.shared.requestAuthentication(username: login, password: password) { id, responseRequest, responseValidate, responseSession in
             
+            Globals.isGuestSession = false
             Globals.sessionId = id
             print("Session id: \(Globals.sessionId)")
             

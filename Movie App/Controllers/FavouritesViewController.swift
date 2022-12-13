@@ -15,6 +15,8 @@ class FavouritesViewController: UIViewController {
     
     @IBOutlet weak var favoritesSegmentedControl: UISegmentedControl!
     
+    @IBOutlet weak var coverViewForGuestSession: UIView!
+    
     var viewModel = FavouritesViewControllerViewModel()
     
     var favoriteMovies: [MovieModel] = []
@@ -47,6 +49,7 @@ class FavouritesViewController: UIViewController {
         favouritesCollectionView.frame = self.view.bounds
     }
     
+    
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         
@@ -65,8 +68,18 @@ class FavouritesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if Globals.isGuestSession {
+            coverViewForGuestSession.isHidden = false
+            favouritesCollectionView.isHidden = true
+        } else {
+            coverViewForGuestSession.isHidden = true
+            favouritesCollectionView.isHidden = false
+        }
+        
         tabBarController?.tabBar.isHidden = false
         configureSegmentedControl()
+        
+        guard !Globals.isGuestSession else { return }
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
@@ -113,6 +126,7 @@ class FavouritesViewController: UIViewController {
         }
     }
     
+    
     func setUpNotifications() {
         let mainNotificationCenter = NotificationCenter.default
         
@@ -127,27 +141,15 @@ class FavouritesViewController: UIViewController {
         } else {
             tabBarController?.tabBar.isHidden = false
         }
-        
     }
     
     
-    
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
-        
-        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { [weak self] result in
-            guard let self else { return }
-            
-            guard result == true else { return }
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "AuthenticationViewController")
-            self.present(viewController, animated: true)
-        }
+        NetworkManager.shared.logOutAndGetBackToLoginView(self)
     }
     
     
     func configureUI(){
-        
         view.backgroundColor = .black
         configureNavBar()
     }
@@ -171,7 +173,10 @@ class FavouritesViewController: UIViewController {
         favoritesSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: .selected)
     }
     
+    
     @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
+        guard !Globals.isGuestSession else { return }
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
