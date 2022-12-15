@@ -161,20 +161,13 @@ struct NetworkManager {
             
             UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
             UserDefaults.standard.removeObject(forKey: "searchResults")
-            
-            // add clear realm and User Defaults
+        
+            RealmManager.shared.deleteAll()
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
             
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
-            
-            
-            //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            //            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "GetStartedViewController")
-            //
-            //            controller.present(destinationViewController, animated: true)
-            //
         }
     }
     

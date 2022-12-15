@@ -352,9 +352,9 @@ extension FavouritesViewController: UICollectionViewDelegate {
 //                }
 //            }
 //        }
-//
+//        
 //        deleteAction.backgroundColor = .systemRed
-//
+//        
 //        return UISwipeActionsConfiguration(actions: [deleteAction])
 //    }
 }
