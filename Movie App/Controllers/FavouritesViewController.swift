@@ -184,11 +184,18 @@ class FavouritesViewController: UIViewController {
         
         guard !isGuestSession else { return }
         
+        let topOffset = CGPoint(x: 0, y: -favouritesCollectionView.contentInset.top)
+        favouritesCollectionView.setContentOffset(topOffset, animated: true)
+        
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
             
         case 0:
+            
+            //reload to update number of items
+            favouritesCollectionView.reloadData()
+            
             RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
                 guard let self else { return }
                 
@@ -200,6 +207,10 @@ class FavouritesViewController: UIViewController {
             }
             
         case 1:
+            
+            //reload to update number of items
+            favouritesCollectionView.reloadData()
+            
             if self.favoriteTVShows.isEmpty {
                 
                 loadingVC = LoadingViewController()
