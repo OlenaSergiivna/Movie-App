@@ -18,7 +18,13 @@ class GetStartedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        navigationController?.navigationBar.isHidden = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -28,6 +34,7 @@ class GetStartedViewController: UIViewController {
         bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
     }
+    
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
@@ -39,16 +46,20 @@ class GetStartedViewController: UIViewController {
 
     }
     
+    
     @IBAction func guestSessionButtonPressed(_ sender: UIButton) {
         print("waiting for guest session...")
         
-        NetworkManager.shared.createGuestSession { success in
-            guard success else { return }
+        NetworkManager.shared.createGuestSession { data in
+            guard data.success else { return }
             
-            Globals.isGuestSession = true
+            UserDefaultsManager.shared.saveUsersDataInUserDefaults(sesssionID: data.guest_session_id, isGuestSession: true, sessionExpireDate: data.expires_at)
             
-            self.performSegue(withIdentifier: "guestSessionSegue", sender: nil)
-
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
+            
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController, animated: true)
+            
         }
     }
 }

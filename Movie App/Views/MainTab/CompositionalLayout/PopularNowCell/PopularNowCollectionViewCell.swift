@@ -13,7 +13,7 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImage: UIImageView!
     
-    var delegate: PopularNowDelegate?
+   weak var delegate: PopularNowDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,6 +93,6 @@ extension PopularNowCollectionViewCell: UIGestureRecognizerDelegate {
     }
 }
 
-protocol PopularNowDelegate {
+protocol PopularNowDelegate: AnyObject {
     func popularNowSwiped()
 }

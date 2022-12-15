@@ -42,7 +42,7 @@ class DetailsScreenViewController: UIViewController {
     
     var mediaType: String = ""
     
-    var castArray: [Cast] = []
+    var castArray: [CastModel] = []
     
     var reviewsArray: [ReviewsModel] = []
     
@@ -50,6 +50,7 @@ class DetailsScreenViewController: UIViewController {
     
     var trailersArray: [TrailerModel] = []
     
+    let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
     
     @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
@@ -96,10 +97,6 @@ class DetailsScreenViewController: UIViewController {
         //configureMediaProviders(<#T##media: T##T#>)
     }
     
-    func configureMediaProviders<T>(_ media: T) {
-        //if let media = media as? MovieModel {
-        //}
-    }
     
     // MARK: - Making overview text expandable by tap
     
@@ -157,7 +154,7 @@ class DetailsScreenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if Globals.isGuestSession {
+        if isGuestSession {
             favoritesButton.isHidden = true
         } else {
             favoritesButton.isHidden = false
@@ -203,23 +200,24 @@ class DetailsScreenViewController: UIViewController {
     
     // MARK: - Configuring DetailsScreen with data depends on tapped cell type
     
-    func configure<T>(with data: T) {
+    func configure<T>(with data: T, completion: () -> Void) {
         
         if let data = data as? MovieModel {
             configureMovieCell(data)
-            
+            completion()
         } else if let data = data as? TVModel {
             configureTVCell(data)
-            
+            completion()
         } else if let data = data as? TrendyMedia {
             
             if data.mediaType == "movie" {
                 let data = MovieModel(from: data)
                 configureMovieCell(data)
-                
+                completion()
             } else if data.mediaType == "tv" {
                 let data = TVModel(from: data)
                 configureTVCell(data)
+                completion()
             }
             
         } else if let data = data as? Media {
@@ -227,9 +225,11 @@ class DetailsScreenViewController: UIViewController {
                 
             case .movie(let movie):
                 configureMovieCell(movie)
+                completion()
                 
             case .tvShow(let tvShow):
                 configureTVCell(tvShow)
+                completion()
             }
         }
     }
@@ -356,7 +356,7 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureFavoriteButton<T>(_ data: T) {
         
-        guard !Globals.isGuestSession else { return }
+        guard !isGuestSession else { return }
         
         if let data = data as? MovieModel {
             

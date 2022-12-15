@@ -21,9 +21,7 @@ struct DataManager {
         request.responseDecodable(of: Genres.self) { response in
             do {
                 let data = try response.result.get().genres
-                guard let statusCode = response.response?.statusCode else {
-                   return
-                }
+                guard let statusCode = response.response?.statusCode else { return }
                 completion(data, statusCode)
             } catch {
                 print(error.localizedDescription)
@@ -42,9 +40,7 @@ struct DataManager {
         request.responseDecodable(of: Genres.self) { response in
             do {
                 let data = try response.result.get().genres
-                guard let statusCode = response.response?.statusCode else {
-                   return
-                }
+                guard let statusCode = response.response?.statusCode else { return }
                 completion(data, statusCode)
             } catch {
                 print(error.localizedDescription)
@@ -101,7 +97,11 @@ struct DataManager {
     
     func requestFavoriteMovies(completion: @escaping (_ success: Bool, _ favorites: [MovieModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
-        let urlMovie = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
+        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        
+        guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
+        
+        let urlMovie = "https://api.themoviedb.org/3/account/\(userID)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=1"
         
         AF.request(urlMovie,
                    method: .get,
@@ -115,20 +115,20 @@ struct DataManager {
             switch response.result {
             case .success:
                 
-                    do {
-                        let data = try response.result.get().results
-                        completion(true, data, nil, nil)
-                    } catch {
-                        
-                        let error = response.error
-                       
-                        print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
-                        completion(false, nil, error, error?.underlyingError)
-                    }
+                do {
+                    let data = try response.result.get().results
+                    completion(true, data, nil, nil)
+                } catch {
                     
-
+                    let error = response.error
+                    
+                    print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
+                    completion(false, nil, error, error?.underlyingError)
+                }
+                
+                
             case .failure(let error):
-               
+                
                 print("Failure. Status code: \(String(describing: response.response?.statusCode ?? 0))")
                 //Error description: \(error.localizedDescription)
                 
@@ -154,7 +154,11 @@ struct DataManager {
     
     func requestFavoriteTVShows(completion: @escaping (_ success: Bool, _ favorites: [TVModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
-        let urlTV = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&language=en-US&sort_by=created_at.asc&page=1"
+        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        
+        guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
+        
+        let urlTV = "https://api.themoviedb.org/3/account/\(userID)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=1"
         
         AF.request(urlTV,
                    method: .get,
@@ -168,20 +172,20 @@ struct DataManager {
             switch response.result {
             case .success:
                 
-                    do {
-                        let data = try response.result.get().results
-                        completion(true, data, nil, nil)
-                    } catch {
-                        
-                        let error = response.error
-                       
-                        print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
-                        completion(false, nil, error, error?.underlyingError)
-                    }
+                do {
+                    let data = try response.result.get().results
+                    completion(true, data, nil, nil)
+                } catch {
                     
-
+                    let error = response.error
+                    
+                    print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
+                    completion(false, nil, error, error?.underlyingError)
+                }
+                
+                
             case .failure(let error):
-               
+                
                 print("Failure. Status code: \(String(describing: response.response?.statusCode ?? 0))")
                 //Error description: \(error.localizedDescription)
                 
@@ -215,7 +219,11 @@ struct DataManager {
             "favorite" : false
         ]
         
-        let deleteURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)"
+        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        
+        guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
+        
+        let deleteURL = "https://api.themoviedb.org/3/account/\(userID)/favorite?api_key=\(Globals.apiKey)&session_id=\(sessionID)"
         
         let deleteFromFavoritesRequest = AF.request(deleteURL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
         
@@ -236,7 +244,11 @@ struct DataManager {
     
     func addToFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
         
-        let addURL = "https://api.themoviedb.org/3/account/\(Globals.userId)/favorite?api_key=\(Globals.apiKey)&session_id=\(Globals.sessionId)&media_id=\(id)&media_type=\(type)&favorite=true"
+        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        
+        guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
+        
+        let addURL = "https://api.themoviedb.org/3/account/\(userID)/favorite?api_key=\(Globals.apiKey)&session_id=\(sessionID)&media_id=\(id)&media_type=\(type)&favorite=true"
         
         
         let addToFavoritesRequest = AF.request(addURL, method: .post)
@@ -350,11 +362,11 @@ struct DataManager {
     }
     
     
-    func getMediaCast(mediaType: String, mediaId: Int, completion: @escaping([Cast]) -> Void) {
+    func getMediaCast(mediaType: String, mediaId: Int, completion: @escaping([CastModel]) -> Void) {
         
         let castRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/credits?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
-        castRequest.responseDecodable(of: CastResults.self ) { response in
+        castRequest.responseDecodable(of: ResultsCast.self ) { response in
             
             do {
                 let data = try response.result.get().cast
@@ -368,7 +380,7 @@ struct DataManager {
     
     
     func getMediaDetails(mediaType: String, mediaId: Int, completion: @escaping(MovieDetailedModel) -> Void) {
-       
+        
         let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         movieDetailsRequest.responseDecodable(of: MovieDetailedModel.self ) { response in
@@ -385,7 +397,7 @@ struct DataManager {
     
     
     func getSimilarMovies(movieId: Int, completion: @escaping([MovieModel]) -> Void) {
-    
+        
         let similarMoviesRequest = AF.request("https://api.themoviedb.org/3/movie/\(movieId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarMoviesRequest.responseDecodable(of: ResultsMovie.self ) { response in
@@ -402,7 +414,7 @@ struct DataManager {
     
     
     func getSimilarTVShows(mediaId: Int, completion: @escaping([TVModel]) -> Void) {
-    
+        
         let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarTVShowsRequest.responseDecodable(of: ResultsTV.self ) { response in
@@ -419,7 +431,7 @@ struct DataManager {
     
     
     func getReviews(mediaType: String, mediaId: Int, completion: @escaping([ReviewsModel]) -> Void) {
-    
+        
         let mediaReviewsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/reviews?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         mediaReviewsRequest.responseDecodable(of: ResultsReviews.self ) { response in
@@ -433,5 +445,37 @@ struct DataManager {
             }
         }
     }
+    
+    func getAllRequest(mediaType: String, mediaId: Int, completion: @escaping(ExpandedMediaDetailsModel) -> Void) {
+        
+        let getAllRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US&append_to_response=similar,credits,reviews,videos", method: .get)
+        
+        getAllRequest.responseDecodable(of: ExpandedMediaDetailsModel.self ) { response in
+            
+            do {
+                let data = try response.result.get()
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    func getProviders(mediaType: String, mediaID: Int, completion: @escaping(AllCasesType) -> Void) {
+        
+        let getProvidersRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaID)/watch/providers?api_key=\(Globals.apiKey)", method: .get)
+        
+        getProvidersRequest.responseDecodable(of: ResultsProviders.self ) { response in
+            print(response)
+            do {
+                let data = try response.result.get().results
+                guard let data else { return }
+                completion(data.us)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
 }
-

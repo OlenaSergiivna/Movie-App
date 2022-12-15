@@ -9,6 +9,10 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var usernameLabel: UILabel!
     
     @IBOutlet weak var avatarImage: UIImageView!
@@ -152,7 +156,7 @@ class MainViewController: UIViewController {
     }
     
 
-    func setUpNotifications() {
+    func setUpNotifications() { 
         let mainNotificationCenter = NotificationCenter.default
         
         mainNotificationCenter.addObserver(self, selector: #selector(appWasHiddenOnBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -251,8 +255,15 @@ class MainViewController: UIViewController {
     
     
     func configureUsersGreetingsView() {
-        usernameLabel.text = "Hello, \(Globals.username)"
-        avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(Globals.avatar)")
+        
+        guard let username = UserDefaults.standard.string(forKey: "username"), let avatar = UserDefaults.standard.string(forKey: "useravatar") else {
+            
+            usernameLabel.text = "Hello, user"
+            return
+        }
+        
+        usernameLabel.text = "Hello, \(username)"
+        avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(avatar)")
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
     }
     

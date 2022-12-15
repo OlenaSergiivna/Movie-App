@@ -19,8 +19,16 @@ struct DetailsService {
         guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
         destinationViewController.loadViewIfNeeded()
         
-        destinationViewController.configure(with: data)
-        navigationController?.present(destinationViewController, animated: true)
-        //navigationController?.pushViewController(destinationViewController, animated: true)
+        destinationViewController.configure(with: data) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+                navigationController?.present(destinationViewController, animated: true) {
+                }
+                
+            }
+            
+            //navigationController?.pushViewController(destinationViewController, animated: true)
+        }
     }
 }

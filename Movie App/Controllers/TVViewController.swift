@@ -8,7 +8,12 @@
 import UIKit
 
 class TVViewController: UIViewController {
+    
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
 
+    
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var tvTableView: UITableView!

@@ -9,6 +9,10 @@ import UIKit
 
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var searchTableView: UITableView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!

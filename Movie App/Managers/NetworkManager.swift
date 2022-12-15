@@ -124,6 +124,7 @@ struct NetworkManager {
         let logOutSession = AF.request(logOutUrl, method: .delete)
         
         logOutSession.responseDecodable(of: LogOut.self) { response in
+            print(response)
             do {
                 let result = try response.result.get().success
                 print("Logged out: \(result)")
@@ -137,30 +138,57 @@ struct NetworkManager {
     
     func logOutAndGetBackToLoginView(_ controller: UIViewController) {
         
-        NetworkManager.shared.logOut(sessionId: Globals.sessionId) { result in
-            guard result else { return }
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "GetStartedViewController")
-            
-            controller.present(destinationViewController, animated: true)
+        guard UserDefaults.standard.bool(forKey: "isguestsession") == false else {
             
             KingsfisherManager.shared.clearCasheKF()
             
-            // add clear realm and User Defaults
+            UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
+            UserDefaults.standard.removeObject(forKey: "searchResults")
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
             
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
+            
+            return
         }
         
+        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        
+        NetworkManager.shared.logOut(sessionId: sessionID) { result in
+            guard result else { return }
+            
+            KingsfisherManager.shared.clearCasheKF()
+            
+            UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
+            UserDefaults.standard.removeObject(forKey: "searchResults")
+            
+            // add clear realm and User Defaults
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
+            
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
+            
+            
+            //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            //            let destinationViewController = storyboard.instantiateViewController(withIdentifier: "GetStartedViewController")
+            //
+            //            controller.present(destinationViewController, animated: true)
+            //
+        }
     }
     
-    func createGuestSession(completion: @escaping(Bool) -> Void) {
     
+    func createGuestSession(completion: @escaping(GuestSessionModel) -> Void) {
+        
         let guestSessionUrl = "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=\(Globals.apiKey)"
         let guestSession = AF.request(guestSessionUrl, method: .get)
         
         guestSession.responseDecodable(of: GuestSessionModel.self) { response in
+            print(response)
             do {
-                let result = try response.result.get().success
+                let result = try response.result.get()
                 print("Logged in as a guest: \(result)")
                 completion(result)
             } catch {

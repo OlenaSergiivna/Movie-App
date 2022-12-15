@@ -40,25 +40,22 @@ class AuthenticationViewController: UIViewController {
         guard let login = loginTextField.text else { return }
         guard let password = passTextField.text else { return }
         
-        NetworkManager.shared.requestAuthentication(username: login, password: password) { id, responseRequest, responseValidate, responseSession in
+        NetworkManager.shared.requestAuthentication(username: login, password: password) { sessionid, responseRequest, responseValidate, responseSession in
             
-            Globals.isGuestSession = false
-            Globals.sessionId = id
-            print("Session id: \(Globals.sessionId)")
+            UserDefaults.standard.set(sessionid, forKey: "usersessionid")
             
-            NetworkManager.shared.getDetails(sessionId: Globals.sessionId) { [weak self] id, username, avatar in
+            NetworkManager.shared.getDetails(sessionId: UserDefaults.standard.string(forKey: "usersessionid") ?? "") { userid, username, avatar in
                 
-                Globals.userId = id
-                Globals.username = username
-                Globals.avatar = avatar
-//                print("User id: \(Globals.userId)")
-//                print("Username: \(Globals.username)")
-//                print("User avatar: \(Globals.avatar)")
                 
+                //replace with guard success else { return }
                 guard responseRequest == 200, responseValidate == 200, responseSession == 200 else { return }
-                guard let self else { return }
                 
-                self.performSegue(withIdentifier: "authenticationPassedSegue", sender: nil)
+                UserDefaultsManager.shared.saveUsersDataInUserDefaults(login: login, password: password, sesssionID: sessionid, isGuestSession: false, userID: userid, username: username, userAvatar: avatar)
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
+                
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController, animated: true)
             }
         }
     }

@@ -9,6 +9,10 @@ import UIKit
 
 class FavouritesViewController: UIViewController {
     
+    deinit {
+        print("!!! Deinit: \(self)")
+      }
+    
     @IBOutlet weak var favouritesCollectionView: UICollectionView!
     
     @IBOutlet weak var logOutButton: UIBarButtonItem!
@@ -24,6 +28,8 @@ class FavouritesViewController: UIViewController {
     var favoriteTVShows: [TVModel] = []
     
     var loadingVC: LoadingViewController?
+    
+    let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
     
     let isWidthBigger = {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
@@ -68,7 +74,7 @@ class FavouritesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if Globals.isGuestSession {
+        if isGuestSession {
             coverViewForGuestSession.isHidden = false
             favouritesCollectionView.isHidden = true
         } else {
@@ -79,7 +85,7 @@ class FavouritesViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         configureSegmentedControl()
         
-        guard !Globals.isGuestSession else { return }
+        guard !isGuestSession else { return }
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
@@ -176,7 +182,7 @@ class FavouritesViewController: UIViewController {
     
     @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         
-        guard !Globals.isGuestSession else { return }
+        guard !isGuestSession else { return }
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
@@ -291,16 +297,20 @@ extension FavouritesViewController: UICollectionViewDelegate {
         switch selectedIndex {
             
         case 0:
-            destinationViewController.configure(with: favoriteMovies[indexPath.row])
+            destinationViewController.configure(with: favoriteMovies[indexPath.row]) { [weak self] in
+                guard let self else { return }
+                self.navigationController?.present(destinationViewController, animated: true)
+            }
             
         case 1:
-            destinationViewController.configure(with: favoriteTVShows[indexPath.row])
+            destinationViewController.configure(with: favoriteTVShows[indexPath.row]) { [weak self] in
+                guard let self else { return }
+                self.navigationController?.present(destinationViewController, animated: true)
+            }
             
         default:
             return
         }
-        
-        navigationController?.present(destinationViewController, animated: true)
     }
     
 // move to contextual menu

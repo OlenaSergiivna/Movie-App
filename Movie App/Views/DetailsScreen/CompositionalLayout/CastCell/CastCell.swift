@@ -108,7 +108,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         characterLabel.text = nil
     }
     
-    func configure(with data: Cast) {
+    func configure(with data: CastModel) {
         
         castLabel.text = data.name
         
@@ -125,7 +125,7 @@ class CastCollectionViewCell: UICollectionViewCell {
     }
     
     
-    private func configureCharacterLabel(data: Cast) {
+    private func configureCharacterLabel(data: CastModel) {
         
         guard let characterString = data.character else {
             characterLabel.text = "  "
