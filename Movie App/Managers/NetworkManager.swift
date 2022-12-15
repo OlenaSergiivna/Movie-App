@@ -124,7 +124,6 @@ struct NetworkManager {
         let logOutSession = AF.request(logOutUrl, method: .delete)
         
         logOutSession.responseDecodable(of: LogOut.self) { response in
-            print(response)
             do {
                 let result = try response.result.get().success
                 print("Logged out: \(result)")
@@ -186,7 +185,6 @@ struct NetworkManager {
         let guestSession = AF.request(guestSessionUrl, method: .get)
         
         guestSession.responseDecodable(of: GuestSessionModel.self) { response in
-            print(response)
             do {
                 let result = try response.result.get()
                 print("Logged in as a guest: \(result)")

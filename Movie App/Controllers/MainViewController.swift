@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     
     var nowPlayingMoviesArray: [MovieModel] = []
     
-    lazy var mainCollectionView : UICollectionView = {
+    lazy var mainCollectionView : UICollectionView = { [weak self] in
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsVerticalScrollIndicator = false
