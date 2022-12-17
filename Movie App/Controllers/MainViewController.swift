@@ -27,6 +27,8 @@ class MainViewController: UIViewController {
     
     var nowPlayingMoviesArray: [MovieModel] = []
     
+    var loadingVC: LoadingViewController?
+    
     let isWidthBigger = {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
     }
@@ -72,6 +74,17 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if nowPlayingMoviesArray.isEmpty {
+            loadingVC = LoadingViewController()
+            if let loadingVC = loadingVC {
+                add(loadingVC)
+            }
+        }
+        
+        usernameLabel.isHidden = false
+        avatarImage.isHidden = false
+        secondaryTextLabel.isHidden = false
         
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
@@ -168,6 +181,11 @@ class MainViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.loadingVC?.remove()
+                self.loadingVC = nil
             }
         }
     }
@@ -389,7 +407,7 @@ extension MainViewController: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             
-            cell.configure(with: moviesArray, indexPath: indexPath)
+            cell.configure(with: nowPlayingMoviesArray, indexPath: indexPath)
             return cell
         }
     }
