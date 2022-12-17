@@ -21,8 +21,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unk-b1-siN">
-                        <rect key="frame" x="15.999999999999993" y="158.66666666666666" width="114.33333333333331" height="25.333333333333343"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Unk-b1-siN">
+                        <rect key="frame" x="16" y="158.66666666666666" width="268" height="25.333333333333343"/>
                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -38,6 +38,7 @@
                 <constraint firstItem="9x0-UU-17q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="KMb-ID-XAt"/>
                 <constraint firstAttribute="trailing" secondItem="9x0-UU-17q" secondAttribute="trailing" id="WyW-BS-9xL"/>
                 <constraint firstItem="9x0-UU-17q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ZYc-9N-3Np"/>
+                <constraint firstAttribute="trailing" secondItem="Unk-b1-siN" secondAttribute="trailing" constant="16" id="rk6-2U-wwl"/>
             </constraints>
             <size key="customSize" width="291" height="204"/>
             <connections>

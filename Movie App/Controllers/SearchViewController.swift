@@ -52,7 +52,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchTableView.register(nibRequestCell, forCellReuseIdentifier: "PreviousRequestsTableViewCell")
         
         
-        // MARK: - Get data from UserDefaults
+        // Decode data from UserDefaults and set as previous search requests
         
         if let movie = UserDefaults.standard.object(forKey: "searchResults") as? Data {
             let decoder = JSONDecoder()
@@ -267,6 +267,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         searchTableView.reloadData()
     }
     
+    
+    // Encode data to bytes type (Data) to save in UserDefaults
     
     func saveInUserDefaults(_ data: [Media] ) {
         

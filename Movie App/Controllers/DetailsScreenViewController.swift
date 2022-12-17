@@ -46,7 +46,11 @@ class DetailsScreenViewController: UIViewController {
     
     var reviewsArray: [ReviewsModel] = []
     
-    var similarArray: [Any] = []
+    var similarArray: [Any] = [] {
+        didSet {
+            print(similarArray.count)
+        }
+    }
     
     var trailersArray: [TrailerModel] = []
     
@@ -94,7 +98,15 @@ class DetailsScreenViewController: UIViewController {
     
     
     @IBAction func watchButtonTapped(_ sender: UIButton) {
-        //configureMediaProviders(<#T##media: T##T#>)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WatchProvidersViewController") as? WatchProvidersViewController else { return }
+        destinationViewController.loadViewIfNeeded()
+        
+        destinationViewController.configure(mediaID: mediaId, mediaType: mediaType) { [weak self] in
+            guard let self else { return }
+            self.navigationController?.present(destinationViewController, animated: true)
+        }
     }
     
     
@@ -289,7 +301,7 @@ class DetailsScreenViewController: UIViewController {
         
         configureMediaCast(with: movie.id)
         
-        configureReviews(mediaType: "movie", mediaId: movie.id)
+        //configureReviews(mediaType: "movie", mediaId: movie.id)
         
         configureSimilarMedia(movie)
         
@@ -348,7 +360,7 @@ class DetailsScreenViewController: UIViewController {
         
         configureMediaCast(with: tvShow.id)
         
-        configureReviews(mediaType: "tv", mediaId: tvShow.id)
+        //configureReviews(mediaType: "tv", mediaId: tvShow.id)
         
         configureSimilarMedia(tvShow)
     }

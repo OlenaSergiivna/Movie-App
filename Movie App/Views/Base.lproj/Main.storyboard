@@ -450,6 +450,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logOutButton" destination="NJE-JS-R21" id="sFk-GA-ISZ"/>
                         <outlet property="tvTableView" destination="gO4-62-ghq" id="Ti8-Ru-DHq"/>
                     </connections>
                 </viewController>
@@ -982,7 +983,8 @@
         <!--Main-->
         <scene sceneID="fBN-CK-lbf">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xdV-gf-riU" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tCw-fM-nzh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="xdV-gf-riU" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Main" image="play" catalog="system" id="zjB-wq-Veg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wog-EH-vJD">
@@ -997,7 +999,6 @@
                         <segue destination="Ikp-O6-wNb" kind="relationship" relationship="rootViewController" id="ALb-nr-Dr9"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tCw-fM-nzh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4689.2307692307695" y="-1243.3649289099526"/>
         </scene>

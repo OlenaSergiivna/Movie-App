@@ -13,20 +13,25 @@ class MainTabLayouts {
     
     var flag = false
     
+    let isWidthBigger = {
+        return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+    }
+    
     func popularNowSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: isWidthBigger() ? .fractionalHeight(0.85) : .absolute(200))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8)
+               
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 16, trailing: 0)
-        section.orthogonalScrollingBehavior = flag ? .continuousGroupLeadingBoundary :  .paging
+        section.orthogonalScrollingBehavior = isWidthBigger() ? .groupPaging : (flag ? .continuousGroupLeadingBoundary :  .paging)
         
         section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30)), elementKind: "Header", alignment: .top)
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40)), elementKind: "Header", alignment: .top)
         ]
         return section
     }

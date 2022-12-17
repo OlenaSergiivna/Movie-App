@@ -27,12 +27,18 @@ class MainViewController: UIViewController {
     
     var nowPlayingMoviesArray: [MovieModel] = []
     
+    let isWidthBigger = {
+        return UIScreen.main.bounds.width > UIScreen.main.bounds.height
+    }
+    
     lazy var mainCollectionView : UICollectionView = { [weak self] in
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.showsVerticalScrollIndicator = false
         cv.delegate = self
         cv.dataSource = self
+        cv.bounces = false
+        cv.bouncesZoom = false
         
         cv.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
         
@@ -60,7 +66,7 @@ class MainViewController: UIViewController {
     
     var scrollRunCount = 1 {
         didSet {
-            //print(scrollRunCount)
+            print(scrollRunCount)
         }
     }
     
@@ -76,9 +82,20 @@ class MainViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.navigationBar.isHidden = false
+        //navigationController?.navigationBar.isHidden = false
         scrollTimer.invalidate()
         
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if isWidthBigger() {
+            mainCollectionView.frame = self.view.bounds
+        }
+        
+        //navigationController?.navigationBar.isHidden = true
     }
     
     
@@ -90,7 +107,7 @@ class MainViewController: UIViewController {
         KingsfisherManager.shared.setCasheLimits()
         
         configureUI()
-        setUpConstraints()
+        setUpMainCV()
         configureCompositionalLayout()
         
         DataManager.shared.requestMovieGenres { data, statusCode in
@@ -171,6 +188,8 @@ class MainViewController: UIViewController {
     
     @objc func appWasReturnedOnForeground() {
         
+        tabBarController?.tabBar.isHidden = false
+        print("not hidden")
         let selectedTabIndex = tabBarController?.selectedIndex
 
         if selectedTabIndex == 0 {
@@ -198,11 +217,6 @@ class MainViewController: UIViewController {
             scrollRunCount = 0
         }
         
-    }
-    
-    
-    func setUpConstraints(){
-        mainCollectionView.setUpMainCV(to: view)
     }
     
     
@@ -248,7 +262,7 @@ class MainViewController: UIViewController {
         view.addSubview(mainCollectionView)
         
         configureTabBar()
-        configureNavBar()
+        //configureNavBar()
         configureUsersGreetingsView()
         
     }
@@ -267,6 +281,15 @@ class MainViewController: UIViewController {
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
     }
     
+    
+    func setUpMainCV() {
+        
+        mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        mainCollectionView.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 16).isActive = true
+        mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        mainCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+    }
     
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
@@ -438,6 +461,20 @@ extension MainViewController: UICollectionViewDelegate {
             DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
         }
     }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        if isWidthBigger() {
+            usernameLabel.isHidden = false
+            avatarImage.isHidden = false
+            secondaryTextLabel.isHidden = false
+        } else {
+            usernameLabel.isHidden = true
+            avatarImage.isHidden = true
+            secondaryTextLabel.isHidden = true
+        }
+    }
 }
 
 
@@ -496,18 +533,6 @@ extension MainViewController: TVHeaderViewDelegate  {
                 self.mainCollectionView.reloadItems(at: items)
             }
         }
-    }
-}
-
-
-extension UIView {
-    
-    func setUpMainCV(to superView: UIView) {
-        translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: superView.topAnchor, constant: 150).isActive = true
-        leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 8).isActive = true
-        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -8).isActive = true
     }
 }
 
