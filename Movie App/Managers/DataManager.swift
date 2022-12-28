@@ -95,20 +95,20 @@ struct DataManager {
     
     // MARK: - Request movies from Favorites list
     
-    func requestFavoriteMovies(completion: @escaping (_ success: Bool, _ favorites: [MovieModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
+    func requestFavoriteMovies(page: Int = 1, completion: @escaping (_ success: Bool, _ totalPages: Int, _ favorites: [MovieModel]?,  _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
         guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
         
         guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
         
-        let urlMovie = "https://api.themoviedb.org/3/account/\(userID)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=1"
-        
+        let urlMovie = "https://api.themoviedb.org/3/account/\(userID)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=\(page)"
+        print("url: \(urlMovie)")
         AF.request(urlMovie,
                    method: .get,
                    parameters: nil,
                    encoding: JSONEncoding.default,
                    headers: nil,
-                   requestModifier: { $0.timeoutInterval = 2 })
+                   requestModifier: { $0.timeoutInterval = 30 })
         .validate(statusCode: 200..<500)
         .responseDecodable(of: ResultsMovie.self) { response in
             
@@ -116,14 +116,15 @@ struct DataManager {
             case .success:
                 
                 do {
-                    let data = try response.result.get().results
-                    completion(true, data, nil, nil)
+                    let data = try response.result.get()
+                    let totalPages = data.totalPages
+                    completion(true, totalPages, data.results, nil, nil)
                 } catch {
                     
                     let error = response.error
                     
                     print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
-                    completion(false, nil, error, error?.underlyingError)
+                    completion(false, 0, nil, error, error?.underlyingError)
                 }
                 
                 
@@ -145,27 +146,27 @@ struct DataManager {
                         }
                     }
                 }
-                completion(false, nil, error, error.underlyingError)
+                completion(false, 0, nil, error, error.underlyingError)
             }
         }
     }
     
     
     
-    func requestFavoriteTVShows(completion: @escaping (_ success: Bool, _ favorites: [TVModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
+    func requestFavoriteTVShows(page: Int = 1, completion: @escaping (_ success: Bool, _ totalPages: Int, _ favorites: [TVModel]?, _ error: Error?, _ underlyingError: Error?) -> ()) -> Void {
         
         guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
         
         guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
         
-        let urlTV = "https://api.themoviedb.org/3/account/\(userID)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=1"
+        let urlTV = "https://api.themoviedb.org/3/account/\(userID)/favorite/tv?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=\(page)"
         
         AF.request(urlTV,
                    method: .get,
                    parameters: nil,
                    encoding: JSONEncoding.default,
                    headers: nil,
-                   requestModifier: { $0.timeoutInterval = 2 })
+                   requestModifier: { $0.timeoutInterval = 30 })
         .validate(statusCode: 200..<500)
         .responseDecodable(of: ResultsTV.self) { response in
             
@@ -173,14 +174,15 @@ struct DataManager {
             case .success:
                 
                 do {
-                    let data = try response.result.get().results
-                    completion(true, data, nil, nil)
+                    let data = try response.result.get()
+                    let totalPages = data.totalPages
+                    completion(true, totalPages, data.results, nil, nil)
                 } catch {
                     
                     let error = response.error
                     
                     print("Decoding error: \(String(describing: error)). Status code: \(String(describing: response.response?.statusCode))")
-                    completion(false, nil, error, error?.underlyingError)
+                    completion(false, 0, nil, error, error?.underlyingError)
                 }
                 
                 
@@ -202,7 +204,7 @@ struct DataManager {
                         }
                     }
                 }
-                completion(false, nil, error, error.underlyingError)
+                completion(false, 0, nil, error, error.underlyingError)
             }
         }
     }

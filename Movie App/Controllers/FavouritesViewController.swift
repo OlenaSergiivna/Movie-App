@@ -35,8 +35,21 @@ class FavouritesViewController: UIViewController {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
     }
     
+    var pageCount = 1
+    
+    var displayStatus = false
+    
+    var totalPagesCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadingVC = LoadingViewController()
+        if let loadingVC = loadingVC {
+            add(loadingVC)
+        }
+        
+        
         configureUI()
         setUpNotifications()
         
@@ -46,6 +59,22 @@ class FavouritesViewController: UIViewController {
         
         let nibFavouritesCell = UINib(nibName: "FavouritesCollectionViewCell", bundle: nil)
         favouritesCollectionView.register(nibFavouritesCell, forCellWithReuseIdentifier: "FavouritesCollectionViewCell")
+        
+        RepositoryService.shared.movieFavoritesCashing { [weak self] favorites, totalPageCount in
+            guard let self else { return }
+            
+            self.favoriteMovies = favorites
+            self.totalPagesCount = totalPageCount
+            
+            DispatchQueue.main.async {
+                self.favouritesCollectionView.reloadData()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.loadingVC?.remove()
+                self.loadingVC = nil
+            }
+        }
     }
     
     
@@ -93,45 +122,64 @@ class FavouritesViewController: UIViewController {
             
         case 0:
             
-            if self.favoriteMovies.isEmpty {
-                
-                loadingVC = LoadingViewController()
-                if let loadingVC = loadingVC {
-                    add(loadingVC)
-                }
-            }
-            
-            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteMovies = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.loadingVC?.remove()
-                    self.loadingVC = nil
+                guard self.pageCount > 1 else { return }
+                
+                for page in 2...self.pageCount {
+                    
+                    RepositoryService.shared.movieFavoritesCashing(page: page) { [weak self] favorites, _ in
+                        guard let self else { return }
+                        
+                        self.favoriteMovies = favorites
+                        
+                        DispatchQueue.main.async {
+                            self.favouritesCollectionView.reloadData()
+                        }
+                    }
                 }
             }
             
         case 1:
-            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+            
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteTVShows = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
                 }
+                
+                guard self.pageCount > 1 else { return }
+                
+                for page in 2...self.pageCount {
+                    
+                    RepositoryService.shared.tvShowsFavoritesCashing(page: page) { [weak self] favorites, _ in
+                        guard let self else { return }
+                        
+                        self.favoriteTVShows = favorites
+                        
+                        DispatchQueue.main.async {
+                            self.favouritesCollectionView.reloadData()
+                        }
+                    }
+                }
             }
             
         default:
-            return
+            self.favouritesCollectionView.reloadData()
         }
     }
-    
     
     func setUpNotifications() {
         let mainNotificationCenter = NotificationCenter.default
@@ -184,6 +232,8 @@ class FavouritesViewController: UIViewController {
         
         guard !isGuestSession else { return }
         
+        pageCount = 1
+        
         let topOffset = CGPoint(x: 0, y: -favouritesCollectionView.contentInset.top)
         favouritesCollectionView.setContentOffset(topOffset, animated: true)
         
@@ -196,10 +246,11 @@ class FavouritesViewController: UIViewController {
             //reload to update number of items
             favouritesCollectionView.reloadData()
             
-            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteMovies = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
@@ -219,10 +270,11 @@ class FavouritesViewController: UIViewController {
                 }
             }
             
-            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteTVShows = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
@@ -304,7 +356,6 @@ extension FavouritesViewController: UICollectionViewDelegate {
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
-        
         switch selectedIndex {
             
         case 0:
@@ -324,6 +375,57 @@ extension FavouritesViewController: UICollectionViewDelegate {
         }
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
+        
+        switch selectedIndex {
+            
+        case 0:
+            
+            guard indexPath.row == favoriteMovies.count - 2, totalPagesCount > pageCount, displayStatus == false else {
+                return
+            }
+            
+            displayStatus = true
+            pageCount += 1
+            
+            RepositoryService.shared.movieFavoritesCashing(page: pageCount) { [weak self] favorites, _ in
+                guard let self else { return }
+                
+                self.favoriteMovies = favorites
+               
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+                self.displayStatus = false
+            }
+            
+        case 1:
+            guard indexPath.row == favoriteTVShows.count - 5, totalPagesCount > pageCount, displayStatus == false else {
+                return
+            }
+            
+            displayStatus = true
+            pageCount += 1
+            
+            RepositoryService.shared.tvShowsFavoritesCashing(page: pageCount) { [weak self] favorites, _  in
+                guard let self else { return }
+                
+                self.favoriteTVShows = favorites
+                
+                DispatchQueue.main.async {
+                    self.favouritesCollectionView.reloadData()
+                }
+                self.displayStatus = false
+            }
+            
+        default:
+            return
+        }
+    }
+
 // move to contextual menu
 
 //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -389,14 +491,15 @@ extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
-        
+        //test with pageCount parameter
         switch selectedIndex {
             
         case 0:
-            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
+            RepositoryService.shared.movieFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteMovies = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
@@ -404,10 +507,11 @@ extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
             }
             
         case 1:
-            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites in
+            RepositoryService.shared.tvShowsFavoritesCashing { [weak self] favorites, totalPages in
                 guard let self else { return }
                 
                 self.favoriteTVShows = favorites
+                self.totalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.favouritesCollectionView.reloadData()
