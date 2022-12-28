@@ -46,12 +46,8 @@ class DetailsScreenViewController: UIViewController {
     
     var reviewsArray: [ReviewsModel] = []
     
-    var similarArray: [Any] = [] {
-        didSet {
-            print(similarArray.count)
-        }
-    }
-    
+    var similarArray: [Any] = []
+
     var trailersArray: [TrailerModel] = []
     
     let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
@@ -372,44 +368,60 @@ class DetailsScreenViewController: UIViewController {
         
         if let data = data as? MovieModel {
             
-            // MARK: - Request favorite movies list
+            // MARK: - Request favorite movies list, check if movie is already in favorites list & set isFavorite property
             
-            DataManager.shared.requestFavoriteMovies { [weak self] success, favorites, _, _ in
-                guard let self else { return }
-                
-                guard let favorites = favorites else { return }
-                
-                // MARK: - Check if movie is already in favorite list & set isFavorite property
+            DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
+                guard let self, let favorites else { return }
                 
                 if favorites.contains(where: { $0.id == data.id }) {
                     self.isFavorite = true
+                    return
+                }
+                
+                guard totalPages > 1 else { return }
+                
+                for page in 2...totalPages {
                     
-                } else {
-                    self.isFavorite = false
+                    DataManager.shared.requestFavoriteMovies(page: page) { [weak self] success, _, favorites, _, _ in
+                        guard let self, let favorites else { return }
+                        
+                        if favorites.contains(where: { $0.id == data.id }) {
+                            self.isFavorite = true
+                            return
+                        }
+                    }
                 }
             }
             
         } else if let data = data as? TVModel {
             
-            // MARK: - Request favorite tv shows list
+            // MARK: - Request favorite tv shows list, check if tv show is already in favorites list & set isFavorite property
             
-            DataManager.shared.requestFavoriteTVShows { [weak self] success, favorites, _, _ in
-                guard let self else { return }
+            DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
+                guard let self, let favorites else { return }
                 
-                guard let favorites = favorites else { return }
+                if favorites.contains(where: { $0.id == data.id }) {
+                    self.isFavorite = true
+                    return
+                }
+                
+                guard totalPages > 1 else { return }
+                
+                for page in 2...totalPages {
                     
-                    // MARK: - Check if tv show is already in favorite list & set isFavorite property
-                    
-                    if favorites.contains(where: { $0.id == data.id }) {
-                        self.isFavorite = true
+                    DataManager.shared.requestFavoriteTVShows(page: page) { [weak self] success, _, favorites, _, _ in
+                        guard let self, let favorites else { return }
                         
-                    } else {
-                        self.isFavorite = false
+                        if favorites.contains(where: { $0.id == data.id }) {
+                            self.isFavorite = true
+                            return
+                        }
                     }
                 }
             }
         }
-        
+    }
+    
         
     private func configureTrailer(with id: Int) {
         
