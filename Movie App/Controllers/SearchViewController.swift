@@ -455,6 +455,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
+        guard cell is SearchTableViewCell else { return }
+        
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         guard let text = searchController.searchBar.text else { return }

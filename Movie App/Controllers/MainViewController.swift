@@ -41,6 +41,7 @@ class MainViewController: UIViewController {
         cv.dataSource = self
         cv.bounces = false
         cv.bouncesZoom = false
+        cv.contentInsetAdjustmentBehavior = .never
         
         cv.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
         
@@ -92,10 +93,13 @@ class MainViewController: UIViewController {
         setUpTimerIfSectionIsVisible()
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //navigationController?.navigationBar.isHidden = false
+        //set for MovieVC and TVShowsVC
+        navigationController?.navigationBar.isHidden = false
+        
         scrollTimer.invalidate()
         
     }
@@ -104,11 +108,7 @@ class MainViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if isWidthBigger() {
-            mainCollectionView.frame = self.view.bounds
-        }
-        
-        //navigationController?.navigationBar.isHidden = true
+        setUpMainCV()
     }
     
     
@@ -120,7 +120,6 @@ class MainViewController: UIViewController {
         KingsfisherManager.shared.setCasheLimits()
         
         configureUI()
-        setUpMainCV()
         configureCompositionalLayout()
         
         DataManager.shared.requestMovieGenres { data, statusCode in
@@ -182,11 +181,11 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.loadingVC?.remove()
-                self.loadingVC = nil
-            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.loadingVC?.remove()
+            self.loadingVC = nil
         }
     }
     
@@ -261,14 +260,23 @@ class MainViewController: UIViewController {
     func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
-        barAppearance.configureWithOpaqueBackground()
-        barAppearance.backgroundColor = .black
+        barAppearance.configureWithTransparentBackground()
+        barAppearance.backgroundColor = .clear
         barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
         
+//        let barAppearance = UINavigationBarAppearance()
+//        barAppearance.configureWithOpaqueBackground()
+//        barAppearance.backgroundColor = .black
+//        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+//
+//        navigationItem.standardAppearance = barAppearance
+//        navigationItem.scrollEdgeAppearance = barAppearance
+
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
@@ -280,7 +288,7 @@ class MainViewController: UIViewController {
         view.addSubview(mainCollectionView)
         
         configureTabBar()
-        //configureNavBar()
+        configureNavBar()
         configureUsersGreetingsView()
         
     }
@@ -303,10 +311,20 @@ class MainViewController: UIViewController {
     func setUpMainCV() {
         
         mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        mainCollectionView.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 16).isActive = true
+        
+        if isWidthBigger() {
+            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
+            mainCollectionView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 16).isActive = false
+            
+        } else {
+            mainCollectionView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 16).isActive = true
+            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = false
+           
+        }
+    
         mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        mainCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
     }
     
     
@@ -430,7 +448,7 @@ extension MainViewController: UICollectionViewDataSource {
                 header.segmentedControl.removeAllSegments()
                 
                 for (index, genre) in Globals.movieGenres.enumerated() {
-                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
+                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
                 }
                 header.segmentedControl.selectedSegmentIndex = 0
                 
@@ -443,7 +461,7 @@ extension MainViewController: UICollectionViewDataSource {
                 header.segmentedControl.removeAllSegments()
                 
                 for (index, genre) in Globals.tvGenres.enumerated() {
-                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: true)
+                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
                 }
                 header.segmentedControl.selectedSegmentIndex = 0
                 
@@ -476,22 +494,22 @@ extension MainViewController: UICollectionViewDelegate {
             
             
         default:
-            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
+            DetailsService.shared.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], navigationController: navigationController)
         }
     }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         
-        if isWidthBigger() {
-            usernameLabel.isHidden = false
-            avatarImage.isHidden = false
-            secondaryTextLabel.isHidden = false
-        } else {
-            usernameLabel.isHidden = true
-            avatarImage.isHidden = true
-            secondaryTextLabel.isHidden = true
-        }
+//        if isWidthBigger() {
+//            usernameLabel.isHidden = false
+//            avatarImage.isHidden = false
+//            secondaryTextLabel.isHidden = false
+//        } else if isWidthBigger() == false {
+//            usernameLabel.isHidden = true
+//            avatarImage.isHidden = true
+//            secondaryTextLabel.isHidden = true
+//        }
     }
 }
 

@@ -214,6 +214,7 @@ class DetailsScreenViewController: UIViewController {
             configureMovieCell(data)
             completion()
         } else if let data = data as? TVModel {
+            print(data.id)
             configureTVCell(data)
             completion()
         } else if let data = data as? TrendyMedia {

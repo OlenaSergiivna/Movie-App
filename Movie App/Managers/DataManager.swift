@@ -102,7 +102,7 @@ struct DataManager {
         guard let userID = UserDefaults.standard.string(forKey: "userid") else { return }
         
         let urlMovie = "https://api.themoviedb.org/3/account/\(userID)/favorite/movies?api_key=\(Globals.apiKey)&session_id=\(sessionID)&language=en-US&sort_by=created_at.asc&page=\(page)"
-        print("url: \(urlMovie)")
+        
         AF.request(urlMovie,
                    method: .get,
                    parameters: nil,
@@ -381,11 +381,28 @@ struct DataManager {
     }
     
     
-    func getMediaDetails(mediaType: String, mediaId: Int, completion: @escaping(MovieDetailedModel) -> Void) {
+    func getMovieDetails(mediaId: Int, completion: @escaping(MovieDetailedModel) -> Void) {
         
-        let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/movie/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         movieDetailsRequest.responseDecodable(of: MovieDetailedModel.self ) { response in
+            
+            do {
+                let data = try response.result.get()
+                completion(data)
+            } catch {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    
+    func getTVShowDetails(mediaId: Int, completion: @escaping(TVShowDetailedModel) -> Void) {
+        
+        let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        
+        movieDetailsRequest.responseDecodable(of: TVShowDetailedModel.self ) { response in
             
             do {
                 let data = try response.result.get()

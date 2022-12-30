@@ -129,7 +129,7 @@ class SearchTableViewCell: UITableViewCell {
         genresLabel.text = String("\(genresString)".dropLast(2))
         
         
-        DataManager.shared.getMediaDetails(mediaType: "movie", mediaId: data.id) { [weak self] details in
+        DataManager.shared.getMovieDetails(mediaId: data.id) { [weak self] details in
             guard let self else { return }
             
             
@@ -224,21 +224,22 @@ class SearchTableViewCell: UITableViewCell {
         
         genresLabel.text = String("\(genresString)".dropLast(2))
         
-        DataManager.shared.getMediaDetails(mediaType: "tv", mediaId: data.id) { [weak self] details in
+        DataManager.shared.getTVShowDetails(mediaId: data.id) { [weak self] details in
             guard let self else { return }
             
-            
-            if let productionCountryName = details.productionCounries.first?.name {
+            if let productionCountryName = details.productionCountries.first?.name {
+                
                 self.productionCountryButton.setTitle(productionCountryName, for: .normal)
             } else {
                 self.productionCountryButton.isHidden = true
             }
             
             
-            if let runtime = details.runtime {
+            if let runtime = details.episodeRunTime.last {
                 if runtime > 0 {
                     let timeInHours = self.calculateTime(Float(runtime))
-                    self.runtimeButton.setTitle(String(timeInHours), for: .normal)
+                    let runtimeString = "≈ \(timeInHours)"
+                    self.runtimeButton.setTitle(String(runtimeString), for: .normal)
                 } else {
                     self.runtimeButton.isHidden = true
                 }
@@ -256,6 +257,7 @@ class SearchTableViewCell: UITableViewCell {
                 self.secondStackView.isHidden = true
             }
         }
+        
         
         guard let imagePath = data.posterPath else {
             

@@ -22,12 +22,12 @@ struct MovieDetailedModel: Codable {
     let overview: String?
     let popularity: Double
     let posterPath: String?
-    let productionCompanies: [ProductionCompanies]
-    let productionCounries: [ProductionCountries]
+    let productionCompanies: [ProductionCompany]
+    let productionCounries: [ProductionCountry]
     let releaseDate: String
     let revenue: Int
     let runtime: Int?
-    let spokenLanguages: [SpokenLanguages]
+    let spokenLanguages: [SpokenLanguage]
     let status: String
     let tagline: String?
     let title: String?
@@ -56,6 +56,7 @@ struct MovieDetailedModel: Codable {
     }
 }
 
+
 struct MediaCollection: Codable {
     let id: Int
     let name: String
@@ -69,7 +70,8 @@ struct MediaCollection: Codable {
     }
 }
 
-struct ProductionCompanies: Codable {
+
+struct ProductionCompany: Codable {
     let name: String
     let id: Int
     let logoPath: String?
@@ -82,7 +84,8 @@ struct ProductionCompanies: Codable {
     }
 }
 
-struct ProductionCountries: Codable {
+
+struct ProductionCountry: Codable {
     let iso_3166_1: String
     let name: String
     
@@ -92,15 +95,17 @@ struct ProductionCountries: Codable {
     }
 }
 
-struct SpokenLanguages: Codable {
+
+struct SpokenLanguage: Codable {
+    let englishName: String
     let iso639_1: String
     let name: String
     
     enum CodingKeys: String, CodingKey {
+        case englishName = "english_name"
         case iso639_1 = "iso_639_1"
         case name
     }
-    
 }
 
 
