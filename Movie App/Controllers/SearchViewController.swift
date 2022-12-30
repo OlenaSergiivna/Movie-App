@@ -406,7 +406,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], navigationController: navigationController)
                 
-                guard !previousSearchRequests.contains(.movie(searchResultsMovie[indexPath.row])) else {return}
+                if let containingIndex = previousSearchRequests.firstIndex(of: .movie(searchResultsMovie[indexPath.row])) {
+                    
+                    previousSearchRequests.remove(at: containingIndex)
+                }
                 
                 previousSearchRequests.insert(.movie(searchResultsMovie[indexPath.row]), at: 0)
                 
@@ -433,7 +436,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], navigationController: navigationController)
                 
-                guard !previousSearchRequests.contains(.tvShow(searchResultsTV[indexPath.row])) else {return}
+                if let containingIndex = previousSearchRequests.firstIndex(of: .tvShow(searchResultsTV[indexPath.row])) {
+                    
+                    previousSearchRequests.remove(at: containingIndex)
+                }
                 
                 previousSearchRequests.insert(.tvShow(searchResultsTV[indexPath.row]), at: 0)
                 
