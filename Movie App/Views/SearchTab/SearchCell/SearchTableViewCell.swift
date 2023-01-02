@@ -25,6 +25,8 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var runtimeButton: UIButton!
     
+    @IBOutlet weak var episodesCountButton: UIButton!
+    
     @IBOutlet weak var backLabel: UILabel!
     
     @IBOutlet weak var firstStackView: UIStackView!
@@ -44,6 +46,7 @@ class SearchTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        movieImage.image = nil
         productionCountryButton.setTitle(nil, for: .normal)
         runtimeButton.setTitle(nil, for: .normal)
     }
@@ -51,8 +54,6 @@ class SearchTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        backLabel.isHidden = true
         
         movieImage.backgroundColor = .clear
         movieImage.layer.masksToBounds = true
@@ -75,22 +76,24 @@ class SearchTableViewCell: UITableViewCell {
         
         guard let title = data.title else {
             
-            movieImage.backgroundColor = .lightGray
+            backLabel.isHidden = true
+            movieImage.isHidden = true
             movieTitle.isHidden = true
-            movieTitle.isEnabled = false
-            
+           
             return
         }
         
-        releaseYearButton.isHidden = false
-        ratingButton.isHidden = false
-        firstStackView.isHidden = false
-        productionCountryButton.isHidden = false
-        runtimeButton.isHidden = false
-        secondStackView.isHidden = false
+        backLabel.isHidden = true
         movieImage.isHidden = false
         movieTitle.isHidden = false
-        
+        releaseYearButton.isHidden = false
+        productionCountryButton.isHidden = false
+        ratingButton.isHidden = false
+        runtimeButton.isHidden = false
+        episodesCountButton.isHidden = true
+        firstStackView.isHidden = false
+        secondStackView.isHidden = false
+       
         
         movieTitle.text = title
         
@@ -165,10 +168,10 @@ class SearchTableViewCell: UITableViewCell {
         
         guard let imagePath = data.posterPath else {
             
-            movieImage.backgroundColor = .lightGray
+            movieImage.isHidden = true
             backLabel.isHidden = false
             backLabel.text = title
-            backLabel.textColor = .systemGray
+            backLabel.textColor = .darkGray
             
             return
         }
@@ -180,14 +183,16 @@ class SearchTableViewCell: UITableViewCell {
     
     func configureTV(with data: TVModel) {
         
-        releaseYearButton.isHidden = false
-        ratingButton.isHidden = false
-        firstStackView.isHidden = false
-        productionCountryButton.isHidden = false
-        runtimeButton.isHidden = false
-        secondStackView.isHidden = false
+        backLabel.isHidden = true
         movieImage.isHidden = false
         movieTitle.isHidden = false
+        releaseYearButton.isHidden = false
+        productionCountryButton.isHidden = false
+        ratingButton.isHidden = false
+        runtimeButton.isHidden = true
+        episodesCountButton.isHidden = false
+        firstStackView.isHidden = false
+        secondStackView.isHidden = false
         
         movieTitle.text = data.name
         
@@ -235,25 +240,26 @@ class SearchTableViewCell: UITableViewCell {
             }
             
             
-            if let runtime = details.episodeRunTime.last {
-                if runtime > 0 {
-                    let timeInHours = self.calculateTime(Float(runtime))
-                    let runtimeString = "≈ \(timeInHours)"
-                    self.runtimeButton.setTitle(String(runtimeString), for: .normal)
-                } else {
-                    self.runtimeButton.isHidden = true
-                }
+            var episodesString = "\(String(details.numberOfEpisodes))"
+            
+            if details.numberOfEpisodes > 1 {
+                episodesString += " episodes"
             } else {
-                self.runtimeButton.isHidden = true
+                episodesString += " episode"
             }
             
+            self.episodesCountButton.setTitle(episodesString, for: .normal)
+            
+            if details.numberOfEpisodes < 1 {
+                self.episodesCountButton.isHidden = true
+            }
             
             if self.releaseYearButton.isHidden && self.productionCountryButton.isHidden {
                 self.firstStackView.isHidden = true
             }
             
             
-            if self.ratingButton.isHidden && self.runtimeButton.isHidden {
+            if self.ratingButton.isHidden && self.runtimeButton.isHidden  && self.episodesCountButton.isHidden {
                 self.secondStackView.isHidden = true
             }
         }
@@ -261,10 +267,10 @@ class SearchTableViewCell: UITableViewCell {
         
         guard let imagePath = data.posterPath else {
             
-            movieImage.backgroundColor = .lightGray
+            movieImage.isHidden = true
             backLabel.isHidden = false
             backLabel.text = data.name
-            backLabel.textColor = .systemGray
+            backLabel.textColor = .darkGray
             
             return
         }

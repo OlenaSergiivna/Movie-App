@@ -10,23 +10,29 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" rowHeight="152" id="KGk-i7-Jjw" customClass="SearchTableViewCell" customModule="Movie_App" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="398" height="152"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" rowHeight="218" id="KGk-i7-Jjw" customClass="SearchTableViewCell" customModule="Movie_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="398" height="218"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="398" height="152"/>
+                <rect key="frame" x="0.0" y="0.0" width="398" height="218"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ob-sE-y4A">
-                        <rect key="frame" x="8" y="0.0" width="382" height="144"/>
+                        <rect key="frame" x="8" y="0.0" width="382" height="210"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Z4-ss-OAt">
-                                <rect key="frame" x="8" y="8" width="90" height="128"/>
+                                <rect key="frame" x="8" y="8" width="90" height="194"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="EKv-Cw-jzG"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-RA-8tp">
+                                <rect key="frame" x="16" y="16" width="74" height="14.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aNz-fr-71Q">
                                 <rect key="frame" x="106" y="8" width="76.666666666666686" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
@@ -63,46 +69,66 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
-                                <rect key="frame" x="106.00000000000001" y="96" width="139.33333333333337" height="34.333333333333343"/>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
+                                <rect key="frame" x="106" y="96" width="260" height="69"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
-                                        <rect key="frame" x="0.0" y="0.0" width="48.333333333333336" height="34.333333333333336"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="8.0" titleAlignment="center">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
+                                        <rect key="frame" x="0.0" y="0.0" width="46" height="69"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="9"/>
+                                        <state key="normal" title="8.0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="filled" title="8.0">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
-                                        <rect key="frame" x="56.333333333333343" y="0.0" width="83" height="34.333333333333336"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
+                                        <rect key="frame" x="54.000000000000007" y="0.0" width="82.666666666666686" height="69"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="2h 39m" cornerStyle="large">
-                                            <backgroundConfiguration key="background"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="2h 39m"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="2h 39m">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-Qe-N6s">
+                                        <rect key="frame" x="144.66666666666669" y="0.0" width="115.33333333333331" height="69"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="20 episodes"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="20 episodes">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
+                                            <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-RA-8tp">
-                                <rect key="frame" x="16" y="16" width="74" height="14.333333333333336"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="top" secondItem="1ob-sE-y4A" secondAttribute="top" constant="8" id="3bK-fY-P0v"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dD6-Ba-KoE" secondAttribute="trailing" constant="16" id="4gv-sP-WND"/>
                             <constraint firstItem="jgg-99-AEz" firstAttribute="leading" secondItem="aNz-fr-71Q" secondAttribute="leading" id="Cut-yy-cwo"/>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="leading" secondItem="oBk-RA-8tp" secondAttribute="leading" constant="-8" id="GBx-s2-wMZ"/>
                             <constraint firstItem="oBk-RA-8tp" firstAttribute="top" secondItem="3Z4-ss-OAt" secondAttribute="top" constant="8" id="J4T-zp-7O7"/>
                             <constraint firstItem="4Sq-eg-itR" firstAttribute="leading" secondItem="jgg-99-AEz" secondAttribute="leading" id="Jf5-xn-8Uc"/>
                             <constraint firstItem="4Sq-eg-itR" firstAttribute="top" secondItem="jgg-99-AEz" secondAttribute="bottom" constant="8" id="KB3-s6-EQo"/>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="leading" secondItem="1ob-sE-y4A" secondAttribute="leading" constant="8" id="TcB-LP-PVZ"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="oBk-RA-8tp" secondAttribute="bottom" constant="16" id="YuH-FI-OUl"/>
                             <constraint firstItem="aNz-fr-71Q" firstAttribute="top" secondItem="3Z4-ss-OAt" secondAttribute="top" id="fAM-J0-17c"/>
                             <constraint firstItem="dD6-Ba-KoE" firstAttribute="top" secondItem="4Sq-eg-itR" secondAttribute="bottom" constant="8" id="gyb-nD-ex7"/>
                             <constraint firstItem="aNz-fr-71Q" firstAttribute="leading" secondItem="3Z4-ss-OAt" secondAttribute="trailing" constant="8" id="kp8-al-bKr"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jgg-99-AEz" secondAttribute="trailing" constant="16" id="o2P-2p-l9f"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4Sq-eg-itR" secondAttribute="trailing" constant="16" id="r7t-NH-AF8"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dD6-Ba-KoE" secondAttribute="bottom" constant="8" id="rIz-iC-2MZ"/>
                             <constraint firstItem="dD6-Ba-KoE" firstAttribute="leading" secondItem="4Sq-eg-itR" secondAttribute="leading" id="s66-UF-kgZ"/>
                             <constraint firstAttribute="bottom" secondItem="3Z4-ss-OAt" secondAttribute="bottom" constant="8" id="tYe-lp-xK3"/>
                             <constraint firstItem="jgg-99-AEz" firstAttribute="top" secondItem="aNz-fr-71Q" secondAttribute="bottom" constant="4" id="uqV-aG-J7X"/>
@@ -123,9 +149,10 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="backLabel" destination="oBk-RA-8tp" id="1cc-6k-UPP"/>
+                <outlet property="episodesCountButton" destination="oc5-Qe-N6s" id="7Nk-0i-E3i"/>
                 <outlet property="firstStackView" destination="4Sq-eg-itR" id="uag-IO-oIg"/>
                 <outlet property="genresLabel" destination="jgg-99-AEz" id="i5Z-CO-PVY"/>
-                <outlet property="movieBackView" destination="1ob-sE-y4A" id="oj7-wV-aFF"/>
+                <outlet property="movieBackView" destination="1ob-sE-y4A" id="Cyd-xx-ieQ"/>
                 <outlet property="movieImage" destination="3Z4-ss-OAt" id="fe9-XH-fYW"/>
                 <outlet property="movieTitle" destination="aNz-fr-71Q" id="xG4-vS-hQN"/>
                 <outlet property="productionCountryButton" destination="cvM-5Z-yJn" id="j3t-QF-HaE"/>
@@ -136,8 +163,10 @@
                 <outletCollection property="mediaLabelsCollection" destination="ohE-La-efc" collectionClass="NSMutableArray" id="Or8-TU-nEq"/>
                 <outletCollection property="mediaLabelsCollection" destination="69S-Dz-R9h" collectionClass="NSMutableArray" id="Hxc-Cz-PCg"/>
                 <outletCollection property="mediaLabelsCollection" destination="Yuf-oa-hjb" collectionClass="NSMutableArray" id="q9Y-47-iEi"/>
+                <outletCollection property="mediaLabelsCollection" destination="oc5-Qe-N6s" collectionClass="NSMutableArray" id="pKc-bI-eI3"/>
+                <outletCollection property="mediaLabelsCollection" destination="cvM-5Z-yJn" collectionClass="NSMutableArray" id="vTg-8I-ZoB"/>
             </connections>
-            <point key="canvasLocation" x="104.61538461538461" y="58.293838862559241"/>
+            <point key="canvasLocation" x="104.61538461538461" y="71.800947867298575"/>
         </tableViewCell>
     </objects>
 </document>
