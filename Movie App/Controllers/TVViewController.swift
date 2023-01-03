@@ -67,7 +67,6 @@ class TVViewController: UIViewController {
     
     
     func configureUI() {
-        
         view.backgroundColor = .black
         configureNavBar()
     }
@@ -103,12 +102,7 @@ extension TVViewController: UITableViewDelegate, UITableViewDataSource {
         cell.cellDelegate = self
         cell.genreLabel.text = Globals.tvGenres[indexPath.row].name
         
-        
-        DispatchQueue.main.async {
-            DataManager.shared.requestTVByGenre(genre: cell.genreLabel.text!, page: 1) { tv in
-                cell.tvArray = tv
-            }
-        }
+        cell.requestTVShows(by: indexPath)
         
         return cell
     }

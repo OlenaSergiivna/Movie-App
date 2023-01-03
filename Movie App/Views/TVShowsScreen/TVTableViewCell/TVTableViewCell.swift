@@ -13,12 +13,12 @@ protocol TVCollectionViewCellDelegate: AnyObject {
 
 
 class TVTableViewCell: UITableViewCell {
+    
+    weak var cellDelegate: TVCollectionViewCellDelegate?
 
     @IBOutlet weak var genreLabel: UILabel!
     
     @IBOutlet weak var tvCollectionView: UICollectionView!
-    
-    weak var cellDelegate: TVCollectionViewCellDelegate?
     
     var tvArray: [TVModel] = [] {
         didSet {
@@ -35,6 +35,19 @@ class TVTableViewCell: UITableViewCell {
         }
     }
     
+    var pageCount = 1 {
+        didSet {
+            print("page count: \(pageCount)")
+        }
+    }
+    
+    var displayStatus = false {
+        didSet {
+            print("display status: \(displayStatus)")
+        }
+    }
+    
+    var totalPagesCount = 1
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,7 +56,20 @@ class TVTableViewCell: UITableViewCell {
     }
 
     
+    func requestTVShows(by indexPath: IndexPath) {
+        
+        let genre = Globals.tvGenres[indexPath.row].name
+        
+        DataManager.shared.requestTVByGenre(genre: genre, page: pageCount) { [weak self] tvShows, totalPages in
+            guard let self else { return }
+            
+            self.totalPagesCount = totalPages
+            self.tvArray = tvShows
+        }
+    }
+    
     override func prepareForReuse() {
+        super.prepareForReuse()
         
         tvCollectionView.dataSource = nil
         tvCollectionView.delegate = nil
@@ -52,7 +78,7 @@ class TVTableViewCell: UITableViewCell {
 }
 
 
-extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension TVTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard !tvArray.isEmpty else {
@@ -71,13 +97,10 @@ extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
         cell.configure(with: tvArray, indexPath: indexPath)
         return cell
     }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 200)
-    }
-    
-    
+}
+
+
+extension TVTableViewCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -86,4 +109,34 @@ extension TVTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
         cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard indexPath.row == tvArray.count - 3, totalPagesCount > pageCount, displayStatus == false else { return }
+        
+        displayStatus = true
+        pageCount += 1
+        
+        guard let genre = genreLabel.text else { return }
+        
+        DataManager.shared.requestTVByGenre(genre: genre, page: self.pageCount) { [weak self] tvShows, _ in
+            guard let self else { return }
+            
+            self.tvArray.append(contentsOf: tvShows)
+            
+            DispatchQueue.main.async {
+                self.tvCollectionView.reloadData()
+            }
+            
+            self.displayStatus = false
+        }
+    }
+}
+
+
+extension TVTableViewCell: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 200)
+    }
 }

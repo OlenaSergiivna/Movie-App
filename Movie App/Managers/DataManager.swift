@@ -52,7 +52,7 @@ struct DataManager {
     
     // MARK: - Request movies by specific genre/genres
     // models?
-    func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel]) -> Void) {
+    func requestMoviesByGenre(genre: String, page: Int, completion: @escaping([MovieModel], Int) -> Void) {
         
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
         
@@ -62,8 +62,8 @@ struct DataManager {
         
         movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
             do {
-                let data = try response.result.get().results
-                completion(data)
+                let data = try response.result.get()
+                completion(data.results, data.totalPages)
             } catch {
                 print(error.localizedDescription)
             }
@@ -74,7 +74,7 @@ struct DataManager {
     
     // MARK: - Request tv shows by specific genre/genres
     // models?
-    func requestTVByGenre(genre: String, page: Int, completion: @escaping([TVModel]) -> Void) {
+    func requestTVByGenre(genre: String, page: Int, completion: @escaping([TVModel], Int) -> Void) {
         
         guard let genreId = Globals.tvGenres.first(where: { $0.name == genre})?.id else { return }
         
@@ -84,8 +84,8 @@ struct DataManager {
         
         tvByGenreRequest.responseDecodable(of: ResultsTV.self) { response in
             do {
-                let data = try response.result.get().results
-                completion(data)
+                let data = try response.result.get()
+                completion(data.results, data.totalPages)
             } catch {
                 print(error.localizedDescription)
             }

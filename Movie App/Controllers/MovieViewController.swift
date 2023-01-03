@@ -19,28 +19,15 @@ class MovieViewController: UIViewController {
     
     var tappedCell: MovieModel!
     
-    var pageCount = 1 {
-        didSet {
-            print("page count: \(pageCount)")
-        }
-    }
-    
-    var displayStatus = false {
-        didSet {
-            print("display status: \(displayStatus)")
-        }
-    }
-    
-    var totalPagesCount = 10
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadContent()
         
         let nibMovieCell = UINib(nibName: "MovieTableViewCell", bundle: nil)
         movieTableView.register(nibMovieCell, forCellReuseIdentifier: "MovieTableViewCell")
         
         configureUI()
-        loadContent()
     }
     
     
@@ -64,6 +51,7 @@ class MovieViewController: UIViewController {
         DataManager.shared.requestMovieGenres { data, statusCode in
             
             guard statusCode == 200 else { return }
+            
             Globals.movieGenres = data
             
             DispatchQueue.main.async {
@@ -118,12 +106,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         cell.cellDelegate = self
         cell.genreLabel.text = Globals.movieGenres[indexPath.row].name
         
-        DispatchQueue.main.async {
-            
-            DataManager.shared.requestMoviesByGenre(genre: cell.genreLabel.text!, page: 1) { movies in
-                cell.moviesArray = movies
-            }
-        }
+        cell.requestMovies(by: indexPath)
         
         return cell
     }

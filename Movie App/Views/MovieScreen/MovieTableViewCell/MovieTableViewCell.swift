@@ -34,6 +34,19 @@ class MovieTableViewCell: UITableViewCell {
         }
     }
     
+    var pageCount = 1 {
+        didSet {
+            print("page count: \(pageCount)")
+        }
+    }
+    
+    var displayStatus = false {
+        didSet {
+            print("display status: \(displayStatus)")
+        }
+    }
+    
+    var totalPagesCount = 1
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,7 +55,20 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     
+    func requestMovies(by indexPath: IndexPath) {
+        
+        let genre = Globals.movieGenres[indexPath.row].name
+        
+        DataManager.shared.requestMoviesByGenre(genre: genre, page: pageCount) { [weak self] movies, totalPages in
+            guard let self else { return }
+            
+            self.totalPagesCount = totalPages
+            self.moviesArray = movies
+        }
+    }
+    
     override func prepareForReuse() {
+        super.prepareForReuse()
         
         moviesCollectionView.dataSource = nil
         moviesCollectionView.delegate = nil
@@ -54,7 +80,7 @@ class MovieTableViewCell: UITableViewCell {
 extension MovieTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard moviesArray.isEmpty else {
+        guard !moviesArray.isEmpty else {
             return 4
         }
         return moviesArray.count
@@ -79,9 +105,32 @@ extension MovieTableViewCell: UICollectionViewDelegate {
         
         guard let cell = moviesCollectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell else { return }
         
-           cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+        cellDelegate?.collectionView(collectionviewcell: cell, index: indexPath.item, didTappedInTableViewCell: self)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard indexPath.row == moviesArray.count - 3, totalPagesCount > pageCount, displayStatus == false else { return }
+        
+        displayStatus = true
+        pageCount += 1
+        
+        guard let genre = genreLabel.text else { return }
+        
+        DataManager.shared.requestMoviesByGenre(genre: genre, page: self.pageCount) { [weak self] movies, _ in
+            guard let self else { return }
+            
+            self.moviesArray.append(contentsOf: movies)
+            
+            DispatchQueue.main.async {
+                self.moviesCollectionView.reloadData()
+            }
+            
+            self.displayStatus = false
         }
     }
+}
 
 
 extension MovieTableViewCell: UICollectionViewDelegateFlowLayout {

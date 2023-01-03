@@ -24,22 +24,24 @@
                                 <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-G5-mHj">
-                                <rect key="frame" x="0.0" y="184.33333333333334" width="75" height="15.666666666666657"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="8iE-G5-mHj">
+                                <rect key="frame" x="8" y="182" width="104" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="8iE-G5-mHj" firstAttribute="top" secondItem="Nea-Yh-Jml" secondAttribute="bottom" constant="2" id="2kO-XQ-6Lp"/>
                             <constraint firstAttribute="trailing" secondItem="Nea-Yh-Jml" secondAttribute="trailing" id="9Zt-tf-FR2"/>
                             <constraint firstAttribute="bottom" secondItem="Nea-Yh-Jml" secondAttribute="bottom" constant="20" id="Xlg-nP-DAl"/>
                             <constraint firstItem="Nea-Yh-Jml" firstAttribute="top" secondItem="77J-1L-eFg" secondAttribute="top" id="fUX-TQ-bf8"/>
-                            <constraint firstItem="8iE-G5-mHj" firstAttribute="leading" secondItem="77J-1L-eFg" secondAttribute="leading" id="nQ6-g7-ciC"/>
+                            <constraint firstItem="8iE-G5-mHj" firstAttribute="leading" secondItem="77J-1L-eFg" secondAttribute="leading" constant="8" id="nQ6-g7-ciC"/>
+                            <constraint firstAttribute="trailing" secondItem="8iE-G5-mHj" secondAttribute="trailing" constant="8" id="sYB-VI-7qR"/>
                             <constraint firstItem="Nea-Yh-Jml" firstAttribute="leading" secondItem="77J-1L-eFg" secondAttribute="leading" id="tN1-fz-1Q6"/>
-                            <constraint firstAttribute="bottom" secondItem="8iE-G5-mHj" secondAttribute="bottom" id="zA6-tW-p79"/>
+                            <constraint firstAttribute="bottom" secondItem="8iE-G5-mHj" secondAttribute="bottom" constant="2" id="zA6-tW-p79"/>
                         </constraints>
                     </view>
                 </subviews>

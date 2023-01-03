@@ -130,7 +130,7 @@ class MainViewController: UIViewController {
             
             Globals.movieGenres = data
             
-            DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres.first?.name ?? "", page: 1) { [weak self] movies in
+            DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres.first?.name ?? "", page: 1) { [weak self] movies, totalPages in
                 guard let self else { return }
                 
                 self.moviesArray = movies
@@ -150,7 +150,7 @@ class MainViewController: UIViewController {
             
             Globals.tvGenres = data
             
-            DataManager.shared.requestTVByGenre(genre: Globals.tvGenres.first?.name ?? "", page: 1) { [weak self] movies in
+            DataManager.shared.requestTVByGenre(genre: Globals.tvGenres.first?.name ?? "", page: 1) { [weak self] movies, totalPages in
                 guard let self else { return }
                 
                 self.tvArray = movies
@@ -521,7 +521,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
         
         mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .right, animated: false)
         
-        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies in
+        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies, totalPages in
             guard let self else { return }
             
             self.moviesArray = movies
@@ -559,7 +559,7 @@ extension MainViewController: TVHeaderViewDelegate  {
     func changeTVGenre(index: Int) {
         mainCollectionView.scrollToItem(at:IndexPath(item: 0, section: 2), at: .right, animated: false)
         
-        DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[index].name, page: 1) { [weak self] movies in
+        DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[index].name, page: 1) { [weak self] movies, totalPages in
             guard let self else { return }
             
             self.tvArray = movies
