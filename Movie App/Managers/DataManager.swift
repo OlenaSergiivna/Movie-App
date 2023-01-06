@@ -309,15 +309,15 @@ struct DataManager {
     
     // MARK: - Request popular now media
     
-    func requestTrendyMedia(completion: @escaping([TrendyMedia]) -> Void) {
+    func requestTrendyMedia(completion: @escaping([TrendyMedia], Int) -> Void) {
         
         let trendyRequest = AF.request("https://api.themoviedb.org/3/trending/all/day?api_key=\(Globals.apiKey)&page=1", method: .get)
         
         trendyRequest.responseDecodable(of: Trends.self) { response in
             
             do {
-                let data = try response.result.get().results
-                completion(data)
+                let data = try response.result.get()
+                completion(data.results, data.totalPages)
             } catch {
                 print(error.localizedDescription)
                 
@@ -329,15 +329,15 @@ struct DataManager {
     
     // MARK: - Request now playing movies
     
-    func requestNowPlayingMovies(completion: @escaping([MovieModel]) -> Void) {
+    func requestNowPlayingMovies(completion: @escaping([MovieModel], Int) -> Void) {
         
         let nowPlayingRequest = AF.request("https://api.themoviedb.org/3/movie/now_playing?api_key=\(Globals.apiKey)&language=en-US&page=1&region=US", method: .get)
         
         nowPlayingRequest.responseDecodable(of: NowPlayingResults.self) { response in
             
             do {
-                let data = try response.result.get().results
-                completion(data)
+                let data = try response.result.get()
+                completion(data.results, data.totalPages)
             } catch {
                 print(error.localizedDescription)
                 

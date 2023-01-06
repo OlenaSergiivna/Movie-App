@@ -19,7 +19,30 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var secondaryTextLabel: UILabel!
     
-    var moviesArray: [MovieModel] = []
+    var moviesArray: [MovieModel] = [] {
+        didSet {
+            print("movies array: \(moviesArray.count)")
+        }
+    }
+    
+    var moviesSelectedIndex = 0 {
+        didSet {
+            print("movies selected index: \(moviesSelectedIndex)")
+        }
+    }
+    
+    var moviesPageCount = 1 {
+        didSet {
+            print("movies page count: \(moviesPageCount)")
+        }
+    }
+    
+    var moviesTotalPagesCount = 1 {
+        didSet {
+            print("movies total page count: \(moviesTotalPagesCount)")
+        }
+    }
+    
     
     var tvArray: [TVModel] = []
     
@@ -134,6 +157,7 @@ class MainViewController: UIViewController {
                 guard let self else { return }
                 
                 self.moviesArray = movies
+                self.moviesTotalPagesCount = totalPages
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
@@ -450,7 +474,7 @@ extension MainViewController: UICollectionViewDataSource {
                 for (index, genre) in Globals.movieGenres.enumerated() {
                     header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
                 }
-                header.segmentedControl.selectedSegmentIndex = 0
+                header.segmentedControl.selectedSegmentIndex = moviesSelectedIndex
                 
                 return header
                 
@@ -477,7 +501,71 @@ extension MainViewController: UICollectionViewDataSource {
 }
 
 
+
 extension MainViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+            
+        case 0:
+            guard indexPath.row == trendyMediaArray.count - 3, trendyTotalPagesCount > trendyPageCount, displayStatus == false else { return }
+            
+            displayStatus = true
+            trendyPageCount += 1
+            
+            DataManager.shared.requestTrendyMedia { [weak self] media, _ in
+                guard let self else { return }
+                
+                self.trendyMediaArray.append(contentsOf: media)
+                
+                DispatchQueue.main.async {
+                    self.mainCollectionView.reloadData()
+                }
+                self.displayStatus = false
+            }
+            
+            print("popular now will display")
+            
+        case 1:
+            guard indexPath.row == moviesArray.count - 2, moviesTotalPagesCount > moviesPageCount, displayStatus == false else {
+                print("indexPath.row: \(indexPath.row) - moviesArray count: \(moviesArray.count)")
+                print("\(moviesTotalPagesCount) - \(moviesPageCount)")
+                print("display status: \(displayStatus)")
+                return
+            }
+            
+            displayStatus = true
+            moviesPageCount += 1
+            
+            
+            DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[moviesSelectedIndex].name, page: moviesPageCount) { [weak self] movies, _ in
+                guard let self else { return }
+                
+                if self.moviesPageCount > 1 {
+                    let lastInArray = self.moviesArray.count
+                    self.moviesArray.append(contentsOf: movies)
+                    let newLastInArray = self.moviesArray.count
+                    let indexPaths = Array(lastInArray..<newLastInArray).map{IndexPath(item: $0, section: 1)}
+                    
+                    DispatchQueue.main.async {
+                            self.mainCollectionView.insertItems(at: indexPaths)
+                    }
+                    
+                    self.displayStatus = false
+                }
+            }
+            
+        case 2:
+            guard indexPath.row == tvArray.count - 2, tvTotalPagesCount > tvPageCount, displayStatus == false else { return }
+            print("tv shows will display")
+            
+        default:
+            guard indexPath.row == nowPlayingMoviesArray.count, nowPlayingTotalPagesCount > nowPlayingPageCount, displayStatus == false else { return }
+            print("now in theatres will display")
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -518,17 +606,31 @@ extension MainViewController: UICollectionViewDelegate {
 extension MainViewController: MoviesHeaderViewDelegate {
     
     func changeMovieGenre(index: Int) {
-        
         mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .right, animated: false)
+       
+        let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 1 })
+        self.mainCollectionView.reloadItems(at: items)
         
-        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: 1) { [weak self] movies, totalPages in
+        let indexPaths = (0..<moviesArray.count).map { IndexPath(item: $0, section: 1) }
+        mainCollectionView.reloadItems(at: indexPaths)
+        
+        moviesSelectedIndex = index
+        
+        moviesPageCount = 1
+        
+        print("items count 1: \(mainCollectionView.numberOfItems(inSection: 1))")
+        
+        DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: moviesPageCount) { [weak self] movies, totalPages in
             guard let self else { return }
             
             self.moviesArray = movies
-           
+            self.moviesTotalPagesCount = totalPages
+            
             DispatchQueue.main.async {
+                self.mainCollectionView.reloadData()
                 let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 1 })
                 self.mainCollectionView.reloadItems(at: items)
+                print("items count 2: \(self.mainCollectionView.numberOfItems(inSection: 1))")
             }
         }
     }
