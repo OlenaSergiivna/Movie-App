@@ -329,9 +329,9 @@ struct DataManager {
     
     // MARK: - Request now playing movies
     
-    func requestNowPlayingMovies(completion: @escaping([MovieModel], Int) -> Void) {
+    func requestNowPlayingMovies(page: Int = 1, completion: @escaping([MovieModel], Int) -> Void) {
         
-        let nowPlayingRequest = AF.request("https://api.themoviedb.org/3/movie/now_playing?api_key=\(Globals.apiKey)&language=en-US&page=1&region=US", method: .get)
+        let nowPlayingRequest = AF.request("https://api.themoviedb.org/3/movie/now_playing?api_key=\(Globals.apiKey)&language=en-US&page=\(page)&region=US", method: .get)
         
         nowPlayingRequest.responseDecodable(of: NowPlayingResults.self) { response in
             

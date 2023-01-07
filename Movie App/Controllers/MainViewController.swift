@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
     
     deinit {
         print("!!! Deinit: \(self)")
-      }
+    }
     
     @IBOutlet weak var usernameLabel: UILabel!
     
@@ -19,48 +19,20 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var secondaryTextLabel: UILabel!
     
-    var moviesArray: [MovieModel] = [] {
-        didSet {
-            print("movies array: \(moviesArray.count)")
-        }
-    }
+    var moviesArray: [MovieModel] = []
     
-    var moviesSelectedIndex = 0 {
-        didSet {
-            print("movies selected index: \(moviesSelectedIndex)")
-        }
-    }
+    var moviesSelectedIndex = 0
     
-    var moviesPageCount = 1 {
-        didSet {
-            print("movies page count: \(moviesPageCount)")
-        }
-    }
+    var moviesPageCount = 1
     
-    var moviesTotalPagesCount = 1 {
-        didSet {
-            print("movies total page count: \(moviesTotalPagesCount)")
-        }
-    }
+    var moviesTotalPagesCount = 1
     
     
-    var tvArray: [TVModel] = [] {
-        didSet {
-            print("tv array: \(tvArray.count)")
-        }
-    }
+    var tvArray: [TVModel] = []
     
-    var tvSelectedIndex = 0 {
-        didSet {
-            print("tv selected index: \(tvSelectedIndex)")
-        }
-    }
+    var tvSelectedIndex = 0
     
-    var tvPageCount = 1 {
-        didSet {
-            print("tv page count: \(tvPageCount)")
-        }
-    }
+    var tvPageCount = 1
     
     var tvTotalPagesCount = 1
     
@@ -68,6 +40,17 @@ class MainViewController: UIViewController {
     var trendyMediaArray: [TrendyMedia] = []
     
     var nowPlayingMoviesArray: [MovieModel] = []
+    
+    var nowPlayingPageCount = 1
+    
+    var nowPlayingTotalPagesCount = 1
+    
+    
+    var displayStatus = false {
+        didSet {
+            print("display status: \(displayStatus)")
+        }
+    }
     
     var loadingVC: LoadingViewController?
     
@@ -166,9 +149,7 @@ class MainViewController: UIViewController {
         
         DataManager.shared.requestMovieGenres { data, statusCode in
             
-            guard statusCode == 200 else {
-                return
-            }
+            guard statusCode == 200 else { return }
             
             Globals.movieGenres = data
             
@@ -187,9 +168,7 @@ class MainViewController: UIViewController {
         
         DataManager.shared.requestTVGenres { data, statusCode in
             
-            guard statusCode == 200 else {
-                return
-            }
+            guard statusCode == 200 else { return }
             
             Globals.tvGenres = data
             
@@ -217,10 +196,11 @@ class MainViewController: UIViewController {
         }
         
         
-        DataManager.shared.requestNowPlayingMovies { [weak self] data in
+        DataManager.shared.requestNowPlayingMovies { [weak self] data, totalPages in
             guard let self else { return }
             
             self.nowPlayingMoviesArray = data
+            self.nowPlayingTotalPagesCount = totalPages
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
@@ -234,7 +214,7 @@ class MainViewController: UIViewController {
     }
     
 
-    func setUpNotifications() { 
+    func setUpNotifications() {
         let mainNotificationCenter = NotificationCenter.default
         
         mainNotificationCenter.addObserver(self, selector: #selector(appWasHiddenOnBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -363,9 +343,8 @@ class MainViewController: UIViewController {
         } else {
             mainCollectionView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 16).isActive = true
             mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = false
-           
         }
-    
+        
         mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
@@ -591,7 +570,6 @@ extension MainViewController: UICollectionViewDelegate {
                     
                     DispatchQueue.main.async {
                         self.mainCollectionView.insertItems(at: indexPaths)
-                        
                     }
                 }
                 
@@ -601,8 +579,21 @@ extension MainViewController: UICollectionViewDelegate {
             }
             
         default:
-            guard indexPath.row == nowPlayingMoviesArray.count, nowPlayingTotalPagesCount > nowPlayingPageCount, displayStatus == false else { return }
-            print("now in theatres will display")
+            guard indexPath.row == nowPlayingMoviesArray.count - 1, nowPlayingTotalPagesCount > nowPlayingPageCount, displayStatus == false else { return }
+            
+            displayStatus = true
+            nowPlayingPageCount += 1
+            
+            DataManager.shared.requestNowPlayingMovies(page: nowPlayingPageCount) { [weak self] nowPlayingMedia, _ in
+                guard let self else { return }
+                
+                self.nowPlayingMoviesArray.append(contentsOf: nowPlayingMedia)
+                
+                DispatchQueue.main.async {
+                    self.mainCollectionView.reloadData()
+                    self.displayStatus = false
+                }
+            }
         }
     }
     
@@ -651,8 +642,8 @@ extension MainViewController: MoviesHeaderViewDelegate {
         let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 1 })
         self.mainCollectionView.reloadItems(at: items)
         
-        let indexPaths = (0..<moviesArray.count).map { IndexPath(item: $0, section: 1) }
-        mainCollectionView.reloadItems(at: indexPaths)
+//        let indexPaths = (0..<moviesArray.count).map { IndexPath(item: $0, section: 1) }
+//        mainCollectionView.reloadItems(at: indexPaths)
         
         moviesSelectedIndex = index
         moviesPageCount = 1
