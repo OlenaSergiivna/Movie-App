@@ -39,6 +39,11 @@ class MainViewController: UIViewController {
     
     var trendyMediaArray: [TrendyMedia] = []
     
+    var trendyPageCount = 1
+    
+    var trendyTotalPagesCount = 1
+    
+    
     var nowPlayingMoviesArray: [MovieModel] = []
     
     var nowPlayingPageCount = 1
@@ -46,11 +51,7 @@ class MainViewController: UIViewController {
     var nowPlayingTotalPagesCount = 1
     
     
-    var displayStatus = false {
-        didSet {
-            print("display status: \(displayStatus)")
-        }
-    }
+    var displayStatus = false
     
     var loadingVC: LoadingViewController?
     
@@ -185,10 +186,11 @@ class MainViewController: UIViewController {
         }
         
         
-        DataManager.shared.requestTrendyMedia { [weak self] media in
+        DataManager.shared.requestTrendyMedia { [weak self] media, totalPages in
             guard let self else { return }
             
             self.trendyMediaArray = media
+            self.trendyTotalPagesCount = totalPages
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
@@ -196,10 +198,10 @@ class MainViewController: UIViewController {
         }
         
         
-        DataManager.shared.requestNowPlayingMovies { [weak self] data, totalPages in
+        DataManager.shared.requestNowPlayingMovies { [weak self] media, totalPages in
             guard let self else { return }
             
-            self.nowPlayingMoviesArray = data
+            self.nowPlayingMoviesArray = media
             self.nowPlayingTotalPagesCount = totalPages
             
             DispatchQueue.main.async {
@@ -254,7 +256,7 @@ class MainViewController: UIViewController {
         
         scrollRunCount += 1
         
-        if scrollRunCount == 20 {
+        if scrollRunCount == trendyMediaArray.count {
             scrollRunCount = 0
         }
         
@@ -508,23 +510,21 @@ extension MainViewController: UICollectionViewDelegate {
         switch indexPath.section {
             
         case 0:
-            guard indexPath.row == trendyMediaArray.count - 3, trendyTotalPagesCount > trendyPageCount, displayStatus == false else { return }
+            guard indexPath.row == trendyMediaArray.count - 1, trendyTotalPagesCount > trendyPageCount, displayStatus == false else { return }
             
             displayStatus = true
             trendyPageCount += 1
             
-            DataManager.shared.requestTrendyMedia { [weak self] media, _ in
+            DataManager.shared.requestTrendyMedia(page: trendyPageCount) { [weak self] media, _ in
                 guard let self else { return }
                 
                 self.trendyMediaArray.append(contentsOf: media)
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
+                    self.displayStatus = false
                 }
-                self.displayStatus = false
             }
-            
-            print("popular now will display")
             
         case 1:
             guard indexPath.row == moviesArray.count - 2, moviesTotalPagesCount > moviesPageCount, displayStatus == false else { return }
@@ -584,10 +584,10 @@ extension MainViewController: UICollectionViewDelegate {
             displayStatus = true
             nowPlayingPageCount += 1
             
-            DataManager.shared.requestNowPlayingMovies(page: nowPlayingPageCount) { [weak self] nowPlayingMedia, _ in
+            DataManager.shared.requestNowPlayingMovies(page: nowPlayingPageCount) { [weak self] media, _ in
                 guard let self else { return }
                 
-                self.nowPlayingMoviesArray.append(contentsOf: nowPlayingMedia)
+                self.nowPlayingMoviesArray.append(contentsOf: media)
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()

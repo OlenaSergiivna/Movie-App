@@ -309,9 +309,9 @@ struct DataManager {
     
     // MARK: - Request popular now media
     
-    func requestTrendyMedia(completion: @escaping([TrendyMedia], Int) -> Void) {
+    func requestTrendyMedia(page: Int = 1, completion: @escaping([TrendyMedia], Int) -> Void) {
         
-        let trendyRequest = AF.request("https://api.themoviedb.org/3/trending/all/day?api_key=\(Globals.apiKey)&page=1", method: .get)
+        let trendyRequest = AF.request("https://api.themoviedb.org/3/trending/all/day?api_key=\(Globals.apiKey)&page=\(page)", method: .get)
         
         trendyRequest.responseDecodable(of: Trends.self) { response in
             
