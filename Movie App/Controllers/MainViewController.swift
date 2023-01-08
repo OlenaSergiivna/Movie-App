@@ -348,7 +348,7 @@ class MainViewController: UIViewController {
         }
         
         mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
     }
     
@@ -603,17 +603,17 @@ extension MainViewController: UICollectionViewDelegate {
         switch indexPath.section {
             
         case 0:
-            DetailsService.shared.openDetailsScreen(with: trendyMediaArray[indexPath.row], navigationController: navigationController)
+            DetailsService.shared.openDetailsScreen(with: trendyMediaArray[indexPath.row], viewController: self)
             
         case 1:
-            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], navigationController: navigationController)
+            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], viewController: self)
             
         case 2:
-            DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], navigationController: navigationController)
+            DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], viewController: self)
             
             
         default:
-            DetailsService.shared.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], navigationController: navigationController)
+            DetailsService.shared.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], viewController: self)
         }
     }
     
@@ -742,3 +742,9 @@ extension MainViewController: PopularNowDelegate {
     
 }
 
+
+extension MainViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("details screen dismissed")
+    }
+}

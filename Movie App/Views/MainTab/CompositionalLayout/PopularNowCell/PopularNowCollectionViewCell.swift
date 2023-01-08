@@ -23,10 +23,17 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
     
     
     func addSwipeRecognizer() {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PopularNowCollectionViewCell.cellSwiped(sender:)))
-        swipeGestureRecognizer.direction = .left
-        swipeGestureRecognizer.delegate = self
-        self.addGestureRecognizer(swipeGestureRecognizer)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(PopularNowCollectionViewCell.cellSwiped(sender:)))
+        swipeLeft.direction = .left
+        swipeLeft.delegate = self
+        self.addGestureRecognizer(swipeLeft)
+        self.isUserInteractionEnabled = true
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(PopularNowCollectionViewCell.cellSwiped(sender:)))
+        swipeRight.direction = .right
+        swipeRight.delegate = self
+        self.addGestureRecognizer(swipeRight)
         self.isUserInteractionEnabled = true
     }
     

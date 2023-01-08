@@ -398,13 +398,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 searchController.searchBar.endEditing(true)
                 searchController.searchBar.resignFirstResponder()
                 
-                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], navigationController: navigationController)
+                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
                 
             } else if cell is SearchTableViewCell {
                 print("movie cell tapped")
                 
-                DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], navigationController: navigationController)
+                DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], viewController: self)
                 
                 if let containingIndex = previousSearchRequests.firstIndex(of: .movie(searchResultsMovie[indexPath.row])) {
                     
@@ -428,13 +428,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             if cell is PreviousRequestsTableViewCell {
                 searchController.searchBar.resignFirstResponder()
                 
-                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], navigationController: navigationController)
+                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
                 
             } else if cell is SearchTableViewCell {
                 print("tv cell tapped")
                 
-                DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], navigationController: navigationController)
+                DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], viewController: self)
                 
                 if let containingIndex = previousSearchRequests.firstIndex(of: .tvShow(searchResultsTV[indexPath.row])) {
                     

@@ -121,6 +121,6 @@ extension TVViewController: TVCollectionViewCellDelegate {
         let cells = didTappedInTableViewCell.tvArray
         tappedCell = cells[index]
         
-        DetailsService.shared.openDetailsScreen(with: tappedCell, navigationController: navigationController)
+        DetailsService.shared.openDetailsScreen(with: tappedCell, viewController: self)
     }
 }

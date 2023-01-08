@@ -127,6 +127,6 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
         let cells = didTappedInTableViewCell.moviesArray
         self.tappedCell = cells[index]
         
-        DetailsService.shared.openDetailsScreen(with: tappedCell, navigationController: navigationController)
+        DetailsService.shared.openDetailsScreen(with: tappedCell, viewController: self)
     }
 }

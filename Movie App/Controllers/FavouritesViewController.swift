@@ -348,27 +348,15 @@ extension FavouritesViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
-        
-        destinationViewController.presentationController?.delegate = self
-        destinationViewController.loadViewIfNeeded()
-        
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         
         switch selectedIndex {
             
         case 0:
-            destinationViewController.configure(with: favoriteMovies[indexPath.row]) { [weak self] in
-                guard let self else { return }
-                self.navigationController?.present(destinationViewController, animated: true)
-            }
+            DetailsService.shared.openDetailsScreen(with: favoriteMovies[indexPath.row], viewController: self)
             
         case 1:
-            destinationViewController.configure(with: favoriteTVShows[indexPath.row]) { [weak self] in
-                guard let self else { return }
-                self.navigationController?.present(destinationViewController, animated: true)
-            }
+            DetailsService.shared.openDetailsScreen(with: favoriteTVShows[indexPath.row], viewController: self)
             
         default:
             return
