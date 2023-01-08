@@ -604,16 +604,20 @@ extension MainViewController: UICollectionViewDelegate {
             
         case 0:
             DetailsService.shared.openDetailsScreen(with: trendyMediaArray[indexPath.row], viewController: self)
+            scrollTimer.invalidate()
             
         case 1:
             DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], viewController: self)
+            scrollTimer.invalidate()
             
         case 2:
             DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], viewController: self)
+            scrollTimer.invalidate()
             
             
         default:
             DetailsService.shared.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], viewController: self)
+            scrollTimer.invalidate()
         }
     }
     
@@ -745,6 +749,7 @@ extension MainViewController: PopularNowDelegate {
 
 extension MainViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("details screen dismissed")
+        
+        setUpTimerIfSectionIsVisible()
     }
 }
