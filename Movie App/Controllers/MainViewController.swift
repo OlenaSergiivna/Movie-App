@@ -13,11 +13,25 @@ class MainViewController: UIViewController {
         print("!!! Deinit: \(self)")
     }
     
+    @IBOutlet weak var mainBackView: UIView!
+    
+    @IBOutlet weak var mainCollectionView: UICollectionView!
+    
+    @IBOutlet weak var mainCVHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var usernameLabel: UILabel!
     
     @IBOutlet weak var avatarImage: UIImageView!
     
     @IBOutlet weak var secondaryTextLabel: UILabel!
+    
+    @IBOutlet weak var logOutButton: UIButton!
+    
+    @IBOutlet weak var userDataView: UIView!
+    
+    @IBOutlet weak var userDataViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var navBartoUserDataConstraint: NSLayoutConstraint!
     
     var moviesArray: [MovieModel] = []
     
@@ -58,34 +72,6 @@ class MainViewController: UIViewController {
     let isWidthBigger = {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
     }
-    
-    lazy var mainCollectionView : UICollectionView = { [weak self] in
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.showsVerticalScrollIndicator = false
-        cv.delegate = self
-        cv.dataSource = self
-        cv.bounces = false
-        cv.bouncesZoom = false
-        cv.contentInsetAdjustmentBehavior = .never
-        
-        cv.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
-        
-        cv.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
-        
-        cv.register(UINib(nibName: "TheatresCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TheatresCollectionViewCell")
-        
-        cv.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
-        
-        cv.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
-        
-        cv.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
-        
-        cv.register(InTheatresFooterView.self, forSupplementaryViewOfKind: "Footer", withReuseIdentifier: InTheatresFooterView.footerIdentifier)
-        
-        cv.backgroundColor = .black
-        return cv
-    }()
     
     var scrollTimer = Timer() {
         willSet {
@@ -134,12 +120,33 @@ class MainViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        setUpMainCV()
+        }
+        
+        DispatchQueue.main.async {
+            self.changeHeight()
+        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true
+        mainCollectionView.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
+
+        mainCollectionView.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
+
+        mainCollectionView.register(UINib(nibName: "TheatresCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TheatresCollectionViewCell")
+
+        mainCollectionView.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
+
+        mainCollectionView.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
+
+        mainCollectionView.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
+
+        mainCollectionView.register(InTheatresFooterView.self, forSupplementaryViewOfKind: "Footer", withReuseIdentifier: InTheatresFooterView.footerIdentifier)
+        
+        mainCollectionView.bounces = false
+        mainCollectionView.bouncesZoom = false
         
         setUpNotifications()
         
@@ -210,6 +217,8 @@ class MainViewController: UIViewController {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.view.layoutIfNeeded()
+            
             self.loadingVC?.remove()
             self.loadingVC = nil
         }
@@ -305,14 +314,13 @@ class MainViewController: UIViewController {
 
         let backButton = UIBarButtonItem()
         backButton.title = ""
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
     
-    func configureUI(){
+    func configureUI() {
         view.backgroundColor = .black
-        view.addSubview(mainCollectionView)
-        
+
         configureTabBar()
         configureNavBar()
         configureUsersGreetingsView()
@@ -331,25 +339,6 @@ class MainViewController: UIViewController {
         usernameLabel.text = "Hello, \(username)"
         avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(avatar)")
         avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
-    }
-    
-    
-    func setUpMainCV() {
-        
-        mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        if isWidthBigger() {
-            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
-            mainCollectionView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 16).isActive = false
-            
-        } else {
-            mainCollectionView.topAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 16).isActive = true
-            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = false
-        }
-        
-        mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        mainCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        mainCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
     }
     
     
@@ -503,7 +492,12 @@ extension MainViewController: UICollectionViewDataSource {
 
 
 
-extension MainViewController: UICollectionViewDelegate {
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    
+    func changeHeight() {
+        mainCVHeightConstraint.constant = mainCollectionView.contentSize.height
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
