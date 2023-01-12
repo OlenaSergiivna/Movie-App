@@ -136,7 +136,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         definesPresentationContext = true
         
         searchController.searchBar.searchTextField.delegate = self
-        searchController.searchBar.searchTextField.clearButtonMode = .unlessEditing
+        searchController.searchBar.searchTextField.clearButtonMode = .always
     }
     
     
@@ -395,8 +395,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             
             if cell is PreviousRequestsTableViewCell {
-                searchController.searchBar.endEditing(true)
-                searchController.searchBar.resignFirstResponder()
                 
                 DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
@@ -426,7 +424,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             
             if cell is PreviousRequestsTableViewCell {
-                searchController.searchBar.resignFirstResponder()
                 
                 DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
@@ -519,7 +516,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
     }
-    
 }
 
 
@@ -595,11 +591,8 @@ extension SearchViewController: UISearchResultsUpdating {
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        guard let text = searchController.searchBar.text else { return }
-        
-        if !text.isEmpty {
-            searchController.searchBar.resignFirstResponder()
-        }
+
+        searchTableView.reloadData()
         
         if selectedScope == 0 {
             searchController.searchBar.placeholder = "Movie"
@@ -607,11 +600,11 @@ extension SearchViewController: UISearchBarDelegate {
             searchController.searchBar.placeholder = "TV Shows"
         }
         
+        searchTableView.scrollToRow(at: [0,0], at: .top, animated: false)
         pageCount = 1
         updateSearchResults(for: searchController)
         searchTableView.reloadData()
     }
-    
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -622,7 +615,6 @@ extension SearchViewController: UISearchBarDelegate {
         searchResultsMovie = []
         searchResultsTV = []
         pageCount = 1
-        searchController.searchBar.resignFirstResponder()
         
         DispatchQueue.main.async {
             self.searchTableView.reloadData()
@@ -675,5 +667,19 @@ extension SearchViewController: UISearchBarDelegate {
         default:
             return UISwipeActionsConfiguration()
         }
+    }
+    
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        
+        searchResultsMovie = []
+        searchResultsTV = []
+        pageCount = 1
+        
+        DispatchQueue.main.async {
+            self.searchTableView.reloadData()
+        }
+        
+        return true
     }
 }
