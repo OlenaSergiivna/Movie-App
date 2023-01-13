@@ -591,8 +591,6 @@ extension SearchViewController: UISearchResultsUpdating {
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-
-        searchTableView.reloadData()
         
         if selectedScope == 0 {
             searchController.searchBar.placeholder = "Movie"
@@ -600,10 +598,18 @@ extension SearchViewController: UISearchBarDelegate {
             searchController.searchBar.placeholder = "TV Shows"
         }
         
-        searchTableView.scrollToRow(at: [0,0], at: .top, animated: false)
         pageCount = 1
-        updateSearchResults(for: searchController)
+        
+        let topOffset = CGPoint(x: 0, y: -searchTableView.contentInset.top)
+        searchTableView.setContentOffset(topOffset, animated: true)
+        
         searchTableView.reloadData()
+        
+        updateSearchResults(for: searchController)
+        
+        DispatchQueue.main.async {
+            self.searchTableView.reloadData()
+        }
     }
     
     
