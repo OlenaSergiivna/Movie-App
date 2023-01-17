@@ -29,10 +29,6 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var userDataView: UIView!
     
-    @IBOutlet weak var userDataViewHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var navBartoUserDataConstraint: NSLayoutConstraint!
-    
     var moviesArray: [MovieModel] = []
     
     var moviesSelectedIndex = 0
@@ -85,6 +81,7 @@ class MainViewController: UIViewController {
         }
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -95,13 +92,7 @@ class MainViewController: UIViewController {
             }
         }
         
-        usernameLabel.isHidden = false
-        avatarImage.isHidden = false
-        secondaryTextLabel.isHidden = false
-        
-        tabBarController?.tabBar.isHidden = false
-        navigationController?.navigationBar.isHidden = true
-        
+        navigationController?.setNavigationBarHidden(true, animated: false)
         setUpTimerIfSectionIsVisible()
     }
     
@@ -110,39 +101,37 @@ class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         //set for MovieVC and TVShowsVC
-        navigationController?.navigationBar.isHidden = false
-        
+        navigationController?.setNavigationBarHidden(false, animated: false)
         scrollTimer.invalidate()
-        
     }
     
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        }
+        
+       configureUsersGreetingsView()
         
         DispatchQueue.main.async {
-            self.changeHeight()
+            self.changeCollectionHeightDueToContentSize()
         }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = true
+        
         mainCollectionView.register(UINib(nibName: "MediaCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MediaCollectionViewCell")
-
+        
         mainCollectionView.register(UINib(nibName: "PopularNowCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PopularNowCollectionViewCell")
-
+        
         mainCollectionView.register(UINib(nibName: "TheatresCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TheatresCollectionViewCell")
-
+        
         mainCollectionView.register(PopularHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: PopularHeaderView.headerIdentifier)
-
+        
         mainCollectionView.register(MoviesHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: MoviesHeaderView.headerIdentifier)
-
+        
         mainCollectionView.register(TVHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TVHeaderView.headerIdentifier)
-
+        
         mainCollectionView.register(InTheatresFooterView.self, forSupplementaryViewOfKind: "Footer", withReuseIdentifier: InTheatresFooterView.footerIdentifier)
         
         mainCollectionView.bounces = false
@@ -240,10 +229,8 @@ class MainViewController: UIViewController {
     
     @objc func appWasReturnedOnForeground() {
         
-        tabBarController?.tabBar.isHidden = false
-        print("not hidden")
         let selectedTabIndex = tabBarController?.selectedIndex
-
+        
         if selectedTabIndex == 0 {
             setUpTimerIfSectionIsVisible()
         }
@@ -303,15 +290,6 @@ class MainViewController: UIViewController {
         navigationItem.standardAppearance = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
         
-//        let barAppearance = UINavigationBarAppearance()
-//        barAppearance.configureWithOpaqueBackground()
-//        barAppearance.backgroundColor = .black
-//        barAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-//        barAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-//
-//        navigationItem.standardAppearance = barAppearance
-//        navigationItem.scrollEdgeAppearance = barAppearance
-
         let backButton = UIBarButtonItem()
         backButton.title = ""
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
@@ -323,14 +301,12 @@ class MainViewController: UIViewController {
 
         configureTabBar()
         configureNavBar()
-        configureUsersGreetingsView()
-        
     }
     
     
     func configureUsersGreetingsView() {
         
-        guard let username = UserDefaults.standard.string(forKey: "username"), let avatar = UserDefaults.standard.string(forKey: "useravatar") else {
+        guard let username = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.username)), let avatar = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.userAvatar)) else {
             
             usernameLabel.text = "Hello, user"
             return
@@ -338,7 +314,7 @@ class MainViewController: UIViewController {
         
         usernameLabel.text = "Hello, \(username)"
         avatarImage.downloaded(from: "https://image.tmdb.org/t/p/w200/\(avatar)")
-        avatarImage.layer.cornerRadius = avatarImage.frame.height / 2
+        avatarImage.layer.cornerRadius = 20
     }
     
     
@@ -446,46 +422,46 @@ extension MainViewController: UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == "Header" {
+        
+        guard kind == "Header" else {
             
-            switch indexPath.section {
-                
-            case 0 :
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
-                
-                return header
-                
-            case 1 :
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
-                
-                header.delegate = self
-                header.segmentedControl.removeAllSegments()
-                
-                for (index, genre) in Globals.movieGenres.enumerated() {
-                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
-                }
-                header.segmentedControl.selectedSegmentIndex = moviesSelectedIndex
-                
-                return header
-                
-            default:
-                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
-                
-                header.delegate = self
-                header.segmentedControl.removeAllSegments()
-                
-                for (index, genre) in Globals.tvGenres.enumerated() {
-                    header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
-                }
-                header.segmentedControl.selectedSegmentIndex = tvSelectedIndex
-                
-                return header
-            }
-            
-        } else {
             guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "InTheatresFooterView", for: indexPath) as? InTheatresFooterView else { return UICollectionReusableView() }
             
             return footer
+        }
+        
+        switch indexPath.section {
+            
+        case 0 :
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "PopularHeaderView", for: indexPath) as? PopularHeaderView else { return UICollectionReusableView() }
+            
+            return header
+            
+        case 1 :
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MoviesHeaderView", for: indexPath) as? MoviesHeaderView else { return UICollectionReusableView() }
+            
+            header.delegate = self
+            header.segmentedControl.removeAllSegments()
+            
+            for (index, genre) in Globals.movieGenres.enumerated() {
+                header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
+            }
+            header.segmentedControl.selectedSegmentIndex = moviesSelectedIndex
+            
+            return header
+            
+        default:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TVHeaderView", for: indexPath) as? TVHeaderView else { return UICollectionReusableView() }
+            
+            header.delegate = self
+            header.segmentedControl.removeAllSegments()
+            
+            for (index, genre) in Globals.tvGenres.enumerated() {
+                header.segmentedControl.insertSegment(withTitle: genre.name, at: index , animated: false)
+            }
+            header.segmentedControl.selectedSegmentIndex = tvSelectedIndex
+            
+            return header
         }
     }
 }
@@ -494,7 +470,7 @@ extension MainViewController: UICollectionViewDataSource {
 
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     
-    func changeHeight() {
+    func changeCollectionHeightDueToContentSize() {
         mainCVHeightConstraint.constant = mainCollectionView.contentSize.height
     }
     
@@ -614,20 +590,6 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             scrollTimer.invalidate()
         }
     }
-    
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        
-//        if isWidthBigger() {
-//            usernameLabel.isHidden = false
-//            avatarImage.isHidden = false
-//            secondaryTextLabel.isHidden = false
-//        } else if isWidthBigger() == false {
-//            usernameLabel.isHidden = true
-//            avatarImage.isHidden = true
-//            secondaryTextLabel.isHidden = true
-//        }
-    }
 }
 
 
@@ -636,7 +598,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
     
     func changeMovieGenre(index: Int) {
         mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .right, animated: false)
-       
+        
         let items = self.mainCollectionView.indexPathsForVisibleItems.filter({ $0.section == 1 })
         self.mainCollectionView.reloadItems(at: items)
         

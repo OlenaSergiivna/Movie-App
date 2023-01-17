@@ -44,14 +44,15 @@ class FavouritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .black
+        configureNavBar()
+        
+        guard !isGuestSession else { return }
+        
         loadingVC = LoadingViewController()
         if let loadingVC = loadingVC {
             add(loadingVC)
         }
-        
-        
-        configureUI()
-        setUpNotifications()
         
         favouritesCollectionView.delegate = self
         favouritesCollectionView.dataSource = self
@@ -85,21 +86,6 @@ class FavouritesViewController: UIViewController {
     }
     
     
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        
-        let isWidthBigger = {
-            return UIScreen.main.bounds.width > UIScreen.main.bounds.height
-        }
-        
-        if isWidthBigger() {
-            tabBarController?.tabBar.isHidden = false
-        } else {
-            tabBarController?.tabBar.isHidden = true
-        }
-    }
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -111,7 +97,6 @@ class FavouritesViewController: UIViewController {
             favouritesCollectionView.isHidden = false
         }
         
-        tabBarController?.tabBar.isHidden = false
         configureSegmentedControl()
         
         guard !isGuestSession else { return }
@@ -181,31 +166,9 @@ class FavouritesViewController: UIViewController {
         }
     }
     
-    func setUpNotifications() {
-        let mainNotificationCenter = NotificationCenter.default
-        
-        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-    }
-    
-    
-    @objc func appWasReturnedOnForeground() {
-        
-        if isWidthBigger() {
-            tabBarController?.tabBar.isHidden = true
-        } else {
-            tabBarController?.tabBar.isHidden = false
-        }
-    }
-    
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOutAndGetBackToLoginView(self)
-    }
-    
-    
-    func configureUI(){
-        view.backgroundColor = .black
-        configureNavBar()
     }
     
     

@@ -40,7 +40,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchTableView.delegate = self
         
         configureUI()
-        setUpNotifications()
         
         
         // MARK: - Registration nibs
@@ -71,8 +70,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         searchTableView.isUserInteractionEnabled = true
         noSearchResultsView.isHidden = true
-        
-        tabBarController?.tabBar.isHidden = false
+
         
         searchController.searchBar.searchTextField.textColor = .white
         searchController.searchBar.setScopeBarButtonTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .normal)
@@ -142,19 +140,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
         NetworkManager.shared.logOutAndGetBackToLoginView(self)
-    }
-    
-    
-    func setUpNotifications() {
-        let mainNotificationCenter = NotificationCenter.default
-        
-        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-    }
-    
-    
-    @objc func appWasReturnedOnForeground() {
-        
-        tabBarController?.tabBar.isHidden = false
     }
 }
 
