@@ -137,12 +137,12 @@ struct NetworkManager {
     
     func logOutAndGetBackToLoginView(_ controller: UIViewController) {
         
-        guard UserDefaults.standard.bool(forKey: "isguestsession") == false else {
+        guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == false else {
             
             KingsfisherManager.shared.clearCasheKF()
             
             UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
-            UserDefaults.standard.removeObject(forKey: "searchResults")
+            UserDefaults.standard.removeObject(forKey: UserDefaultsManager.shared.getKeyFor(.searchResults))
 
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
@@ -152,7 +152,7 @@ struct NetworkManager {
             return
         }
         
-        guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
+        guard let sessionID = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.sessionID)) else { return }
         
         NetworkManager.shared.logOut(sessionId: sessionID) { result in
             guard result else { return }
@@ -160,7 +160,7 @@ struct NetworkManager {
             KingsfisherManager.shared.clearCasheKF()
             
             UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
-            UserDefaults.standard.removeObject(forKey: "searchResults")
+            UserDefaults.standard.removeObject(forKey: UserDefaultsManager.shared.getKeyFor(.searchResults))
         
             RealmManager.shared.deleteAll()
             

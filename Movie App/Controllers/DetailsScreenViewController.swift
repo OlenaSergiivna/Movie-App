@@ -73,7 +73,6 @@ class DetailsScreenViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        mediaImage.translatesAutoresizingMaskIntoConstraints = false
         mediaImage.clipsToBounds = true
         mediaImage.contentMode = .scaleAspectFill
         mediaImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]

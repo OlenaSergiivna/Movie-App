@@ -38,4 +38,40 @@ struct UserDefaultsManager {
         UserDefaults.standard.removeObject(forKey: "useravatar")
     }
     
+    
+    func getKeyFor(_ key: UserDefaultsKeys) -> String {
+        switch key {
+        case .login:
+            return "userlogin"
+        case .password:
+            return "userpass"
+        case .sessionID:
+            return "usersessionid"
+        case .isGuestSession:
+            return "isguestsession"
+        case .userID:
+            return "userid"
+        case .username:
+            return "username"
+        case .userAvatar:
+            return "useravatar"
+        case .searchResults:
+            return "searchResults"
+        }
+    }
 }
+
+
+enum UserDefaultsKeys: String {
+    
+    case login
+    case password
+    case sessionID
+    case isGuestSession
+    
+    case userID
+    case username
+    case userAvatar
+    case searchResults
+}
+

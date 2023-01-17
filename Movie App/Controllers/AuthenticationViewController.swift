@@ -42,15 +42,18 @@ class AuthenticationViewController: UIViewController {
         
         NetworkManager.shared.requestAuthentication(username: login, password: password) { sessionid, responseRequest, responseValidate, responseSession in
             
-            UserDefaults.standard.set(sessionid, forKey: "usersessionid")
+            UserDefaults.standard.set(sessionid, forKey: UserDefaultsManager.shared.getKeyFor(.sessionID))
             
-            NetworkManager.shared.getDetails(sessionId: UserDefaults.standard.string(forKey: "usersessionid") ?? "") { userid, username, avatar in
-                
+            guard let sessionID = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.sessionID)) else { return }
+            
+            NetworkManager.shared.getDetails(sessionId: sessionID) { userid, username, avatar in
                 
                 //replace with guard success else { return }
                 guard responseRequest == 200, responseValidate == 200, responseSession == 200 else { return }
                 
                 UserDefaultsManager.shared.saveUsersDataInUserDefaults(login: login, password: password, sesssionID: sessionid, isGuestSession: false, userID: userid, username: username, userAvatar: avatar)
+                
+                guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == false else { return }
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")

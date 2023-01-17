@@ -19,19 +19,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
+        
         // go to MainScreen if user already logged in
-            if UserDefaults.standard.string(forKey: "usersessionid") != nil {
-                
-                let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
-                window?.rootViewController = mainTabBarController
-                
-            } else {
-                
-                // go to LoginScreen if user haven't logged in
-                let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
-                window?.rootViewController = loginNavController
-            }
+        if UserDefaults.standard.string(forKey: "usersessionid") != nil {
+            
+            guard !(window?.rootViewController is UITabBarController) else { return }
+            
+            let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController") as! UITabBarController
+            window?.rootViewController = mainTabBarController
+            window?.makeKeyAndVisible()
+            
+        } else {
+            
+            // go to LoginScreen if user haven't logged in
+            guard !(window?.rootViewController is UINavigationController) else { return }
+            
+            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController") as! UINavigationController
+            window?.rootViewController = loginNavController
+            window?.makeKeyAndVisible()
+        }
     }
     
     
@@ -40,7 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        // change the root view controller to your specific view controller
+        
         window.rootViewController = vc
         
         UIView.transition(with: window,

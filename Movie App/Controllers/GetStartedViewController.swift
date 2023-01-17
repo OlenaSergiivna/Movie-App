@@ -54,6 +54,8 @@ class GetStartedViewController: UIViewController {
             guard data.success else { return }
             
             UserDefaultsManager.shared.saveUsersDataInUserDefaults(sesssionID: data.guest_session_id, isGuestSession: true, sessionExpireDate: data.expires_at)
+          
+            guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == true else { return }
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
