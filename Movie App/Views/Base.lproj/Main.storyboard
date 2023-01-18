@@ -360,7 +360,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tabBarAppearance>
                         <tabBarAppearance key="scrollEdgeAppearance" backgroundEffect="systemMaterial">
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" systemColor="systemYellowColor"/>
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
@@ -1078,7 +1078,6 @@
                         <outlet property="mainCollectionView" destination="A10-0S-Da0" id="1aF-P7-tLO"/>
                         <outlet property="secondaryTextLabel" destination="9mn-PA-gJc" id="Kwy-94-C7k"/>
                         <outlet property="userDataView" destination="6QQ-YB-tJh" id="0RK-gq-m4Y"/>
-                        <outlet property="userDataViewHeight" destination="9Vg-Ha-naK" id="83B-Od-cIZ"/>
                         <outlet property="usernameLabel" destination="dtd-Gg-ZHT" id="EYV-72-P9Y"/>
                     </connections>
                 </viewController>
@@ -1209,6 +1208,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

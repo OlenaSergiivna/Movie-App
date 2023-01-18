@@ -269,6 +269,9 @@ class MainViewController: UIViewController {
         tabAppearance.stackedLayoutAppearance.selected.iconColor = .systemPink
         tabAppearance.stackedLayoutAppearance.normal.iconColor = .white
         
+        tabAppearance.compactInlineLayoutAppearance = tabAppearance.stackedLayoutAppearance
+        tabAppearance.inlineLayoutAppearance = tabAppearance.stackedLayoutAppearance
+        
         tabBarController?.tabBar.standardAppearance = tabAppearance
         tabBarController?.tabBar.scrollEdgeAppearance = tabAppearance
         
@@ -488,11 +491,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             DataManager.shared.requestTrendyMedia(page: trendyPageCount) { [weak self] media, _ in
                 guard let self else { return }
                 
+                self.displayStatus = false
+                
                 self.trendyMediaArray.append(contentsOf: media)
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
-                    self.displayStatus = false
                 }
             }
             
@@ -506,19 +510,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[moviesSelectedIndex].name, page: moviesPageCount) { [weak self] movies, _ in
                 guard let self else { return }
                 
-                if self.moviesPageCount > 1 {
-                    let lastInArray = self.moviesArray.count
-                    self.moviesArray.append(contentsOf: movies)
-                    let newLastInArray = self.moviesArray.count
-                    let indexPaths = Array(lastInArray..<newLastInArray).map{IndexPath(item: $0, section: 1)}
-                    
-                    DispatchQueue.main.async {
-                        self.mainCollectionView.insertItems(at: indexPaths)
-                    }
-                }
+                self.displayStatus = false
+                
+                let lastInArray = self.moviesArray.count
+                self.moviesArray.append(contentsOf: movies)
+                let newLastInArray = self.moviesArray.count
+                let indexPaths = Array(lastInArray..<newLastInArray).map{IndexPath(item: $0, section: 1)}
                 
                 DispatchQueue.main.async {
-                    self.displayStatus = false
+                    self.mainCollectionView.insertItems(at: indexPaths)
                 }
             }
             
@@ -528,23 +528,18 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             displayStatus = true
             tvPageCount += 1
             
-            
             DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[tvSelectedIndex].name, page: tvPageCount) { [weak self] tv, _ in
                 guard let self else { return }
                 
-                if self.tvPageCount > 1 {
-                    let lastInArray = self.tvArray.count
-                    self.tvArray.append(contentsOf: tv)
-                    let newLastInArray = self.tvArray.count
-                    let indexPaths = Array(lastInArray..<newLastInArray).map{IndexPath(item: $0, section: 2)}
-                    
-                    DispatchQueue.main.async {
-                        self.mainCollectionView.insertItems(at: indexPaths)
-                    }
-                }
+                self.displayStatus = false
+                
+                let lastInArray = self.tvArray.count
+                self.tvArray.append(contentsOf: tv)
+                let newLastInArray = self.tvArray.count
+                let indexPaths = Array(lastInArray..<newLastInArray).map{IndexPath(item: $0, section: 2)}
                 
                 DispatchQueue.main.async {
-                    self.displayStatus = false
+                    self.mainCollectionView.insertItems(at: indexPaths)
                 }
             }
             
@@ -557,11 +552,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
             DataManager.shared.requestNowPlayingMovies(page: nowPlayingPageCount) { [weak self] media, _ in
                 guard let self else { return }
                 
+                self.displayStatus = false
+                
                 self.nowPlayingMoviesArray.append(contentsOf: media)
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
-                    self.displayStatus = false
                 }
             }
         }
