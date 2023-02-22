@@ -46,8 +46,8 @@ class DetailsScreenViewController: UIViewController {
     
     var reviewsArray: [ReviewsModel] = []
     
-    var similarArray: [Any] = []
-
+    var similarArray: [Media] = []
+    
     var trailersArray: [TrailerModel] = []
     
     let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
@@ -116,7 +116,7 @@ class DetailsScreenViewController: UIViewController {
             UIView.animate(withDuration: 1.0) {
                 self.view.layoutIfNeeded()
             }
-                
+            
         } else {
             
             mediaOverview.numberOfLines = 0
@@ -127,27 +127,27 @@ class DetailsScreenViewController: UIViewController {
             }
         }
     }
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         detailsScreenCollectionView.register(TrailerCollectionViewCell.self, forCellWithReuseIdentifier: TrailerCollectionViewCell.cellIdentifier)
- 
+        
         detailsScreenCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.cellIdentifier)
-            
+        
         detailsScreenCollectionView.register(ReviewsCollectionViewCell.self, forCellWithReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier)
-            
+        
         detailsScreenCollectionView.register(SimilarMediaCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier)
         
         detailsScreenCollectionView.register(TrailerHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TrailerHeaderView.headerIdentifier)
-            
+        
         detailsScreenCollectionView.register(CastHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: CastHeaderView.headerIdentifier)
-            
+        
         detailsScreenCollectionView.register(ReviewsHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: ReviewsHeaderView.headerIdentifier)
-            
+        
         detailsScreenCollectionView.register(SimilarHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SimilarHeaderView.headerIdentifier)
-            
+        
         detailsScreenCollectionView.backgroundColor = .black
         
         configureUI()
@@ -157,7 +157,7 @@ class DetailsScreenViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -201,55 +201,146 @@ class DetailsScreenViewController: UIViewController {
         detailsScreenCollectionView.bounces = false
         detailsScreenCollectionView.translatesAutoresizingMaskIntoConstraints = false
         detailsScreenCollectionView.backgroundColor = .clear
-        
     }
     
     
     // MARK: - Configuring DetailsScreen with data depends on tapped cell type
     
-    func configure<T>(with data: T, completion: () -> Void) {
+    func configure<T>(with data: T, completion: @escaping() -> Void) {
         
         if let data = data as? MovieModel {
-            configureMovieCell(data)
-            completion()
+            configureFavButtonForMovie(data) {
+                self.configureMovieCell(data) {
+                    completion()
+                }
+            }
+            
+            
         } else if let data = data as? TVModel {
-            print(data.id)
-            configureTVCell(data)
-            completion()
+            configureFavButtonForTVShow(data) {
+                self.configureTVCell(data) {
+                    completion()
+                }
+            }
+            
         } else if let data = data as? TrendyMedia {
             
             if data.mediaType == "movie" {
                 let data = MovieModel(from: data)
-                configureMovieCell(data)
-                completion()
+                configureFavButtonForMovie(data) {
+                    self.configureMovieCell(data) {
+                        completion()
+                    }
+                }
+                
             } else if data.mediaType == "tv" {
                 let data = TVModel(from: data)
-                configureTVCell(data)
-                completion()
+                configureFavButtonForTVShow(data) {
+                    self.configureTVCell(data) {
+                        completion()
+                    }
+                }
             }
             
         } else if let data = data as? Media {
             switch data {
                 
             case .movie(let movie):
-                configureMovieCell(movie)
-                completion()
+                configureFavButtonForMovie(movie) {
+                    self.configureMovieCell(movie) {
+                        completion()
+                    }
+                }
                 
             case .tvShow(let tvShow):
-                configureTVCell(tvShow)
-                completion()
+                configureFavButtonForTVShow(tvShow) {
+                    self.configureTVCell(tvShow) {
+                        completion()
+                    }
+                }
             }
         }
     }
     
     
-    private func configureMovieCell(_ movie: MovieModel) {
+    private func configureFavButtonForMovie(_ data: MovieModel, completion: @escaping() -> Void) {
+        
+        // MARK: - Request favorite movies list, check if movie is already in favorites list & set isFavorite property
+        
+        guard !isGuestSession else {
+            completion()
+            return
+        }
+        
+        DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
+            guard let self, let favorites else { return }
+            
+            if favorites.contains(where: { $0.id == data.id }) {
+                self.isFavorite = true
+                completion()
+                return
+            }
+            
+            guard totalPages > 1 else { return }
+            
+            for page in 2...totalPages {
+                
+                DataManager.shared.requestFavoriteMovies(page: page) { [weak self] success, _, favorites, _, _ in
+                    guard let self, let favorites else { return }
+                    
+                    if favorites.contains(where: { $0.id == data.id }) {
+                        self.isFavorite = true
+                        return
+                    }
+                }
+            }
+            
+            completion()
+        }
+    }
+    
+    
+    private func configureFavButtonForTVShow(_ data: TVModel, completion: @escaping() -> Void) {
+        // MARK: - Request favorite tv shows list, check if tv show is already in favorites list & set isFavorite property
+        
+        guard !isGuestSession else {
+            completion()
+            return
+        }
+        
+        DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
+            guard let self, let favorites else { return }
+            
+            if favorites.contains(where: { $0.id == data.id }) {
+                self.isFavorite = true
+                completion()
+                return
+            }
+            
+            guard totalPages > 1 else { return }
+            
+            for page in 2...totalPages {
+                
+                DataManager.shared.requestFavoriteTVShows(page: page) { [weak self] success, _, favorites, _, _ in
+                    guard let self, let favorites else { return }
+                    
+                    if favorites.contains(where: { $0.id == data.id }) {
+                        self.isFavorite = true
+                        return
+                    }
+                }
+            }
+            
+            completion()
+        }
+    }
+    
+    
+    private func configureMovieCell(_ movie: MovieModel, completion: @escaping() -> Void) {
         
         mediaType = "movie"
         media.append(movie)
         mediaId = movie.id
-        
-        configureFavoriteButton(movie)
         
         mediaName.text = movie.title
         
@@ -300,17 +391,15 @@ class DetailsScreenViewController: UIViewController {
         //configureReviews(mediaType: "movie", mediaId: movie.id)
         
         configureSimilarMedia(movie)
-        
+        completion()
     }
     
     
-    private func configureTVCell(_ tvShow: TVModel) {
+    private func configureTVCell(_ tvShow: TVModel, completion: @escaping() -> Void) {
         
         mediaType = "tv"
         media.append(tvShow)
         mediaId = tvShow.id
-        
-        configureFavoriteButton(tvShow)
         
         mediaName.text = tvShow.name
         
@@ -359,70 +448,10 @@ class DetailsScreenViewController: UIViewController {
         //configureReviews(mediaType: "tv", mediaId: tvShow.id)
         
         configureSimilarMedia(tvShow)
+        completion()
     }
     
     
-    private func configureFavoriteButton<T>(_ data: T) {
-        
-        guard !isGuestSession else { return }
-        
-        if let data = data as? MovieModel {
-            
-            // MARK: - Request favorite movies list, check if movie is already in favorites list & set isFavorite property
-            
-            DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
-                guard let self, let favorites else { return }
-                
-                if favorites.contains(where: { $0.id == data.id }) {
-                    self.isFavorite = true
-                    return
-                }
-                
-                guard totalPages > 1 else { return }
-                
-                for page in 2...totalPages {
-                    
-                    DataManager.shared.requestFavoriteMovies(page: page) { [weak self] success, _, favorites, _, _ in
-                        guard let self, let favorites else { return }
-                        
-                        if favorites.contains(where: { $0.id == data.id }) {
-                            self.isFavorite = true
-                            return
-                        }
-                    }
-                }
-            }
-            
-        } else if let data = data as? TVModel {
-            
-            // MARK: - Request favorite tv shows list, check if tv show is already in favorites list & set isFavorite property
-            
-            DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
-                guard let self, let favorites else { return }
-                
-                if favorites.contains(where: { $0.id == data.id }) {
-                    self.isFavorite = true
-                    return
-                }
-                
-                guard totalPages > 1 else { return }
-                
-                for page in 2...totalPages {
-                    
-                    DataManager.shared.requestFavoriteTVShows(page: page) { [weak self] success, _, favorites, _, _ in
-                        guard let self, let favorites else { return }
-                        
-                        if favorites.contains(where: { $0.id == data.id }) {
-                            self.isFavorite = true
-                            return
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-        
     private func configureTrailer(with id: Int) {
         
         DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
@@ -434,9 +463,9 @@ class DetailsScreenViewController: UIViewController {
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
             }
-            
         }
     }
+    
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
         
@@ -448,7 +477,6 @@ class DetailsScreenViewController: UIViewController {
             DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { [weak self] success in
                 
                 guard let self else { return }
-                
                 guard success == true else { return }
                 
                 if self.mediaType == "movie" {
@@ -499,9 +527,9 @@ class DetailsScreenViewController: UIViewController {
     func configureReviews(mediaType: String, mediaId: Int) {
         DataManager.shared.getReviews(mediaType: mediaType, mediaId: mediaId) { [weak self] reviews in
             guard let self else { return }
-           
+            
             self.reviewsArray = reviews
-
+            
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
             }
@@ -559,7 +587,7 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return castArray.count
             
         case 1:
-           return reviewsArray.count
+            return reviewsArray.count
             
         case 2:
             return trailersArray.count
@@ -597,10 +625,10 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrailerCollectionViewCell", for: indexPath) as? TrailerCollectionViewCell else {
-
+                
                 return UICollectionViewCell()
             }
-
+            
             cell.layoutIfNeeded()
             cell.trailerPlayer.delegate = self
             cell.trailerPlayer.load(withVideoId: trailersArray[indexPath.row].key)
@@ -636,12 +664,12 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             
         case 1:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
-
+            
             return header
             
         case 2:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: "TrailerHeaderView", for: indexPath) as? TrailerHeaderView else { return UICollectionReusableView() }
-
+            
             return header
             
         default:
