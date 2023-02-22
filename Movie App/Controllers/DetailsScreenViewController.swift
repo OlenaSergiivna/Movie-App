@@ -36,7 +36,7 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var detailsScreenCollectionView: UICollectionView!
     
-    var media: [Any] = []
+    var media: [MediaProtocol] = []
     
     var mediaId: Int = 0
     
@@ -445,20 +445,22 @@ class DetailsScreenViewController: UIViewController {
             favoritesButton.tintColor = .systemRed
             isFavorite = false
             
-            DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { [weak self] response in
+            DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { [weak self] success in
                 
                 guard let self else { return }
                 
-                guard response == 200 else { return }
+                guard success == true else { return }
                 
                 if self.mediaType == "movie" {
                     
                     RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
+                        //add pop up
                     }
                     
                 } else if self.mediaType == "tv" {
                     
                     RealmManager.shared.delete(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
+                        //add pop up
                     }
                 }
             }
@@ -469,20 +471,12 @@ class DetailsScreenViewController: UIViewController {
             favoritesButton.tintColor = .systemRed
             isFavorite = true
             
-            DataManager.shared.addToFavorites(id: mediaId, type: mediaType) { [weak self] response in
+            DataManager.shared.addToFavorites(id: mediaId, type: mediaType) { [weak self] success in
                 
                 guard let self else { return }
+                guard success == true else { return }
                 
-                guard response == 200 else { return }
-                
-                if self.mediaType == "movie" {
-                    
-                    RealmManager.shared.saveFavoriteMoviesInRealm(movies: self.media as! [MovieModel])
-                    
-                } else if self.mediaType == "tv" {
-                    
-                    RealmManager.shared.saveFavoriteTVInRealm(tvShows: self.media as! [TVModel])
-                }
+                RealmManager.shared.saveFavoritesInRealm(media: self.media)
             }
         }
     }

@@ -11,7 +11,7 @@ class FavouritesViewController: UIViewController {
     
     deinit {
         print("!!! Deinit: \(self)")
-      }
+    }
     
     @IBOutlet weak var favouritesCollectionView: UICollectionView!
     

@@ -213,7 +213,7 @@ struct DataManager {
     
     // MARK: - Delete movie from Favorites list
     
-    func deleteFromFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
+    func deleteFromFavorites(id: Int, type: String, completion: @escaping(Bool) -> Void ) {
         
         let parameters: [String : Any] = [
             "media_type" : type,
@@ -232,9 +232,7 @@ struct DataManager {
         deleteFromFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
                 let result = try response.result.get()
-                if let response = response.response?.statusCode {
-                    completion(response)
-                }
+                completion(result.success)
                 
             } catch {
                 print("removed: \(error.localizedDescription)")
@@ -244,7 +242,7 @@ struct DataManager {
     
     
     
-    func addToFavorites(id: Int, type: String, completion: @escaping(Int) -> Void ) {
+    func addToFavorites(id: Int, type: String, completion: @escaping(Bool) -> Void ) {
         
         guard let sessionID = UserDefaults.standard.string(forKey: "usersessionid") else { return }
         
@@ -257,11 +255,9 @@ struct DataManager {
         
         addToFavoritesRequest.responseDecodable(of: FavoritesResponse.self) { response in
             do {
-                let _ = try response.result.get()
-                if let response = response.response?.statusCode {
-                    completion(response)
-                }
-                
+                let data = try response.result.get()
+                completion(data.success)
+            
             } catch {
                 print("added: \(error.localizedDescription)")
             }
@@ -496,5 +492,17 @@ struct DataManager {
                 
             }
         }
+        
+        
+    }
+    
+    func getGet(array: [Int], completion: (Int) -> Void) {
+        
+        var sum = 0
+        for i in array {
+            sum += i
+        }
+        
+        completion(sum)
     }
 }
