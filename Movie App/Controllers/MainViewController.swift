@@ -63,7 +63,7 @@ class MainViewController: UIViewController {
     
     var displayStatus = false
     
-    var loadingVC: LoadingViewController?
+    var loadingVC: LoadingViewController!
     
     let isWidthBigger = {
         return UIScreen.main.bounds.width > UIScreen.main.bounds.height
@@ -87,9 +87,7 @@ class MainViewController: UIViewController {
         
         if nowPlayingMoviesArray.isEmpty {
             loadingVC = LoadingViewController()
-            if let loadingVC = loadingVC {
-                add(loadingVC)
-            }
+            add(loadingVC)
         }
         
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -203,14 +201,14 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
             }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.view.layoutIfNeeded()
             
-            self.loadingVC?.remove()
-            self.loadingVC = nil
-        }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.view.layoutIfNeeded()
+                
+                self.loadingVC.remove()
+                self.loadingVC = nil
+            }
+        } 
     }
     
 
@@ -603,6 +601,7 @@ extension MainViewController: MoviesHeaderViewDelegate {
         
         moviesSelectedIndex = index
         moviesPageCount = 1
+        //displayStatus = false
         
         DataManager.shared.requestMoviesByGenre(genre: Globals.movieGenres[index].name, page: moviesPageCount) { [weak self] movies, totalPages in
             guard let self else { return }
@@ -653,6 +652,7 @@ extension MainViewController: TVHeaderViewDelegate  {
         
         tvSelectedIndex = index
         tvPageCount = 1
+        displayStatus = false
         
         DataManager.shared.requestTVByGenre(genre: Globals.tvGenres[index].name, page: tvPageCount) { [weak self] movies, totalPages in
             guard let self else { return }
@@ -691,7 +691,7 @@ extension MainViewController: UIScrollViewDelegate {
 
 
 extension MainViewController: PopularNowDelegate {
-    
+    //change to "did end dragging"
     func popularNowSwiped() {
         scrollTimer.invalidate()
     }
