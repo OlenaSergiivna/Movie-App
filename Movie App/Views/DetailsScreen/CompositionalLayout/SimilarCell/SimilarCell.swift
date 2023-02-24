@@ -83,12 +83,14 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func configure<T>(with data: T) {
-        
-        if let data = data as? MovieModel {
-            configureMovie(with: data)
-        } else if let data = data as? TVModel {
-            configureTV(with: data)
+    func configure(with data: Media) {
+        switch data {
+            
+        case .movie(let movie):
+            configureMovie(with: movie)
+            
+        case .tvShow(let tvShow):
+            configureTV(with: tvShow)
         }
     }
     
@@ -98,7 +100,6 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
         mediaName.text = data.title
         
         guard let backdropPath = data.backdropPath else {
-
             mediaImage.image = .strokedCheckmark
             return
         }
@@ -112,7 +113,6 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
         mediaName.text = data.name
         
         guard let backdropPath = data.backdropPath else {
-
             mediaImage.image = .strokedCheckmark
             return
         }

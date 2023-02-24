@@ -36,7 +36,7 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet weak var detailsScreenCollectionView: UICollectionView!
     
-    var media: [MediaProtocol] = []
+    var media: [Media] = []
     
     var mediaId: Int = 0
     
@@ -339,7 +339,7 @@ class DetailsScreenViewController: UIViewController {
     private func configureMovieCell(_ movie: MovieModel, completion: @escaping() -> Void) {
         
         mediaType = "movie"
-        media.append(movie)
+        media.append(.movie(movie))
         mediaId = movie.id
         
         mediaName.text = movie.title
@@ -398,7 +398,7 @@ class DetailsScreenViewController: UIViewController {
     private func configureTVCell(_ tvShow: TVModel, completion: @escaping() -> Void) {
         
         mediaType = "tv"
-        media.append(tvShow)
+        media.append(.tvShow(tvShow))
         mediaId = tvShow.id
         
         mediaName.text = tvShow.name
@@ -543,7 +543,8 @@ class DetailsScreenViewController: UIViewController {
             
             DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movies in
                 guard let self else { return }
-                self.similarArray = movies
+                
+                movies.forEach({self.similarArray.append(.movie($0))})
                 
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
@@ -554,7 +555,8 @@ class DetailsScreenViewController: UIViewController {
             
             DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tvShows in
                 guard let self else { return }
-                self.similarArray = tvShows
+                
+                tvShows.forEach({self.similarArray.append(.tvShow($0))})
                 
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
