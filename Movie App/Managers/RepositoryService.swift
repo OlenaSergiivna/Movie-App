@@ -18,7 +18,6 @@ struct RepositoryService {
     func movieFavoritesCashing(page: Int = 1, completion: @escaping([MovieModel], Int) -> Void) {
         
         // Data fetched from API
-        
         DataManager.shared.requestFavoriteMovies(page: page) { success, totalPages, favorites, _, _  in
             switch success {
                 
@@ -27,10 +26,10 @@ struct RepositoryService {
                 // Data saved in Realm Database
                 guard let favorites = favorites else { return }
                 
-                RealmManager.shared.saveFavoriteMoviesInRealm(movies: favorites)
+                let favoritesEnum = favorites.map({Media.movie($0)})
+                RealmManager.shared.saveFavoritesInRealm(media: favoritesEnum)
                 
                 // Data fetched from Realm Database & converted in ViewController's models
-                
                 let favoritesArray = RealmManager.shared.getFromRealm(type: .movieFavorite)
                 completion(favoritesArray as! [MovieModel], totalPages)
                 
@@ -38,7 +37,6 @@ struct RepositoryService {
             case false:
                 
                 // Data fetched from Realm Database & converted in ViewController's models
-                
                 let favoritesArray = RealmManager.shared.getFromRealm(type: .movieFavorite)
                 completion(favoritesArray as! [MovieModel], 0)
             }
@@ -52,28 +50,24 @@ struct RepositoryService {
     func tvShowsFavoritesCashing(page: Int = 1, completion: @escaping([TVModel], Int) -> Void) {
         
         // Data fetched from API
-        
         DataManager.shared.requestFavoriteTVShows(page: page) { success, totalPages, favorites, _, _ in
             switch success {
+                
             case true:
                 
                 // Data saved in Realm Database
-                
                 guard let favorites = favorites else { return }
                 
-                RealmManager.shared.saveFavoriteTVInRealm(tvShows: favorites)
+                let favoritesEnum = favorites.map({Media.tvShow($0)})
+                RealmManager.shared.saveFavoritesInRealm(media: favoritesEnum)
                 
                 // Data fetched from Realm Database & converted in ViewController's models
-                
                 let favoritesArray = RealmManager.shared.getFromRealm(type: .tvFavorite)
                 completion(favoritesArray as! [TVModel], totalPages)
-                
-                
                 
             case false:
                 
                 // Data fetched from Realm Database & converted in ViewController's models
-                
                 let favoritesArray = RealmManager.shared.getFromRealm(type: .tvFavorite)
                 completion(favoritesArray as! [TVModel], 0)
                 

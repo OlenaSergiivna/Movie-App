@@ -481,13 +481,13 @@ class DetailsScreenViewController: UIViewController {
                 
                 if self.mediaType == "movie" {
                     
-                    RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
+                    RealmManager.shared.deleteFromRealm(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
                         //add pop up
                     }
                     
                 } else if self.mediaType == "tv" {
                     
-                    RealmManager.shared.delete(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
+                    RealmManager.shared.deleteFromRealm(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
                         //add pop up
                     }
                 }

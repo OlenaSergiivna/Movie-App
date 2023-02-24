@@ -9,6 +9,12 @@ import Foundation
 import RealmSwift
 import Realm
 
+enum MediaRealm {
+    case movieFavorite
+    case tvFavorite
+}
+
+
 struct RealmManager {
     // try! / try?
     private var realm = try! Realm()
@@ -27,9 +33,29 @@ struct RealmManager {
     }
     
     
+    func saveFavoritesInRealm(media: [Media]) {
+        
+        media.forEach { media in
+            
+            switch media {
+                
+            case .movie(let movie):
+                var movies: [MovieModel] = []
+                movies.append(movie)
+                saveFavoriteMoviesInRealm(movies: movies)
+                
+            case .tvShow(let tvShow):
+                var tvShows: [TVModel] = []
+                tvShows.append(tvShow)
+                saveFavoriteTVInRealm(tvShows: tvShows)
+            }
+        }
+    }
+    
+    
     //MARK: - Save favorite movies in Realm
     
-    func saveFavoriteMoviesInRealm(movies: [MovieModel]) {
+    private func saveFavoriteMoviesInRealm(movies: [MovieModel]) {
         
         for movie in movies {
             
@@ -60,7 +86,7 @@ struct RealmManager {
     
     //MARK: - Save favorite TV Shows in Realm
     
-    func saveFavoriteTVInRealm(tvShows: [TVModel]) {
+    private func saveFavoriteTVInRealm(tvShows: [TVModel]) {
         
         for tv in tvShows {
             
@@ -88,21 +114,13 @@ struct RealmManager {
     }
     
     
-    enum MediaType {
-        case movieFavorite
-        case tvFavorite
-
-    }
-    
-    
     //MARK: - Get from Realm
     
-    func getFromRealm(type: MediaType) -> Any {
+    func getFromRealm(type: MediaRealm) -> Any {
         switch type {
+            
         case .movieFavorite:
-            
             let moviesRealm = realm.objects(FavoriteMovieRealm.self)
-            
             var movies = [MovieModel]()
             
             for movieRealm in moviesRealm {
@@ -111,27 +129,22 @@ struct RealmManager {
             }
             return (Array(movies))
             
-            
         case .tvFavorite:
-            
             let tvRealm = realm.objects(FavoriteTVRealm.self)
-            
             var tvShows = [TVModel]()
             
             for tv in tvRealm {
                 let tv = TVModel(from: tv)
                 tvShows.append(tv)
             }
-            
             return (Array(tvShows))
-            
         }
     }
     
     
     //MARK: - Delete object of specific type from Realm
     
-    func delete<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
+    func deleteFromRealm<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
         
         guard let dataToDelete = realm.object(ofType: type, forPrimaryKey: primaryKey) else {
             return
@@ -141,5 +154,5 @@ struct RealmManager {
             realm.delete(dataToDelete)
         }
         completion()
-    }  
+    }
 }
