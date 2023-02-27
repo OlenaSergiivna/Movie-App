@@ -21,10 +21,7 @@ struct DetailsService {
         destinationViewController.presentationController?.delegate = viewController as? any UIAdaptivePresentationControllerDelegate
         destinationViewController.configure(with: data) {
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                viewController.navigationController?.present(destinationViewController, animated: true) {
-                }
-            }
+            viewController.navigationController?.present(destinationViewController, animated: true)
             //navigationController?.pushViewController(destinationViewController, animated: true)
         }
     }

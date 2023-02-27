@@ -83,11 +83,6 @@ class DetailsScreenViewController: UIViewController {
         paddingView.contentMode = .scaleAspectFill
         paddingView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         paddingView.layer.cornerRadius = 20
-        
-        
-        DispatchQueue.main.async {
-            self.changeHeight()
-        }
     }
     
     
@@ -153,8 +148,6 @@ class DetailsScreenViewController: UIViewController {
         configureUI()
         setUpcollectionView()
         configureCompositionalLayout()
-        
-        self.view.layoutIfNeeded()
     }
     
     
@@ -382,16 +375,37 @@ class DetailsScreenViewController: UIViewController {
             mediaImage.image = .strokedCheckmark
         }
         
+        
+        let group = DispatchGroup()
+        group.enter()
+        
         if movie.video != nil {
-            configureTrailer(with: movie.id)
+            configureTrailer(with: movie.id) {
+                group.leave()
+            }
         }
         
-        configureMediaCast(with: movie.id)
+        group.enter()
         
-        //configureReviews(mediaType: "movie", mediaId: movie.id)
+        configureMediaCast(with: movie.id) {
+            group.leave()
+        }
         
-        configureSimilarMedia(movie)
-        completion()
+//        group.enter()
+//        configureReviews(mediaType: "movie", mediaId: movie.id) {
+//            group.leave()
+//        }
+        
+        group.enter()
+        
+        configureSimilarMedia(movie) {
+            group.leave()
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
+            self.changeHeight()
+            completion()
+        }
     }
     
     
@@ -441,28 +455,55 @@ class DetailsScreenViewController: UIViewController {
             mediaImage.image = .strokedCheckmark
         }
         
-        configureTrailer(with: tvShow.id)
+        let group = DispatchGroup()
+        group.enter()
         
-        configureMediaCast(with: tvShow.id)
+        configureTrailer(with: tvShow.id) {
+            group.leave()
+        }
         
-        //configureReviews(mediaType: "tv", mediaId: tvShow.id)
+        group.enter()
         
-        configureSimilarMedia(tvShow)
-        completion()
+        configureMediaCast(with: tvShow.id) {
+            group.leave()
+        }
+        
+//        group.enter()
+        
+//        configureReviews(mediaType: "tv", mediaId: tvShow.id) {
+//            group.leave()
+//        }
+        
+        group.enter()
+        
+        configureSimilarMedia(tvShow) {
+            group.leave()
+        }
+        
+        
+        group.notify(queue: DispatchQueue.main) {
+            self.changeHeight()
+            completion()
+        }
     }
     
     
-    private func configureTrailer(with id: Int) {
+    private func configureTrailer(with id: Int, completion: @escaping() -> Void) {
         
         DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
             guard let self else { return }
             
-            guard let first = data.first else { return }
+            guard let first = data.first else {
+                completion()
+                return
+            }
+            
             self.trailersArray.append(first)
             
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
             }
+            completion()
         }
     }
     
@@ -510,7 +551,7 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    func configureMediaCast(with id: Int) {
+    func configureMediaCast(with id: Int, completion: @escaping() -> Void) {
         
         DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] cast in
             guard let self else { return }
@@ -520,24 +561,32 @@ class DetailsScreenViewController: UIViewController {
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
             }
+            completion()
         }
     }
     
     
-    func configureReviews(mediaType: String, mediaId: Int) {
+    func configureReviews(mediaType: String, mediaId: Int, completion: @escaping() -> Void) {
         DataManager.shared.getReviews(mediaType: mediaType, mediaId: mediaId) { [weak self] reviews in
             guard let self else { return }
+            
+            guard !reviews.isEmpty else {
+                completion()
+                return
+            }
             
             self.reviewsArray = reviews
             
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
             }
+            
+            completion()
         }
     }
     
     
-    func configureSimilarMedia<T>(_ media: T) {
+    func configureSimilarMedia<T>(_ media: T, completion: @escaping() -> Void) {
         
         if let media = media as? MovieModel {
             
@@ -549,6 +598,8 @@ class DetailsScreenViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
                 }
+                
+                completion()
             }
             
         } else if let media = media as? TVModel {
@@ -561,6 +612,8 @@ class DetailsScreenViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
                 }
+                
+                completion()
             }
         }
     }
@@ -577,7 +630,9 @@ extension DetailsScreenViewController: YTPlayerViewDelegate {
 extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func changeHeight() {
+        self.detailsScreenCollectionView.layoutIfNeeded()
         collectionHeightConstraint.constant = detailsScreenCollectionView.contentSize.height
+        //self.view.layoutIfNeeded()
     }
     
     
