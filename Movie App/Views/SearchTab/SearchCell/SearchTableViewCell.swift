@@ -98,13 +98,9 @@ class SearchTableViewCell: UITableViewCell {
         movieTitle.text = title
         
         
-        if let releaseDate = data.releaseDate {
+        if let releaseDate = data.releaseDate, !releaseDate.isEmpty {
+            releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
             
-            if !releaseDate.isEmpty {
-                releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
-            } else {
-                releaseYearButton.isHidden = true
-            }
         } else {
             releaseYearButton.isHidden = true
         }
@@ -196,13 +192,9 @@ class SearchTableViewCell: UITableViewCell {
         
         movieTitle.text = data.name
         
-        if let firstAirDate = data.firstAirDate {
+        if let firstAirDate = data.firstAirDate, !firstAirDate.isEmpty {
+            releaseYearButton.setTitle(String("\(firstAirDate)".dropLast(6)), for: .normal)
             
-            if !firstAirDate.isEmpty {
-                releaseYearButton.setTitle(String("\(firstAirDate)".dropLast(6)), for: .normal)
-            } else {
-                releaseYearButton.isHidden = true
-            }
         } else {
             releaseYearButton.isHidden = true
         }
