@@ -69,44 +69,41 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
                                 <rect key="frame" x="106" y="96" width="260" height="69"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="69"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="69"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="9"/>
                                         <state key="normal" title="8.0">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <buttonConfiguration key="configuration" style="filled" title="8.0">
+                                        <buttonConfiguration key="configuration" style="plain" title="8.0">
                                             <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
-                                        <rect key="frame" x="54.000000000000007" y="0.0" width="82.666666666666686" height="69"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
+                                        <rect key="frame" x="50.000000000000007" y="0.0" width="85.666666666666686" height="69"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="2h 39m"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="2h 39m">
+                                        <buttonConfiguration key="configuration" style="plain" title="2h 39m">
                                             <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-Qe-N6s">
-                                        <rect key="frame" x="144.66666666666669" y="0.0" width="115.33333333333331" height="69"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-Qe-N6s">
+                                        <rect key="frame" x="137.66666666666666" y="0.0" width="122.33333333333334" height="69"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="20 episodes"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="20 episodes">
+                                        <buttonConfiguration key="configuration" style="plain" title="20 episodes">
                                             <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
                                             <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
                                 </subviews>

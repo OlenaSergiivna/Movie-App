@@ -13,7 +13,7 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImage: UIImageView!
     
-   weak var delegate: PopularNowDelegate?
+    weak var delegate: PopularNowDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -89,7 +89,7 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, cornerRadius: 10)
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w1280", cornerRadius: 10)
     }
 }
 

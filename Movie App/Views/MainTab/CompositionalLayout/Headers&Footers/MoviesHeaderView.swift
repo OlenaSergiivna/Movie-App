@@ -36,7 +36,7 @@ class MoviesHeaderView: UICollectionReusableView {
         button.setTitle("See all", for: .normal)
         button.setTitleColor(UIColor.systemPink, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        button.addTarget(self, action: #selector(seaAllButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(seeAllButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -118,7 +118,7 @@ class MoviesHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-   @objc func seaAllButtonPressed() {
+   @objc func seeAllButtonPressed() {
        delegate?.openAllMoviesVC()
     }
     

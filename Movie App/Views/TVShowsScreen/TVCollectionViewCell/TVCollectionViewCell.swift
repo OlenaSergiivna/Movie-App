@@ -47,6 +47,6 @@ class TVCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: tvImage)
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: tvImage, size: "w342")
     }
 }

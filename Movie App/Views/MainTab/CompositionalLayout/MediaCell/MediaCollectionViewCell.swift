@@ -59,7 +59,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, cornerRadius: 5)
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, size: "w500", cornerRadius: 5)
     }
     
     
@@ -86,6 +86,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, cornerRadius: 5)
+        KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, size: "w500", cornerRadius: 5)
     }
 }
