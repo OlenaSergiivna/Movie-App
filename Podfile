@@ -7,9 +7,8 @@ target 'Movie App' do
     pod 'RealmSwift'
     pod 'Kingfisher', '~> 7.0'
     
-#    pod 'RxSwift', '6.5.0'
-#    pod 'RxCocoa', '6.5.0'
-    
     pod 'lottie-ios'
-
+    
+    pod 'KeychainAccess'
+    
 end
