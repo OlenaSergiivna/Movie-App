@@ -11,4 +11,5 @@ target 'Movie App' do
     
     pod 'KeychainAccess'
     
+    pod 'SkeletonView', '~> 1.30.4'
 end

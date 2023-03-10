@@ -7,6 +7,7 @@
 
 import UIKit
 import youtube_ios_player_helper
+import SkeletonView
 
 class DetailsScreenViewController: UIViewController {
     
@@ -16,45 +17,45 @@ class DetailsScreenViewController: UIViewController {
     
     // MARK: - Properties and outlets
     
-    @IBOutlet weak var mediaImage: UIImageView!
+    @IBOutlet private weak var mediaImage: UIImageView!
     
-    @IBOutlet weak var mediaName: UILabel!
+    @IBOutlet private weak var mediaName: UILabel!
     
-    @IBOutlet weak var mediaRating: UIButton!
+    @IBOutlet private weak var mediaRating: UIButton!
     
-    @IBOutlet weak var mediaGenres: UILabel!
+    @IBOutlet private weak var mediaGenres: UILabel!
     
-    @IBOutlet weak var mediaOverview: UILabel!
+    @IBOutlet private weak var mediaOverview: UILabel!
     
-    @IBOutlet weak var favoritesButton: UIButton!
+    @IBOutlet private weak var favoritesButton: UIButton!
     
-    @IBOutlet weak var mainScrollView: UIScrollView!
+    @IBOutlet private weak var mainScrollView: UIScrollView!
     
-    @IBOutlet weak var mainBackView: UIView!
+    @IBOutlet private weak var mainBackView: UIView!
     
-    @IBOutlet weak var paddingView: UIView!
+    @IBOutlet private weak var paddingView: UIView!
     
-    @IBOutlet weak var detailsScreenCollectionView: UICollectionView!
+    @IBOutlet private weak var detailsScreenCollectionView: UICollectionView!
     
-    var media: [Media] = []
+    private var detailsScreenLayouts = DetailsScreenLayouts()
     
-    var mediaId: Int = 0
+    private var media: [Media] = []
     
-    var mediaType: String = ""
+    private var mediaId: Int = 0
     
-    var castArray: [CastModel] = []
+    private var mediaType: String = ""
     
-    var reviewsArray: [ReviewsModel] = []
+    private var castArray: [CastModel] = []
     
-    var similarArray: [Media] = []
+    private var similarArray: [Media] = []
     
-    var trailersArray: [TrailerModel] = []
+    private var trailersArray: [TrailerModel] = []
     
-    let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
+    private let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
     
-    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var collectionHeightConstraint: NSLayoutConstraint!
     
-    var isFavorite: Bool = false {
+    private var isFavorite: Bool = false {
         didSet {
             if isFavorite == true {
                 
@@ -68,7 +69,7 @@ class DetailsScreenViewController: UIViewController {
         }
     }
     
-    var isExpanded = false
+    private var isExpanded = false
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -131,23 +132,24 @@ class DetailsScreenViewController: UIViewController {
         
         detailsScreenCollectionView.register(CastCollectionViewCell.self, forCellWithReuseIdentifier: CastCollectionViewCell.cellIdentifier)
         
-        detailsScreenCollectionView.register(ReviewsCollectionViewCell.self, forCellWithReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier)
-        
         detailsScreenCollectionView.register(SimilarMediaCollectionViewCell.self, forCellWithReuseIdentifier: SimilarMediaCollectionViewCell.cellIdentifier)
         
         detailsScreenCollectionView.register(TrailerHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: TrailerHeaderView.headerIdentifier)
         
         detailsScreenCollectionView.register(CastHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: CastHeaderView.headerIdentifier)
         
-        detailsScreenCollectionView.register(ReviewsHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: ReviewsHeaderView.headerIdentifier)
-        
         detailsScreenCollectionView.register(SimilarHeaderView.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: SimilarHeaderView.headerIdentifier)
         
         detailsScreenCollectionView.backgroundColor = .black
         
-        configureUI()
+        view.backgroundColor = .black
+        configureNavBar()
         setUpcollectionView()
         configureCompositionalLayout()
+        
+        detailsScreenCollectionView.prepareSkeleton { (done) in
+            self.detailsScreenCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .darkClouds), animation: nil, transition: .crossDissolve(0.25))
+        }
     }
     
     
@@ -164,14 +166,6 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    func configureUI() {
-        view.backgroundColor = .black
-        
-        configureNavBar()
-    }
-    
-    
-    
     private func configureNavBar() {
         
         let barAppearance = UINavigationBarAppearance()
@@ -185,7 +179,7 @@ class DetailsScreenViewController: UIViewController {
         
     }
     
-    func setUpcollectionView() {
+    private func setUpcollectionView() {
         
         detailsScreenCollectionView.showsVerticalScrollIndicator = false
         detailsScreenCollectionView.delegate = self
@@ -202,75 +196,51 @@ class DetailsScreenViewController: UIViewController {
     func configure<T>(with data: T, completion: @escaping() -> Void) {
         
         if let data = data as? MovieModel {
-            configureFavButtonForMovie(data) {
-                self.configureMovieCell(data) {
-                    completion()
-                }
-            }
-            
+            configureMovieCell(data)
+            completion()
             
         } else if let data = data as? TVModel {
-            configureFavButtonForTVShow(data) {
-                self.configureTVCell(data) {
-                    completion()
-                }
-            }
+            configureTVCell(data)
+            completion()
             
         } else if let data = data as? TrendyMedia {
             
             if data.mediaType == "movie" {
                 let data = MovieModel(from: data)
-                configureFavButtonForMovie(data) {
-                    self.configureMovieCell(data) {
-                        completion()
-                    }
-                }
-                
+                configureMovieCell(data)
+                completion()
             } else if data.mediaType == "tv" {
                 let data = TVModel(from: data)
-                configureFavButtonForTVShow(data) {
-                    self.configureTVCell(data) {
-                        completion()
-                    }
-                }
+                configureTVCell(data)
+                completion()
             }
             
         } else if let data = data as? Media {
             switch data {
                 
             case .movie(let movie):
-                configureFavButtonForMovie(movie) {
-                    self.configureMovieCell(movie) {
-                        completion()
-                    }
-                }
+                configureMovieCell(movie)
+                completion()
                 
             case .tvShow(let tvShow):
-                configureFavButtonForTVShow(tvShow) {
-                    self.configureTVCell(tvShow) {
-                        completion()
-                    }
-                }
+                configureTVCell(tvShow)
+                completion()
             }
         }
     }
     
     
-    private func configureFavButtonForMovie(_ data: MovieModel, completion: @escaping() -> Void) {
+    private func configureFavButtonForMovie(_ data: MovieModel) {
         
         // MARK: - Request favorite movies list, check if movie is already in favorites list & set isFavorite property
         
-        guard !isGuestSession else {
-            completion()
-            return
-        }
+        guard !isGuestSession else { return }
         
         DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
             guard let self, let favorites else { return }
             
             if favorites.contains(where: { $0.id == data.id }) {
                 self.isFavorite = true
-                completion()
                 return
             }
             
@@ -287,26 +257,20 @@ class DetailsScreenViewController: UIViewController {
                     }
                 }
             }
-            
-            completion()
         }
     }
     
     
-    private func configureFavButtonForTVShow(_ data: TVModel, completion: @escaping() -> Void) {
+    private func configureFavButtonForTVShow(_ data: TVModel) {
         // MARK: - Request favorite tv shows list, check if tv show is already in favorites list & set isFavorite property
         
-        guard !isGuestSession else {
-            completion()
-            return
-        }
+        guard !isGuestSession else { return }
         
         DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
             guard let self, let favorites else { return }
             
             if favorites.contains(where: { $0.id == data.id }) {
                 self.isFavorite = true
-                completion()
                 return
             }
             
@@ -323,13 +287,11 @@ class DetailsScreenViewController: UIViewController {
                     }
                 }
             }
-            
-            completion()
         }
     }
     
     
-    private func configureMovieCell(_ movie: MovieModel, completion: @escaping() -> Void) {
+    private func configureMovieCell(_ movie: MovieModel) {
         
         mediaType = "movie"
         media.append(.movie(movie))
@@ -365,6 +327,8 @@ class DetailsScreenViewController: UIViewController {
         
         mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
+        configureFavButtonForMovie(movie)
+        
         // MARK: Configuring movie image
         
         if let imagePath = movie.posterPath {
@@ -391,11 +355,6 @@ class DetailsScreenViewController: UIViewController {
             group.leave()
         }
         
-//        group.enter()
-//        configureReviews(mediaType: "movie", mediaId: movie.id) {
-//            group.leave()
-//        }
-        
         group.enter()
         
         configureSimilarMedia(movie) {
@@ -404,12 +363,15 @@ class DetailsScreenViewController: UIViewController {
         
         group.notify(queue: DispatchQueue.main) {
             self.changeHeight()
-            completion()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.detailsScreenCollectionView.stopSkeletonAnimation()
+                self.view.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+            }
         }
     }
     
     
-    private func configureTVCell(_ tvShow: TVModel, completion: @escaping() -> Void) {
+    private func configureTVCell(_ tvShow: TVModel) {
         
         mediaType = "tv"
         media.append(.tvShow(tvShow))
@@ -445,6 +407,8 @@ class DetailsScreenViewController: UIViewController {
         
         mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
+        configureFavButtonForTVShow(tvShow)
+        
         // MARK: Configuring tv image
         
         if let imagePath = tvShow.posterPath {
@@ -468,12 +432,6 @@ class DetailsScreenViewController: UIViewController {
             group.leave()
         }
         
-//        group.enter()
-        
-//        configureReviews(mediaType: "tv", mediaId: tvShow.id) {
-//            group.leave()
-//        }
-        
         group.enter()
         
         configureSimilarMedia(tvShow) {
@@ -483,27 +441,10 @@ class DetailsScreenViewController: UIViewController {
         
         group.notify(queue: DispatchQueue.main) {
             self.changeHeight()
-            completion()
-        }
-    }
-    
-    
-    private func configureTrailer(with id: Int, completion: @escaping() -> Void) {
-        
-        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
-            guard let self else { return }
-            
-            guard let first = data.first else {
-                completion()
-                return
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.detailsScreenCollectionView.stopSkeletonAnimation()
+                self.view.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
             }
-            
-            self.trailersArray.append(first)
-            
-            DispatchQueue.main.async {
-                self.detailsScreenCollectionView.reloadData()
-            }
-            completion()
         }
     }
     
@@ -551,73 +492,91 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    func configureMediaCast(with id: Int, completion: @escaping() -> Void) {
+    private func configureTrailer(with id: Int, completion: @escaping() -> Void) {
+        
+        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
+            guard let self else { return }
+            
+            guard let first = data.first else {
+                self.detailsScreenLayouts.isTrailerEmpty = true
+                completion()
+                return
+            }
+            
+            self.trailersArray.append(first)
+            
+            DispatchQueue.main.async {
+                self.detailsScreenCollectionView.reloadData()
+                completion()
+            }
+        }
+    }
+    
+    
+    private func configureMediaCast(with id: Int, completion: @escaping() -> Void) {
         
         DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] cast in
             guard let self else { return }
+            
+            if cast.isEmpty {
+                self.detailsScreenLayouts.isCastEmpty = true
+            }
             
             self.castArray = cast
             
             DispatchQueue.main.async {
                 self.detailsScreenCollectionView.reloadData()
-            }
-            completion()
-        }
-    }
-    
-    
-    func configureReviews(mediaType: String, mediaId: Int, completion: @escaping() -> Void) {
-        DataManager.shared.getReviews(mediaType: mediaType, mediaId: mediaId) { [weak self] reviews in
-            guard let self else { return }
-            
-            guard !reviews.isEmpty else {
                 completion()
-                return
             }
-            
-            self.reviewsArray = reviews
-            
-            DispatchQueue.main.async {
-                self.detailsScreenCollectionView.reloadData()
-            }
-            
-            completion()
         }
     }
     
     
-    func configureSimilarMedia<T>(_ media: T, completion: @escaping() -> Void) {
+    private func configureSimilarMedia<T>(_ media: T, completion: @escaping() -> Void) {
         
         if let media = media as? MovieModel {
             
             DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movies in
                 guard let self else { return }
                 
+                if movies.isEmpty {
+                    self.detailsScreenLayouts.isSimilarMediaEmpty = true
+                }
+                
                 movies.forEach({self.similarArray.append(.movie($0))})
                 
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
+                    completion()
                 }
-                
-                completion()
             }
-            
         } else if let media = media as? TVModel {
             
             DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tvShows in
                 guard let self else { return }
                 
+                if tvShows.isEmpty {
+                    self.detailsScreenLayouts.isSimilarMediaEmpty = true
+                }
+                
                 tvShows.forEach({self.similarArray.append(.tvShow($0))})
                 
                 DispatchQueue.main.async {
                     self.detailsScreenCollectionView.reloadData()
+                    completion()
                 }
-                
-                completion()
             }
         }
     }
+    
+    
+    private func changeHeight() {
+        self.detailsScreenCollectionView.reloadData()
+        self.detailsScreenCollectionView.layoutIfNeeded()
+        collectionHeightConstraint.constant = detailsScreenCollectionView.contentSize.height
+    }
 }
+
 
 extension DetailsScreenViewController: YTPlayerViewDelegate {
     
@@ -627,12 +586,44 @@ extension DetailsScreenViewController: YTPlayerViewDelegate {
 }
 
 
-extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailsScreenViewController: SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func changeHeight() {
-        self.detailsScreenCollectionView.layoutIfNeeded()
-        collectionHeightConstraint.constant = detailsScreenCollectionView.contentSize.height
-        //self.view.layoutIfNeeded()
+    // MARK: Setup for SkeletonView
+    
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return 3
+    }
+    
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        switch section {
+        case 0:
+            return 5
+        default:
+            return 1
+        }
+    }
+    
+    
+    // MARK: Setup for DetailsScreenCollectionView
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        
+        switch indexPath.section {
+            
+        case 0:
+            return CastCollectionViewCell.cellIdentifier
+        case 1:
+            return TrailerCollectionViewCell.cellIdentifier
+        default:
+            return SimilarMediaCollectionViewCell.cellIdentifier
+        }
     }
     
     
@@ -644,9 +635,6 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return castArray.count
             
         case 1:
-            return reviewsArray.count
-            
-        case 2:
             return trailersArray.count
             
         default:
@@ -671,16 +659,6 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return cell
             
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewsCollectionViewCell.cellIdentifier, for: indexPath) as? ReviewsCollectionViewCell else {
-                
-                return UICollectionViewCell()
-            }
-            
-            cell.layoutIfNeeded()
-            cell.configure(with: reviewsArray[indexPath.row])
-            return cell
-            
-        case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrailerCollectionViewCell", for: indexPath) as? TrailerCollectionViewCell else {
                 
                 return UICollectionViewCell()
@@ -706,7 +684,7 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 3
     }
     
     
@@ -720,11 +698,6 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
             return header
             
         case 1:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ReviewsHeaderView.headerIdentifier, for: indexPath) as? ReviewsHeaderView else { return UICollectionReusableView() }
-            
-            return header
-            
-        case 2:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: "TrailerHeaderView", for: indexPath) as? TrailerHeaderView else { return UICollectionReusableView() }
             
             return header
@@ -740,7 +713,7 @@ extension DetailsScreenViewController: UICollectionViewDataSource, UICollectionV
 
 extension DetailsScreenViewController  {
     
-    func configureCompositionalLayout() {
+    private func configureCompositionalLayout() {
         
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, enviroment in
             guard let self else { return nil }
@@ -748,25 +721,33 @@ extension DetailsScreenViewController  {
             switch sectionIndex {
                 
             case 0 :
-                return DetailsScreenLayouts.shared.mediaCastSection()
+                return self.detailsScreenLayouts.mediaCastSection()
                 
             case 1:
-                guard !self.reviewsArray.isEmpty else { return nil }
-                
-                return DetailsScreenLayouts.shared.mediaReviewsSection()
-                
-            case 2:
-                guard !self.trailersArray.isEmpty else { return nil }
-                
-                return DetailsScreenLayouts.shared.trailersSection()
+                return self.detailsScreenLayouts.trailersSection()
                 
             default:
-                guard !self.similarArray.isEmpty else { return nil }
-                
-                return DetailsScreenLayouts.shared.similarMediaSection()
+                return self.detailsScreenLayouts.similarMediaSection()
             }
         }
-        
         detailsScreenCollectionView.setCollectionViewLayout(layout, animated: true)
+    }
+    
+}
+
+
+extension UIScrollView {
+    var isOrthogonalScrollView: Bool {
+        let isInCollectionView = superview as? UICollectionView != nil
+        return isInCollectionView && subviews.contains { $0.isSkeletonable }
+    }
+    
+    override public var isSkeletonable: Bool {
+        get {
+            super.isSkeletonable || isOrthogonalScrollView
+        }
+        set {
+            super.isSkeletonable = newValue
+        }
     }
 }
