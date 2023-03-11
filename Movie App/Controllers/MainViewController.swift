@@ -85,7 +85,7 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if nowPlayingMoviesArray.isEmpty {
+        if trendyMediaArray.isEmpty {
             loadingVC = LoadingViewController()
             add(loadingVC)
         }
@@ -142,6 +142,9 @@ class MainViewController: UIViewController {
         configureUI()
         configureCompositionalLayout()
         
+        let group = DispatchGroup()
+        group.enter()
+        
         DataManager.shared.requestMovieGenres { data, statusCode in
             
             guard statusCode == 200 else { return }
@@ -156,10 +159,12 @@ class MainViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
+                    group.leave()
                 }
             }
         }
         
+        group.enter()
         
         DataManager.shared.requestTVGenres { data, statusCode in
             
@@ -175,10 +180,12 @@ class MainViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.mainCollectionView.reloadData()
+                    group.leave()
                 }
             }
         }
         
+        group.enter()
         
         DataManager.shared.requestTrendyMedia { [weak self] media, totalPages in
             guard let self else { return }
@@ -188,9 +195,11 @@ class MainViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
+                group.leave()
             }
         }
         
+        group.enter()
         
         DataManager.shared.requestNowPlayingMovies { [weak self] media, totalPages in
             guard let self else { return }
@@ -200,15 +209,14 @@ class MainViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.mainCollectionView.reloadData()
+                group.leave()
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                self.view.layoutIfNeeded()
-                
-                self.loadingVC.remove()
-                self.loadingVC = nil
-            }
-        } 
+        }
+        
+        group.notify(queue: .main) {
+            self.loadingVC.remove()
+            self.loadingVC = nil
+        }
     }
     
 
@@ -388,8 +396,8 @@ extension MainViewController: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             
-            cell.configure(with: trendyMediaArray, indexPath: indexPath)
             cell.delegate = self
+            cell.configure(with: trendyMediaArray, indexPath: indexPath)
             return cell
             
         case 1:
