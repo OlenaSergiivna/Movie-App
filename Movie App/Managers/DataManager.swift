@@ -342,36 +342,36 @@ struct DataManager {
     }
     
     
-    func getMediaTrailer(id: Int, mediaType: String, completion: @escaping([TrailerModel]) -> Void) {
+    func getMediaTrailer(id: Int, mediaType: String, completion: @escaping (Result<[TrailerModel], Error>) -> Void) {
         
         let trailerRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(id)/videos?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         trailerRequest.responseDecodable(of: ResultsTrailers.self ) { response in
             
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let results):
+                completion(.success(results.results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
-        
     }
     
     
-    func getMediaCast(mediaType: String, mediaId: Int, completion: @escaping([CastModel]) -> Void) {
+    func getMediaCast(mediaType: String, mediaId: Int, completion: @escaping (Result<[CastModel], Error>) -> Void) {
         
         let castRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/credits?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         castRequest.responseDecodable(of: ResultsCast.self ) { response in
             
-            do {
-                let data = try response.result.get().cast
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let data):
+                completion(.success(data.cast))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -411,71 +411,41 @@ struct DataManager {
     }
     
     
-    func getSimilarMovies(movieId: Int, completion: @escaping([MovieModel]) -> Void) {
+    func getSimilarMovies(movieId: Int, completion: @escaping (Result<[MovieModel], Error>) -> Void) {
         
         let similarMoviesRequest = AF.request("https://api.themoviedb.org/3/movie/\(movieId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarMoviesRequest.responseDecodable(of: ResultsMovie.self ) { response in
             
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let data):
+                completion(.success(data.results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
     
     
-    func getSimilarTVShows(mediaId: Int, completion: @escaping([TVModel]) -> Void) {
+    func getSimilarTVShows(mediaId: Int, completion: @escaping (Result<[TVModel], Error>) -> Void) {
         
         let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarTVShowsRequest.responseDecodable(of: ResultsTV.self ) { response in
             
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let data):
+                completion(.success(data.results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
     
-    
-    func getReviews(mediaType: String, mediaId: Int, completion: @escaping([ReviewsModel]) -> Void) {
-        
-        let mediaReviewsRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)/reviews?api_key=\(Globals.apiKey)&language=en-US", method: .get)
-        
-        mediaReviewsRequest.responseDecodable(of: ResultsReviews.self ) { response in
-            
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
-                
-            }
-        }
-    }
-    
-    func getAllRequest(mediaType: String, mediaId: Int, completion: @escaping(ExpandedMediaDetailsModel) -> Void) {
-        
-        let getAllRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US&append_to_response=similar,credits,reviews,videos", method: .get)
-        
-        getAllRequest.responseDecodable(of: ExpandedMediaDetailsModel.self ) { response in
-            
-            do {
-                let data = try response.result.get()
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
-                
-            }
-        }
-    }
     
     func getProviders(mediaType: String, mediaID: Int, completion: @escaping(AllCasesType) -> Void) {
         
@@ -492,17 +462,5 @@ struct DataManager {
                 
             }
         }
-        
-        
-    }
-    
-    func getGet(array: [Int], completion: (Int) -> Void) {
-        
-        var sum = 0
-        for i in array {
-            sum += i
-        }
-        
-        completion(sum)
     }
 }

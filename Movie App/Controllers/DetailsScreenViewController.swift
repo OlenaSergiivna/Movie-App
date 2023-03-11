@@ -494,19 +494,28 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureTrailer(with id: Int, completion: @escaping() -> Void) {
         
-        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] data in
+        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] result in
             guard let self else { return }
             
-            guard let first = data.first else {
+            switch result {
+                
+            case .success(let data):
+                guard let first = data.first else {
+                    self.detailsScreenLayouts.isTrailerEmpty = true
+                    completion()
+                    return
+                }
+                
+                self.trailersArray.append(first)
+                
+                DispatchQueue.main.async {
+                    self.detailsScreenCollectionView.reloadData()
+                    completion()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
                 self.detailsScreenLayouts.isTrailerEmpty = true
-                completion()
-                return
-            }
-            
-            self.trailersArray.append(first)
-            
-            DispatchQueue.main.async {
-                self.detailsScreenCollectionView.reloadData()
                 completion()
             }
         }
@@ -515,17 +524,29 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureMediaCast(with id: Int, completion: @escaping() -> Void) {
         
-        DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] cast in
+        DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] result in
             guard let self else { return }
             
-            if cast.isEmpty {
+            switch result {
+                
+            case .success(let cast):
+                
+                guard !cast.isEmpty else {
+                    self.detailsScreenLayouts.isCastEmpty = true
+                    completion()
+                    return
+                }
+                
+                self.castArray = cast
+                
+                DispatchQueue.main.async {
+                    self.detailsScreenCollectionView.reloadData()
+                    completion()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
                 self.detailsScreenLayouts.isCastEmpty = true
-            }
-            
-            self.castArray = cast
-            
-            DispatchQueue.main.async {
-                self.detailsScreenCollectionView.reloadData()
                 completion()
             }
         }
@@ -536,33 +557,57 @@ class DetailsScreenViewController: UIViewController {
         
         if let media = media as? MovieModel {
             
-            DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] movies in
+            DataManager.shared.getSimilarMovies(movieId: media.id) { [weak self] result in
                 guard let self else { return }
                 
-                if movies.isEmpty {
+                switch result {
+                    
+                case .success(let movies):
+                    
+                    guard !movies.isEmpty else {
+                        self.detailsScreenLayouts.isSimilarMediaEmpty = true
+                        completion()
+                        return
+                    }
+                    
+                    movies.forEach({self.similarArray.append(.movie($0))})
+                    
+                    DispatchQueue.main.async {
+                        self.detailsScreenCollectionView.reloadData()
+                        completion()
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                     self.detailsScreenLayouts.isSimilarMediaEmpty = true
-                }
-                
-                movies.forEach({self.similarArray.append(.movie($0))})
-                
-                DispatchQueue.main.async {
-                    self.detailsScreenCollectionView.reloadData()
                     completion()
                 }
             }
         } else if let media = media as? TVModel {
             
-            DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] tvShows in
+            DataManager.shared.getSimilarTVShows(mediaId: media.id) { [weak self] result in
                 guard let self else { return }
                 
-                if tvShows.isEmpty {
+                switch result {
+                    
+                case .success(let tvShows):
+                    
+                    guard !tvShows.isEmpty else {
+                        self.detailsScreenLayouts.isSimilarMediaEmpty = true
+                        completion()
+                        return
+                    }
+                    
+                    tvShows.forEach({self.similarArray.append(.tvShow($0))})
+                    
+                    DispatchQueue.main.async {
+                        self.detailsScreenCollectionView.reloadData()
+                        completion()
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                     self.detailsScreenLayouts.isSimilarMediaEmpty = true
-                }
-                
-                tvShows.forEach({self.similarArray.append(.tvShow($0))})
-                
-                DispatchQueue.main.async {
-                    self.detailsScreenCollectionView.reloadData()
                     completion()
                 }
             }
