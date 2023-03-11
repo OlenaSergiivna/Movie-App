@@ -235,7 +235,7 @@ struct DataManager {
                 completion(result.success)
                 
             } catch {
-                print("removed: \(error.localizedDescription)")
+                print("Delete from favorites: \(error.localizedDescription)")
             }
         }
     }

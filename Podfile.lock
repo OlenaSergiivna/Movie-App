@@ -17,7 +17,7 @@ DEPENDENCIES:
   - Kingfisher (~> 7.0)
   - lottie-ios
   - RealmSwift
-  - SkeletonView
+  - SkeletonView (~> 1.30.4)
   - youtube-ios-player-helper
 
 SPEC REPOS:
@@ -41,6 +41,6 @@ SPEC CHECKSUMS:
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: dfc550cac34ee3cbfa76e20b8826ac9a73da172e
+PODFILE CHECKSUM: e9f87201a335428438870dc6e4273918a6c5c6d4
 
 COCOAPODS: 1.11.3
