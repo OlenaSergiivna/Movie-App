@@ -21,6 +21,8 @@ class TrailerCollectionViewCell: UICollectionViewCell {
         let trailerPlayer = YTPlayerView()
         trailerPlayer.translatesAutoresizingMaskIntoConstraints = false
         trailerPlayer.clipsToBounds = true
+        trailerPlayer.layer.cornerRadius = 20
+        trailerPlayer.isSkeletonable = true
         return trailerPlayer
     }()
     
@@ -37,8 +39,9 @@ class TrailerCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
-       
-        //trailerPlayer.addSubview(coverButton)
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+        //contentView.addSubview(coverButton)
         contentView.addSubview(trailerPlayer)
         
         NSLayoutConstraint.activate([
@@ -48,10 +51,10 @@ class TrailerCollectionViewCell: UICollectionViewCell {
             trailerPlayer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             trailerPlayer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-//            coverButton.topAnchor.constraint(equalTo: trailerPlayer.topAnchor),
-//            coverButton.bottomAnchor.constraint(equalTo: trailerPlayer.bottomAnchor),
-//            coverButton.leadingAnchor.constraint(equalTo: trailerPlayer.leadingAnchor),
-//            coverButton.trailingAnchor.constraint(equalTo: trailerPlayer.trailingAnchor)
+//            coverButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+//            coverButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+//            coverButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            coverButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
             
         ])
     }

@@ -704,7 +704,7 @@ extension DetailsScreenViewController: SkeletonCollectionViewDataSource, UIColle
             return cell
             
         case 1:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TrailerCollectionViewCell", for: indexPath) as? TrailerCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrailerCollectionViewCell.cellIdentifier, for: indexPath) as? TrailerCollectionViewCell else {
                 
                 return UICollectionViewCell()
             }
@@ -743,7 +743,7 @@ extension DetailsScreenViewController: SkeletonCollectionViewDataSource, UIColle
             return header
             
         case 1:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: "TrailerHeaderView", for: indexPath) as? TrailerHeaderView else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: TrailerHeaderView.headerIdentifier, for: indexPath) as? TrailerHeaderView else { return UICollectionReusableView() }
             
             return header
             

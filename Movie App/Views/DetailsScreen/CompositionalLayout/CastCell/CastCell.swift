@@ -22,6 +22,9 @@ class CastCollectionViewCell: UICollectionViewCell {
         castImage.contentMode = .scaleAspectFill
         castImage.clipsToBounds = true
         castImage.layer.cornerRadius = 20
+        castImage.isSkeletonable = true
+        castImage.image = UIImage()
+        castImage.isHidden = false
         return castImage
     }()
     
@@ -35,6 +38,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         backLabel.numberOfLines = 3
         backLabel.font = .systemFont(ofSize: 12, weight: .bold)
         backLabel.adjustsFontSizeToFitWidth = true
+        backLabel.isSkeletonable = true
         return backLabel
     }()
     
@@ -48,6 +52,8 @@ class CastCollectionViewCell: UICollectionViewCell {
         castLabel.contentMode = .center
         castLabel.font = .systemFont(ofSize: 10)
         castLabel.adjustsFontSizeToFitWidth = true
+        castLabel.isSkeletonable = true
+        castLabel.isHidden = false
         return castLabel
     }()
     
@@ -62,6 +68,8 @@ class CastCollectionViewCell: UICollectionViewCell {
         characterLabel.font = .systemFont(ofSize: 8)
         characterLabel.adjustsFontSizeToFitWidth = true
         characterLabel.minimumScaleFactor = 0.3
+        characterLabel.isSkeletonable = true
+        characterLabel.isHidden = false
         return characterLabel
     }()
     
@@ -69,8 +77,10 @@ class CastCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
-       
-        castImage.addSubview(backLabel)
+        isSkeletonable = true
+        
+        contentView.isSkeletonable = true
+        contentView.addSubview(backLabel)
         contentView.addSubview(castImage)
         contentView.addSubview(castLabel)
         contentView.addSubview(characterLabel)
@@ -92,9 +102,9 @@ class CastCollectionViewCell: UICollectionViewCell {
             characterLabel.centerXAnchor.constraint(equalTo: castLabel.centerXAnchor),
             characterLabel.trailingAnchor.constraint(greaterThanOrEqualTo: castLabel.trailingAnchor),
             
-            backLabel.topAnchor.constraint(equalTo: castImage.topAnchor, constant: 8),
-            backLabel.leadingAnchor.constraint(equalTo: castImage.leadingAnchor, constant: 8),
-            backLabel.trailingAnchor.constraint(equalTo: castImage.trailingAnchor, constant: -8)
+            backLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            backLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            backLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
         ])
     }
     
@@ -107,6 +117,7 @@ class CastCollectionViewCell: UICollectionViewCell {
         castLabel.text = nil
         characterLabel.text = nil
     }
+    
     
     func configure(with data: CastModel) {
         

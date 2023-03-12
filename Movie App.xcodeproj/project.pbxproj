@@ -69,7 +69,6 @@
 		CE9F8CA1295E58BF00EEDBDE /* TVDetailedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9F8CA0295E58BF00EEDBDE /* TVDetailedModel.swift */; };
 		CEA6DAE8294A488D00A4416F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DAE7294A488D00A4416F /* UserDefaultsManager.swift */; };
 		CEAEDF3C29422EAD0095A9B5 /* ReviewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAEDF3B29422EAD0095A9B5 /* ReviewsHeaderView.swift */; };
-		CEAEDF3F29422F960095A9B5 /* ReviewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAEDF3E29422F960095A9B5 /* ReviewsCell.swift */; };
 		CEAEDF4129424A230095A9B5 /* ReviewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAEDF4029424A230095A9B5 /* ReviewsModel.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB1EDCD2946195D0023D0F8 /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */; };
@@ -170,7 +169,6 @@
 		CE9F8CA0295E58BF00EEDBDE /* TVDetailedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVDetailedModel.swift; sourceTree = "<group>"; };
 		CEA6DAE7294A488D00A4416F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		CEAEDF3B29422EAD0095A9B5 /* ReviewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsHeaderView.swift; sourceTree = "<group>"; };
-		CEAEDF3E29422F960095A9B5 /* ReviewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsCell.swift; sourceTree = "<group>"; };
 		CEAEDF4029424A230095A9B5 /* ReviewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsModel.swift; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 				CE8DBA8C2941DD360091BD4B /* DetailsScreenLayouts.swift */,
 				CE8DBA8E2941DD450091BD4B /* CastCell */,
 				CEB1EDCB2946193B0023D0F8 /* TrailerCell */,
-				CEAEDF3D29422F6F0095A9B5 /* ReviewsCell */,
 				CE8DBA902941DD720091BD4B /* SimilarCell */,
 				CE8DBA912941E2440091BD4B /* Headers&Footers */,
 			);
@@ -565,14 +562,6 @@
 				CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		CEAEDF3D29422F6F0095A9B5 /* ReviewsCell */ = {
-			isa = PBXGroup;
-			children = (
-				CEAEDF3E29422F960095A9B5 /* ReviewsCell.swift */,
-			);
-			path = ReviewsCell;
 			sourceTree = "<group>";
 		};
 		CEB1EDCB2946193B0023D0F8 /* TrailerCell */ = {
@@ -762,7 +751,6 @@
 				CE6EFD44290DC82600924F62 /* InTheatresFooterView.swift in Sources */,
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,
 				CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */,
-				CEAEDF3F29422F960095A9B5 /* ReviewsCell.swift in Sources */,
 				CED374E728F61A5C006D95A9 /* SearchTVRealmModel.swift in Sources */,
 				CECEF5EE28FDB5B100BCB039 /* AlamofireConnectionService.swift in Sources */,
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,

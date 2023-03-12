@@ -22,6 +22,9 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
         mediaImage.contentMode = .scaleAspectFill
         mediaImage.clipsToBounds = true
         mediaImage.layer.cornerRadius = 20
+        mediaImage.isSkeletonable = true
+        mediaImage.image = UIImage()
+        mediaImage.isHidden = false
         return mediaImage
     }()
     
@@ -35,30 +38,20 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
         mediaName.contentMode = .center
         mediaName.font = .systemFont(ofSize: 10)
         mediaName.adjustsFontSizeToFitWidth = true
+        mediaName.isSkeletonable = true
+        mediaName.isHidden = false
         return mediaName
     }()
-    
-//    private let characterLabel: UILabel = {
-//        let characterLabel = UILabel()
-//        characterLabel.translatesAutoresizingMaskIntoConstraints = false
-//        characterLabel.text = "Hello"
-//        characterLabel.textColor = .darkGray
-//        characterLabel.contentMode = .center
-//        characterLabel.textAlignment = .center
-//        characterLabel.font = .systemFont(ofSize: 8)
-//        characterLabel.adjustsFontSizeToFitWidth = true
-//        characterLabel.minimumScaleFactor = 0.3
-//        return characterLabel
-//    }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
-       
+        isSkeletonable = true
+        
+        contentView.isSkeletonable = true
         contentView.addSubview(mediaImage)
         contentView.addSubview(mediaName)
-        //contentView.addSubview(characterLabel)
         
         NSLayoutConstraint.activate([
             
@@ -80,6 +73,9 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
         
         mediaImage.image = nil
         mediaName.text = nil
+        
+        mediaImage.isHidden = false
+        mediaName.isHidden = false 
     }
     
     
