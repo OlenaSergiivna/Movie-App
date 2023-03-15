@@ -268,17 +268,19 @@ struct DataManager {
     
     // MARK: - Search TV Shows by text request
     
-    func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping([TVModel]) -> Void) {
+    func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<[TVModel], Error>) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsTV.self) { response in
             
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
+                
+            case .success(let data):
+                completion(.success(data.results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -286,17 +288,19 @@ struct DataManager {
     
     // MARK: - Search movies by text request
     
-    func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping([MovieModel]) -> Void) {
+    func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<[MovieModel], Error>) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
         searchRequest.responseDecodable(of: ResultsMovie.self) { response in
             
-            do {
-                let data = try response.result.get().results
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
+                
+            case .success(let data):
+                completion(.success(data.results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -377,18 +381,19 @@ struct DataManager {
     }
     
     
-    func getMovieDetails(mediaId: Int, completion: @escaping(MovieDetailedModel) -> Void) {
+    func getMovieDetails(mediaId: Int, completion: @escaping(Result<MovieDetailedModel, Error>) -> Void) {
         
         let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/movie/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         movieDetailsRequest.responseDecodable(of: MovieDetailedModel.self ) { response in
             
-            do {
-                let data = try response.result.get()
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let data):
+                completion(.success(data))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
