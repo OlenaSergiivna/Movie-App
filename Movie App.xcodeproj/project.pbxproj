@@ -76,6 +76,7 @@
 		CEB1EDD1294676D00023D0F8 /* KingsfisherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */; };
 		CEB3450828E225DF00451A6F /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450728E225DF00451A6F /* UserDetailsModel.swift */; };
 		CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3450928E23E0100451A6F /* MovieViewController.swift */; };
+		CEBAACDE29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBAACDD29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift */; };
 		CEBEC23A293ECC5200A2AB72 /* ProvidersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBEC239293ECC5200A2AB72 /* ProvidersModel.swift */; };
 		CEC003B628F780A5005B8B4E /* String+ isBlank.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC003B528F780A5005B8B4E /* String+ isBlank.swift */; };
 		CEC3408C28EF3FCD00F5275B /* FavoritesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC3408B28EF3FCD00F5275B /* FavoritesResponse.swift */; };
@@ -176,6 +177,7 @@
 		CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingsfisherManager.swift; sourceTree = "<group>"; };
 		CEB3450728E225DF00451A6F /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
 		CEB3450928E23E0100451A6F /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
+		CEBAACDD29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+ PaddingLabel.swift"; sourceTree = "<group>"; };
 		CEBEC239293ECC5200A2AB72 /* ProvidersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersModel.swift; sourceTree = "<group>"; };
 		CEC003B528F780A5005B8B4E /* String+ isBlank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ isBlank.swift"; sourceTree = "<group>"; };
 		CEC3408B28EF3FCD00F5275B /* FavoritesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesResponse.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */,
 				CEC003B528F780A5005B8B4E /* String+ isBlank.swift */,
 				CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */,
+				CEBAACDD29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */,
 				CE64C1602917335A00D1BBA6 /* TrailerModels.swift in Sources */,
 				CE3B74AC29492429005EFA94 /* ProviderTableViewCell.swift in Sources */,
+				CEBAACDE29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift in Sources */,
 				CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */,
 				CECD9B1E290C88FF0013992F /* TVHeader.swift in Sources */,
 				CE169E4828EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift in Sources */,
