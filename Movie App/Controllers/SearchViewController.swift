@@ -458,10 +458,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     // check for canceling request if cancel button pressed but request in not loaded yet
                     if text == self.searchQuery {
-                        self.searchResultsMovie.append(contentsOf: results)
                         
+                        // replaced reloadData with insertRows to remove flickering
+                        let startIndex = self.searchResultsMovie.count
+                        self.searchResultsMovie.append(contentsOf: results)
+                        let endIndex = self.searchResultsMovie.count
+                        
+                        let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+ 
                         DispatchQueue.main.async {
-                            self.searchTableView.reloadData()
+                            
+                            self.searchTableView.beginUpdates()
+                            self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
+                            self.searchTableView.endUpdates()
                         }
                     }
                     
@@ -491,10 +500,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     // check for canceling request if cancel button pressed but request in not loaded yet
                     if text == self.searchQuery {
-                        self.searchResultsTV.append(contentsOf: results)
                         
+                        // replaced reloadData with insertRows to remove flickering
+                        let startIndex = self.searchResultsTV.count
+                        self.searchResultsTV.append(contentsOf: results)
+                        let endIndex = self.searchResultsTV.count
+                        
+                        let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+ 
                         DispatchQueue.main.async {
-                            self.searchTableView.reloadData()
+                            
+                            self.searchTableView.beginUpdates()
+                            self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
+                            self.searchTableView.endUpdates()
                         }
                     }
                     
