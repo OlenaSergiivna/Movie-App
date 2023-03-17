@@ -27,85 +27,122 @@
                                     <constraint firstAttribute="width" constant="90" id="EKv-Cw-jzG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-RA-8tp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="oBk-RA-8tp">
                                 <rect key="frame" x="16" y="16" width="74" height="14.333333333333336"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aNz-fr-71Q">
-                                <rect key="frame" x="106" y="8" width="76.666666666666686" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aNz-fr-71Q">
+                                <rect key="frame" x="106" y="8" width="4" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Fantasy Adventure" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-99-AEz">
-                                <rect key="frame" x="105.99999999999999" y="30.000000000000004" width="154.66666666666663" height="15.666666666666668"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jgg-99-AEz">
+                                <rect key="frame" x="106" y="30.000000000000004" width="3.6666666666666714" height="15.666666666666668"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4Sq-eg-itR">
-                                <rect key="frame" x="106" y="53.666666666666657" width="151" height="34.333333333333343"/>
+                                <rect key="frame" x="105.99999999999999" y="53.666666666666657" width="154.66666666666663" height="23"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohE-La-efc">
-                                        <rect key="frame" x="0.0" y="0.0" width="64" height="34.333333333333336"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="2022">
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cvM-5Z-yJn">
-                                        <rect key="frame" x="66" y="0.0" width="85" height="34.333333333333336"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Country" cornerStyle="fixed">
-                                            <backgroundConfiguration key="background" cornerRadius="15">
-                                                <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            </backgroundConfiguration>
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uIp-A7-Bt3" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="64.666666666666671" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KfU-AY-l83" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="66.666666666666657" y="0.0" width="88" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="dD6-Ba-KoE">
-                                <rect key="frame" x="106" y="96" width="260" height="69"/>
+                                <rect key="frame" x="106" y="84.666666666666671" width="260" height="23"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69S-Dz-R9h">
-                                        <rect key="frame" x="0.0" y="0.0" width="48" height="69"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="9"/>
-                                        <state key="normal" title="8.0">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <buttonConfiguration key="configuration" style="plain" title="8.0">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yuf-oa-hjb">
-                                        <rect key="frame" x="50.000000000000007" y="0.0" width="85.666666666666686" height="69"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="2h 39m"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="2h 39m">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
-                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oc5-Qe-N6s">
-                                        <rect key="frame" x="137.66666666666666" y="0.0" width="122.33333333333334" height="69"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="20 episodes"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="20 episodes">
-                                            <fontDescription key="titleFontDescription" type="system" pointSize="23"/>
-                                            <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </buttonConfiguration>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ghF-VU-Wge" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="47" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2h 39m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wMm-dt-3fd" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="48.999999999999993" y="0.0" width="85.333333333333314" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="d5X-oH-j1W" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="136.33333333333334" y="0.0" width="123.66666666666666" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -114,6 +151,7 @@
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="top" secondItem="1ob-sE-y4A" secondAttribute="top" constant="8" id="3bK-fY-P0v"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dD6-Ba-KoE" secondAttribute="trailing" constant="16" id="4gv-sP-WND"/>
                             <constraint firstItem="jgg-99-AEz" firstAttribute="leading" secondItem="aNz-fr-71Q" secondAttribute="leading" id="Cut-yy-cwo"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4Sq-eg-itR" secondAttribute="trailing" constant="16" id="FPZ-uf-K1Y"/>
                             <constraint firstItem="3Z4-ss-OAt" firstAttribute="leading" secondItem="oBk-RA-8tp" secondAttribute="leading" constant="-8" id="GBx-s2-wMZ"/>
                             <constraint firstItem="oBk-RA-8tp" firstAttribute="top" secondItem="3Z4-ss-OAt" secondAttribute="top" constant="8" id="J4T-zp-7O7"/>
                             <constraint firstItem="4Sq-eg-itR" firstAttribute="leading" secondItem="jgg-99-AEz" secondAttribute="leading" id="Jf5-xn-8Uc"/>
@@ -124,7 +162,6 @@
                             <constraint firstItem="dD6-Ba-KoE" firstAttribute="top" secondItem="4Sq-eg-itR" secondAttribute="bottom" constant="8" id="gyb-nD-ex7"/>
                             <constraint firstItem="aNz-fr-71Q" firstAttribute="leading" secondItem="3Z4-ss-OAt" secondAttribute="trailing" constant="8" id="kp8-al-bKr"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jgg-99-AEz" secondAttribute="trailing" constant="16" id="o2P-2p-l9f"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4Sq-eg-itR" secondAttribute="trailing" constant="16" id="r7t-NH-AF8"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dD6-Ba-KoE" secondAttribute="bottom" constant="8" id="rIz-iC-2MZ"/>
                             <constraint firstItem="dD6-Ba-KoE" firstAttribute="leading" secondItem="4Sq-eg-itR" secondAttribute="leading" id="s66-UF-kgZ"/>
                             <constraint firstAttribute="bottom" secondItem="3Z4-ss-OAt" secondAttribute="bottom" constant="8" id="tYe-lp-xK3"/>
@@ -146,24 +183,41 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="backLabel" destination="oBk-RA-8tp" id="1cc-6k-UPP"/>
-                <outlet property="episodesCountButton" destination="oc5-Qe-N6s" id="7Nk-0i-E3i"/>
+                <outlet property="episodesCountLabel" destination="d5X-oH-j1W" id="fOv-6j-NaV"/>
                 <outlet property="firstStackView" destination="4Sq-eg-itR" id="uag-IO-oIg"/>
                 <outlet property="genresLabel" destination="jgg-99-AEz" id="i5Z-CO-PVY"/>
                 <outlet property="movieBackView" destination="1ob-sE-y4A" id="Cyd-xx-ieQ"/>
                 <outlet property="movieImage" destination="3Z4-ss-OAt" id="fe9-XH-fYW"/>
                 <outlet property="movieTitle" destination="aNz-fr-71Q" id="xG4-vS-hQN"/>
-                <outlet property="productionCountryButton" destination="cvM-5Z-yJn" id="j3t-QF-HaE"/>
-                <outlet property="ratingButton" destination="69S-Dz-R9h" id="ppC-1C-bKV"/>
-                <outlet property="releaseYearButton" destination="ohE-La-efc" id="JUu-lo-lWj"/>
-                <outlet property="runtimeButton" destination="Yuf-oa-hjb" id="qH4-Wg-l5O"/>
+                <outlet property="productionCountryLabel" destination="KfU-AY-l83" id="40b-fZ-FLR"/>
+                <outlet property="ratingLabel" destination="ghF-VU-Wge" id="rpa-VA-0R1"/>
+                <outlet property="releaseYearLabel" destination="uIp-A7-Bt3" id="gvg-Ec-270"/>
+                <outlet property="runtimeLabel" destination="wMm-dt-3fd" id="tuP-FO-NaG"/>
                 <outlet property="secondStackView" destination="dD6-Ba-KoE" id="Ld5-cJ-0UH"/>
-                <outletCollection property="mediaLabelsCollection" destination="ohE-La-efc" collectionClass="NSMutableArray" id="Or8-TU-nEq"/>
-                <outletCollection property="mediaLabelsCollection" destination="69S-Dz-R9h" collectionClass="NSMutableArray" id="Hxc-Cz-PCg"/>
-                <outletCollection property="mediaLabelsCollection" destination="Yuf-oa-hjb" collectionClass="NSMutableArray" id="q9Y-47-iEi"/>
-                <outletCollection property="mediaLabelsCollection" destination="oc5-Qe-N6s" collectionClass="NSMutableArray" id="pKc-bI-eI3"/>
-                <outletCollection property="mediaLabelsCollection" destination="cvM-5Z-yJn" collectionClass="NSMutableArray" id="vTg-8I-ZoB"/>
+                <outletCollection property="mediaLabelsCollection" destination="uIp-A7-Bt3" collectionClass="NSMutableArray" id="1ZJ-lh-xOI"/>
+                <outletCollection property="mediaLabelsCollection" destination="KfU-AY-l83" collectionClass="NSMutableArray" id="oQB-fj-s27"/>
+                <outletCollection property="mediaLabelsCollection" destination="ghF-VU-Wge" collectionClass="NSMutableArray" id="LoM-wx-SX6"/>
+                <outletCollection property="mediaLabelsCollection" destination="wMm-dt-3fd" collectionClass="NSMutableArray" id="mqz-eh-ZDr"/>
+                <outletCollection property="mediaLabelsCollection" destination="d5X-oH-j1W" collectionClass="NSMutableArray" id="7Kw-yl-waY"/>
             </connections>
             <point key="canvasLocation" x="104.61538461538461" y="71.800947867298575"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="KfU-AY-l83">
+            <size key="intrinsicContentSize" width="88" height="23"/>
+        </designable>
+        <designable name="d5X-oH-j1W">
+            <size key="intrinsicContentSize" width="123.66666666666667" height="23"/>
+        </designable>
+        <designable name="ghF-VU-Wge">
+            <size key="intrinsicContentSize" width="47" height="23"/>
+        </designable>
+        <designable name="uIp-A7-Bt3">
+            <size key="intrinsicContentSize" width="64.666666666666657" height="23"/>
+        </designable>
+        <designable name="wMm-dt-3fd">
+            <size key="intrinsicContentSize" width="85.666666666666671" height="23"/>
+        </designable>
+    </designables>
 </document>
