@@ -35,6 +35,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     var searchQuery: String?
     
+    var lastSearchScope: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTableView.layoutMargins = .zero
@@ -536,8 +538,10 @@ extension SearchViewController: UISearchResultsUpdating {
         
         guard let text = searchController.searchBar.text else { return }
         
-        // check to ensure that search results won't be reupdated only by click on search field, if text hasn't been changed
-        guard text != searchQuery else { return }
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
+        // check to ensure that search results won't be reupdated only by click on search field, if text or the last search scope hasn't been changed
+        guard text != searchQuery || selectedIndex != lastSearchScope else { return }
         
         let textWithoutBlankSpaces = text.replacingOccurrences(of: " ", with: "")
         
@@ -563,13 +567,12 @@ extension SearchViewController: UISearchResultsUpdating {
         
         let searchText = text.replacingOccurrences(of: " ", with: "%20")
         
-        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        
         switch selectedIndex {
             
         case 0:
             
             displayStatus = true
+            if lastSearchScope != 0 { lastSearchScope = 0 }
             
             DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] result in
                 guard let self else { return }
@@ -607,6 +610,7 @@ extension SearchViewController: UISearchResultsUpdating {
         case 1:
             
             displayStatus = true
+            if lastSearchScope != 1 { lastSearchScope = 1 }
             
             DataManager.shared.searchTV(with: searchText, page: pageCount) { [weak self] result in
                 guard let self else { return }
