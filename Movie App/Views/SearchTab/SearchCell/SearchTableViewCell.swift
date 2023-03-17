@@ -17,15 +17,15 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var genresLabel: UILabel!
     
-    @IBOutlet weak var ratingButton: UIButton!
+    @IBOutlet weak var ratingLabel: PaddingLabel!
     
-    @IBOutlet weak var releaseYearButton: UIButton!
+    @IBOutlet weak var releaseYearLabel: PaddingLabel!
     
-    @IBOutlet weak var productionCountryButton: UIButton!
+    @IBOutlet weak var productionCountryLabel: PaddingLabel!
     
-    @IBOutlet weak var runtimeButton: UIButton!
+    @IBOutlet weak var runtimeLabel: PaddingLabel!
     
-    @IBOutlet weak var episodesCountButton: UIButton!
+    @IBOutlet weak var episodesCountLabel: PaddingLabel!
     
     @IBOutlet weak var backLabel: UILabel!
     
@@ -33,13 +33,12 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var secondStackView: UIStackView!
     
-    @IBOutlet var mediaLabelsCollection: [UIButton]!
+    @IBOutlet var mediaLabelsCollection: [PaddingLabel]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         self.selectionStyle = .none
-        
     }
     
     
@@ -47,8 +46,22 @@ class SearchTableViewCell: UITableViewCell {
         super.prepareForReuse()
         
         movieImage.image = nil
-        productionCountryButton.setTitle(nil, for: .normal)
-        runtimeButton.setTitle(nil, for: .normal)
+        movieTitle.text = nil
+        genresLabel.text = nil
+        backLabel.text = nil
+        
+        movieImage.isHidden = false
+        movieTitle.isHidden = false
+        genresLabel.isHidden = false
+        
+        firstStackView.isHidden = true
+        secondStackView.isHidden = true
+        backLabel.isHidden = true
+        
+        mediaLabelsCollection.forEach { label in
+            label.isHidden = true
+            label.text = nil
+        }
     }
     
     
@@ -62,212 +75,238 @@ class SearchTableViewCell: UITableViewCell {
         movieBackView.layer.masksToBounds = true
         movieBackView.layer.cornerRadius = 10
         
-        mediaLabelsCollection.forEach { button in
-            button.layer.masksToBounds = true
-            button.clipsToBounds = true
-            button.backgroundColor = #colorLiteral(red: 0.1176470444, green: 0.1176470444, blue: 0.1176470444, alpha: 1)
-            button.titleLabel?.textColor = .white
-            button.layer.cornerRadius = 15
+        mediaLabelsCollection.forEach { label in
+            label.clipsToBounds = true
+            label.backgroundColor = #colorLiteral(red: 0.1176470444, green: 0.1176470444, blue: 0.1176470444, alpha: 1)
+            label.textColor = .white
+            label.layer.cornerRadius = 10
         }
     }
     
     
     func configureMovie(with data: MovieModel) {
         
-        guard let title = data.title else {
-            
-            backLabel.isHidden = true
-            movieImage.isHidden = true
-            movieTitle.isHidden = true
-           
-            return
-        }
-        
-        backLabel.isHidden = true
         movieImage.isHidden = false
         movieTitle.isHidden = false
-        releaseYearButton.isHidden = false
-        productionCountryButton.isHidden = false
-        ratingButton.isHidden = false
-        runtimeButton.isHidden = false
-        episodesCountButton.isHidden = true
-        firstStackView.isHidden = false
-        secondStackView.isHidden = false
-       
+        genresLabel.isHidden = false
         
-        movieTitle.text = title
+        firstStackView.isHidden = true
+        secondStackView.isHidden = true
+        backLabel.isHidden = true
         
-        
-        if let releaseDate = data.releaseDate, !releaseDate.isEmpty {
-            releaseYearButton.setTitle(String("\(releaseDate)".dropLast(6)), for: .normal)
-            
-        } else {
-            releaseYearButton.isHidden = true
+        mediaLabelsCollection.forEach { label in
+            label.isHidden = true
+            label.text = nil
         }
         
-        
-        if data.voteAverage > 0 {
-            ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
-        } else {
-            ratingButton.isHidden = true
-        }
-        
-        var genresString = ""
-        let genres = Globals.movieGenres
-        
-        for movieID in data.genreIDS {
+        getMovieDetails(with: data) {
             
-            for genre in genres {
+            guard let title = data.title else {
                 
-                if movieID == genre.id {
-                    genresString.append("\(genre.name). ")
+                self.movieImage.isHidden = true
+                self.movieTitle.isHidden = true
+                
+                return
+            }
+            
+            self.movieTitle.text = title
+            
+            
+            if let releaseDate = data.releaseDate, !releaseDate.isEmpty {
+                self.releaseYearLabel.text = String("\(releaseDate)".dropLast(6))
+                self.releaseYearLabel.applyPadding()
+                self.releaseYearLabel.isHidden = false
+            }
+            
+            
+            if data.voteAverage > 0 {
+                self.ratingLabel.text = "★ \(round((data.voteAverage * 100))/100)"
+                self.ratingLabel.isHidden = false
+                self.ratingLabel.applyPadding()
+            }
+            
+            
+            var genresString = ""
+            let genres = Globals.movieGenres
+            
+            for movieID in data.genreIDS {
+                
+                for genre in genres {
+                    
+                    if movieID == genre.id {
+                        genresString.append("\(genre.name). ")
+                    }
                 }
             }
+            
+            self.genresLabel.text = String("\(genresString)".dropLast(2))
+            
+            
+            if !self.releaseYearLabel.isHidden || !self.productionCountryLabel.isHidden {
+                self.firstStackView.isHidden = false
+            }
+            
+            if !self.ratingLabel.isHidden || !self.runtimeLabel.isHidden {
+                self.secondStackView.isHidden = false
+            }
+            
+            guard let imagePath = data.posterPath else {
+                
+                self.movieImage.isHidden = true
+                self.backLabel.isHidden = false
+                self.backLabel.text = title
+                self.backLabel.textColor = .darkGray
+                
+                return
+            }
+            
+            KingsfisherManager.shared.setImage(profilePath: imagePath, image: self.movieImage, size: "w342", cornerRadius: 5)
         }
-        
-        genresLabel.text = String("\(genresString)".dropLast(2))
-        
-        
-        DataManager.shared.getMovieDetails(mediaId: data.id) { [weak self] details in
-            guard let self else { return }
-            
-            
-            if let productionCountryName = details.productionCounries.first?.name {
-                self.productionCountryButton.setTitle(productionCountryName, for: .normal)
-            } else {
-                self.productionCountryButton.isHidden = true
-            }
-            
-            
-            if let runtime = details.runtime {
-                if runtime > 0 {
-                    let timeInHours = self.calculateTime(Float(runtime))
-                    self.runtimeButton.setTitle(String(timeInHours), for: .normal)
-                } else {
-                    self.runtimeButton.isHidden = true
-                }
-            } else {
-                self.runtimeButton.isHidden = true
-            }
-            
-            
-            if self.releaseYearButton.isHidden && self.productionCountryButton.isHidden {
-                self.firstStackView.isHidden = true
-            }
-            
-            
-            if self.ratingButton.isHidden && self.runtimeButton.isHidden {
-                self.secondStackView.isHidden = true
-            }
-        }
-        
-        
-        guard let imagePath = data.posterPath else {
-            
-            movieImage.isHidden = true
-            backLabel.isHidden = false
-            backLabel.text = title
-            backLabel.textColor = .darkGray
-            
-            return
-        }
-        
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w342", cornerRadius: 5)
     }
-    
     
     
     func configureTV(with data: TVModel) {
         
-        backLabel.isHidden = true
         movieImage.isHidden = false
         movieTitle.isHidden = false
-        releaseYearButton.isHidden = false
-        productionCountryButton.isHidden = false
-        ratingButton.isHidden = false
-        runtimeButton.isHidden = true
-        episodesCountButton.isHidden = false
-        firstStackView.isHidden = false
-        secondStackView.isHidden = false
+        genresLabel.isHidden = false
         
-        movieTitle.text = data.name
+        firstStackView.isHidden = true
+        secondStackView.isHidden = true
+        backLabel.isHidden = true
         
-        if let firstAirDate = data.firstAirDate, !firstAirDate.isEmpty {
-            releaseYearButton.setTitle(String("\(firstAirDate)".dropLast(6)), for: .normal)
-            
-        } else {
-            releaseYearButton.isHidden = true
+        mediaLabelsCollection.forEach { label in
+            label.isHidden = true
+            label.text = nil
         }
         
-        
-        if data.voteAverage > 0 {
-            ratingButton.setTitle("★ \(round((data.voteAverage * 100))/100)", for: .normal)
-        } else {
-            ratingButton.isHidden = true
-        }
-        
-        var genresString = ""
-        let genres = Globals.tvGenres
-        
-        for tvID in data.genreIDS {
+        getTVDetails(with: data) {
             
-            for genre in genres {
+            self.movieTitle.text = data.name
+            
+            if let firstAirDate = data.firstAirDate, !firstAirDate.isEmpty {
+                self.releaseYearLabel.text = String("\(firstAirDate)".dropLast(6))
+                self.releaseYearLabel.applyPadding()
+                self.releaseYearLabel.isHidden = false
+            }
+            
+            
+            if data.voteAverage > 0 {
+                self.ratingLabel.text = "★ \(round((data.voteAverage * 100))/100)"
+                self.ratingLabel.isHidden = false
+                self.ratingLabel.applyPadding()
+            }
+            
+            
+            var genresString = ""
+            let genres = Globals.tvGenres
+            
+            for tvID in data.genreIDS {
                 
-                if tvID == genre.id {
-                    genresString.append("\(genre.name). ")
+                for genre in genres {
+                    
+                    if tvID == genre.id {
+                        genresString.append("\(genre.name). ")
+                    }
                 }
             }
+            
+            self.genresLabel.text = String("\(genresString)".dropLast(2))
+            
+            
+            if !self.releaseYearLabel.isHidden || !self.productionCountryLabel.isHidden {
+                self.firstStackView.isHidden = false
+            }
+            
+            
+            if !self.ratingLabel.isHidden || !self.runtimeLabel.isHidden || !self.episodesCountLabel.isHidden {
+                self.secondStackView.isHidden = false
+            }
+            
+            guard let imagePath = data.posterPath else {
+                
+                self.movieImage.isHidden = true
+                self.backLabel.isHidden = false
+                self.backLabel.text = data.name
+                self.backLabel.textColor = .darkGray
+                
+                return
+            }
+            
+            KingsfisherManager.shared.setImage(profilePath: imagePath, image: self.movieImage, size: "w342", cornerRadius: 5)
         }
+    }
+    
+    
+    private func getMovieDetails(with data: MovieModel, completion: @escaping () -> Void) {
         
-        genresLabel.text = String("\(genresString)".dropLast(2))
-        
-        DataManager.shared.getTVShowDetails(mediaId: data.id) { [weak self] details in
+        DataManager.shared.getMovieDetails(mediaId: data.id) { [weak self] result in
             guard let self else { return }
             
-            if let productionCountryName = details.productionCountries.first?.name {
+            switch result {
                 
-                self.productionCountryButton.setTitle(productionCountryName, for: .normal)
-            } else {
-                self.productionCountryButton.isHidden = true
-            }
-            
-            
-            var episodesString = "\(String(details.numberOfEpisodes))"
-            
-            if details.numberOfEpisodes > 1 {
-                episodesString += " episodes"
-            } else {
-                episodesString += " episode"
-            }
-            
-            self.episodesCountButton.setTitle(episodesString, for: .normal)
-            
-            if details.numberOfEpisodes < 1 {
-                self.episodesCountButton.isHidden = true
-            }
-            
-            if self.releaseYearButton.isHidden && self.productionCountryButton.isHidden {
-                self.firstStackView.isHidden = true
-            }
-            
-            
-            if self.ratingButton.isHidden && self.runtimeButton.isHidden  && self.episodesCountButton.isHidden {
-                self.secondStackView.isHidden = true
+            case .success(let details):
+                
+                if let productionCountryName = details.productionCounries.first?.name {
+                    self.productionCountryLabel.text = productionCountryName
+                    self.productionCountryLabel.isHidden = false
+                    self.productionCountryLabel.applyPadding()
+                }
+                
+                if let runtime = details.runtime, runtime > 0 {
+                    let timeInHours = self.calculateTime(Float(runtime))
+                    self.runtimeLabel.text = String(timeInHours)
+                    self.runtimeLabel.isHidden = false
+                    self.runtimeLabel.applyPadding()
+                }
+                completion()
+                
+            case .failure(let error):
+                print("Error with getting details for movie: \(error.localizedDescription)")
+                completion()
             }
         }
+    }
+    
+    
+    private func getTVDetails(with data: TVModel, completion: @escaping () -> Void) {
         
-        
-        guard let imagePath = data.posterPath else {
+        DataManager.shared.getTVShowDetails(mediaId: data.id) { [weak self] result in
+            guard let self else { return }
             
-            movieImage.isHidden = true
-            backLabel.isHidden = false
-            backLabel.text = data.name
-            backLabel.textColor = .darkGray
-            
-            return
+            switch result {
+                
+            case .success(let details):
+                
+                if let productionCountryName = details.productionCountries.first?.name {
+                    self.productionCountryLabel.text = productionCountryName
+                    self.productionCountryLabel.isHidden = false
+                    self.productionCountryLabel.applyPadding()
+                }
+                
+                
+                var episodesString = "\(String(details.numberOfEpisodes))"
+                
+                if details.numberOfEpisodes > 1 {
+                    episodesString += " episodes"
+                } else {
+                    episodesString += " episode"
+                }
+                
+                self.episodesCountLabel.text = episodesString
+                
+                if details.numberOfEpisodes > 0 {
+                    self.episodesCountLabel.isHidden = false
+                    self.episodesCountLabel.applyPadding()
+                }
+                
+                completion()
+                
+            case .failure(let error):
+                print("Error with getting details for movie: \(error.localizedDescription)")
+                completion()
+            }
         }
-        
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w342", cornerRadius: 5)
     }
     
     
@@ -279,5 +318,17 @@ class SearchTableViewCell: UITableViewCell {
             return String(format: "%.f %@ %.f %@", hours.value, "h", minutes, "min")
         }
         return String(format: "%.f %@", timeMeasure.value, "min")
+    }
+}
+
+
+extension PaddingLabel {
+    
+    func applyPadding() {
+        
+        self.paddingLeft = 10
+        self.paddingRight = 10
+        self.paddingTop = 5
+        self.paddingBottom = 5
     }
 }
