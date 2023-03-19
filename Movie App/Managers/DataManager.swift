@@ -399,18 +399,19 @@ struct DataManager {
     }
     
     
-    func getTVShowDetails(mediaId: Int, completion: @escaping(TVShowDetailedModel) -> Void) {
+    func getTVShowDetails(mediaId: Int, completion: @escaping(Result<TVShowDetailedModel, Error>) -> Void) {
         
         let movieDetailsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         movieDetailsRequest.responseDecodable(of: TVShowDetailedModel.self ) { response in
             
-            do {
-                let data = try response.result.get()
-                completion(data)
-            } catch {
-                print(error.localizedDescription)
+            switch response.result {
                 
+            case .success(let data):
+                completion(.success(data))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -467,5 +468,14 @@ struct DataManager {
                 
             }
         }
+    }
+    
+    func cancelAllTasks() {
+
+        Alamofire.Session.default.session.getTasksWithCompletionHandler({ dataTasks, uploadTasks, downloadTasks in
+                    dataTasks.forEach { $0.cancel() }
+                    uploadTasks.forEach { $0.cancel() }
+                    downloadTasks.forEach { $0.cancel() }
+                })
     }
 }

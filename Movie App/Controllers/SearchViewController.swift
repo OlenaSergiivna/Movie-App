@@ -33,10 +33,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var searchQuery: String?
-    
-    var lastSearchScope: Int?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTableView.layoutMargins = .zero
@@ -458,22 +454,18 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 case .success(let results):
                     self.displayStatus = false
                     
-                    // check for canceling request if cancel button pressed but request in not loaded yet
-                    if text == self.searchQuery {
+                    // replaced reloadData with insertRows to remove flickering
+                    let startIndex = self.searchResultsMovie.count
+                    self.searchResultsMovie.append(contentsOf: results)
+                    let endIndex = self.searchResultsMovie.count
+                    
+                    let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+                    
+                    DispatchQueue.main.async {
                         
-                        // replaced reloadData with insertRows to remove flickering
-                        let startIndex = self.searchResultsMovie.count
-                        self.searchResultsMovie.append(contentsOf: results)
-                        let endIndex = self.searchResultsMovie.count
-                        
-                        let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
- 
-                        DispatchQueue.main.async {
-                            
-                            self.searchTableView.beginUpdates()
-                            self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
-                            self.searchTableView.endUpdates()
-                        }
+                        self.searchTableView.beginUpdates()
+                        self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
+                        self.searchTableView.endUpdates()
                     }
                     
                 case .failure(let error):
@@ -500,22 +492,18 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 case .success(let results):
                     self.displayStatus = false
                     
-                    // check for canceling request if cancel button pressed but request in not loaded yet
-                    if text == self.searchQuery {
+                    // replaced reloadData with insertRows to remove flickering
+                    let startIndex = self.searchResultsTV.count
+                    self.searchResultsTV.append(contentsOf: results)
+                    let endIndex = self.searchResultsTV.count
+                    
+                    let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+                    
+                    DispatchQueue.main.async {
                         
-                        // replaced reloadData with insertRows to remove flickering
-                        let startIndex = self.searchResultsTV.count
-                        self.searchResultsTV.append(contentsOf: results)
-                        let endIndex = self.searchResultsTV.count
-                        
-                        let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
- 
-                        DispatchQueue.main.async {
-                            
-                            self.searchTableView.beginUpdates()
-                            self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
-                            self.searchTableView.endUpdates()
-                        }
+                        self.searchTableView.beginUpdates()
+                        self.searchTableView.insertRows(at: indexPathsToReload, with: .automatic)
+                        self.searchTableView.endUpdates()
                     }
                     
                 case .failure(let error):
@@ -538,41 +526,24 @@ extension SearchViewController: UISearchResultsUpdating {
         
         guard let text = searchController.searchBar.text else { return }
         
-        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        
-        // check to ensure that search results won't be reupdated only by click on search field, if text or the last search scope hasn't been changed
-        guard text != searchQuery || selectedIndex != lastSearchScope else { return }
-        
         let textWithoutBlankSpaces = text.replacingOccurrences(of: " ", with: "")
         
-        guard textWithoutBlankSpaces.count > 2 else {
-            // check to update searchTableView to empty state if user is deleting search text with delete button
-            if text.count < searchQuery?.count ?? 0 {
-                searchQuery = nil
-                searchResultsMovie = []
-                searchResultsTV = []
-                searchTableView.reloadData()
-            }
-            return
-        }
+        guard textWithoutBlankSpaces.count > 0 else { return }
         
         guard displayStatus == false else { return }
         
         // check to start searching from 1st page for every new text
-        if pageCount > 1  {
-            pageCount = 1
-        }
-        
-        searchQuery = text
+        if pageCount > 1  { pageCount = 1 }
         
         let searchText = text.replacingOccurrences(of: " ", with: "%20")
+        
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
             
         case 0:
             
             displayStatus = true
-            if lastSearchScope != 0 { lastSearchScope = 0 }
             
             DataManager.shared.searchMovie(with: searchText, page: pageCount) { [weak self] result in
                 guard let self else { return }
@@ -582,23 +553,20 @@ extension SearchViewController: UISearchResultsUpdating {
                 case .success(let results):
                     self.displayStatus = false
                     
-                    // check to cancel request if cancel button pressed and request in not loaded yet
-                    if text == self.searchQuery {
-                        self.searchResultsMovie = results
-                        
-                        DispatchQueue.main.async {
-                            self.searchTableView.reloadData()
-                            self.searchTableView.layoutIfNeeded()
-                            self.searchTableView.setContentOffset(CGPoint.zero, animated: false)
-                        }
-                        
-                        if results.isEmpty {
-                            self.noSearchResultsView.isHidden = false
-                            self.searchTableView.isUserInteractionEnabled = false
-                        } else {
-                            self.noSearchResultsView.isHidden = true
-                            self.searchTableView.isUserInteractionEnabled = true
-                        }
+                    self.searchResultsMovie = results
+                    
+                    DispatchQueue.main.async {
+                        self.searchTableView.reloadData()
+                        self.searchTableView.layoutIfNeeded()
+                        self.searchTableView.setContentOffset(CGPoint.zero, animated: false)
+                    }
+                    
+                    if results.isEmpty {
+                        self.noSearchResultsView.isHidden = false
+                        self.searchTableView.isUserInteractionEnabled = false
+                    } else {
+                        self.noSearchResultsView.isHidden = true
+                        self.searchTableView.isUserInteractionEnabled = true
                     }
                     
                 case .failure(let error):
@@ -610,7 +578,6 @@ extension SearchViewController: UISearchResultsUpdating {
         case 1:
             
             displayStatus = true
-            if lastSearchScope != 1 { lastSearchScope = 1 }
             
             DataManager.shared.searchTV(with: searchText, page: pageCount) { [weak self] result in
                 guard let self else { return }
@@ -620,21 +587,18 @@ extension SearchViewController: UISearchResultsUpdating {
                 case .success(let results):
                     self.displayStatus = false
                     
-                    // check to cancel request if cancel button pressed and request in not loaded yet
-                    if text == self.searchQuery {
-                        self.searchResultsTV = results
-                        
-                        DispatchQueue.main.async {
-                            self.searchTableView.reloadData()
-                        }
-                        
-                        if results.isEmpty {
-                            self.noSearchResultsView.isHidden = false
-                            self.searchTableView.isUserInteractionEnabled = false
-                        } else {
-                            self.noSearchResultsView.isHidden = true
-                            self.searchTableView.isUserInteractionEnabled = true
-                        }
+                    self.searchResultsTV = results
+                    
+                    DispatchQueue.main.async {
+                        self.searchTableView.reloadData()
+                    }
+                    
+                    if results.isEmpty {
+                        self.noSearchResultsView.isHidden = false
+                        self.searchTableView.isUserInteractionEnabled = false
+                    } else {
+                        self.noSearchResultsView.isHidden = true
+                        self.searchTableView.isUserInteractionEnabled = true
                     }
                     
                 case .failure(let error):
@@ -660,33 +624,38 @@ extension SearchViewController: UISearchBarDelegate {
             searchController.searchBar.placeholder = "TV Shows"
         }
         
+        DataManager.shared.cancelAllTasks()
+        displayStatus = false
+        
+        searchResultsMovie = []
+        searchResultsTV = []
         pageCount = 1
         
         let topOffset = CGPoint(x: 0, y: -searchTableView.contentInset.top)
         searchTableView.setContentOffset(topOffset, animated: true)
         
-        searchTableView.reloadData()
-        
-        updateSearchResults(for: searchController)
-        
         DispatchQueue.main.async {
             self.searchTableView.reloadData()
+            self.searchTableView.layoutIfNeeded()
         }
     }
     
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
-        searchQuery = nil
+        DataManager.shared.cancelAllTasks()
+        
         searchResultsMovie = []
         searchResultsTV = []
         pageCount = 1
         
-        self.searchTableView.reloadData()
-        self.searchTableView.layoutIfNeeded()
-        
         searchTableView.isUserInteractionEnabled = true
         noSearchResultsView.isHidden = true
+        
+        DispatchQueue.main.async {
+            self.searchTableView.reloadData()
+            self.searchTableView.layoutIfNeeded()
+        }
     }
     
     
@@ -740,16 +709,19 @@ extension SearchViewController: UISearchBarDelegate {
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         
-        searchQuery = nil
+        DataManager.shared.cancelAllTasks()
+        
         searchResultsMovie = []
         searchResultsTV = []
         pageCount = 1
         
-        searchTableView.reloadData()
-        searchTableView.layoutIfNeeded()
-        
         searchTableView.isUserInteractionEnabled = true
         noSearchResultsView.isHidden = true
+        
+        DispatchQueue.main.async {
+            self.searchTableView.reloadData()
+            self.searchTableView.layoutIfNeeded()
+        }
         
         return true
     }
