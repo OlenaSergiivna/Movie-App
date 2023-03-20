@@ -63,7 +63,7 @@ struct DataManager {
         movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
             do {
                 let data = try response.result.get()
-                completion(data.results, data.totalPages)
+                completion(data.movies, data.totalPages)
             } catch {
                 print(error.localizedDescription)
             }
@@ -85,7 +85,7 @@ struct DataManager {
         tvByGenreRequest.responseDecodable(of: ResultsTV.self) { response in
             do {
                 let data = try response.result.get()
-                completion(data.results, data.totalPages)
+                completion(data.tvShows, data.totalPages)
             } catch {
                 print(error.localizedDescription)
             }
@@ -118,7 +118,7 @@ struct DataManager {
                 do {
                     let data = try response.result.get()
                     let totalPages = data.totalPages
-                    completion(true, totalPages, data.results, nil, nil)
+                    completion(true, totalPages, data.movies, nil, nil)
                 } catch {
                     
                     let error = response.error
@@ -176,7 +176,7 @@ struct DataManager {
                 do {
                     let data = try response.result.get()
                     let totalPages = data.totalPages
-                    completion(true, totalPages, data.results, nil, nil)
+                    completion(true, totalPages, data.tvShows, nil, nil)
                 } catch {
                     
                     let error = response.error
@@ -268,7 +268,7 @@ struct DataManager {
     
     // MARK: - Search TV Shows by text request
     
-    func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<[TVModel], Error>) -> Void) {
+    func searchTV(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<ResultsTV, Error>) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/tv?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
@@ -277,7 +277,7 @@ struct DataManager {
             switch response.result {
                 
             case .success(let data):
-                completion(.success(data.results))
+                completion(.success(data))
                 
             case .failure(let error):
                 completion(.failure(error))
@@ -288,7 +288,7 @@ struct DataManager {
     
     // MARK: - Search movies by text request
     
-    func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<[MovieModel], Error>) -> Void) {
+    func searchMovie(with text: String, page: Int, adult: Bool = false, completion: @escaping(Result<ResultsMovie, Error>) -> Void) {
         
         let searchRequest = AF.request("https://api.themoviedb.org/3/search/movie?api_key=\(Globals.apiKey)&language=en-US&query=\(text)&page=\(page)&include_adult=\(adult)", method: .get)
         
@@ -297,7 +297,7 @@ struct DataManager {
             switch response.result {
                 
             case .success(let data):
-                completion(.success(data.results))
+                completion(.success(data))
                 
             case .failure(let error):
                 completion(.failure(error))
@@ -426,7 +426,7 @@ struct DataManager {
             switch response.result {
                 
             case .success(let data):
-                completion(.success(data.results))
+                completion(.success(data.movies))
                 
             case .failure(let error):
                 completion(.failure(error))
@@ -444,7 +444,7 @@ struct DataManager {
             switch response.result {
                 
             case .success(let data):
-                completion(.success(data.results))
+                completion(.success(data.tvShows))
                 
             case .failure(let error):
                 completion(.failure(error))
