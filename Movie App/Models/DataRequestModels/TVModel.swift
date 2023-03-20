@@ -9,11 +9,12 @@ import Foundation
 
 struct ResultsTV: Codable {
     let page: Int
-    let results: [TVModel]
+    let tvShows: [TVModel]
     let totalPages, totalResults: Int
     
     enum CodingKeys: String, CodingKey {
-        case page, results
+        case page
+        case tvShows = "results"
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }

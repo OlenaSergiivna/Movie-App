@@ -38,6 +38,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         searchTableView.layoutMargins = .zero
         searchTableView.keyboardDismissMode = .onDrag
         searchTableView.delegate = self
+        searchTableView.sectionHeaderTopPadding = 0
         
         configureUI()
         
@@ -52,7 +53,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
         
         
         // Decode data from UserDefaults and set as previous search requests
-        
         if let movie = UserDefaults.standard.object(forKey: "searchResults") as? Data {
             let decoder = JSONDecoder()
             do {
@@ -153,20 +153,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if !searchResultsMovie.isEmpty {
                 return searchResultsMovie.count
-            } else if !previousSearchRequests.isEmpty {
-                return previousSearchRequests.count
             } else {
-                return 0
+                return previousSearchRequests.count
             }
             
         case 1:
             
             if !searchResultsTV.isEmpty {
                 return searchResultsTV.count
-            } else if !previousSearchRequests.isEmpty {
-                return previousSearchRequests.count
             } else {
-                return 0
+                return previousSearchRequests.count
             }
             
         default:
@@ -177,26 +173,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
-        
-        switch selectedIndex {
-            
-        case 0:
-            if previousSearchRequests.isEmpty || !searchResultsMovie.isEmpty {
-                return 0
-            } else {
-                return 30
-            }
-            
-        case 1:
-            if previousSearchRequests.isEmpty || !searchResultsTV.isEmpty {
-                return 0
-            } else {
-                return 30
-            }
-            
-        default:
+        if previousSearchRequests.isEmpty || !searchResultsMovie.isEmpty || !searchResultsTV.isEmpty{
             return 0
+        } else {
+            return 30
         }
     }
     
@@ -276,18 +256,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configureMovie(with: searchResultsMovie[indexPath.row])
                 return cell
                 
-            } else if !previousSearchRequests.isEmpty {
+            } else {
                 
                 guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
                     return UITableViewCell()
                 }
                 
                 cell.configureRequest(with: previousSearchRequests[indexPath.row])
-                return cell
-                
-            } else {
-                let cell = UITableViewCell()
-                cell.backgroundColor = .black
                 return cell
             }
             
@@ -302,19 +277,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configureTV(with: searchResultsTV[indexPath.row])
                 return cell
                 
-            } else if !previousSearchRequests.isEmpty {
+            } else {
                 
                 guard let cell = searchTableView.dequeueReusableCell(withIdentifier: "PreviousRequestsTableViewCell", for: indexPath) as? PreviousRequestsTableViewCell else {
                     return UITableViewCell()
                 }
                 
                 cell.configureRequest(with: previousSearchRequests[indexPath.row])
-                
-                return cell
-                
-            } else {
-                let cell = UITableViewCell()
-                cell.backgroundColor = .black
                 return cell
             }
             
@@ -456,7 +425,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     // replaced reloadData with insertRows to remove flickering
                     let startIndex = self.searchResultsMovie.count
-                    self.searchResultsMovie.append(contentsOf: results)
+                    self.searchResultsMovie.append(contentsOf: results.movies)
                     let endIndex = self.searchResultsMovie.count
                     
                     let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
@@ -494,7 +463,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     
                     // replaced reloadData with insertRows to remove flickering
                     let startIndex = self.searchResultsTV.count
-                    self.searchResultsTV.append(contentsOf: results)
+                    self.searchResultsTV.append(contentsOf: results.tvShows)
                     let endIndex = self.searchResultsTV.count
                     
                     let indexPathsToReload = (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
@@ -552,16 +521,18 @@ extension SearchViewController: UISearchResultsUpdating {
                     
                 case .success(let results):
                     self.displayStatus = false
+                    self.totalPagesCount = results.totalPages
                     
-                    self.searchResultsMovie = results
+                    self.searchResultsMovie = results.movies
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
                         self.searchTableView.layoutIfNeeded()
-                        self.searchTableView.setContentOffset(CGPoint.zero, animated: false)
+                        
+                        self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                     }
                     
-                    if results.isEmpty {
+                    if results.movies.isEmpty {
                         self.noSearchResultsView.isHidden = false
                         self.searchTableView.isUserInteractionEnabled = false
                     } else {
@@ -586,14 +557,18 @@ extension SearchViewController: UISearchResultsUpdating {
                     
                 case .success(let results):
                     self.displayStatus = false
+                    self.totalPagesCount = results.totalPages
                     
-                    self.searchResultsTV = results
+                    self.searchResultsTV = results.tvShows
                     
                     DispatchQueue.main.async {
                         self.searchTableView.reloadData()
+                        self.searchTableView.layoutIfNeeded()
+                        
+                        self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                     }
                     
-                    if results.isEmpty {
+                    if results.tvShows.isEmpty {
                         self.noSearchResultsView.isHidden = false
                         self.searchTableView.isUserInteractionEnabled = false
                     } else {
@@ -618,21 +593,18 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         
-        if selectedScope == 0 {
-            searchController.searchBar.placeholder = "Movie"
-        } else if selectedScope == 1 {
-            searchController.searchBar.placeholder = "TV Shows"
-        }
-        
         DataManager.shared.cancelAllTasks()
         displayStatus = false
         
-        searchResultsMovie = []
-        searchResultsTV = []
-        pageCount = 1
+        if selectedScope == 0 {
+            searchResultsMovie = []
+            searchController.searchBar.placeholder = "Movie"
+        } else if selectedScope == 1 {
+            searchResultsTV = []
+            searchController.searchBar.placeholder = "TV Shows"
+        }
         
-        let topOffset = CGPoint(x: 0, y: -searchTableView.contentInset.top)
-        searchTableView.setContentOffset(topOffset, animated: true)
+        pageCount = 1
         
         DispatchQueue.main.async {
             self.searchTableView.reloadData()
