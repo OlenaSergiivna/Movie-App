@@ -23,6 +23,7 @@
 		CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064928E0F1B100B67410 /* NetworkManager.swift */; };
 		CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064B28E0F38D00B67410 /* TokenModel.swift */; };
 		CE1437F228F38911002A7FBB /* TVModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1437F128F38911002A7FBB /* TVModel.swift */; };
+		CE162EDF29CA0DA900D69CBC /* HeartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE162EDE29CA0DA900D69CBC /* HeartButton.swift */; };
 		CE169E4828EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE169E4628EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift */; };
 		CE169E4928EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE169E4728EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib */; };
 		CE170BDA28E10CC9001323E4 /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE170BD928E10CC9001323E4 /* SessionModel.swift */; };
@@ -124,6 +125,7 @@
 		CE14064928E0F1B100B67410 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CE14064B28E0F38D00B67410 /* TokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
 		CE1437F128F38911002A7FBB /* TVModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVModel.swift; sourceTree = "<group>"; };
+		CE162EDE29CA0DA900D69CBC /* HeartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartButton.swift; sourceTree = "<group>"; };
 		CE169E4628EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE169E4728EE34AF00FF9FB0 /* FavouritesCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouritesCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE170BD928E10CC9001323E4 /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				CEC003B528F780A5005B8B4E /* String+ isBlank.swift */,
 				CE81D89E28FC895700D667A8 /* UIViewController+ add+removeChildView.swift */,
 				CEBAACDD29BE34A40030C6B6 /* UILabel+ PaddingLabel.swift */,
+				CE162EDE29CA0DA900D69CBC /* HeartButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */,
 				CE0B873E28E4DCCA005CBA8A /* GenresModels.swift in Sources */,
 				CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */,
+				CE162EDF29CA0DA900D69CBC /* HeartButton.swift in Sources */,
 				CEA6DAE8294A488D00A4416F /* UserDefaultsManager.swift in Sources */,
 				CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */,
 				CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */,
