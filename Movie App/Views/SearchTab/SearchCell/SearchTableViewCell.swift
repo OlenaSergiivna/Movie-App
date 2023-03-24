@@ -27,6 +27,8 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var episodesCountLabel: PaddingLabel!
     
+    @IBOutlet weak var seasonsCountLabel: PaddingLabel!
+    
     @IBOutlet weak var backLabel: UILabel!
     
     @IBOutlet weak var firstStackView: UIStackView!
@@ -219,7 +221,7 @@ class SearchTableViewCell: UITableViewCell {
             }
             
             
-            if !self.ratingLabel.isHidden || !self.runtimeLabel.isHidden || !self.episodesCountLabel.isHidden {
+            if !self.ratingLabel.isHidden || !self.runtimeLabel.isHidden || !self.episodesCountLabel.isHidden || !self.seasonsCountLabel.isHidden {
                 self.secondStackView.isHidden = false
             }
             
@@ -298,6 +300,21 @@ class SearchTableViewCell: UITableViewCell {
                 if details.numberOfEpisodes > 0 {
                     self.episodesCountLabel.isHidden = false
                     self.episodesCountLabel.applyPadding()
+                }
+                
+                var seasonsString = "\(String(details.numberOfSeasons))"
+                
+                if details.numberOfSeasons > 1 {
+                    seasonsString += " seasons"
+                } else {
+                    seasonsString += " season"
+                }
+                
+                self.seasonsCountLabel.text = seasonsString
+                
+                if details.numberOfSeasons > 0 {
+                    self.seasonsCountLabel.isHidden = false
+                    self.seasonsCountLabel.applyPadding()
                 }
                 
                 completion()

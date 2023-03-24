@@ -90,7 +90,7 @@
                                 <rect key="frame" x="106" y="84.666666666666671" width="260" height="23"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ghF-VU-Wge" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="47" height="23"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="33.333333333333336" height="23"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -108,7 +108,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2h 39m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wMm-dt-3fd" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
-                                        <rect key="frame" x="48.999999999999993" y="0.0" width="85.333333333333314" height="23"/>
+                                        <rect key="frame" x="35.333333333333343" y="0.0" width="60.333333333333343" height="23"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -126,7 +126,25 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="d5X-oH-j1W" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
-                                        <rect key="frame" x="136.33333333333334" y="0.0" width="123.66666666666666" height="23"/>
+                                        <rect key="frame" x="97.666666666666657" y="0.0" width="87.333333333333343" height="23"/>
+                                        <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 seasons" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Dk-TT-Tum" customClass="PaddingLabel" customModule="Movie_App" customModuleProvider="target">
+                                        <rect key="frame" x="187" y="0.0" width="73" height="23"/>
                                         <color key="backgroundColor" red="0.1529411765" green="0.1529411765" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -193,17 +211,22 @@
                 <outlet property="ratingLabel" destination="ghF-VU-Wge" id="rpa-VA-0R1"/>
                 <outlet property="releaseYearLabel" destination="uIp-A7-Bt3" id="gvg-Ec-270"/>
                 <outlet property="runtimeLabel" destination="wMm-dt-3fd" id="tuP-FO-NaG"/>
+                <outlet property="seasonsCountLabel" destination="6Dk-TT-Tum" id="9oo-T8-a7l"/>
                 <outlet property="secondStackView" destination="dD6-Ba-KoE" id="Ld5-cJ-0UH"/>
                 <outletCollection property="mediaLabelsCollection" destination="uIp-A7-Bt3" collectionClass="NSMutableArray" id="1ZJ-lh-xOI"/>
                 <outletCollection property="mediaLabelsCollection" destination="KfU-AY-l83" collectionClass="NSMutableArray" id="oQB-fj-s27"/>
                 <outletCollection property="mediaLabelsCollection" destination="ghF-VU-Wge" collectionClass="NSMutableArray" id="LoM-wx-SX6"/>
                 <outletCollection property="mediaLabelsCollection" destination="wMm-dt-3fd" collectionClass="NSMutableArray" id="mqz-eh-ZDr"/>
                 <outletCollection property="mediaLabelsCollection" destination="d5X-oH-j1W" collectionClass="NSMutableArray" id="7Kw-yl-waY"/>
+                <outletCollection property="mediaLabelsCollection" destination="6Dk-TT-Tum" collectionClass="NSMutableArray" id="ttu-xl-Jbr"/>
             </connections>
             <point key="canvasLocation" x="104.61538461538461" y="71.800947867298575"/>
         </tableViewCell>
     </objects>
     <designables>
+        <designable name="6Dk-TT-Tum">
+            <size key="intrinsicContentSize" width="106" height="23"/>
+        </designable>
         <designable name="KfU-AY-l83">
             <size key="intrinsicContentSize" width="88" height="23"/>
         </designable>
