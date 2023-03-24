@@ -27,7 +27,7 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet private weak var mediaOverview: UILabel!
     
-    @IBOutlet private weak var favoritesButton: UIButton!
+    @IBOutlet private weak var favoritesButton: HeartButton!
     
     @IBOutlet private weak var mainScrollView: UIScrollView!
     
@@ -147,6 +147,10 @@ class DetailsScreenViewController: UIViewController {
         setUpcollectionView()
         configureCompositionalLayout()
         
+        if !isGuestSession {
+            favoritesButton.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .darkClouds), animation: nil, transition: .crossDissolve(0.25))
+        }
+        
         detailsScreenCollectionView.prepareSkeleton { (done) in
             self.detailsScreenCollectionView.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: .darkClouds), animation: nil, transition: .crossDissolve(0.25))
         }
@@ -230,30 +234,48 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    private func configureFavButtonForMovie(_ data: MovieModel) {
-        
-        // MARK: - Request favorite movies list, check if movie is already in favorites list & set isFavorite property
+    private func configureFavButtonForMovie(_ data: MovieModel, completion: (()-> Void)? = nil) {
         
         guard !isGuestSession else { return }
         
+        // MARK: - Request favorite movies list, check if movie is already in the favorites list. Get total favorite movies pages count.
         DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
-            guard let self, let favorites else { return }
-            
-            if favorites.contains(where: { $0.id == data.id }) {
-                self.isFavorite = true
+            guard let self, let favorites, totalPages > 0 else {
+                completion?()
                 return
             }
             
-            guard totalPages > 1 else { return }
+            if favorites.contains(where: { $0.id == data.id }) {
+                self.isFavorite = true
+                completion?()
+                return
+            }
+            
+            // MARK: - If the movie wasn't found on the 1st page and total pages > 1, request all pages and check if the movie is in the favorites list
+            guard totalPages > 1 else {
+                completion?()
+                return
+            }
+            
+            var requestCompleted = 1
             
             for page in 2...totalPages {
                 
                 DataManager.shared.requestFavoriteMovies(page: page) { [weak self] success, _, favorites, _, _ in
-                    guard let self, let favorites else { return }
+                    guard let self, let favorites else {
+                        completion?()
+                        return
+                    }
                     
                     if favorites.contains(where: { $0.id == data.id }) {
                         self.isFavorite = true
+                        completion?()
                         return
+                    }
+                    
+                    requestCompleted += 1
+                    if requestCompleted == totalPages {
+                        completion?()
                     }
                 }
             }
@@ -261,29 +283,48 @@ class DetailsScreenViewController: UIViewController {
     }
     
     
-    private func configureFavButtonForTVShow(_ data: TVModel) {
-        // MARK: - Request favorite tv shows list, check if tv show is already in favorites list & set isFavorite property
+    private func configureFavButtonForTVShow(_ data: TVModel, completion: (()-> Void)? = nil) {
         
         guard !isGuestSession else { return }
         
+        // MARK: - Request favorite tv shows list, check if tv show is already in the favorites list. Get total favorite tv shows pages count.
         DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
-            guard let self, let favorites else { return }
-            
-            if favorites.contains(where: { $0.id == data.id }) {
-                self.isFavorite = true
+            guard let self, let favorites, totalPages > 0 else {
+                completion?()
                 return
             }
             
-            guard totalPages > 1 else { return }
+            if favorites.contains(where: { $0.id == data.id }) {
+                self.isFavorite = true
+                completion?()
+                return
+            }
+            
+            // MARK: - If the tv show wasn't found on the 1st page and total pages > 1, request all pages and check if the tv show is in the favorites list
+            guard totalPages > 1 else {
+                completion?()
+                return
+            }
+            
+            var requestCompleted = 1
             
             for page in 2...totalPages {
                 
                 DataManager.shared.requestFavoriteTVShows(page: page) { [weak self] success, _, favorites, _, _ in
-                    guard let self, let favorites else { return }
+                    guard let self, let favorites else {
+                        completion?()
+                        return
+                    }
                     
                     if favorites.contains(where: { $0.id == data.id }) {
                         self.isFavorite = true
+                        completion?()
                         return
+                    }
+                    
+                    requestCompleted += 1
+                    if requestCompleted == totalPages {
+                        completion?()
                     }
                 }
             }
@@ -327,7 +368,10 @@ class DetailsScreenViewController: UIViewController {
         
         mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
-        configureFavButtonForMovie(movie)
+        configureFavButtonForMovie(movie) {
+            self.favoritesButton.stopSkeletonAnimation()
+            self.favoritesButton.hideSkeleton(reloadDataAfter: false, transition: .crossDissolve(0.25))
+        }
         
         // MARK: Configuring movie image
         
@@ -365,7 +409,7 @@ class DetailsScreenViewController: UIViewController {
             self.changeHeight()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.detailsScreenCollectionView.stopSkeletonAnimation()
-                self.view.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+                self.detailsScreenCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
             }
         }
     }
@@ -407,7 +451,10 @@ class DetailsScreenViewController: UIViewController {
         
         mediaGenres.text = String("\(yearGenresString)".dropLast(2))
         
-        configureFavButtonForTVShow(tvShow)
+        configureFavButtonForTVShow(tvShow) {
+            self.favoritesButton.stopSkeletonAnimation()
+            self.favoritesButton.hideSkeleton(reloadDataAfter: false, transition: .crossDissolve(0.25))
+        }
         
         // MARK: Configuring tv image
         
@@ -443,13 +490,13 @@ class DetailsScreenViewController: UIViewController {
             self.changeHeight()
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.detailsScreenCollectionView.stopSkeletonAnimation()
-                self.view.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+                self.detailsScreenCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
             }
         }
     }
     
     
-    @IBAction func favoritesButtonPressed(_ sender: UIButton) {
+    @IBAction func favoritesButtonPressed(_ sender: HeartButton) {
         
         if isFavorite {
             favoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
