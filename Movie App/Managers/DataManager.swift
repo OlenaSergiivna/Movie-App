@@ -418,8 +418,7 @@ struct DataManager {
     
     
     func getSimilarMovies(movieId: Int, completion: @escaping (Result<[MovieModel], Error>) -> Void) {
-        
-        let similarMoviesRequest = AF.request("https://api.themoviedb.org/3/movie/\(movieId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        let similarMoviesRequest = AF.request("https://api.themoviedb.org/3/movie/\(movieId)/recommendations?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarMoviesRequest.responseDecodable(of: ResultsMovie.self ) { response in
             
@@ -437,7 +436,7 @@ struct DataManager {
     
     func getSimilarTVShows(mediaId: Int, completion: @escaping (Result<[TVModel], Error>) -> Void) {
         
-        let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/similar?api_key=\(Globals.apiKey)&language=en-US", method: .get)
+        let similarTVShowsRequest = AF.request("https://api.themoviedb.org/3/tv/\(mediaId)/recommendations?api_key=\(Globals.apiKey)&language=en-US", method: .get)
         
         similarTVShowsRequest.responseDecodable(of: ResultsTV.self ) { response in
             

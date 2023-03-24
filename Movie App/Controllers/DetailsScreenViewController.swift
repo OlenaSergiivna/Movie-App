@@ -616,8 +616,12 @@ class DetailsScreenViewController: UIViewController {
                         completion()
                         return
                     }
-                    
-                    movies.forEach({self.similarArray.append(.movie($0))})
+                    movies.forEach { movie in
+                        guard let backdropPath = movie.backdropPath, !backdropPath.isEmpty else {
+                            return
+                        }
+                        self.similarArray.append(.movie(movie))
+                    }
                     
                     DispatchQueue.main.async {
                         self.detailsScreenCollectionView.reloadData()
@@ -645,7 +649,12 @@ class DetailsScreenViewController: UIViewController {
                         return
                     }
                     
-                    tvShows.forEach({self.similarArray.append(.tvShow($0))})
+                    tvShows.forEach { tvShow in
+                        guard let backdropPath = tvShow.backdropPath, !backdropPath.isEmpty else {
+                            return
+                        }
+                        self.similarArray.append(.tvShow(tvShow))
+                    }
                     
                     DispatchQueue.main.async {
                         self.detailsScreenCollectionView.reloadData()
