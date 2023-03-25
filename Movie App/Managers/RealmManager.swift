@@ -77,7 +77,7 @@ struct RealmManager {
             movieRealm.voteCount = movie.voteCount
             
             try? realm.write {
-                realm.add(movieRealm, update: .all)
+                realm.add(movieRealm, update: .modified)
                 
             }
         }
@@ -107,7 +107,7 @@ struct RealmManager {
             tvRealm.voteCount = tv.voteCount
             
             try? realm.write {
-                realm.add(tvRealm, update: .all)
+                realm.add(tvRealm, update: .modified)
                 
             }
         }
