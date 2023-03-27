@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Swinject
 
 class MovieViewController: UIViewController {
     
@@ -16,6 +17,8 @@ class MovieViewController: UIViewController {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var movieTableView: UITableView!
+    
+    @Injected private var detailsService: DetailsServiceProtocol
     
     var tappedCell: MovieModel!
     
@@ -127,6 +130,6 @@ extension MovieViewController: MovieCollectionViewCellDelegate {
         let cells = didTappedInTableViewCell.moviesArray
         self.tappedCell = cells[index]
         
-        DetailsService.shared.openDetailsScreen(with: tappedCell, viewController: self)
+       detailsService.openDetailsScreen(with: tappedCell, viewController: self)
     }
 }

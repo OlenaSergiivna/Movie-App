@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Swinject
 
 class MainViewController: UIViewController {
     
@@ -28,6 +29,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var logOutButton: UIButton!
     
     @IBOutlet weak var userDataView: UIView!
+    
+    @Injected private var detailsService: DetailsServiceProtocol
     
     var moviesArray: [MovieModel] = []
     
@@ -575,20 +578,20 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
         switch indexPath.section {
             
         case 0:
-            DetailsService.shared.openDetailsScreen(with: trendyMediaArray[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: trendyMediaArray[indexPath.row], viewController: self)
             scrollTimer.invalidate()
             
         case 1:
-            DetailsService.shared.openDetailsScreen(with: moviesArray[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: moviesArray[indexPath.row], viewController: self)
             scrollTimer.invalidate()
             
         case 2:
-            DetailsService.shared.openDetailsScreen(with: tvArray[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: tvArray[indexPath.row], viewController: self)
             scrollTimer.invalidate()
             
             
         default:
-            DetailsService.shared.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: nowPlayingMoviesArray[indexPath.row], viewController: self)
             scrollTimer.invalidate()
         }
     }

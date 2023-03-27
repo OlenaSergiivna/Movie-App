@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Swinject
 
 class TVViewController: UIViewController {
     
@@ -17,6 +18,8 @@ class TVViewController: UIViewController {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var tvTableView: UITableView!
+    
+    @Injected private var detailsService: DetailsServiceProtocol
     
     var tappedCell: TVModel!
     
@@ -121,6 +124,6 @@ extension TVViewController: TVCollectionViewCellDelegate {
         let cells = didTappedInTableViewCell.tvArray
         tappedCell = cells[index]
         
-        DetailsService.shared.openDetailsScreen(with: tappedCell, viewController: self)
+       detailsService.openDetailsScreen(with: tappedCell, viewController: self)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Swinject
 
 class SearchViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,6 +19,8 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     @IBOutlet weak var noSearchResultsView: UIView!
+    
+    @Injected private var detailsService: DetailsServiceProtocol
     
     private var searchResultsTV: [TVModel] = []
     
@@ -345,12 +348,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if cell is PreviousRequestsTableViewCell {
                 
-                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
+               detailsService.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
                 
             } else if cell is SearchTableViewCell {
                 
-                DetailsService.shared.openDetailsScreen(with: searchResultsMovie[indexPath.row], viewController: self)
+                detailsService.openDetailsScreen(with: searchResultsMovie[indexPath.row], viewController: self)
                 
                 if let containingIndex = previousSearchRequests.firstIndex(of: .movie(searchResultsMovie[indexPath.row])) {
                     
@@ -370,12 +373,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             
             if cell is PreviousRequestsTableViewCell {
                 
-                DetailsService.shared.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
+                detailsService.openDetailsScreen(with: previousSearchRequests[indexPath.row], viewController: self)
                 
                 
             } else if cell is SearchTableViewCell {
                 
-                DetailsService.shared.openDetailsScreen(with: searchResultsTV[indexPath.row], viewController: self)
+                detailsService.openDetailsScreen(with: searchResultsTV[indexPath.row], viewController: self)
                 
                 if let containingIndex = previousSearchRequests.firstIndex(of: .tvShow(searchResultsTV[indexPath.row])) {
                     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Swinject
 
 class FavouritesViewController: UIViewController {
     
@@ -20,6 +21,8 @@ class FavouritesViewController: UIViewController {
     @IBOutlet weak var favoritesSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var coverViewForGuestSession: UIView!
+    
+    @Injected private var detailsService: DetailsServiceProtocol
     
     var viewModel = FavouritesViewControllerViewModel()
     
@@ -316,10 +319,10 @@ extension FavouritesViewController: UICollectionViewDelegate {
         switch selectedIndex {
             
         case 0:
-            DetailsService.shared.openDetailsScreen(with: favoriteMovies[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: favoriteMovies[indexPath.row], viewController: self)
             
         case 1:
-            DetailsService.shared.openDetailsScreen(with: favoriteTVShows[indexPath.row], viewController: self)
+            detailsService.openDetailsScreen(with: favoriteTVShows[indexPath.row], viewController: self)
             
         default:
             return
