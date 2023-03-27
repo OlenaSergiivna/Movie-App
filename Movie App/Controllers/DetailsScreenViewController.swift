@@ -8,6 +8,7 @@
 import UIKit
 import youtube_ios_player_helper
 import SkeletonView
+import Swinject
 
 class DetailsScreenViewController: UIViewController {
     
@@ -52,6 +53,10 @@ class DetailsScreenViewController: UIViewController {
     private var trailersArray: [TrailerModel] = []
     
     private let isGuestSession = UserDefaults.standard.bool(forKey: "isguestsession")
+    
+    @Injected private var detailsService: DetailsServiceProtocol
+    
+    var isSecondaryScreen: Bool = false
     
     @IBOutlet private weak var collectionHeightConstraint: NSLayoutConstraint!
     
@@ -601,6 +606,12 @@ class DetailsScreenViewController: UIViewController {
     
     
     private func configureSimilarMedia<T>(_ media: T, completion: @escaping() -> Void) {
+
+        guard isSecondaryScreen == false else {
+            detailsScreenLayouts.isSimilarMediaEmpty = true
+            completion()
+            return
+        }
         
         if let media = media as? MovieModel {
             
@@ -687,7 +698,7 @@ extension DetailsScreenViewController: YTPlayerViewDelegate {
 }
 
 
-extension DetailsScreenViewController: SkeletonCollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension DetailsScreenViewController: SkeletonCollectionViewDataSource {
     
     // MARK: Setup for SkeletonView
     
@@ -807,6 +818,26 @@ extension DetailsScreenViewController: SkeletonCollectionViewDataSource, UIColle
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SimilarHeaderView.headerIdentifier, for: indexPath) as? SimilarHeaderView else { return UICollectionReusableView() }
             
             return header
+        }
+    }
+}
+
+
+extension DetailsScreenViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+           
+        case 2:
+
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first, let rootViewController = window.rootViewController else { return }
+            
+            detailsService.isSecondaryScreen = true
+            detailsService.openDetailsScreen(with: similarArray[indexPath.row], viewController: rootViewController.presentedViewController ?? rootViewController)
+            
+        default:
+            return
         }
     }
 }

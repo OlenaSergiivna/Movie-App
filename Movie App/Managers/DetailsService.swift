@@ -7,11 +7,9 @@
 
 import UIKit
 
-struct DetailsService {
+struct DetailsService: DetailsServiceProtocol {
     
-    static let shared = DetailsService()
-    
-    private init() {}
+    var isSecondaryScreen: Bool = false
     
     func openDetailsScreen<T>(with data: T, viewController: UIViewController) {
         
@@ -19,9 +17,10 @@ struct DetailsService {
         guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "DetailsScreenViewController") as? DetailsScreenViewController else { return }
         destinationViewController.loadViewIfNeeded()
         destinationViewController.presentationController?.delegate = viewController as? any UIAdaptivePresentationControllerDelegate
+        
+        if isSecondaryScreen { destinationViewController.isSecondaryScreen = true }
         destinationViewController.configure(with: data) {
-            
-            viewController.navigationController?.present(destinationViewController, animated: true)
+            viewController.present(destinationViewController, animated: true)
             //navigationController?.pushViewController(destinationViewController, animated: true)
         }
     }
