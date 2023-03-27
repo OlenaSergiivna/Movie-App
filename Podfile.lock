@@ -19,7 +19,7 @@ DEPENDENCIES:
   - lottie-ios
   - RealmSwift
   - SkeletonView (~> 1.30.4)
-  - Swinject
+  - Swinject (~> 2.8.3)
   - youtube-ios-player-helper
 
 SPEC REPOS:
@@ -45,6 +45,6 @@ SPEC CHECKSUMS:
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: 057f31176884cf2d15252907187f386adfb909c4
+PODFILE CHECKSUM: a1fc2edce9280506d346cf68f1ea9331c0806b67
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
