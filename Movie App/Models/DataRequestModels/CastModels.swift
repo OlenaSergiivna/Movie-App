@@ -7,13 +7,12 @@
 
 import Foundation
 
-struct CastResults: Codable {
-    let id: Int
-    let cast, crew: [Cast]
+struct ResultsCast: Codable {
+    let cast, crew: [CastModel]
 }
 
 
-struct Cast: Codable {
+struct CastModel: Codable {
     let adult: Bool
     let gender, id: Int
     let knownForDepartment, name, originalName: String

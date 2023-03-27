@@ -9,7 +9,6 @@ import Foundation
 
 
 struct ResultsTrailers: Codable {
-    let id: Int
     let results: [TrailerModel]
 }
 

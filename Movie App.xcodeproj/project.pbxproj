@@ -40,7 +40,6 @@
 		CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3682C028FB3B5E00B4A356 /* TVCollectionViewCell.swift */; };
 		CE3682C328FB3B5E00B4A356 /* TVCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3682C128FB3B5E00B4A356 /* TVCollectionViewCell.xib */; };
 		CE3B0F8E2905BF6100616CF0 /* AnimationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B0F8D2905BF6100616CF0 /* AnimationsService.swift */; };
-		CE3B74A62948B4CF005EFA94 /* ExpandedMediaDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B74A52948B4CF005EFA94 /* ExpandedMediaDetailsModel.swift */; };
 		CE3B74A82949231A005EFA94 /* WatchProvidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B74A72949231A005EFA94 /* WatchProvidersViewController.swift */; };
 		CE3B74AC29492429005EFA94 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B74AA29492429005EFA94 /* ProviderTableViewCell.swift */; };
 		CE3B74AD29492429005EFA94 /* ProviderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3B74AB29492429005EFA94 /* ProviderTableViewCell.xib */; };
@@ -71,7 +70,6 @@
 		CE9F8CA1295E58BF00EEDBDE /* TVDetailedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9F8CA0295E58BF00EEDBDE /* TVDetailedModel.swift */; };
 		CEA6DAE8294A488D00A4416F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA6DAE7294A488D00A4416F /* UserDefaultsManager.swift */; };
 		CEAEDF3C29422EAD0095A9B5 /* ReviewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAEDF3B29422EAD0095A9B5 /* ReviewsHeaderView.swift */; };
-		CEAEDF4129424A230095A9B5 /* ReviewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAEDF4029424A230095A9B5 /* ReviewsModel.swift */; };
 		CEAF651028F462420032DF55 /* FavoriteTVRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */; };
 		CEB1EDCD2946195D0023D0F8 /* TrailerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */; };
 		CEB1EDCF29461DE10023D0F8 /* TrailerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB1EDCE29461DE10023D0F8 /* TrailerHeaderView.swift */; };
@@ -144,7 +142,6 @@
 		CE3682C028FB3B5E00B4A356 /* TVCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE3682C128FB3B5E00B4A356 /* TVCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TVCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE3B0F8D2905BF6100616CF0 /* AnimationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsService.swift; sourceTree = "<group>"; };
-		CE3B74A52948B4CF005EFA94 /* ExpandedMediaDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedMediaDetailsModel.swift; sourceTree = "<group>"; };
 		CE3B74A72949231A005EFA94 /* WatchProvidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProvidersViewController.swift; sourceTree = "<group>"; };
 		CE3B74AA29492429005EFA94 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
 		CE3B74AB29492429005EFA94 /* ProviderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProviderTableViewCell.xib; sourceTree = "<group>"; };
@@ -175,7 +172,6 @@
 		CE9F8CA0295E58BF00EEDBDE /* TVDetailedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVDetailedModel.swift; sourceTree = "<group>"; };
 		CEA6DAE7294A488D00A4416F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		CEAEDF3B29422EAD0095A9B5 /* ReviewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsHeaderView.swift; sourceTree = "<group>"; };
-		CEAEDF4029424A230095A9B5 /* ReviewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsModel.swift; sourceTree = "<group>"; };
 		CEAF650F28F462420032DF55 /* FavoriteTVRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTVRealmModel.swift; sourceTree = "<group>"; };
 		CEB1EDCC2946195D0023D0F8 /* TrailerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerCell.swift; sourceTree = "<group>"; };
 		CEB1EDCE29461DE10023D0F8 /* TrailerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerHeaderView.swift; sourceTree = "<group>"; };
@@ -283,8 +279,6 @@
 				CE6C7780292FFC3500895514 /* MovieDetailedModel.swift */,
 				CE9F8CA0295E58BF00EEDBDE /* TVDetailedModel.swift */,
 				CEBEC239293ECC5200A2AB72 /* ProvidersModel.swift */,
-				CEAEDF4029424A230095A9B5 /* ReviewsModel.swift */,
-				CE3B74A52948B4CF005EFA94 /* ExpandedMediaDetailsModel.swift */,
 			);
 			path = DataRequestModels;
 			sourceTree = "<group>";
@@ -801,11 +795,9 @@
 				CE169E4828EE34AF00FF9FB0 /* FavouritesCollectionViewCell.swift in Sources */,
 				CE2F03BE29073CFB001DFADE /* PopularNowCollectionViewCell.swift in Sources */,
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
-				CEAEDF4129424A230095A9B5 /* ReviewsModel.swift in Sources */,
 				CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */,
 				CEF4F66A28FB0B60000BC6DA /* TVViewController.swift in Sources */,
 				CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */,
-				CE3B74A62948B4CF005EFA94 /* ExpandedMediaDetailsModel.swift in Sources */,
 				CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* FavoritesResponse.swift in Sources */,
 				CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */,

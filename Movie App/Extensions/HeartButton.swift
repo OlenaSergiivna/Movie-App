@@ -40,8 +40,6 @@ class HeartButton: UIButton {
         layer.mask = maskLayer
         
         let scale: CGFloat = 0.8
-        let newSize = CGSize(width: rect.width * scale, height: rect.height * scale)
-        let scaledRect = CGRect(origin: rect.origin, size: newSize)
         layer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))
     }
 }
