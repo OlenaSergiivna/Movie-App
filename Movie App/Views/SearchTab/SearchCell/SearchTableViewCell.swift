@@ -162,7 +162,7 @@ class SearchTableViewCell: UITableViewCell {
                 return
             }
             
-            KingsfisherManager.shared.setImage(profilePath: imagePath, image: self.movieImage, size: "w342", cornerRadius: 5)
+            KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: self.movieImage, size: "w342", cornerRadius: 5)
         }
     }
     
@@ -235,7 +235,7 @@ class SearchTableViewCell: UITableViewCell {
                 return
             }
             
-            KingsfisherManager.shared.setImage(profilePath: imagePath, image: self.movieImage, size: "w342", cornerRadius: 5)
+            KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: self.movieImage, size: "w342", cornerRadius: 5)
         }
     }
     

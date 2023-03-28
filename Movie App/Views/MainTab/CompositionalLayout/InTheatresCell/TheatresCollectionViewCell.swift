@@ -45,6 +45,6 @@ class TheatresCollectionViewCell: UICollectionViewCell {
         
         movieImage.isHidden = false
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w500", cornerRadius: 0)
+        KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: movieImage, size: "w500", cornerRadius: 0)
     }
 }

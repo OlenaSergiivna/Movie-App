@@ -62,7 +62,7 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage)
+        KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: movieImage)
     }
     
     private func configureTVShow(with data: TVModel) {
@@ -77,6 +77,6 @@ class FavouritesCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage)
+        KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: movieImage)
     }
 }

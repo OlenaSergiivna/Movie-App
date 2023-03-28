@@ -132,7 +132,7 @@ class CastCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: profilePath, image: castImage)
+        KingsfisherManager.shared.setImage(imagePath: profilePath, setFor: castImage)
     }
     
     

@@ -57,7 +57,7 @@ struct DataManager {
         guard let genreId = Globals.movieGenres.first(where: { $0.name == genre})?.id else { return }
         
         let movieByGenreURL = "https://api.themoviedb.org/3/discover/movie?api_key=\(Globals.apiKey)&with_genres=\(genreId)&page=\(page)"
-       
+        
         let movieByGenreRequest = AF.request(movieByGenreURL, method: .get)
         
         movieByGenreRequest.responseDecodable(of: ResultsMovie.self) { response in
@@ -452,29 +452,31 @@ struct DataManager {
     }
     
     
-    func getProviders(mediaType: String, mediaID: Int, completion: @escaping(AllCasesType) -> Void) {
+    func getProviders(mediaType: String, mediaID: Int, completion: @escaping(Result<Providers, Error>) -> Void) {
         
         let getProvidersRequest = AF.request("https://api.themoviedb.org/3/\(mediaType)/\(mediaID)/watch/providers?api_key=\(Globals.apiKey)", method: .get)
         
         getProvidersRequest.responseDecodable(of: ResultsProviders.self ) { response in
-            print(response)
-            do {
-                let data = try response.result.get().results
-                guard let data else { return }
-                completion(data.us)
-            } catch {
-                print(error.localizedDescription)
+            
+            switch response.result {
                 
+            case .success(let data):
+                guard let results = data.results?.US else { return }
+                completion(.success(results))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
     
+    
     func cancelAllTasks() {
-
+        
         Alamofire.Session.default.session.getTasksWithCompletionHandler({ dataTasks, uploadTasks, downloadTasks in
-                    dataTasks.forEach { $0.cancel() }
-                    uploadTasks.forEach { $0.cancel() }
-                    downloadTasks.forEach { $0.cancel() }
-                })
+            dataTasks.forEach { $0.cancel() }
+            uploadTasks.forEach { $0.cancel() }
+            downloadTasks.forEach { $0.cancel() }
+        })
     }
 }

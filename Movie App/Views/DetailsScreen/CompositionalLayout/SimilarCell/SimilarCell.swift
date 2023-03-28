@@ -100,7 +100,7 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        KingsfisherManager.shared.setImage(profilePath: backdropPath, image: mediaImage)
+        KingsfisherManager.shared.setImage(imagePath: backdropPath, setFor: mediaImage)
     }
     
     
@@ -113,7 +113,7 @@ class SimilarMediaCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        KingsfisherManager.shared.setImage(profilePath: backdropPath, image: mediaImage)
+        KingsfisherManager.shared.setImage(imagePath: backdropPath, setFor: mediaImage)
     }
 }
 

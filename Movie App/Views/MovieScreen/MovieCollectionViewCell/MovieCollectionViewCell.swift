@@ -47,6 +47,6 @@ class MovieCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w342")
+        KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: movieImage, size: "w342")
     }
 }

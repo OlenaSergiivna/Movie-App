@@ -89,7 +89,7 @@ class PopularNowCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        KingsfisherManager.shared.setImage(profilePath: imagePath, image: movieImage, size: "w1280", cornerRadius: 10)
+        KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: movieImage, size: "w1280", cornerRadius: 10)
     }
 }
 

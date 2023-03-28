@@ -14,9 +14,9 @@ struct KingsfisherManager {
     
     private init() {}
     
-    func setImage(profilePath: String, image: UIImageView, size: String = "original", cornerRadius: CGFloat = 0, scaleFactor: CGFloat = UIScreen.main.scale) {
+    func setImage(imagePath: String, setFor image: UIImageView, size: String = "original", cornerRadius: CGFloat = 0, scaleFactor: CGFloat = UIScreen.main.scale) {
         
-        let url = URL(string: "https://image.tmdb.org/t/p/\(size)/\(profilePath)")
+        let url = URL(string: "https://image.tmdb.org/t/p/\(size)/\(imagePath)")
         
         let processor = DownsamplingImageProcessor(size: image.bounds.size)
         |> RoundCornerImageProcessor(cornerRadius: cornerRadius)

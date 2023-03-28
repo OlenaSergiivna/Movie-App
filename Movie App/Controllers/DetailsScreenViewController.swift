@@ -101,7 +101,7 @@ class DetailsScreenViewController: UIViewController {
         
         destinationViewController.configure(mediaID: mediaId, mediaType: mediaType) { [weak self] in
             guard let self else { return }
-            self.navigationController?.present(destinationViewController, animated: true)
+            self.present(destinationViewController, animated: true)
         }
     }
     
@@ -382,7 +382,7 @@ class DetailsScreenViewController: UIViewController {
         
         if let imagePath = movie.posterPath {
             
-            KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, scaleFactor: 3)
+            KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: mediaImage, scaleFactor: 3)
             
         } else {
             mediaImage.image = .strokedCheckmark
@@ -465,7 +465,7 @@ class DetailsScreenViewController: UIViewController {
         
         if let imagePath = tvShow.posterPath {
             
-            KingsfisherManager.shared.setImage(profilePath: imagePath, image: mediaImage, scaleFactor: 3)
+            KingsfisherManager.shared.setImage(imagePath: imagePath, setFor: mediaImage, scaleFactor: 3)
             
         } else {
             mediaImage.image = .strokedCheckmark
@@ -828,13 +828,10 @@ extension DetailsScreenViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch indexPath.section {
-           
-        case 2:
-
-            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = windowScene.windows.first, let rootViewController = window.rootViewController else { return }
             
+        case 2:
             detailsService.isSecondaryScreen = true
-            detailsService.openDetailsScreen(with: similarArray[indexPath.row], viewController: rootViewController.presentedViewController ?? rootViewController)
+            detailsService.openDetailsScreen(with: similarArray[indexPath.row], viewController: self)
             
         default:
             return
