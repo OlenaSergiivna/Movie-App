@@ -871,6 +871,8 @@ extension UIScrollView {
         return isInCollectionView && subviews.contains { $0.isSkeletonable }
     }
     
+    // to fix the error: ctrl+command+click on isSkeletonable and set extension as «public» and isSkeletonable as «open»
+    
     override public var isSkeletonable: Bool {
         get {
             super.isSkeletonable || isOrthogonalScrollView
