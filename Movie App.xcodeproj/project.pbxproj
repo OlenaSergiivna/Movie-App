@@ -32,6 +32,7 @@
 		CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */; };
 		CE2461A12909D59500E295AA /* PopularHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2461A02909D59500E295AA /* PopularHeaderView.swift */; };
 		CE2461A42909FFB800E295AA /* MoviesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */; };
+		CE2C7C9929DA2B7200C19830 /* 001.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CE2C7C9829DA2B7200C19830 /* 001.mp4 */; };
 		CE2F03BA29073B5A001DFADE /* MainTabLayouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */; };
 		CE2F03BE29073CFB001DFADE /* PopularNowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2F03BC29073CFB001DFADE /* PopularNowCollectionViewCell.swift */; };
 		CE2F03BF29073CFB001DFADE /* PopularNowCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2F03BD29073CFB001DFADE /* PopularNowCollectionViewCell.xib */; };
@@ -134,6 +135,7 @@
 		CE23DF0028F4D45D006A16EB /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		CE2461A02909D59500E295AA /* PopularHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularHeaderView.swift; sourceTree = "<group>"; };
 		CE2461A32909FFB800E295AA /* MoviesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesHeaderView.swift; sourceTree = "<group>"; };
+		CE2C7C9829DA2B7200C19830 /* 001.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001.mp4; sourceTree = "<group>"; };
 		CE2F03B929073B5A001DFADE /* MainTabLayouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabLayouts.swift; sourceTree = "<group>"; };
 		CE2F03BC29073CFB001DFADE /* PopularNowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularNowCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE2F03BD29073CFB001DFADE /* PopularNowCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularNowCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 		CE14062428E0C57D00B67410 = {
 			isa = PBXGroup;
 			children = (
+				CE2C7C9829DA2B7200C19830 /* 001.mp4 */,
 				CE14064728E0ED7D00B67410 /* Podfile */,
 				CE14062F28E0C57D00B67410 /* Movie App */,
 				CE14062E28E0C57D00B67410 /* Products */,
@@ -714,6 +717,7 @@
 				CE14063D28E0C57F00B67410 /* LaunchScreen.storyboard in Resources */,
 				CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */,
 				CE2F03BF29073CFB001DFADE /* PopularNowCollectionViewCell.xib in Resources */,
+				CE2C7C9929DA2B7200C19830 /* 001.mp4 in Resources */,
 				CE23DF0228F4D45D006A16EB /* SearchTableViewCell.xib in Resources */,
 				CE6EFD42290DC6AD00924F62 /* TheatresCollectionViewCell.xib in Resources */,
 				CE3682BE28FB154700B4A356 /* TVTableViewCell.xib in Resources */,
