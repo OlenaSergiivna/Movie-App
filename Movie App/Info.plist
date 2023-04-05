@@ -21,8 +21,6 @@
 			</array>
 		</dict>
 	</dict>
-	<key>CFBundleDisplayName</key>
-	<string>KachkaMovies</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
