@@ -11,7 +11,6 @@ import Foundation
   var wrappedValue: Dependency
  
   init() {
-    self.wrappedValue =
-            Injection.shared.container.resolve(Dependency.self)!
+    self.wrappedValue = Injection.shared.container.resolve(Dependency.self)!
   }
 }

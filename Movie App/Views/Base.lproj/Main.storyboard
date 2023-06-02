@@ -657,6 +657,7 @@
                         <outlet property="mediaName" destination="wKB-LQ-ZCX" id="Z6t-nA-PEe"/>
                         <outlet property="mediaOverview" destination="Iq5-1A-zlK" id="lFk-5Z-8CM"/>
                         <outlet property="mediaRating" destination="Z6h-xw-Pms" id="io1-wh-b6k"/>
+                        <outlet property="overviewCoverButton" destination="Vki-Yn-OPh" id="xkg-l0-pqN"/>
                         <outlet property="paddingView" destination="5ua-0r-SJR" id="vql-ys-hzi"/>
                     </connections>
                 </viewController>

@@ -9,7 +9,9 @@ import Foundation
 import Swinject
 
 final class Injection {
+    
     static let shared = Injection()
+    
     var container: Container {
         get {
             if _container == nil {
@@ -21,8 +23,9 @@ final class Injection {
             _container = newValue
         }
     }
+    
     private var _container: Container?
-     
+    
     private func buildContainer() -> Container {
         let container = Container()
         container.register(DetailsServiceProtocol.self) { _ in return DetailsService() }
