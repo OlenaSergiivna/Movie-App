@@ -28,6 +28,8 @@ class DetailsScreenViewController: UIViewController {
     
     @IBOutlet private weak var mediaOverview: UILabel!
     
+    @IBOutlet weak var overviewCoverButton: UIButton!
+    
     @IBOutlet private weak var favoritesButton: HeartButton!
     
     @IBOutlet private weak var mainScrollView: UIScrollView!
@@ -74,7 +76,7 @@ class DetailsScreenViewController: UIViewController {
         }
     }
     
-    private var isExpanded = false
+    private var isOverviewExpanded = false
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -110,22 +112,13 @@ class DetailsScreenViewController: UIViewController {
     
     @IBAction func owerviewButtonTapped(_ sender: UIButton) {
         
-        if isExpanded {
-            mediaOverview.numberOfLines = 3
-            isExpanded = false
-            
-            UIView.animate(withDuration: 1.0) {
-                self.view.layoutIfNeeded()
-            }
-            
-        } else {
-            
-            mediaOverview.numberOfLines = 0
-            isExpanded = true
-            
-            UIView.animate(withDuration: 1.0) {
-                self.view.layoutIfNeeded()
-            }
+        overviewCoverButton.isEnabled = false
+        mediaOverview.numberOfLines = 0
+        isOverviewExpanded = true
+        configureOverview(for: media)
+        
+        UIView.animate(withDuration: 1.0) {
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -349,7 +342,7 @@ class DetailsScreenViewController: UIViewController {
             mediaRating.setTitle("★ \(round((movie.voteAverage * 100))/100)", for: .normal)
         }
         
-        mediaOverview.text = movie.overview
+        configureOverview(for: media)
         
         // MARK: Configuring movie genre
         
@@ -432,7 +425,7 @@ class DetailsScreenViewController: UIViewController {
             mediaRating.setTitle("★ \(round((tvShow.voteAverage * 100))/100)", for: .normal)
         }
         
-        mediaOverview.text = tvShow.overview
+        configureOverview(for: media)
         
         // MARK: Configuring tv genre
         
@@ -496,6 +489,78 @@ class DetailsScreenViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.detailsScreenCollectionView.stopSkeletonAnimation()
                 self.detailsScreenCollectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.25))
+            }
+        }
+    }
+    
+    
+    private func configureOverview(for media: [Media]) {
+        
+        let textFont = UIFont.systemFont(ofSize: 17)
+        mediaOverview.font = textFont
+        mediaOverview.lineBreakMode = .byTruncatingTail
+        
+        guard let firstMedia = media.first else { return }
+        
+        var text: String
+        
+        switch firstMedia {
+        case .movie(let movie):
+            text = movie.overview ?? ""
+        case .tvShow(let tvShow):
+            text = tvShow.overview
+        }
+        
+        guard !text.isEmpty else { return }
+        mediaOverview.text = text
+        
+        guard !isOverviewExpanded else { return }
+        mediaOverview.layoutIfNeeded()
+        
+        let requiredNumberOfVisibleLines: CGFloat = 3
+        let lineHeight = textFont.lineHeight
+        
+        let boundingRect = text.boundingRect(with: CGSize(width: mediaOverview.frame.size.width, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], attributes: [.font: textFont], context: nil)
+        
+        let totalNumberOfLines = Int(boundingRect.height/lineHeight)
+        guard totalNumberOfLines > Int(requiredNumberOfVisibleLines) else { return }
+        
+        let showMoreText = "Show more"
+        let textArray = text.components(separatedBy: " ")
+        var someString = String()
+        
+        
+        for word in textArray {
+            let newString = someString + word + " "
+            
+            if isHeightSmaller(for: newString + "... " + showMoreText, font: textFont) {
+                someString = newString
+            } else {
+                someString = String(someString.dropLast(1))
+                
+                if someString.hasSuffix(",") || someString.hasSuffix(".") {
+                    someString = String(someString.dropLast(1))
+                }
+                
+                someString += "... " + showMoreText
+                break
+            }
+        }
+        
+        mediaOverview.attributedText = someString.withAttributedText(text: showMoreText, font: textFont, weight: .regular, color: .lightGray)
+        
+        
+        func isHeightSmaller(for text: String, font: UIFont) -> Bool {
+            
+            let boundingRect = text.boundingRect(with: CGSize(width: mediaOverview.frame.size.width, height: .greatestFiniteMagnitude), options: [.usesLineFragmentOrigin], attributes: [.font: font], context: nil)
+            
+            let maximumNumberOfLines = 3
+            let currentNumberOfLines = Int(ceil(boundingRect.height/font.lineHeight))
+            
+            if currentNumberOfLines <= maximumNumberOfLines {
+                return true
+            } else {
+                return false
             }
         }
     }
@@ -606,7 +671,7 @@ class DetailsScreenViewController: UIViewController {
     
     
     private func configureSimilarMedia<T>(_ media: T, completion: @escaping() -> Void) {
-
+        
         guard isSecondaryScreen == false else {
             detailsScreenLayouts.isSimilarMediaEmpty = true
             completion()
@@ -861,7 +926,6 @@ extension DetailsScreenViewController  {
         }
         detailsScreenCollectionView.setCollectionViewLayout(layout, animated: true)
     }
-    
 }
 
 
