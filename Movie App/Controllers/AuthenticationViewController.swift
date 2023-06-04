@@ -28,6 +28,11 @@ class AuthenticationViewController: UIViewController {
         loginTextField.textColor = .systemGray
         passTextField.textColor = .systemGray
         
+        loginTextField.textContentType = .username
+        passTextField.textContentType = .password
+        loginTextField.autocorrectionType = .no
+        passTextField.autocorrectionType = .no
+        
         resetForm()
         //AnimationService.shared.addAnimation(view: view)
         
@@ -40,25 +45,41 @@ class AuthenticationViewController: UIViewController {
         guard let login = loginTextField.text else { return }
         guard let password = passTextField.text else { return }
         
-        NetworkManager.shared.requestAuthentication(username: login, password: password) { sessionid, responseRequest, responseValidate, responseSession in
+        NetworkManager.shared.requestAuthentication(username: login, password: password) { result in
             
-            UserDefaults.standard.set(sessionid, forKey: UserDefaultsManager.shared.getKeyFor(.sessionID))
-            
-            guard let sessionID = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.sessionID)) else { return }
-            
-            NetworkManager.shared.getDetails(sessionId: sessionID) { userid, username, avatar in
+            switch result {
                 
-                //replace with guard success else { return }
-                guard responseRequest == 200, responseValidate == 200, responseSession == 200 else { return }
+            case .success(let sessionID):
+                print("SUCCESS: \(sessionID)")
                 
-                UserDefaultsManager.shared.saveUsersDataInUserDefaults(login: login, password: password, sesssionID: sessionid, isGuestSession: false, userID: userid, username: username, userAvatar: avatar)
+                UserDefaults.standard.set(sessionID, forKey: UserDefaultsManager.shared.getKeyFor(.sessionID))
                 
-                guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == false else { return }
+                guard let sessionID = UserDefaults.standard.string(forKey: UserDefaultsManager.shared.getKeyFor(.sessionID)) else { return }
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
+                NetworkManager.shared.getUserDetails(sessionId: sessionID) { result in
+                    
+                    switch result {
+                        
+                    case .success(let details):
+                        
+                        
+                        
+                        UserDefaultsManager.shared.saveUsersDataInUserDefaults(sesssionID: sessionID, isGuestSession: false, userID: details.id, username: details.username, userAvatar: details.avatar.tmdb.avatar_path ?? "")
+                        
+                        guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == false else { return }
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
+                        
+                        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController, animated: true)
+                        
+                    case .failure(let error):
+                        print("Error while getting user's details: \(error.localizedDescription)")
+                    }
+                }
                 
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController, animated: true)
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
             }
         }
     }
@@ -78,6 +99,4 @@ class AuthenticationViewController: UIViewController {
         loginTextField.text = "Olena.Olena"
         passTextField.text = "olena1611"
     }
-    
-    
 }

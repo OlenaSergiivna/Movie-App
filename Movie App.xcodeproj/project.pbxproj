@@ -19,7 +19,6 @@
 		CE14063528E0C57D00B67410 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */; };
 		CE14063828E0C57D00B67410 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE14063628E0C57D00B67410 /* Main.storyboard */; };
 		CE14063A28E0C57F00B67410 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE14063928E0C57F00B67410 /* Assets.xcassets */; };
-		CE14063D28E0C57F00B67410 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE14063B28E0C57F00B67410 /* LaunchScreen.storyboard */; };
 		CE14064828E0ED7D00B67410 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = CE14064728E0ED7D00B67410 /* Podfile */; };
 		CE14064A28E0F1B100B67410 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064928E0F1B100B67410 /* NetworkManager.swift */; };
 		CE14064C28E0F38D00B67410 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14064B28E0F38D00B67410 /* TokenModel.swift */; };
@@ -121,7 +120,6 @@
 		CE14063428E0C57D00B67410 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		CE14063728E0C57D00B67410 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CE14063928E0C57F00B67410 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CE14063C28E0C57F00B67410 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE14063E28E0C57F00B67410 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE14064728E0ED7D00B67410 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CE14064928E0F1B100B67410 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 				CE14063028E0C57D00B67410 /* AppDelegate.swift */,
 				CE14063228E0C57D00B67410 /* SceneDelegate.swift */,
 				CE14063928E0C57F00B67410 /* Assets.xcassets */,
-				CE14063B28E0C57F00B67410 /* LaunchScreen.storyboard */,
 				CE14063E28E0C57F00B67410 /* Info.plist */,
 			);
 			path = "Movie App";
@@ -717,7 +714,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE14063D28E0C57F00B67410 /* LaunchScreen.storyboard in Resources */,
 				CED374EB28F625B6006D95A9 /* PreviousRequestsTableViewCell.xib in Resources */,
 				CE2F03BF29073CFB001DFADE /* PopularNowCollectionViewCell.xib in Resources */,
 				CE2C7C9929DA2B7200C19830 /* 001.mp4 in Resources */,
@@ -877,14 +873,6 @@
 				CE14063728E0C57D00B67410 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		CE14063B28E0C57F00B67410 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CE14063C28E0C57F00B67410 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

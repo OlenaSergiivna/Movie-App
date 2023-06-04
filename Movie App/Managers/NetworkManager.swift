@@ -16,7 +16,7 @@ struct NetworkManager {
     
     // MARK: - Main autentication request: Request token + Validate token + Create session
     
-    func requestAuthentication(username: String, password: String, completion: @escaping((String, Int, Int, Int) -> Void)) {
+    func requestAuthentication(username: String, password: String, completion: @escaping(Result<String,Error>) -> Void) {
         
         // MARK: - First: Request token
         
@@ -25,21 +25,38 @@ struct NetworkManager {
         
         tokenRequest.responseDecodable(of: Token.self) { response in
             
-            do {
-                let data = try response.result.get()
+            switch response.result {
                 
-                guard let responseRequest = response.response?.statusCode else { return }
+            case .success(let token):
+                print("Success while requesting token: \(token.request_token)")
                 
-                validateAuthentication(username: username, password: password, token: data.request_token) { responseValidate in
+                validateAuthentication(username: username, password: password, token: token.request_token) { result in
                     
-                    createSession(token: data.request_token) { id, responseSession in
+                    switch result {
                         
-                        completion(id, responseRequest, responseValidate, responseSession)
+                    case .success(let success):
+                        print("Success while validating authentication: \(success)")
+                        
+                        createSession(token: token.request_token) { result in
+                            
+                            switch result {
+                                
+                            case .success(let session):
+                                print("Success while creating session: \(success)")
+                                completion(.success(session))
+                                
+                            case .failure(let error):
+                                print("Error while creating session: \(error.localizedDescription)")
+                            }
+                        }
+                        
+                    case .failure(let error):
+                        print("Error while validating authentication: \(error.localizedDescription)")
                     }
                 }
                 
-            } catch {
-                print("Request: \(error.localizedDescription)")
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -48,7 +65,7 @@ struct NetworkManager {
     
     // MARK: - Second: Validate token - PRIVATE
     
-    private func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Int) -> ()) {
+    private func validateAuthentication(username: String, password: String, token: String, completion: @escaping(Result<Bool, Error>) -> ()) {
         
         let validateTokenUrl = "https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=\(Globals.apiKey)&username=\(username)&password=\(password)&request_token=\(token)"
         
@@ -56,41 +73,34 @@ struct NetworkManager {
         
         tokenValidation.responseDecodable(of: Token.self) { response in
             
-            do {
-                let _ = try response.result.get()
-                if let responseValidate = response.response?.statusCode {
-                    completion(responseValidate)
-                }
-            } catch {
-                if let responseValidate = response.response?.statusCode {
-                    print(responseValidate)
-                    completion(responseValidate)
-                }
-                print("Validate: \(error.localizedDescription)")
+            switch response.result {
+                
+            case .success(let isSuccess):
+                completion(.success(isSuccess.success))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
- 
         }
     }
     
     
     // MARK: - Third: Create session id - PRIVATE
     
-    private func createSession(token: String, completion: @escaping(String, Int) -> Void) {
+    private func createSession(token: String, completion: @escaping(Result<String, Error>) -> Void) {
         
         let sessionUrl = "https://api.themoviedb.org/3/authentication/session/new?api_key=\(Globals.apiKey)&request_token=\(token)"
         let creatingSession = AF.request(sessionUrl, method: .get)
         
         creatingSession.responseDecodable(of: Session.self) { response in
             
-            do {
-                let data = try response.result.get()
+            switch response.result {
                 
-                if let responseSession = response.response?.statusCode {
-                    completion(data.session_id, responseSession)
-                }
-            } catch {
+            case .success(let session):
+                completion(.success(session.session_id))
                 
-                print("Create: \(error.localizedDescription)")
+            case.failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -98,18 +108,20 @@ struct NetworkManager {
     
     // MARK: - Get user's details
     
-    func getDetails(sessionId: String, completion: @escaping(_ id: Int, _ username: String, _ avatar: String) -> Void) {
+    func getUserDetails(sessionId: String, completion: @escaping(Result<UserDetails, Error>) -> Void) {
         
         let getDetailsUrl = "https://api.themoviedb.org/3/account?api_key=\(Globals.apiKey)&session_id=\(sessionId)"
         let getDetailsSession = AF.request(getDetailsUrl, method: .get)
         
         getDetailsSession.responseDecodable(of: UserDetails.self) { response in
             
-            do {
-                let userDetails = try response.result.get()
-                completion(userDetails.id, userDetails.username, userDetails.avatar.tmdb.avatar_path ?? "no avatar")
-            } catch {
-                print("user id: \(error.localizedDescription)")
+            switch response.result {
+                
+            case .success(let userDetails):
+                completion(.success(userDetails))
+                
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -118,7 +130,7 @@ struct NetworkManager {
     
     // MARK: - Log out (delete current session)
     
-   private func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
+    private func logOut(sessionId: String, completion: @escaping(Bool) -> Void) {
         
         let logOutUrl = "https://api.themoviedb.org/3/authentication/session?api_key=\(Globals.apiKey)&session_id=\(sessionId)"
         let logOutSession = AF.request(logOutUrl, method: .delete)
@@ -143,7 +155,7 @@ struct NetworkManager {
             
             UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
             UserDefaults.standard.removeObject(forKey: UserDefaultsManager.shared.getKeyFor(.searchResults))
-
+            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
             
@@ -161,7 +173,7 @@ struct NetworkManager {
             
             UserDefaultsManager.shared.deleteUsersDataFromUserDefaults()
             UserDefaults.standard.removeObject(forKey: UserDefaultsManager.shared.getKeyFor(.searchResults))
-        
+            
             RealmManager.shared.deleteAll()
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
