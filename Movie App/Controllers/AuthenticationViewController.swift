@@ -7,9 +7,6 @@
 
 import UIKit
 
-// add CocoaLumberjack + set MovieVC as root VC, open AuthVC only when user in not logged in + keyChain + autologin
-// add login and password validation
-
 class AuthenticationViewController: UIViewController {
     
     deinit {
@@ -33,6 +30,12 @@ class AuthenticationViewController: UIViewController {
         loginTextField.autocorrectionType = .no
         passTextField.autocorrectionType = .no
         
+        loginTextField.isSecureTextEntry = false
+        passTextField.isSecureTextEntry = true
+        
+        loginTextField.tintColor = .systemPink
+        passTextField.tintColor = .systemPink
+        
         resetForm()
         //AnimationService.shared.addAnimation(view: view)
         
@@ -50,7 +53,6 @@ class AuthenticationViewController: UIViewController {
             switch result {
                 
             case .success(let sessionID):
-                print("SUCCESS: \(sessionID)")
                 
                 UserDefaults.standard.set(sessionID, forKey: UserDefaultsManager.shared.getKeyFor(.sessionID))
                 
@@ -61,9 +63,7 @@ class AuthenticationViewController: UIViewController {
                     switch result {
                         
                     case .success(let details):
-                        
-                        
-                        
+
                         UserDefaultsManager.shared.saveUsersDataInUserDefaults(sesssionID: sessionID, isGuestSession: false, userID: details.id, username: details.username, userAvatar: details.avatar.tmdb.avatar_path ?? "")
                         
                         guard UserDefaults.standard.bool(forKey: UserDefaultsManager.shared.getKeyFor(.isGuestSession)) == false else { return }
@@ -83,6 +83,27 @@ class AuthenticationViewController: UIViewController {
             }
         }
     }
+    
+    
+    @IBAction func loginTextfieldPressed(_ sender: UITextField) {
+        self.becomeFirstResponder()
+        
+    }
+    
+    @IBAction func passTextfieldPressed(_ sender: UITextField) {
+        self.becomeFirstResponder()
+        print("tapped")
+        keychainManager.getPasswordFor(login: loginTextField.text ?? "") { result in
+            switch result {
+            case .success(let password):
+                self.passTextField.text = password
+            case .failure(let error):
+                print("Error when getting password for login \(self.loginTextField.text): \(error)")
+            }
+        }
+        
+    }
+    
     
     
     func resetForm() {
