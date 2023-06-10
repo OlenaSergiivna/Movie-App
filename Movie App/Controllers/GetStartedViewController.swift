@@ -14,17 +14,41 @@ class GetStartedViewController: UIViewController {
     
     var player: AVPlayer!
     
+    @IBOutlet weak var backView: UIView!
+    
     deinit {
         print("!!! Deinit: \(self)")
     }
     
     @IBOutlet weak var bottomView: UIView!
     
+    let mainNotificationCenter = NotificationCenter.default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        backView.isHidden = false
+        setUpNotifications()
         configureAnimation()
     }
+    
+    func setUpNotifications() {
+        
+        mainNotificationCenter.addObserver(self, selector: #selector(appWillBeHiddenOnBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        mainNotificationCenter.addObserver(self, selector: #selector(appWasReturnedOnForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    
+    @objc func appWillBeHiddenOnBackground() {
+        self.player.pause()
+    }
+    
+    
+    @objc func appWasReturnedOnForeground() {
+        DispatchQueue.main.async {
+            self.player.play()
+        }
+    }
+    
     
     func configureAnimation() {
         guard let videoURL = Bundle.main.url(forResource: "001", withExtension: "mp4") else { return }
@@ -32,17 +56,20 @@ class GetStartedViewController: UIViewController {
         player = AVPlayer(url: videoURL)
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resizeAspectFill
-        playerLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
         
         view.layer.addSublayer(playerLayer)
         player.play()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
     }
+    
     
     @objc func playerDidFinishPlaying() {
         playerLayer.removeFromSuperlayer()
-        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        mainNotificationCenter.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        mainNotificationCenter.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        mainNotificationCenter.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        backView.isHidden = true
     }
     
     
@@ -60,6 +87,10 @@ class GetStartedViewController: UIViewController {
         bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        playerLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+    }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
@@ -88,4 +119,6 @@ class GetStartedViewController: UIViewController {
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController, animated: true)
         }
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .portrait}
 }
