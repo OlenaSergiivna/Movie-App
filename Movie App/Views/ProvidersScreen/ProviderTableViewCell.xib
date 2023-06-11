@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProviderTableViewCell" rowHeight="124" id="KGk-i7-Jjw" customClass="ProviderTableViewCell" customModule="Movie_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fc1-lf-ZLK">
+                        <rect key="frame" x="8" y="8" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="nt3-Dr-EW0"/>
+                            <constraint firstAttribute="width" constant="100" id="tiD-ST-tvU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company's name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Spl-U9-UUK">
+                        <rect key="frame" x="116" y="8" width="196" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5vg-LA-WGm">
+                        <rect key="frame" x="116" y="61" width="196" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Yxa-wL-UY0"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system" title=" Watch now">
+                            <backgroundConfiguration key="background">
+                                <color key="strokeColor" name="AccentColor"/>
+                            </backgroundConfiguration>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="watchButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yVb-xG-ejL"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="5vg-LA-WGm" firstAttribute="trailing" secondItem="Spl-U9-UUK" secondAttribute="trailing" id="6Bm-bz-QBz"/>
+                    <constraint firstAttribute="trailing" secondItem="Spl-U9-UUK" secondAttribute="trailing" constant="8" id="I9Q-dd-47r"/>
+                    <constraint firstItem="Spl-U9-UUK" firstAttribute="top" secondItem="fc1-lf-ZLK" secondAttribute="top" id="QXM-vi-6Bm"/>
+                    <constraint firstItem="fc1-lf-ZLK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="R5F-IH-3IS"/>
+                    <constraint firstItem="5vg-LA-WGm" firstAttribute="top" secondItem="Spl-U9-UUK" secondAttribute="bottom" constant="32" id="UE3-J5-K5L"/>
+                    <constraint firstItem="Spl-U9-UUK" firstAttribute="leading" secondItem="fc1-lf-ZLK" secondAttribute="trailing" constant="8" id="clX-kj-i8Q"/>
+                    <constraint firstItem="fc1-lf-ZLK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="cr3-x0-2lc"/>
+                    <constraint firstAttribute="bottom" secondItem="fc1-lf-ZLK" secondAttribute="bottom" constant="8" id="geV-ql-3nM"/>
+                    <constraint firstItem="5vg-LA-WGm" firstAttribute="leading" secondItem="Spl-U9-UUK" secondAttribute="leading" id="iJa-9K-5EO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="providersLogo" destination="fc1-lf-ZLK" id="a0l-bW-hT8"/>
+                <outlet property="providersName" destination="Spl-U9-UUK" id="aWv-TO-1Xa"/>
+                <outlet property="watchButton" destination="5vg-LA-WGm" id="59o-AA-diX"/>
+            </connections>
+            <point key="canvasLocation" x="7.6335877862595414" y="47.887323943661976"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="play.fill" catalog="system" width="117" height="128"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

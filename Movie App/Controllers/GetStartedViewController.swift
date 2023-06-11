@@ -51,7 +51,7 @@ class GetStartedViewController: UIViewController {
     
     
     func configureAnimation() {
-        guard let videoURL = Bundle.main.url(forResource: "001", withExtension: "mp4") else { return }
+        guard let videoURL = Bundle.main.url(forResource: "kachka", withExtension: "mp4") else { return }
         
         player = AVPlayer(url: videoURL)
         playerLayer = AVPlayerLayer(player: player)

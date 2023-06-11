@@ -28,16 +28,22 @@ class WatchProvidersViewController: UIViewController {
     
     
     func configure(mediaID: Int, mediaType: String, completion: @escaping() -> Void) {
-        DataManager.shared.getProviders(mediaType: mediaType, mediaID: mediaID) { [weak self] data in
+        DataManager.shared.getProviders(mediaType: mediaType, mediaID: mediaID) { [weak self] result in
             guard let self else { return }
             
-            print(data)
+            switch result {
+                
+            case .success(let data):
+                guard let providers = data.buy else { return }
+                self.providersArray = providers
+                completion()
+                
+            case .failure(let error):
+                print("Error while getting providers: \(error.localizedDescription)")
+                completion()
+            }
         }
     }
-    
-
-    
-
 }
 
 
@@ -47,6 +53,7 @@ extension WatchProvidersViewController: UITableViewDataSource {
         providersArray.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = providersTableView.dequeueReusableCell(withIdentifier: "ProviderTableViewCell", for: indexPath) as? ProviderTableViewCell else {
             return UITableViewCell()
@@ -55,8 +62,6 @@ extension WatchProvidersViewController: UITableViewDataSource {
         cell.configure(with: providersArray[indexPath.row])
         return cell
     }
-    
-    
 }
 
 

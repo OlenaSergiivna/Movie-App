@@ -8,23 +8,34 @@
 import Foundation
 
 struct ResultsProviders: Codable {
-    
-    let results: [ProvidersModel]
+    let id: Int
+    let results: USProvidersModel?
 }
 
 
-struct ProvidersModel: Codable {
-    
-    let displayPriorities: [String: Int]
-    let displayPriority: Int
-    let logoPath, providerName: String
-    let providerID: Int
+struct USProvidersModel: Codable {
+    let US: Providers?
+}
 
+
+struct Providers: Codable {
+    let link: String
+    let rent: [ProviderDetails]?
+    let buy: [ProviderDetails]?
+    let flatrate: [ProviderDetails]?
+}
+
+
+struct ProviderDetails: Codable {
+    let displayPriority: Int
+    let logoPath: String
+    let providerID: Int
+    let providerName: String
+    
     enum CodingKeys: String, CodingKey {
-        case displayPriorities = "display_priorities"
         case displayPriority = "display_priority"
         case logoPath = "logo_path"
-        case providerName = "provider_name"
         case providerID = "provider_id"
+        case providerName = "provider_name"
     }
 }
