@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FLI-LX-qBP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FLI-LX-qBP">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -90,14 +90,23 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BM4-Su-QuE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="820"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fWY-uA-R9P"/>
                         <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="BM4-Su-QuE" firstAttribute="top" secondItem="wkE-Ik-Vr3" secondAttribute="top" id="5bn-aH-jcQ"/>
                             <constraint firstAttribute="bottom" secondItem="Wau-AK-A2D" secondAttribute="bottom" id="FHO-QJ-24b"/>
                             <constraint firstItem="Wau-AK-A2D" firstAttribute="leading" secondItem="wkE-Ik-Vr3" secondAttribute="leading" id="MYj-Hi-qPE"/>
                             <constraint firstItem="Wau-AK-A2D" firstAttribute="height" secondItem="wkE-Ik-Vr3" secondAttribute="height" multiplier="0.5" id="MZj-9A-7fC"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="BM4-Su-QuE" secondAttribute="bottomMargin" id="Phm-fv-CkW"/>
+                            <constraint firstAttribute="trailing" secondItem="BM4-Su-QuE" secondAttribute="trailing" id="XsG-P7-000"/>
                             <constraint firstItem="Wau-AK-A2D" firstAttribute="trailing" secondItem="wkE-Ik-Vr3" secondAttribute="trailing" id="mD3-GB-hp2"/>
+                            <constraint firstItem="BM4-Su-QuE" firstAttribute="leading" secondItem="wkE-Ik-Vr3" secondAttribute="leading" id="nam-6c-KUk"/>
                             <constraint firstItem="Wau-AK-A2D" firstAttribute="height" secondItem="wkE-Ik-Vr3" secondAttribute="height" multiplier="0.3" id="x17-FQ-5rG"/>
                         </constraints>
                         <variation key="default">
@@ -120,6 +129,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="eu7-4e-cu2"/>
                     <connections>
+                        <outlet property="backView" destination="BM4-Su-QuE" id="fHb-si-faP"/>
                         <outlet property="bottomView" destination="Wau-AK-A2D" id="dYX-UB-lz3"/>
                     </connections>
                 </viewController>
@@ -135,14 +145,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ENTER YOUR USER NAME" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JcI-Fk-1Kv">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="JcI-Fk-1Kv">
                                 <rect key="frame" x="16" y="300.33333333333331" width="343" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ENTER YOUR PASSWORD" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-im-XSq">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-im-XSq">
                                 <rect key="frame" x="16" y="434.33333333333331" width="343" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1180,24 +1190,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g0u-HV-Kq4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="11810" y="167"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="V0X-BN-qBv">
-            <objects>
-                <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Ucv-d3-0tV" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CXv-YF-zdW">
-                        <rect key="frame" x="0.0" y="47" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="2n8-ou-6Gm" kind="relationship" relationship="rootViewController" id="EDq-Zc-gV4"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hgu-3Q-DJE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-866" y="406"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WcT-wZ-DFF">

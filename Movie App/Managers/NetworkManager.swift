@@ -157,9 +157,9 @@ struct NetworkManager {
             UserDefaults.standard.removeObject(forKey: UserDefaultsManager.shared.getKeyFor(.searchResults))
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
+            let loginVC = storyboard.instantiateViewController(identifier: "GetStartedViewController")
             
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC)
             
             return
         }
@@ -177,9 +177,9 @@ struct NetworkManager {
             RealmManager.shared.deleteAll()
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController")
+            let loginVC = storyboard.instantiateViewController(identifier: "GetStartedViewController")
             
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginNavController)
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC)
         }
     }
     

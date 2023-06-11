@@ -34,8 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // go to LoginScreen if user haven't logged in
             guard !(window?.rootViewController is UINavigationController) else { return }
             
-            let loginNavController = storyboard.instantiateViewController(identifier: "LoginNavigationController") as! UINavigationController
-            window?.rootViewController = loginNavController
+            let loginVC = storyboard.instantiateViewController(identifier: "GetStartedViewController") as! GetStartedViewController
+            window?.rootViewController = loginVC
             window?.makeKeyAndVisible()
         }
     }
