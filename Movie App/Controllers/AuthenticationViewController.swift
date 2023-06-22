@@ -46,8 +46,9 @@ class AuthenticationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginTextField.textColor = .systemGray
-        passTextField.textColor = .systemGray
+        
+        loginTextField.textColor = .black
+        passTextField.textColor = .black
         
         loginTextField.textContentType = .username
         passTextField.textContentType = .password
@@ -69,6 +70,8 @@ class AuthenticationViewController: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard) )
         view.addGestureRecognizer(tapGesture)
+        
+        keychainManager.savePasswordFor(login: loginTextField.text!, password: "olena2023", completion: nil)
     }
     
     @objc func hideKeyboard() {
