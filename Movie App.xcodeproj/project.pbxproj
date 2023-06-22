@@ -12,6 +12,7 @@
 		CE08EB3B28E33FF70038CC92 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3A28E33FF70038CC92 /* FavouritesViewController.swift */; };
 		CE08EB3D28E34C820038CC92 /* LogOutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3C28E34C820038CC92 /* LogOutModel.swift */; };
 		CE08EB4028E3526C0038CC92 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE08EB3F28E3526C0038CC92 /* Globals.swift */; };
+		CE0A484A29D88E8C004C1E8F /* KeychainManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0A484929D88E8C004C1E8F /* KeychainManagerProtocol.swift */; };
 		CE0B873E28E4DCCA005CBA8A /* GenresModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B873D28E4DCC9005CBA8A /* GenresModels.swift */; };
 		CE0B874028E4E919005CBA8A /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0B873F28E4E919005CBA8A /* MovieModel.swift */; };
 		CE14063128E0C57D00B67410 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE14063028E0C57D00B67410 /* AppDelegate.swift */; };

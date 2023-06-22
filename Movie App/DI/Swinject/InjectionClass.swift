@@ -29,6 +29,7 @@ final class Injection {
     private func buildContainer() -> Container {
         let container = Container()
         container.register(DetailsServiceProtocol.self) { _ in return DetailsService() }
+        container.register(KeychainManagerProtocol.self) { _ in return KeychainManager() }
         return container
     }
 }

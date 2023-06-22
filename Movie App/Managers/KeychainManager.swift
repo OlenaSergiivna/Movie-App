@@ -6,31 +6,79 @@
 //
 
 import Foundation
+import KeychainAccess
 
-class KeychainManager {
+enum KeychainErrors: String, Error {
+    case noValue
+}
+
+class KeychainManager: KeychainManagerProtocol {
+     
+    let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "")
+        .accessibility(.whenUnlocked)
     
-    enum KeychainError: Error {
-        case duplicateEntry
-        case unknown(OSStatus)
-    }
     
-    static func save(service: String, account: String, password: Data) throws {
-        let query: [String: AnyObject] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service as AnyObject,
-            kSecAttrAccount as String: account as AnyObject,
-            kSecValueData as String: password as AnyObject
-        ]
+    func savePasswordFor(login: String, password: String, completion: ((Result<Bool, Error>)-> Void)? = nil) {
+//        let prompt = "Enable FaceID to login?"
         
-        let status = SecItemAdd(query as CFDictionary, nil)
-        
-       guard status != errSecDuplicateItem else {
-            throw KeychainError.duplicateEntry
+        DispatchQueue.global().async {
+            do {
+                try self.keychain
+//                    .accessibility(.whenUnlocked, authenticationPolicy: [.biometryAny, .or, .devicePasscode])
+//                    .authenticationPrompt(prompt)
+                    .set(password, key: login)
+                
+                completion?(.success(true))
+                
+            } catch let error {
+                completion?(.failure(error))
+            }
         }
-        
     }
     
-    static func get() throws {
+    func getPasswordFor(login: String, completion: ((Result<String, Error>) -> Void)? = nil) {
         
+        DispatchQueue.global().async {
+            do {
+                            
+                guard let pass = try self.keychain
+                    .accessibility(.whenUnlocked, authenticationPolicy: [.biometryAny, .or, .devicePasscode])
+                    .get(login) else {
+                    completion?(.failure(KeychainErrors.noValue))
+                    return
+                }
+                
+                completion?(.success(pass))
+
+            } catch let error {
+                completion?(.failure(error))
+            }
+        }
+    }
+    
+    func deletePasswordFor(login: String, completion: ((Result<Bool,Error>) -> Void)? = nil) {
+        
+        do {
+            try keychain.remove(login)
+           completion?(.success(true))
+        } catch let error {
+            completion?(.failure(error))
+        }
+    }
+    
+    
+    func getAllKeys() -> [String] {
+        let keys = keychain.allKeys()
+        return keys
+    }
+    
+    
+    func removeAllItems(completion: ((Result<Bool,Error>)->Void)? = nil) {
+        do {
+            try keychain.removeAll()
+            completion?(.success(true))
+        } catch let error {
+            completion?(.failure(error))
+        }
     }
 }
