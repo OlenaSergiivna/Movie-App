@@ -144,17 +144,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="JcI-Fk-1Kv">
-                                <rect key="frame" x="16" y="420.33333333333331" width="398" height="60"/>
+                                <rect key="frame" x="16" y="330.66666666666669" width="398" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" systemColor="systemPinkColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="username"/>
-                                <connections>
-                                    <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="pYj-Y2-RnO"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="kl1-im-XSq">
-                                <rect key="frame" x="16" y="554.33333333333337" width="398" height="60"/>
+                                <rect key="frame" x="16" y="464.66666666666669" width="398" height="60.000000000000057"/>
                                 <color key="textColor" systemColor="systemPinkColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="password"/>
@@ -163,13 +160,13 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="e8j-W4-RKl">
-                                <rect key="frame" x="16" y="391.33333333333331" width="398" height="21"/>
+                                <rect key="frame" x="16" y="301.66666666666669" width="398" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fn9-HU-7l3">
-                                <rect key="frame" x="46" y="658.33333333333337" width="338" height="60"/>
+                                <rect key="frame" x="46" y="568.66666666666663" width="338" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Wlx-EQ-F36"/>
                                 </constraints>
@@ -196,19 +193,19 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Required" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jnF-eO-Jkb">
-                                <rect key="frame" x="16" y="488.33333333333331" width="398" height="21"/>
+                                <rect key="frame" x="16" y="398.66666666666669" width="398" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1ek-uf-bcb">
-                                <rect key="frame" x="16" y="525.33333333333337" width="398" height="21"/>
+                                <rect key="frame" x="16" y="435.66666666666669" width="398" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Required" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-NR-tcS">
-                                <rect key="frame" x="16" y="622.33333333333337" width="398" height="20"/>
+                                <rect key="frame" x="16" y="532.66666666666663" width="398" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
@@ -245,7 +242,7 @@
                             <constraint firstItem="Fn9-HU-7l3" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.0643777" id="feu-9V-CTd"/>
                             <constraint firstItem="1ek-uf-bcb" firstAttribute="leading" secondItem="kl1-im-XSq" secondAttribute="leading" id="gBo-me-57X"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="height" secondItem="Fn9-HU-7l3" secondAttribute="height" id="jwg-xQ-urV"/>
-                            <constraint firstItem="Fn9-HU-7l3" firstAttribute="bottom" secondItem="Ksb-BS-3R4" secondAttribute="bottom" multiplier="0.8" identifier="buttonBotttom" id="kJ1-zt-3E2"/>
+                            <constraint firstItem="Fn9-HU-7l3" firstAttribute="bottom" secondItem="Ksb-BS-3R4" secondAttribute="bottom" multiplier="0.7" identifier="buttonBotttom" id="kJ1-zt-3E2"/>
                             <constraint firstAttribute="trailing" secondItem="kl1-im-XSq" secondAttribute="trailing" constant="16" id="oYS-w0-poK"/>
                             <constraint firstItem="jnF-eO-Jkb" firstAttribute="trailing" secondItem="JcI-Fk-1Kv" secondAttribute="trailing" id="tbP-fW-g1L"/>
                             <constraint firstItem="kl1-im-XSq" firstAttribute="leading" secondItem="Ksb-BS-3R4" secondAttribute="leading" constant="16" id="uhh-ym-E0G"/>
