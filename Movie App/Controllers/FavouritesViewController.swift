@@ -379,40 +379,6 @@ extension FavouritesViewController: UICollectionViewDelegate {
             return
         }
     }
-
-// move to contextual menu
-
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        
-//        let deleteAction = UIContextualAction(style: .normal, title: "Delete") { [weak self] _, _, completion in
-//            
-//            guard let self else { return }
-//            
-//            DataManager.shared.deleteFromFavorites(id: self.favoriteMovies[indexPath.row].id, type: "movie") { [weak self] result in
-//                
-//                guard let self else { return }
-//                
-//                guard result == 200 else { return }
-//                
-//                RealmManager.shared.delete(type: FavoriteMovieRealm.self, primaryKey: self.favoriteMovies[indexPath.row].id) {
-//                    
-//                    RepositoryService.shared.movieFavoritesCashing { [weak self] favorites in
-//                        guard let self else { return }
-//
-//                        self.favoriteMovies = favorites
-//
-//                        DispatchQueue.main.async {
-//                            self.favouritesCollectionView.reloadData()
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        
-//        deleteAction.backgroundColor = .systemRed
-//        
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
 }
 
 
@@ -442,7 +408,8 @@ extension FavouritesViewController: UICollectionViewDelegateFlowLayout {
 
 
 extension FavouritesViewController: UIAdaptivePresentationControllerDelegate {
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         
         let selectedIndex = favoritesSegmentedControl.selectedSegmentIndex
         //test with pageCount parameter

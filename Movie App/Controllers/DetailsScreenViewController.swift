@@ -101,8 +101,8 @@ class DetailsScreenViewController: UIViewController {
         guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "WatchProvidersViewController") as? WatchProvidersViewController else { return }
         destinationViewController.loadViewIfNeeded()
         
-        destinationViewController.configure(mediaID: mediaId, mediaType: mediaType) { [weak self] in
-            guard let self else { return }
+        destinationViewController.configure(mediaID: mediaId, mediaType: mediaType) {
+            
             self.present(destinationViewController, animated: true)
         }
     }
@@ -237,8 +237,8 @@ class DetailsScreenViewController: UIViewController {
         guard !isGuestSession else { return }
         
         // MARK: - Request favorite movies list, check if movie is already in the favorites list. Get total favorite movies pages count.
-        DataManager.shared.requestFavoriteMovies { [weak self] success, totalPages, favorites, _, _ in
-            guard let self, let favorites, totalPages > 0 else {
+        DataManager.shared.requestFavoriteMovies { success, totalPages, favorites, _, _ in
+            guard let favorites, totalPages > 0 else {
                 completion?()
                 return
             }
@@ -259,8 +259,8 @@ class DetailsScreenViewController: UIViewController {
             
             for page in 2...totalPages {
                 
-                DataManager.shared.requestFavoriteMovies(page: page) { [weak self] success, _, favorites, _, _ in
-                    guard let self, let favorites else {
+                DataManager.shared.requestFavoriteMovies(page: page) { success, _, favorites, _, _ in
+                    guard let favorites else {
                         completion?()
                         return
                     }
@@ -286,8 +286,8 @@ class DetailsScreenViewController: UIViewController {
         guard !isGuestSession else { return }
         
         // MARK: - Request favorite tv shows list, check if tv show is already in the favorites list. Get total favorite tv shows pages count.
-        DataManager.shared.requestFavoriteTVShows { [weak self] success, totalPages, favorites, _, _ in
-            guard let self, let favorites, totalPages > 0 else {
+        DataManager.shared.requestFavoriteTVShows { success, totalPages, favorites, _, _ in
+            guard let favorites, totalPages > 0 else {
                 completion?()
                 return
             }
@@ -308,8 +308,8 @@ class DetailsScreenViewController: UIViewController {
             
             for page in 2...totalPages {
                 
-                DataManager.shared.requestFavoriteTVShows(page: page) { [weak self] success, _, favorites, _, _ in
-                    guard let self, let favorites else {
+                DataManager.shared.requestFavoriteTVShows(page: page) { success, _, favorites, _, _ in
+                    guard let favorites else {
                         completion?()
                         return
                     }
@@ -573,9 +573,8 @@ class DetailsScreenViewController: UIViewController {
             favoritesButton.tintColor = .systemRed
             isFavorite = false
             
-            DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { [weak self] success in
+            DataManager.shared.deleteFromFavorites(id: mediaId , type: mediaType) { success in
                 
-                guard let self else { return }
                 guard success == true else { return }
                 
                 if self.mediaType == "movie" {
@@ -598,12 +597,11 @@ class DetailsScreenViewController: UIViewController {
             favoritesButton.tintColor = .systemRed
             isFavorite = true
             
-            DataManager.shared.addToFavorites(id: mediaId, type: mediaType) { [weak self] success in
+            DataManager.shared.addToFavorites(id: mediaId, type: mediaType) { success in
                 
-                guard let self else { return }
                 guard success == true else { return }
                 
-                RealmManager.shared.saveFavoritesInRealm(media: self.media)
+                // add pop up
             }
         }
     }
@@ -611,8 +609,7 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureTrailer(with id: Int, completion: @escaping() -> Void) {
         
-        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { [weak self] result in
-            guard let self else { return }
+        DataManager.shared.getMediaTrailer(id: id, mediaType: mediaType) { result in
             
             switch result {
                 
@@ -641,8 +638,7 @@ class DetailsScreenViewController: UIViewController {
     
     private func configureMediaCast(with id: Int, completion: @escaping() -> Void) {
         
-        DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { [weak self] result in
-            guard let self else { return }
+        DataManager.shared.getMediaCast(mediaType: mediaType, mediaId: id) { result in
             
             switch result {
                 
