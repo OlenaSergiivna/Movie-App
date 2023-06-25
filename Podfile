@@ -16,4 +16,6 @@ target 'Movie App' do
     pod 'SkeletonView', '~> 1.30.4'
     
     pod 'Swinject', '~> 2.8.3'
+    
+    pod 'SwiftEntryKit', '2.0.0'
 end

@@ -144,15 +144,16 @@ struct RealmManager {
     
     //MARK: - Delete object of specific type from Realm
     
-    func deleteFromRealm<T>(type: RealmSwiftObject.Type, primaryKey: T, completion: @escaping() -> Void) {
+    func deleteFromRealm<T>(type: RealmSwiftObject.Type, mediaId: T, completion: ((Result<Bool, Error>) -> Void)?) {
         
-        guard let dataToDelete = realm.object(ofType: type, forPrimaryKey: primaryKey) else {
+        guard let dataToDelete = realm.object(ofType: type, forPrimaryKey: mediaId) else {
             return
         }
-        
-        try? realm.write {
-            realm.delete(dataToDelete)
-        }
-        completion()
+        do {
+            try realm.write { realm.delete(dataToDelete) }
+            completion?(.success(true))
+        } catch(let error) {
+            completion?(.failure(error))
+        } 
     }
 }

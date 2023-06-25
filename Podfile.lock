@@ -9,6 +9,7 @@ PODS:
   - RealmSwift (10.37.0):
     - Realm (= 10.37.0)
   - SkeletonView (1.30.4)
+  - SwiftEntryKit (2.0.0)
   - Swinject (2.8.3)
   - youtube-ios-player-helper (1.0.4)
 
@@ -19,6 +20,7 @@ DEPENDENCIES:
   - lottie-ios
   - RealmSwift
   - SkeletonView (~> 1.30.4)
+  - SwiftEntryKit (= 2.0.0)
   - Swinject (~> 2.8.3)
   - youtube-ios-player-helper
 
@@ -31,6 +33,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - SkeletonView
+    - SwiftEntryKit
     - Swinject
     - youtube-ios-player-helper
 
@@ -42,9 +45,10 @@ SPEC CHECKSUMS:
   Realm: 9c5fc6f8f5cb70b299f2e3064d2b9f6cb0f1523d
   RealmSwift: 7be7bb45911c16400dd1bfce3a01764ecb4cae7a
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
+  SwiftEntryKit: 61b5fa36f34a97dd8013e48a7345bc4c4720be9a
   Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
   youtube-ios-player-helper: e9b97535e816db3152179d84d999bc1807ecd689
 
-PODFILE CHECKSUM: a1fc2edce9280506d346cf68f1ea9331c0806b67
+PODFILE CHECKSUM: adb38e21247dcde432ae1f958d170bf9a250c6e7
 
 COCOAPODS: 1.12.0

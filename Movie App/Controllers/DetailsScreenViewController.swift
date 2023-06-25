@@ -577,17 +577,16 @@ class DetailsScreenViewController: UIViewController {
                 
                 guard success == true else { return }
                 
+                if self.mediaType == "tv" {
+                    PopupManager.shared.showPopup(forAction: .remove, mediaType: "tv show")
+                } else {
+                    PopupManager.shared.showPopup(forAction: .remove, mediaType: self.mediaType)
+                }
+                
                 if self.mediaType == "movie" {
-                    
-                    RealmManager.shared.deleteFromRealm(type: FavoriteMovieRealm.self, primaryKey: self.mediaId) {
-                        //add pop up
-                    }
-                    
+                    RealmManager.shared.deleteFromRealm(type: FavoriteMovieRealm.self, mediaId: self.mediaId, completion: nil)
                 } else if self.mediaType == "tv" {
-                    
-                    RealmManager.shared.deleteFromRealm(type: FavoriteTVRealm.self, primaryKey: self.mediaId) {
-                        //add pop up
-                    }
+                    RealmManager.shared.deleteFromRealm(type: FavoriteTVRealm.self, mediaId: self.mediaId, completion: nil)
                 }
             }
             
@@ -601,7 +600,12 @@ class DetailsScreenViewController: UIViewController {
                 
                 guard success == true else { return }
                 
-                // add pop up
+                if self.mediaType == "tv" {
+                    PopupManager.shared.showPopup(forAction: .add, mediaType: "tv show")
+                } else {
+                    PopupManager.shared.showPopup(forAction: .add, mediaType: self.mediaType)
+                }
+                
             }
         }
     }

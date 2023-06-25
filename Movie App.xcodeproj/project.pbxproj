@@ -45,6 +45,7 @@
 		CE3B74A82949231A005EFA94 /* WatchProvidersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B74A72949231A005EFA94 /* WatchProvidersViewController.swift */; };
 		CE3B74AC29492429005EFA94 /* ProviderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3B74AA29492429005EFA94 /* ProviderTableViewCell.swift */; };
 		CE3B74AD29492429005EFA94 /* ProviderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3B74AB29492429005EFA94 /* ProviderTableViewCell.xib */; };
+		CE48F6FB2A488D1000C040E4 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48F6FA2A488D1000C040E4 /* PopupManager.swift */; };
 		CE4B415F29086F9800512AC0 /* TrendyMediaModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4B415E29086F9800512AC0 /* TrendyMediaModels.swift */; };
 		CE4E5DD9290456190048E65C /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E5DD7290456190048E65C /* MediaCollectionViewCell.swift */; };
 		CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E5DDB2904563D0048E65C /* MainViewController.swift */; };
@@ -148,6 +149,7 @@
 		CE3B74A72949231A005EFA94 /* WatchProvidersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProvidersViewController.swift; sourceTree = "<group>"; };
 		CE3B74AA29492429005EFA94 /* ProviderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderTableViewCell.swift; sourceTree = "<group>"; };
 		CE3B74AB29492429005EFA94 /* ProviderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProviderTableViewCell.xib; sourceTree = "<group>"; };
+		CE48F6FA2A488D1000C040E4 /* PopupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
 		CE4B415E29086F9800512AC0 /* TrendyMediaModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendyMediaModels.swift; sourceTree = "<group>"; };
 		CE4E5DD7290456190048E65C /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE4E5DDB2904563D0048E65C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				CEB1EDD0294676D00023D0F8 /* KingsfisherManager.swift */,
 				CE5CB7B52937F2040099EE09 /* KeychainManager.swift */,
 				CEA6DAE7294A488D00A4416F /* UserDefaultsManager.swift */,
+				CE48F6FA2A488D1000C040E4 /* PopupManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 			files = (
 				CE538AC5292822E600E9F1E2 /* MediaEnum.swift in Sources */,
 				CE6EFD41290DC6AD00924F62 /* TheatresCollectionViewCell.swift in Sources */,
+				CE48F6FB2A488D1000C040E4 /* PopupManager.swift in Sources */,
 				CE6EFD44290DC82600924F62 /* InTheatresFooterView.swift in Sources */,
 				CEB3450B28E23E0100451A6F /* MovieViewController.swift in Sources */,
 				CE3682BD28FB154700B4A356 /* TVTableViewCell.swift in Sources */,
