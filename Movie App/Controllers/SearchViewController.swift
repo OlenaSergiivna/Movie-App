@@ -528,19 +528,21 @@ extension SearchViewController: UISearchResultsUpdating {
                     
                     self.searchResultsMovie = results.movies
                     
-                    DispatchQueue.main.async {
-                        self.searchTableView.reloadData()
-                        self.searchTableView.layoutIfNeeded()
-                        
-                        self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                    }
                     
                     if results.movies.isEmpty {
                         self.noSearchResultsView.isHidden = false
                         self.searchTableView.isUserInteractionEnabled = false
+                        
                     } else {
                         self.noSearchResultsView.isHidden = true
                         self.searchTableView.isUserInteractionEnabled = true
+                        
+                        DispatchQueue.main.async {
+                            self.searchTableView.reloadData()
+                            self.searchTableView.layoutIfNeeded()
+                            
+                            self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                        }
                     }
                     
                 case .failure(let error):
@@ -564,19 +566,21 @@ extension SearchViewController: UISearchResultsUpdating {
                     
                     self.searchResultsTV = results.tvShows
                     
-                    DispatchQueue.main.async {
-                        self.searchTableView.reloadData()
-                        self.searchTableView.layoutIfNeeded()
-                        
-                        self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                    }
                     
                     if results.tvShows.isEmpty {
                         self.noSearchResultsView.isHidden = false
                         self.searchTableView.isUserInteractionEnabled = false
+                        
                     } else {
                         self.noSearchResultsView.isHidden = true
                         self.searchTableView.isUserInteractionEnabled = true
+                        
+                        DispatchQueue.main.async {
+                            self.searchTableView.reloadData()
+                            self.searchTableView.layoutIfNeeded()
+                            
+                            self.searchTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                        }
                     }
                     
                 case .failure(let error):
