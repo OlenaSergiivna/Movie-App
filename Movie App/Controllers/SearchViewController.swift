@@ -496,11 +496,25 @@ extension SearchViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        
         guard let text = searchController.searchBar.text else { return }
         
         let textWithoutBlankSpaces = text.replacingOccurrences(of: " ", with: "")
         
-        guard textWithoutBlankSpaces.count > 0 else { return }
+        guard textWithoutBlankSpaces.count > 0 else {
+            
+            switch selectedIndex {
+            case 0:
+                searchResultsMovie = []
+            case 1:
+                searchResultsTV = []
+            default:
+                return
+            }
+            searchTableView.reloadData()
+            return
+        }
         
         guard displayStatus == false else { return }
         
@@ -509,7 +523,6 @@ extension SearchViewController: UISearchResultsUpdating {
         
         let searchText = text.replacingOccurrences(of: " ", with: "%20")
         
-        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
         
         switch selectedIndex {
             
