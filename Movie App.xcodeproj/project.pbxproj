@@ -51,7 +51,6 @@
 		CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4E5DDB2904563D0048E65C /* MainViewController.swift */; };
 		CE52C23A28EA46FD0076DBBD /* UIImageView+Downloaded.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */; };
 		CE538AC5292822E600E9F1E2 /* MediaEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE538AC4292822E600E9F1E2 /* MediaEnum.swift */; };
-		CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */; };
 		CE5B08332907415E003D9F85 /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */; };
 		CE5CB7B62937F2040099EE09 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5CB7B52937F2040099EE09 /* KeychainManager.swift */; };
 		CE6133A128EA028200778822 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6133A028EA028200778822 /* DataManager.swift */; };
@@ -155,7 +154,6 @@
 		CE4E5DDB2904563D0048E65C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CE52C23928EA46FD0076DBBD /* UIImageView+Downloaded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Downloaded.swift"; sourceTree = "<group>"; };
 		CE538AC4292822E600E9F1E2 /* MediaEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEnum.swift; sourceTree = "<group>"; };
-		CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewControllerViewModel.swift; sourceTree = "<group>"; };
 		CE5B08322907415E003D9F85 /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE5CB7B52937F2040099EE09 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		CE6133A028EA028200778822 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 		CE2E29AA28ECE81C00C865E5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				CE5614D528EE15120085A49B /* FavouritesViewControllerViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -808,7 +805,6 @@
 				CE08EB3928E33F320038CC92 /* SearchViewController.swift in Sources */,
 				CE70D57328F9DCE700536243 /* LoadingViewController.swift in Sources */,
 				CEF4F66A28FB0B60000BC6DA /* TVViewController.swift in Sources */,
-				CE5614D628EE15120085A49B /* FavouritesViewControllerViewModel.swift in Sources */,
 				CE4E5DDC2904563D0048E65C /* MainViewController.swift in Sources */,
 				CEC3408C28EF3FCD00F5275B /* FavoritesResponse.swift in Sources */,
 				CE3682C228FB3B5E00B4A356 /* TVCollectionViewCell.swift in Sources */,

@@ -24,8 +24,6 @@ class FavouritesViewController: UIViewController {
     
     @Injected private var detailsService: DetailsServiceProtocol
     
-    var viewModel = FavouritesViewControllerViewModel()
-    
     var favoriteMovies: [MovieModel] = []
     
     var favoriteTVShows: [TVModel] = []
